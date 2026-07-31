@@ -238,6 +238,8 @@ export default function Home() {
   const [activeTab, setActiveTab] = useState<Tab>("explore");
   const [category, setCategory] = useState<Category>("Tất cả");
   const [query, setQuery] = useState("");
+  const [serverResultIds, setServerResultIds] = useState<string[] | null>(null);
+  const [isServerSearching, setIsServerSearching] = useState(false);
   const [favorites, setFavorites] = useState<string[]>([]);
   const [selected, setSelected] = useState<Place | null>(null);
   const [detailMode, setDetailMode] = useState<"eat" | "stay">("eat");
@@ -255,8 +257,14 @@ export default function Home() {
   const toastTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
-    const stored = window.localStorage.getItem("datto-favorites");
-    if (stored) setFavorites(JSON.parse(stored));
+    const favoritesTimer = window.setTimeout(() => {
+      try {
+        const stored = window.localStorage.getItem("datto-favorites");
+        if (stored) setFavorites(JSON.parse(stored));
+      } catch {
+        window.localStorage.removeItem("datto-favorites");
+      }
+    }, 0);
 
     fetch(
       "https://api.open-meteo.com/v1/forecast?latitude=21.31&longitude=105.40&current=temperature_2m,weather_code&timezone=Asia%2FBangkok",
@@ -268,7 +276,37 @@ export default function Home() {
         setWeather({ temp: Math.round(data.current.temperature_2m), label });
       })
       .catch(() => undefined);
+
+    return () => window.clearTimeout(favoritesTimer);
   }, []);
+
+  useEffect(() => {
+    const controller = new AbortController();
+    const timer = window.setTimeout(async () => {
+      setIsServerSearching(true);
+      try {
+        const params = new URLSearchParams({ q: query, category, limit: "50" });
+        const response = await fetch(`/api/places?${params.toString()}`, {
+          signal: controller.signal,
+          headers: { Accept: "application/json" },
+        });
+        if (!response.ok) throw new Error("Search server unavailable");
+        const payload = (await response.json()) as { data?: Array<{ id: string }> };
+        setServerResultIds((payload.data ?? []).map((item) => item.id));
+      } catch (error) {
+        if (!(error instanceof DOMException && error.name === "AbortError")) {
+          setServerResultIds(null);
+        }
+      } finally {
+        if (!controller.signal.aborted) setIsServerSearching(false);
+      }
+    }, 180);
+
+    return () => {
+      window.clearTimeout(timer);
+      controller.abort();
+    };
+  }, [category, query]);
 
   useEffect(() => {
     if (!selected) return;
@@ -318,14 +356,19 @@ export default function Home() {
 
   const filteredPlaces = useMemo(() => {
     const normalized = query.trim().toLocaleLowerCase("vi");
-    return places
-      .filter((place) => category === "Tất cả" || place.category === category)
-      .filter((place) =>
-        [place.name, place.location, place.category, ...place.tags]
-          .join(" ")
-          .toLocaleLowerCase("vi")
-          .includes(normalized),
-      )
+    const serverMatches = serverResultIds ? new Set(serverResultIds) : null;
+    const matchingPlaces = serverMatches
+      ? places.filter((place) => serverMatches.has(place.id))
+      : places
+          .filter((place) => category === "Tất cả" || place.category === category)
+          .filter((place) =>
+            [place.name, place.location, place.category, ...place.tags]
+              .join(" ")
+              .toLocaleLowerCase("vi")
+              .includes(normalized),
+          );
+
+    return matchingPlaces
       .sort((a, b) => {
         if (!position) return Number(Boolean(b.featured)) - Number(Boolean(a.featured));
         return (
@@ -333,7 +376,7 @@ export default function Home() {
           haversine(position.lat, position.lng, b.lat, b.lng)
         );
       });
-  }, [category, position, query]);
+  }, [category, position, query, serverResultIds]);
 
   const generatePlan = () => {
     let pool = [...places];
@@ -487,7 +530,7 @@ export default function Home() {
               <div>
                 <span className="section-number">02</span>
                 <h2>{query ? `Kết quả cho “${query}”` : position ? "Gần vị trí của bạn" : "Không thể bỏ lỡ"}</h2>
-                <p>{locationMessage} · {filteredPlaces.length} gợi ý phù hợp</p>
+                <p>{isServerSearching ? "Đang tìm trên máy chủ…" : `${locationMessage} · ${filteredPlaces.length} gợi ý phù hợp`}</p>
               </div>
               {!position && <button className="location-link" onClick={locate}>⌖ Bật định vị</button>}
             </div>
