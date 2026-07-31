@@ -524,7 +524,7 @@ export default function Home() {
 
           <section className="content-section category-section">
             <div className="section-heading section-heading--inline">
-              <div><span className="section-number">01</span><h2>Khám phá theo cách của bạn</h2></div>
+              <div><span className="section-number">01</span><h2>Khám phá theo cách của&nbsp;bạn</h2></div>
               <button className="text-link" onClick={() => { setCategory("Tất cả"); setQuery(""); }}>Xem tất cả →</button>
             </div>
             <div className="category-row" role="group" aria-label="Lọc theo danh mục">
@@ -540,7 +540,7 @@ export default function Home() {
             <div className="section-heading section-heading--inline">
               <div>
                 <span className="section-number">02</span>
-                <h2>{query ? `Kết quả cho “${query}”` : position ? "Gần vị trí của bạn" : "Không thể bỏ lỡ"}</h2>
+                <h2>{query ? `Kết quả cho “${query}”` : position ? "Gần vị trí của\u00a0bạn" : "Không thể bỏ\u00a0lỡ"}</h2>
                 <p>{isServerSearching ? "Đang tìm trên máy chủ…" : `${locationMessage} · ${filteredPlaces.length} gợi ý phù hợp`}</p>
               </div>
               {!position && <button className="location-link" onClick={locate}>⌖ Bật định vị</button>}
