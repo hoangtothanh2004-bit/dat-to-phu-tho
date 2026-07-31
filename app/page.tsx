@@ -2,6 +2,8 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 
+const isStaticDemo = process.env.NEXT_PUBLIC_STATIC_DEMO === "true";
+
 type Tab = "explore" | "trip" | "near" | "saved" | "profile";
 type Category = "Tất cả" | "Tâm linh" | "Thiên nhiên" | "Nghỉ dưỡng" | "Văn hóa";
 
@@ -234,6 +236,14 @@ function formatDistance(distance: number) {
   return `${distance.toFixed(distance < 10 ? 1 : 0).replace(".", ",")} km`;
 }
 
+function normalizeSearch(value: string) {
+  return value
+    .toLocaleLowerCase("vi")
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/đ/g, "d");
+}
+
 export default function Home() {
   const [activeTab, setActiveTab] = useState<Tab>("explore");
   const [category, setCategory] = useState<Category>("Tất cả");
@@ -281,6 +291,8 @@ export default function Home() {
   }, []);
 
   useEffect(() => {
+    if (isStaticDemo) return;
+
     const controller = new AbortController();
     const timer = window.setTimeout(async () => {
       setIsServerSearching(true);
@@ -355,17 +367,16 @@ export default function Home() {
   };
 
   const filteredPlaces = useMemo(() => {
-    const normalized = query.trim().toLocaleLowerCase("vi");
+    const normalized = normalizeSearch(query.trim());
     const serverMatches = serverResultIds ? new Set(serverResultIds) : null;
     const matchingPlaces = serverMatches
       ? places.filter((place) => serverMatches.has(place.id))
       : places
           .filter((place) => category === "Tất cả" || place.category === category)
           .filter((place) =>
-            [place.name, place.location, place.category, ...place.tags]
-              .join(" ")
-              .toLocaleLowerCase("vi")
-              .includes(normalized),
+            normalizeSearch([place.name, place.location, place.category, ...place.tags].join(" ")).includes(
+              normalized,
+            ),
           );
 
     return matchingPlaces
