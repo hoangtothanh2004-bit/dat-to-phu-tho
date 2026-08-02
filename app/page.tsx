@@ -7,6 +7,9 @@ import {
   foodRegions,
   places,
   type Category,
+  type FoodDish,
+  type FoodSeller,
+  type NearbyItem,
   type Place,
 } from "@/data/travel";
 
@@ -23,6 +26,21 @@ type UserReview = {
   photos: string[];
   createdAt: string;
 };
+
+type CartLine = {
+  dishId: string;
+  sellerId: string;
+  quantity: number;
+};
+
+type BookingOffer = {
+  place: Place;
+  stay: NearbyItem;
+};
+
+type SearchSuggestion =
+  | { id: string; kind: "place"; label: string; meta: string; icon: string; place: Place }
+  | { id: string; kind: "food"; label: string; meta: string; icon: string; dish: FoodDish };
 
 /* Dữ liệu mẫu ban đầu được giữ trong lịch sử Git; dữ liệu sử dụng thực tế nằm ở data/travel.ts.
 type Category = "Tất cả" | "Tâm linh" | "Thiên nhiên" | "Nghỉ dưỡng" | "Văn hóa";
@@ -226,6 +244,7 @@ const services = [
 ];
 
 const categories = categoryLabels.map((label) => ({ label, icon: categoryIcons[label] }));
+const foodCatalog = foodRegions.flatMap((region) => region.dishes.map((dish) => ({ dish, region })));
 
 const navigation: { id: Tab; label: string; icon: string }[] = [
   { id: "explore", label: "Khám phá", icon: "⌕" },
@@ -250,6 +269,18 @@ function formatDistance(distance: number) {
   if (distance < 1) return `${Math.max(50, Math.round(distance * 1000 / 50) * 50)} m`;
   if (distance > 999) return `${Math.round(distance).toLocaleString("vi-VN")} km`;
   return `${distance.toFixed(distance < 10 ? 1 : 0).replace(".", ",")} km`;
+}
+
+function formatMoney(amount: number) {
+  return `${amount.toLocaleString("vi-VN")}đ`;
+}
+
+function estimatedStayPrice(stay: NearbyItem) {
+  const key = normalizeSearch(`${stay.name} ${stay.type}`);
+  if (key.includes("wyndham")) return 1_500_000;
+  if (key.includes("resort") || key.includes("khoang nong")) return 1_100_000;
+  if (key.includes("hotel") || key.includes("khach san")) return 800_000;
+  return 450_000;
 }
 
 function normalizeSearch(value: string) {
@@ -302,6 +333,15 @@ export default function Home() {
   const [reviewRating, setReviewRating] = useState(5);
   const [reviewComment, setReviewComment] = useState("");
   const [reviewPhotos, setReviewPhotos] = useState<string[]>([]);
+  const [activeFoodId, setActiveFoodId] = useState<string | null>(null);
+  const [cart, setCart] = useState<CartLine[]>([]);
+  const [cartOpen, setCartOpen] = useState(false);
+  const [checkoutPhone, setCheckoutPhone] = useState("");
+  const [bookingOffer, setBookingOffer] = useState<BookingOffer | null>(null);
+  const [bookingCheckIn, setBookingCheckIn] = useState("");
+  const [bookingCheckOut, setBookingCheckOut] = useState("");
+  const [bookingGuests, setBookingGuests] = useState(2);
+  const [bookingPhone, setBookingPhone] = useState("");
   const toastTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const speechRef = useRef<SpeechSynthesisUtterance | null>(null);
 
@@ -312,9 +352,12 @@ export default function Home() {
         if (stored) setFavorites(JSON.parse(stored));
         const storedReviews = window.localStorage.getItem("datto-reviews");
         if (storedReviews) setUserReviews(JSON.parse(storedReviews));
+        const storedCart = window.localStorage.getItem("datto-cart");
+        if (storedCart) setCart(JSON.parse(storedCart));
       } catch {
         window.localStorage.removeItem("datto-favorites");
         window.localStorage.removeItem("datto-reviews");
+        window.localStorage.removeItem("datto-cart");
       }
     }, 0);
 
@@ -412,6 +455,22 @@ export default function Home() {
     );
   };
 
+  const matchingFoodDishes = useMemo(() => {
+    const terms = normalizeSearch(query.trim()).split(/\s+/).filter(Boolean);
+    if (!terms.length) return [];
+    return foodCatalog
+      .filter(({ dish, region }) => {
+        const haystack = normalizeSearch([
+          dish.name,
+          dish.description,
+          region.label,
+          ...dish.sellers.flatMap((seller) => [seller.name, seller.address]),
+        ].join(" "));
+        return terms.every((term) => haystack.includes(term));
+      })
+      .map(({ dish }) => dish);
+  }, [query]);
+
   const filteredPlaces = useMemo(() => {
     const terms = normalizeSearch(query.trim()).split(/\s+/).filter(Boolean);
     const serverMatches = serverResultIds ? new Set(serverResultIds) : null;
@@ -421,9 +480,6 @@ export default function Home() {
           .filter((place) => category === "Tất cả" || place.category === category)
           .filter((place) => {
             if (!terms.length) return true;
-            const regionalDishes = foodRegions.flatMap((region) =>
-              region.dishes.filter((dish) => dish.placeId === place.id).map((dish) => dish.name),
-            );
             const haystack = normalizeSearch([
               place.name,
               place.shortName,
@@ -433,7 +489,6 @@ export default function Home() {
               place.season,
               ...place.tags,
               ...place.highlights,
-              ...regionalDishes,
               ...place.restaurants.flatMap((item) => [item.name, item.type, item.address, item.taste ?? ""]),
               ...place.stays.flatMap((item) => [item.name, item.type, item.address]),
             ].join(" "));
@@ -452,7 +507,7 @@ export default function Home() {
 
   const searchSuggestions = useMemo(() => {
     const needle = normalizeSearch(query.trim());
-    const placeSuggestions = places
+    const placeSuggestions: SearchSuggestion[] = places
       .filter((place) => {
         if (!needle) return Boolean(place.featured);
         return normalizeSearch([place.name, place.shortName, place.district, place.category, ...place.tags].join(" ")).includes(needle);
@@ -460,26 +515,40 @@ export default function Home() {
       .slice(0, 5)
       .map((place) => ({
         id: `place-${place.id}`,
+        kind: "place" as const,
         label: place.shortName,
         meta: `${place.category} · ${place.district}`,
         icon: "⌖",
         place,
       }));
 
-    const dishSuggestions = foodRegions
-      .flatMap((region) => region.dishes.map((dish) => ({ dish, region })))
+    const dishSuggestions: SearchSuggestion[] = foodCatalog
       .filter(({ dish }) => needle && normalizeSearch(`${dish.name} ${dish.description}`).includes(needle))
       .slice(0, 3)
       .map(({ dish, region }) => ({
         id: `dish-${region.id}-${dish.name}`,
+        kind: "food" as const,
         label: dish.name,
         meta: `Ẩm thực ${region.label} · ${dish.season}`,
         icon: "♨",
-        place: places.find((place) => place.id === dish.placeId) ?? places[0],
+        dish,
       }));
 
     return [...placeSuggestions, ...dishSuggestions].slice(0, 6);
   }, [query]);
+
+  const cartDetails = useMemo(() => cart.flatMap((line) => {
+    const catalogItem = foodCatalog.find(({ dish }) => dish.id === line.dishId);
+    const seller = catalogItem?.dish.sellers.find((item) => item.id === line.sellerId);
+    return catalogItem && seller ? [{ ...line, dish: catalogItem.dish, seller }] : [];
+  }), [cart]);
+  const cartQuantity = cart.reduce((total, line) => total + line.quantity, 0);
+  const cartSubtotal = cartDetails.reduce((total, line) => total + line.seller.price * line.quantity, 0);
+  const bookingNights = useMemo(() => {
+    if (!bookingCheckIn || !bookingCheckOut) return 1;
+    const milliseconds = new Date(bookingCheckOut).getTime() - new Date(bookingCheckIn).getTime();
+    return Math.max(1, Math.ceil(milliseconds / 86_400_000));
+  }, [bookingCheckIn, bookingCheckOut]);
 
   const currentMonth = new Date().getMonth() + 1;
   const planDistance = useMemo(
@@ -578,6 +647,75 @@ export default function Home() {
     openPlace(place);
   };
 
+  const selectFoodSuggestion = (dish: FoodDish) => {
+    const catalogItem = foodCatalog.find((item) => item.dish.id === dish.id);
+    if (catalogItem) setFoodRegionId(catalogItem.region.id);
+    setCategory("Tất cả");
+    setQuery(dish.name);
+    setActiveFoodId(dish.id);
+    setSearchFocused(false);
+  };
+
+  const addToCart = (dish: FoodDish, seller: FoodSeller) => {
+    const existing = cart.find((line) => line.dishId === dish.id && line.sellerId === seller.id);
+    const next = existing
+      ? cart.map((line) => line === existing ? { ...line, quantity: line.quantity + 1 } : line)
+      : [...cart, { dishId: dish.id, sellerId: seller.id, quantity: 1 }];
+    setCart(next);
+    window.localStorage.setItem("datto-cart", JSON.stringify(next));
+    showToast(`Đã thêm ${dish.name} vào giỏ`);
+  };
+
+  const changeCartQuantity = (dishId: string, sellerId: string, change: number) => {
+    const next = cart
+      .map((line) => line.dishId === dishId && line.sellerId === sellerId ? { ...line, quantity: line.quantity + change } : line)
+      .filter((line) => line.quantity > 0);
+    setCart(next);
+    window.localStorage.setItem("datto-cart", JSON.stringify(next));
+  };
+
+  const submitDemoOrder = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    if (checkoutPhone.replace(/\D/g, "").length < 9 || !cartDetails.length) {
+      showToast("Hãy nhập số điện thoại hợp lệ để người bán xác nhận");
+      return;
+    }
+    const stored = JSON.parse(window.localStorage.getItem("datto-demo-orders") ?? "[]") as unknown[];
+    const order = { id: `DT-${String(stored.length + 1).padStart(6, "0")}`, phone: checkoutPhone, items: cartDetails, total: cartSubtotal, createdAt: new Date().toISOString() };
+    window.localStorage.setItem("datto-demo-orders", JSON.stringify([order, ...stored]));
+    setCart([]);
+    window.localStorage.removeItem("datto-cart");
+    setCartOpen(false);
+    setCheckoutPhone("");
+    showToast(`Đã lưu đơn mẫu ${order.id} trên thiết bị — chưa gửi tới người bán`);
+  };
+
+  const openBooking = (place: Place, stay: NearbyItem) => {
+    setBookingOffer({ place, stay });
+    setBookingCheckIn("");
+    setBookingCheckOut("");
+    setBookingGuests(2);
+    setBookingPhone("");
+  };
+
+  const submitBookingRequest = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    if (!bookingOffer || !bookingCheckIn || !bookingCheckOut || bookingPhone.replace(/\D/g, "").length < 9) {
+      showToast("Hãy điền ngày nhận, trả phòng và số điện thoại hợp lệ");
+      return;
+    }
+    if (new Date(bookingCheckOut) <= new Date(bookingCheckIn)) {
+      showToast("Ngày trả phòng cần sau ngày nhận phòng");
+      return;
+    }
+    const total = estimatedStayPrice(bookingOffer.stay) * bookingNights;
+    const stored = JSON.parse(window.localStorage.getItem("datto-booking-requests") ?? "[]") as unknown[];
+    const request = { id: `DP-${String(stored.length + 1).padStart(6, "0")}`, stay: bookingOffer.stay.name, place: bookingOffer.place.shortName, checkIn: bookingCheckIn, checkOut: bookingCheckOut, guests: bookingGuests, phone: bookingPhone, total, createdAt: new Date().toISOString() };
+    window.localStorage.setItem("datto-booking-requests", JSON.stringify([request, ...stored]));
+    setBookingOffer(null);
+    showToast(`Đã lưu yêu cầu ${request.id} — cần máy chủ để gửi tới nơi nghỉ`);
+  };
+
   const handleReviewPhotos = async (event: ChangeEvent<HTMLInputElement>) => {
     const files = Array.from(event.target.files ?? []).slice(0, 2);
     if (!files.length) return;
@@ -660,6 +798,33 @@ export default function Home() {
     </article>
   );
 
+  const renderFoodMarket = (dish: FoodDish, context: "search" | "region") => (
+    <article className={`food-market food-market--${context}`} key={`${context}-${dish.id}`}>
+      <div className="food-market__intro">
+        <img src={dish.image} alt={`Ảnh minh họa ${dish.name}`} />
+        <div><span>GIAN HÀNG MẪU · CẦN ĐỐI TÁC XÁC MINH</span><h3>{dish.name}</h3><p>{dish.description}</p></div>
+      </div>
+      <div className="seller-grid">
+        {dish.sellers.map((seller) => (
+          <section className="seller-card" key={seller.id}>
+            <div className="seller-card__top"><span>{seller.verified ? "✓ Đã xác minh" : "○ Đang chờ xác minh"}</span><b>★ {seller.rating}{seller.reviewCount ? ` (${seller.reviewCount})` : " · mới"}</b></div>
+            <h4>{seller.name}</h4>
+            <p><strong>Địa chỉ:</strong> {seller.address}</p>
+            <p><strong>Giờ bán:</strong> {seller.hours}</p>
+            <p><strong>Điện thoại:</strong> {seller.verified ? seller.phone : "Chờ đối tác xác minh"}</p>
+            <p><strong>Nhận món:</strong> {seller.pickupNote}</p>
+            <div className="seller-card__buy">
+              <span><b>{formatMoney(seller.price)}</b><small>/{seller.unit}</small></span>
+              <button onClick={() => addToCart(dish, seller)}>＋ Thêm giỏ</button>
+            </div>
+            <div className="seller-card__links">{seller.verified && <a href={`tel:${seller.phone}`}>Gọi người bán</a>}<a target="_blank" rel="noreferrer" href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(seller.address)}`}>Mở bản đồ →</a></div>
+          </section>
+        ))}
+      </div>
+      <p className="food-market__notice">Mức giá và điểm bán đang là dữ liệu minh họa. Khi đối tác xác minh, app có thể nhận khoảng 5% hoa hồng từ người bán cho mỗi đơn thành công; khách không trả thêm phí này.</p>
+    </article>
+  );
+
   return (
     <main className="app-shell">
       <header className="topbar">
@@ -689,7 +854,7 @@ export default function Home() {
               <span className="kicker">VỀ MIỀN DI SẢN</span>
               <h1>Đi đúng mùa.<br /><em>Chạm đúng Đất Tổ.</em></h1>
               <p>Tìm đúng nơi, đúng giờ và đúng món ngon — cùng khoảng cách, thời gian di chuyển và kinh nghiệm cần biết trước khi lên đường.</p>
-              <div className="search-area">
+              <div className="search-area" onMouseLeave={() => setSearchFocused(false)} onPointerLeave={() => setSearchFocused(false)}>
                 <div className="search-box">
                   <span aria-hidden="true">⌕</span>
                   <input
@@ -699,7 +864,9 @@ export default function Home() {
                     onKeyDown={(event) => {
                       if (event.key === "Escape") setSearchFocused(false);
                       if (event.key === "Enter" && searchSuggestions[0]) {
-                        selectSearchSuggestion(searchSuggestions[0].place, searchSuggestions[0].label);
+                        const suggestion = searchSuggestions[0];
+                        if (suggestion.kind === "place") selectSearchSuggestion(suggestion.place, suggestion.label);
+                        else selectFoodSuggestion(suggestion.dish);
                       }
                     }}
                     placeholder="Thử “săn mây”, “thịt chua”, “Hạ Hòa”…"
@@ -712,7 +879,7 @@ export default function Home() {
                   <div className="search-suggestions" id="search-suggestions" role="listbox">
                     <span className="search-suggestions__label">{query ? "Gợi ý phù hợp" : "Được tìm nhiều"}</span>
                     {searchSuggestions.map((item) => (
-                      <button key={item.id} role="option" aria-selected="false" onMouseDown={(event) => event.preventDefault()} onClick={() => selectSearchSuggestion(item.place, item.label)}>
+                      <button key={item.id} role="option" aria-selected="false" onMouseDown={(event) => event.preventDefault()} onClick={() => item.kind === "place" ? selectSearchSuggestion(item.place, item.label) : selectFoodSuggestion(item.dish)}>
                         <span>{item.icon}</span><p><b>{item.label}</b><small>{item.meta}</small></p><i>↗</i>
                       </button>
                     ))}
@@ -754,21 +921,23 @@ export default function Home() {
             <div className="section-heading section-heading--inline">
               <div>
                 <span className="section-number">02</span>
-                <h2>{query ? `Kết quả cho “${query}”` : position ? "Gần vị trí của\u00a0bạn" : "Không thể bỏ\u00a0lỡ"}</h2>
-                <p>{isServerSearching ? "Đang tìm trên máy chủ…" : `${locationMessage} · ${filteredPlaces.length} gợi ý phù hợp`}</p>
+                <h2>{query && matchingFoodDishes.length ? `Điểm bán cho “${query}”` : query ? `Kết quả cho “${query}”` : position ? "Gần vị trí của\u00a0bạn" : "Không thể bỏ\u00a0lỡ"}</h2>
+                <p>{isServerSearching ? "Đang tìm trên máy chủ…" : matchingFoodDishes.length ? `${matchingFoodDishes.length} món · ${matchingFoodDishes.reduce((total, dish) => total + dish.sellers.length, 0)} điểm bán mẫu` : `${locationMessage} · ${filteredPlaces.length} gợi ý phù hợp`}</p>
               </div>
               {!position && <button className="location-link" onClick={locate}>⌖ Bật định vị</button>}
             </div>
+            {matchingFoodDishes.length > 0 && <div className="commerce-search-results">{matchingFoodDishes.map((dish) => renderFoodMarket(dish, "search"))}</div>}
             {filteredPlaces.length ? (
               <>
+                {matchingFoodDishes.length > 0 && <div className="related-places-heading"><span>ĐỊA ĐIỂM DU LỊCH LIÊN QUAN TRỰC TIẾP</span><p>Chỉ hiện khi tên món cũng khớp thật sự với thông tin của địa điểm; món ăn không còn bị gắn nhầm vào công viên.</p></div>}
                 <div className="place-grid">{filteredPlaces.slice(0, visibleCount).map((place) => renderPlaceCard(place))}</div>
                 {filteredPlaces.length > visibleCount && (
                   <button className="load-more" onClick={() => setVisibleCount((count) => count + 4)}>Xem thêm {Math.min(4, filteredPlaces.length - visibleCount)} địa điểm →</button>
                 )}
               </>
-            ) : (
+            ) : matchingFoodDishes.length === 0 ? (
               <div className="empty-state"><b>Chưa tìm thấy kết quả</b><span>Thử “săn mây”, “thịt chua”, “Hạ Hòa” hoặc chọn một gợi ý trong ô tìm kiếm.</span></div>
-            )}
+            ) : null}
           </section>
 
           <section className="content-section itinerary-teaser">
@@ -809,12 +978,12 @@ export default function Home() {
                 <div key={region.id} className="food-list">
                   <p className="food-region-note">{region.subtitle}</p>
                   {region.dishes.map((food, index) => (
-                    <button key={food.name} onClick={() => {
-                      const place = places.find((item) => item.id === food.placeId);
-                      if (place) selectSearchSuggestion(place, food.name);
-                    }}>
-                      <span>{String(index + 1).padStart(2, "0")}</span><b>{food.name}</b><small>{food.description}</small><i>{food.price}<em>{food.season}</em></i>
-                    </button>
+                    <div className="food-entry" key={food.id}>
+                      <button className="food-row" aria-expanded={activeFoodId === food.id} onClick={() => setActiveFoodId((current) => current === food.id ? null : food.id)}>
+                        <span>{String(index + 1).padStart(2, "0")}</span><img src={food.image} alt="" /><b>{food.name}</b><small>{food.description}</small><i>{food.price}<em>{food.season}</em></i><strong>{activeFoodId === food.id ? "Thu gọn −" : "Xem điểm bán +"}</strong>
+                      </button>
+                      {activeFoodId === food.id && renderFoodMarket(food, "region")}
+                    </div>
                   ))}
                 </div>
               ))}
@@ -972,7 +1141,7 @@ export default function Home() {
             <article className="booking-card">
               <span>ĐẶT DỊCH VỤ</span><h2>Mọi thứ cho chuyến đi</h2>
               <button onClick={() => showToast("Form yêu cầu tour đã sẵn sàng kết nối đối tác")}><i>▣</i><b>Đặt tour địa phương</b><small>Gửi yêu cầu trong 1 phút</small><em>→</em></button>
-              <button onClick={() => setActiveTab("saved")}><i>⌂</i><b>Khách sạn & homestay</b><small>Từ danh sách đã xác minh</small><em>→</em></button>
+              <button onClick={() => { setCategory("Nghỉ dưỡng & chữa lành"); setQuery(""); setActiveTab("explore"); showToast("Chọn một điểm nghỉ dưỡng rồi mở mục Chỗ nghỉ gần đây để đặt phòng"); }}><i>⌂</i><b>Khách sạn & homestay</b><small>Đặt qua app · đối tác trả hoa hồng</small><em>→</em></button>
               <button onClick={() => showToast("Khu OCOP sẽ kết nối gian hàng chính hãng")}><i>◇</i><b>Quà OCOP chính hãng</b><small>Chè, bưởi, thịt chua…</small><em>→</em></button>
             </article>
             <article className="partner-card">
@@ -1046,6 +1215,7 @@ export default function Home() {
                           {item.phone && <a href={`tel:${item.phone}`}>☎ {item.phone.replace(/(\d{4})(\d{3})(\d+)/, "$1 $2 $3")}</a>}
                           <a target="_blank" rel="noreferrer" href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${item.name} ${item.address}`)}`}>Xem bản đồ →</a>
                         </div>
+                        {detailMode === "stay" && <button className="stay-book-button" onClick={() => openBooking(selected, item)}>Đặt phòng qua app · từ {formatMoney(estimatedStayPrice(item))}/đêm →</button>}
                       </div>
                       <p className="nearby-card__distance"><b>{item.distance}</b><small>{item.travelTime}</small></p>
                     </article>
@@ -1084,6 +1254,50 @@ export default function Home() {
               </aside>
             </div>
           </section>
+        </div>
+      )}
+
+      {cartQuantity > 0 && !cartOpen && (
+        <button className="cart-dock" onClick={() => setCartOpen(true)}><span>Giỏ đặc sản <b>{cartQuantity}</b></span><strong>{formatMoney(cartSubtotal)} →</strong></button>
+      )}
+
+      {cartOpen && (
+        <div className="commerce-overlay" role="presentation" onMouseDown={(event) => { if (event.target === event.currentTarget) setCartOpen(false); }}>
+          <form className="commerce-drawer" onSubmit={submitDemoOrder}>
+            <div className="commerce-drawer__heading"><div><span>GIỎ ĐẶC SẢN</span><h2>Gửi đơn tới người bán</h2></div><button type="button" onClick={() => setCartOpen(false)} aria-label="Đóng giỏ hàng">×</button></div>
+            <p className="demo-commerce-note">Bản GitHub Pages hiện chỉ lưu đơn mẫu trên thiết bị. Khi có máy chủ, đơn mới được chuyển trực tiếp tới đối tác để xác nhận.</p>
+            <div className="cart-lines">
+              {cartDetails.map((line) => (
+                <article key={`${line.dishId}-${line.sellerId}`}>
+                  <img src={line.dish.image} alt="" />
+                  <div><b>{line.dish.name}</b><small>{line.seller.name}</small><span>{formatMoney(line.seller.price)}/{line.seller.unit}</span></div>
+                  <div className="quantity-picker"><button type="button" onClick={() => changeCartQuantity(line.dishId, line.sellerId, -1)}>−</button><b>{line.quantity}</b><button type="button" onClick={() => changeCartQuantity(line.dishId, line.sellerId, 1)}>＋</button></div>
+                </article>
+              ))}
+            </div>
+            <div className="commerce-total"><span>Tạm tính</span><b>{formatMoney(cartSubtotal)}</b><small>Hoa hồng dự kiến cho app: {formatMoney(Math.round(cartSubtotal * 0.05))} do người bán chi trả.</small></div>
+            <label className="commerce-field">Số điện thoại nhận xác nhận<input inputMode="tel" value={checkoutPhone} onChange={(event) => setCheckoutPhone(event.target.value)} placeholder="Ví dụ: 0912 345 678" /></label>
+            <button className="button button--dark button--full" type="submit">Lưu đơn đặt món mẫu →</button>
+          </form>
+        </div>
+      )}
+
+      {bookingOffer && (
+        <div className="commerce-overlay booking-overlay" role="presentation" onMouseDown={(event) => { if (event.target === event.currentTarget) setBookingOffer(null); }}>
+          <form className="booking-dialog" onSubmit={submitBookingRequest}>
+            <button className="booking-dialog__close" type="button" onClick={() => setBookingOffer(null)} aria-label="Đóng form đặt phòng">×</button>
+            <span>ĐẶT PHÒNG QUA ĐẤT TỔ</span><h2>{bookingOffer.stay.name}</h2><p>{bookingOffer.stay.address}</p>
+            <div className="booking-price"><span>Giá đối tác minh họa từ</span><b>{formatMoney(estimatedStayPrice(bookingOffer.stay))}<small>/đêm</small></b></div>
+            <div className="booking-fields">
+              <label>Ngày nhận phòng<input type="date" value={bookingCheckIn} onChange={(event) => setBookingCheckIn(event.target.value)} /></label>
+              <label>Ngày trả phòng<input type="date" min={bookingCheckIn} value={bookingCheckOut} onChange={(event) => setBookingCheckOut(event.target.value)} /></label>
+              <label>Số khách<select value={bookingGuests} onChange={(event) => setBookingGuests(Number(event.target.value))}>{[1, 2, 3, 4, 5, 6].map((count) => <option key={count} value={count}>{count} khách</option>)}</select></label>
+              <label>Điện thoại<input inputMode="tel" value={bookingPhone} onChange={(event) => setBookingPhone(event.target.value)} placeholder="Số để nơi nghỉ xác nhận" /></label>
+            </div>
+            <div className="booking-summary"><span>{bookingNights} đêm · {bookingGuests} khách</span><b>Dự kiến {formatMoney(estimatedStayPrice(bookingOffer.stay) * bookingNights)}</b><small>App dự kiến nhận 8% hoa hồng từ nơi nghỉ, không cộng thêm vào giá khách trả.</small></div>
+            <p className="demo-commerce-note">Đây là yêu cầu demo, chưa phải xác nhận phòng. Cần máy chủ và hợp đồng đối tác để đồng bộ phòng trống, giá thật và thanh toán.</p>
+            <button className="button button--dark button--full" type="submit">Lưu yêu cầu đặt phòng mẫu →</button>
+          </form>
         </div>
       )}
 

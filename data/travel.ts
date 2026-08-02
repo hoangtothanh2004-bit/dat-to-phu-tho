@@ -503,8 +503,65 @@ export type FoodRegion = {
   id: string;
   label: string;
   subtitle: string;
-  dishes: Array<{ name: string; description: string; price: string; season: string; placeId: string }>;
+  dishes: FoodDish[];
 };
+
+export type FoodSeller = {
+  id: string;
+  name: string;
+  address: string;
+  phone: string;
+  hours: string;
+  price: number;
+  unit: string;
+  rating: number;
+  reviewCount: number;
+  pickupNote: string;
+  verified: boolean;
+};
+
+export type FoodDish = {
+  id: string;
+  name: string;
+  description: string;
+  price: string;
+  season: string;
+  image: string;
+  sellers: FoodSeller[];
+};
+
+const dishImages = {
+  banhTai: "https://images.unsplash.com/photo-1626804475297-41608ea09aeb?auto=format&fit=crop&w=900&q=82",
+  bunTom: "https://images.unsplash.com/photo-1569718212165-3a8278d5f624?auto=format&fit=crop&w=900&q=82",
+  ga: "https://images.unsplash.com/photo-1532550907401-a500c9a57435?auto=format&fit=crop&w=900&q=82",
+  thitChua: "https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=900&q=82",
+  mamCo: "https://images.unsplash.com/photo-1547592180-85f173990554?auto=format&fit=crop&w=900&q=82",
+  xoi: "https://images.unsplash.com/photo-1603105037880-880cd4edfb0d?auto=format&fit=crop&w=900&q=82",
+  fruit: "https://images.unsplash.com/photo-1547514701-42782101795e?auto=format&fit=crop&w=900&q=82",
+  fish: "https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=900&q=82",
+};
+
+const demoSeller = (
+  id: string,
+  name: string,
+  address: string,
+  phone: string,
+  price: number,
+  unit: string,
+  hours = "Liên hệ trước khi đến",
+): FoodSeller => ({
+  id,
+  name,
+  address,
+  phone,
+  hours,
+  price,
+  unit,
+  rating: 4.7,
+  reviewCount: 0,
+  pickupNote: "Nhận tại cửa hàng; giao hàng sẽ mở khi kết nối đối tác vận chuyển",
+  verified: false,
+});
 
 export const foodRegions: FoodRegion[] = [
   {
@@ -512,9 +569,21 @@ export const foodRegions: FoodRegion[] = [
     label: "Việt Trì",
     subtitle: "Món cội nguồn và phố ẩm thực",
     dishes: [
-      { name: "Bánh tai Phú Thọ", description: "Vỏ bột gạo mềm, nhân thịt tiêu thơm, hợp ăn sáng.", price: "Từ 10.000đ", season: "Quanh năm", placeId: "van-lang" },
-      { name: "Bún tôm Đất Tổ", description: "Nước dùng thanh, tôm rang thơm và rau ghém tươi.", price: "Từ 40.000đ", season: "Quanh năm", placeId: "van-lang" },
-      { name: "Gà nhiều cựa", description: "Thịt săn chắc, hợp nướng, hấp hoặc ăn cùng xôi.", price: "Theo suất", season: "Nên đặt trước", placeId: "den-hung" },
+      {
+        id: "banh-tai-phu-tho", name: "Bánh tai Phú Thọ", description: "Vỏ bột gạo mềm, nhân thịt tiêu thơm, hợp ăn sáng.", price: "Từ 10.000đ", season: "Quanh năm", image: dishImages.banhTai,
+        sellers: [
+          demoSeller("bep-dat-to-banh-tai", "Bếp Đất Tổ — gian hàng mẫu", "Trung tâm Việt Trì, Phú Thọ", "02103888888", 10000, "chiếc", "06:00 – 10:00"),
+          demoSeller("cho-viet-tri-banh-tai", "Quầy đặc sản Việt Trì — gian hàng mẫu", "Khu chợ trung tâm Việt Trì, Phú Thọ", "02103999999", 12000, "chiếc", "06:30 – 11:00"),
+        ],
+      },
+      {
+        id: "bun-tom-dat-to", name: "Bún tôm Đất Tổ", description: "Nước dùng thanh, tôm rang thơm và rau ghém tươi.", price: "Từ 40.000đ", season: "Quanh năm", image: dishImages.bunTom,
+        sellers: [demoSeller("pho-am-thuc-bun-tom", "Bếp Việt Trì — gian hàng mẫu", "Phường Gia Cẩm, Việt Trì, Phú Thọ", "02103666666", 40000, "bát", "06:00 – 13:30")],
+      },
+      {
+        id: "ga-nhieu-cua", name: "Gà nhiều cựa", description: "Thịt săn chắc, hợp nướng, hấp hoặc ăn cùng xôi.", price: "Từ 320.000đ", season: "Nên đặt trước", image: dishImages.ga,
+        sellers: [demoSeller("ga-cua-viet-tri", "Bếp gà nhiều cựa — gian hàng mẫu", "Khu vực Đền Hùng, Việt Trì, Phú Thọ", "02103777777", 320000, "suất", "10:00 – 21:00")],
+      },
     ],
   },
   {
@@ -522,9 +591,9 @@ export const foodRegions: FoodRegion[] = [
     label: "Tân Sơn – Thanh Sơn",
     subtitle: "Ẩm thực Mường – Dao giữa núi rừng",
     dishes: [
-      { name: "Thịt chua Thanh Sơn", description: "Vị chua dịu từ thính rang, ăn cùng lá sung và tương ớt.", price: "Từ 45.000đ", season: "Quanh năm", placeId: "xuan-son" },
-      { name: "Mâm cỗ lá", description: "Nhiều món bản địa bày trên lá, thơm mắc khén và rau rừng.", price: "Theo mâm", season: "Đặt trước", placeId: "long-coc" },
-      { name: "Xôi ngũ sắc", description: "Nếp dẻo nhuộm màu tự nhiên từ lá rừng.", price: "Theo suất", season: "Lễ hội và đặt trước", placeId: "xuan-son" },
+      { id: "thit-chua-thanh-son", name: "Thịt chua Thanh Sơn", description: "Vị chua dịu từ thính rang, ăn cùng lá sung và tương ớt.", price: "Từ 45.000đ", season: "Quanh năm", image: dishImages.thitChua, sellers: [demoSeller("ocop-thanh-son", "Đặc sản Thanh Sơn — gian hàng mẫu", "Thị trấn Thanh Sơn, Phú Thọ", "02106333333", 45000, "hộp", "07:00 – 20:00")] },
+      { id: "mam-co-la", name: "Mâm cỗ lá", description: "Nhiều món bản địa bày trên lá, thơm mắc khén và rau rừng.", price: "Từ 650.000đ", season: "Đặt trước", image: dishImages.mamCo, sellers: [demoSeller("bep-ban-coi", "Bếp bản Cỏi — gian hàng mẫu", "Bản Cỏi, Xuân Sơn, Tân Sơn", "02106444444", 650000, "mâm 4 người", "Phục vụ theo lịch đặt")] },
+      { id: "xoi-ngu-sac", name: "Xôi ngũ sắc", description: "Nếp dẻo nhuộm màu tự nhiên từ lá rừng.", price: "Từ 35.000đ", season: "Lễ hội và đặt trước", image: dishImages.xoi, sellers: [demoSeller("xoi-xuan-son", "Bếp nhà sàn Xuân Sơn — gian hàng mẫu", "Bản Dù, Xuân Sơn, Tân Sơn", "02106555555", 35000, "suất", "06:00 – 19:00")] },
     ],
   },
   {
@@ -532,8 +601,8 @@ export const foodRegions: FoodRegion[] = [
     label: "Đoan Hùng",
     subtitle: "Sản vật ven sông Lô",
     dishes: [
-      { name: "Bưởi Đoan Hùng", description: "Múi mọng, vị ngọt mát và hương thơm nhẹ.", price: "Theo mùa", season: "Thu hoạch chính khoảng tháng 8 – 12", placeId: "hung-lo" },
-      { name: "Cá sông Lô", description: "Thịt chắc, thường nướng hoặc om chuối đậu.", price: "Theo món", season: "Quanh năm", placeId: "hung-lo" },
+      { id: "buoi-doan-hung", name: "Bưởi Đoan Hùng", description: "Múi mọng, vị ngọt mát và hương thơm nhẹ.", price: "Từ 35.000đ", season: "Thu hoạch chính khoảng tháng 8 – 12", image: dishImages.fruit, sellers: [demoSeller("vuon-buoi-doan-hung", "Vườn bưởi Đoan Hùng — gian hàng mẫu", "Huyện Đoan Hùng, Phú Thọ", "02106666666", 35000, "quả", "07:00 – 18:00")] },
+      { id: "ca-song-lo", name: "Cá sông Lô", description: "Thịt chắc, thường nướng hoặc om chuối đậu.", price: "Từ 180.000đ", season: "Quanh năm", image: dishImages.fish, sellers: [demoSeller("bep-song-lo", "Bếp ven sông Lô — gian hàng mẫu", "Thị trấn Đoan Hùng, Phú Thọ", "02106777777", 180000, "suất", "10:00 – 21:00")] },
     ],
   },
   {
@@ -541,8 +610,8 @@ export const foodRegions: FoodRegion[] = [
     label: "Hạ Hòa",
     subtitle: "Món quê quanh Đền Mẫu và hồ đầm",
     dishes: [
-      { name: "Cơm quê Hiền Lương", description: "Món mùa, rau vườn và gà bản theo mâm gia đình.", price: "Theo mâm", season: "Nên đặt trước", placeId: "mau-au-co" },
-      { name: "Cá suối nướng", description: "Cá nhỏ nướng giòn, chấm muối mắc khén.", price: "Theo suất", season: "Mùa khô", placeId: "ao-gioi" },
+      { id: "com-que-hien-luong", name: "Cơm quê Hiền Lương", description: "Món mùa, rau vườn và gà bản theo mâm gia đình.", price: "Từ 450.000đ", season: "Nên đặt trước", image: dishImages.mamCo, sellers: [demoSeller("bep-hien-luong", "Bếp quê Hiền Lương — gian hàng mẫu", "Hiền Lương, Hạ Hòa, Phú Thọ", "02106888888", 450000, "mâm 4 người", "Phục vụ theo lịch đặt")] },
+      { id: "ca-suoi-nuong", name: "Cá suối nướng", description: "Cá nhỏ nướng giòn, chấm muối mắc khén.", price: "Từ 120.000đ", season: "Mùa khô", image: dishImages.fish, sellers: [demoSeller("bep-ao-gioi", "Bếp Ao Giời — gian hàng mẫu", "Quân Khê, Hạ Hòa, Phú Thọ", "02106999999", 120000, "suất", "10:00 – 20:00")] },
     ],
   },
   {
@@ -550,8 +619,8 @@ export const foodRegions: FoodRegion[] = [
     label: "Thanh Thủy",
     subtitle: "Cá sông Đà và bữa ăn nghỉ dưỡng",
     dishes: [
-      { name: "Cá sông Đà", description: "Thịt ngọt chắc, hợp nướng, om hoặc lẩu.", price: "Theo cân", season: "Quanh năm", placeId: "thanh-thuy" },
-      { name: "Dê núi đá", description: "Thịt thơm, thường tái chanh, hấp hoặc nướng.", price: "Theo món", season: "Quanh năm", placeId: "lang-suong" },
+      { id: "ca-song-da", name: "Cá sông Đà", description: "Thịt ngọt chắc, hợp nướng, om hoặc lẩu.", price: "Từ 220.000đ", season: "Quanh năm", image: dishImages.fish, sellers: [demoSeller("bep-song-da", "Bếp sông Đà — gian hàng mẫu", "La Phù, Thanh Thủy, Phú Thọ", "02106111111", 220000, "suất", "10:00 – 21:30")] },
+      { id: "de-nui-da", name: "Dê núi đá", description: "Thịt thơm, thường tái chanh, hấp hoặc nướng.", price: "Từ 180.000đ", season: "Quanh năm", image: dishImages.ga, sellers: [demoSeller("de-thanh-thuy", "Bếp dê Thanh Thủy — gian hàng mẫu", "Trung tâm Thanh Thủy, Phú Thọ", "02106222222", 180000, "đĩa", "10:00 – 22:00")] },
     ],
   },
 ];

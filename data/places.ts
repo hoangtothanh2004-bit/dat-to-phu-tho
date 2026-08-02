@@ -1,4 +1,4 @@
-import { foodRegions, places, type Category } from "./travel";
+import { places, type Category } from "./travel";
 
 export type SearchablePlace = {
   id: string;
@@ -26,11 +26,6 @@ export const searchablePlaces: SearchablePlace[] = places.map((place) => ({
     place.bestTime,
     ...place.restaurants.flatMap((item) => [item.name, item.type, item.address, item.taste ?? ""]),
     ...place.stays.flatMap((item) => [item.name, item.type, item.address]),
-    ...foodRegions.flatMap((region) =>
-      region.dishes
-        .filter((dish) => dish.placeId === place.id)
-        .flatMap((dish) => [dish.name, dish.description, region.label]),
-    ),
   ].filter(Boolean),
   lat: place.lat,
   lng: place.lng,
