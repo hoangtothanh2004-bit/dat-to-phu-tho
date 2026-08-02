@@ -1,10 +1,30 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState, type ChangeEvent, type FormEvent } from "react";
+import {
+  categoryIcons,
+  categoryLabels,
+  foodRegions,
+  places,
+  type Category,
+  type Place,
+} from "@/data/travel";
 
 const isStaticDemo = process.env.NEXT_PUBLIC_STATIC_DEMO === "true";
 
 type Tab = "explore" | "trip" | "near" | "saved" | "profile";
+type AudioState = "idle" | "playing" | "paused";
+type UserReview = {
+  id: string;
+  placeId: string;
+  name: string;
+  rating: number;
+  comment: string;
+  photos: string[];
+  createdAt: string;
+};
+
+/* Dữ liệu mẫu ban đầu được giữ trong lịch sử Git; dữ liệu sử dụng thực tế nằm ở data/travel.ts.
 type Category = "Tất cả" | "Tâm linh" | "Thiên nhiên" | "Nghỉ dưỡng" | "Văn hóa";
 
 type NearbyItem = {
@@ -195,6 +215,8 @@ const places: Place[] = [
   },
 ];
 
+*/
+
 const services = [
   { icon: "✚", name: "Bệnh viện Đa khoa tỉnh", type: "Y tế", lat: 21.3215, lng: 105.3926, note: "Cấp cứu 24/7" },
   { icon: "⛽", name: "Trạm xăng Hùng Vương", type: "Trạm xăng", lat: 21.3341, lng: 105.3835, note: "Mở cửa cả ngày" },
@@ -203,13 +225,7 @@ const services = [
   { icon: "WC", name: "Nhà vệ sinh công cộng Văn Lang", type: "Tiện ích", lat: 21.307, lng: 105.4002, note: "Có lối tiếp cận" },
 ];
 
-const categories: { label: Category; icon: string }[] = [
-  { label: "Tất cả", icon: "⌘" },
-  { label: "Tâm linh", icon: "◆" },
-  { label: "Thiên nhiên", icon: "♧" },
-  { label: "Nghỉ dưỡng", icon: "◌" },
-  { label: "Văn hóa", icon: "◎" },
-];
+const categories = categoryLabels.map((label) => ({ label, icon: categoryIcons[label] }));
 
 const navigation: { id: Tab; label: string; icon: string }[] = [
   { id: "explore", label: "Khám phá", icon: "⌕" },
@@ -244,10 +260,25 @@ function normalizeSearch(value: string) {
     .replace(/đ/g, "d");
 }
 
+function estimateTravel(distance: number) {
+  if (distance < 1) return "3 – 5 phút";
+  const minutes = Math.max(5, Math.round((distance / (distance > 35 ? 48 : 35)) * 60 / 5) * 5);
+  if (minutes < 60) return `Khoảng ${minutes} phút`;
+  const hours = Math.floor(minutes / 60);
+  const remainder = minutes % 60;
+  return `Khoảng ${hours} giờ${remainder ? ` ${remainder} phút` : ""}`;
+}
+
+function isInSeason(place: Place, month = new Date().getMonth() + 1) {
+  return place.seasonMonths.includes(month);
+}
+
 export default function Home() {
   const [activeTab, setActiveTab] = useState<Tab>("explore");
   const [category, setCategory] = useState<Category>("Tất cả");
   const [query, setQuery] = useState("");
+  const [searchFocused, setSearchFocused] = useState(false);
+  const [visibleCount, setVisibleCount] = useState(8);
   const [serverResultIds, setServerResultIds] = useState<string[] | null>(null);
   const [isServerSearching, setIsServerSearching] = useState(false);
   const [favorites, setFavorites] = useState<string[]>([]);
@@ -263,16 +294,27 @@ export default function Home() {
   const [serviceFilter, setServiceFilter] = useState("Tất cả");
   const [weather, setWeather] = useState<{ temp: number; label: string }>({ temp: 29, label: "Nắng nhẹ" });
   const [toast, setToast] = useState("");
-  const [isListening, setIsListening] = useState(false);
+  const [foodRegionId, setFoodRegionId] = useState(foodRegions[0].id);
+  const [audioState, setAudioState] = useState<AudioState>("idle");
+  const [speechPlaceId, setSpeechPlaceId] = useState<string | null>(null);
+  const [userReviews, setUserReviews] = useState<UserReview[]>([]);
+  const [reviewName, setReviewName] = useState("Du khách");
+  const [reviewRating, setReviewRating] = useState(5);
+  const [reviewComment, setReviewComment] = useState("");
+  const [reviewPhotos, setReviewPhotos] = useState<string[]>([]);
   const toastTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const speechRef = useRef<SpeechSynthesisUtterance | null>(null);
 
   useEffect(() => {
     const favoritesTimer = window.setTimeout(() => {
       try {
         const stored = window.localStorage.getItem("datto-favorites");
         if (stored) setFavorites(JSON.parse(stored));
+        const storedReviews = window.localStorage.getItem("datto-reviews");
+        if (storedReviews) setUserReviews(JSON.parse(storedReviews));
       } catch {
         window.localStorage.removeItem("datto-favorites");
+        window.localStorage.removeItem("datto-reviews");
       }
     }, 0);
 
@@ -330,6 +372,10 @@ export default function Home() {
     return () => {
       document.removeEventListener("keydown", onKey);
       document.body.classList.remove("modal-open");
+      if ("speechSynthesis" in window) window.speechSynthesis.cancel();
+      speechRef.current = null;
+      setAudioState("idle");
+      setSpeechPlaceId(null);
     };
   }, [selected]);
 
@@ -367,17 +413,32 @@ export default function Home() {
   };
 
   const filteredPlaces = useMemo(() => {
-    const normalized = normalizeSearch(query.trim());
+    const terms = normalizeSearch(query.trim()).split(/\s+/).filter(Boolean);
     const serverMatches = serverResultIds ? new Set(serverResultIds) : null;
     const matchingPlaces = serverMatches
       ? places.filter((place) => serverMatches.has(place.id))
       : places
           .filter((place) => category === "Tất cả" || place.category === category)
-          .filter((place) =>
-            normalizeSearch([place.name, place.location, place.category, ...place.tags].join(" ")).includes(
-              normalized,
-            ),
-          );
+          .filter((place) => {
+            if (!terms.length) return true;
+            const regionalDishes = foodRegions.flatMap((region) =>
+              region.dishes.filter((dish) => dish.placeId === place.id).map((dish) => dish.name),
+            );
+            const haystack = normalizeSearch([
+              place.name,
+              place.shortName,
+              place.location,
+              place.district,
+              place.category,
+              place.season,
+              ...place.tags,
+              ...place.highlights,
+              ...regionalDishes,
+              ...place.restaurants.flatMap((item) => [item.name, item.type, item.address, item.taste ?? ""]),
+              ...place.stays.flatMap((item) => [item.name, item.type, item.address]),
+            ].join(" "));
+            return terms.every((term) => haystack.includes(term));
+          });
 
     return matchingPlaces
       .sort((a, b) => {
@@ -389,14 +450,62 @@ export default function Home() {
       });
   }, [category, position, query, serverResultIds]);
 
+  const searchSuggestions = useMemo(() => {
+    const needle = normalizeSearch(query.trim());
+    const placeSuggestions = places
+      .filter((place) => {
+        if (!needle) return Boolean(place.featured);
+        return normalizeSearch([place.name, place.shortName, place.district, place.category, ...place.tags].join(" ")).includes(needle);
+      })
+      .slice(0, 5)
+      .map((place) => ({
+        id: `place-${place.id}`,
+        label: place.shortName,
+        meta: `${place.category} · ${place.district}`,
+        icon: "⌖",
+        place,
+      }));
+
+    const dishSuggestions = foodRegions
+      .flatMap((region) => region.dishes.map((dish) => ({ dish, region })))
+      .filter(({ dish }) => needle && normalizeSearch(`${dish.name} ${dish.description}`).includes(needle))
+      .slice(0, 3)
+      .map(({ dish, region }) => ({
+        id: `dish-${region.id}-${dish.name}`,
+        label: dish.name,
+        meta: `Ẩm thực ${region.label} · ${dish.season}`,
+        icon: "♨",
+        place: places.find((place) => place.id === dish.placeId) ?? places[0],
+      }));
+
+    return [...placeSuggestions, ...dishSuggestions].slice(0, 6);
+  }, [query]);
+
+  const currentMonth = new Date().getMonth() + 1;
+  const planDistance = useMemo(
+    () => plan.slice(1).reduce((total, item, index) => total + haversine(plan[index].lat, plan[index].lng, item.lat, item.lng) * 1.22, 0),
+    [plan],
+  );
+
   const generatePlan = () => {
-    let pool = [...places];
-    if (interest.includes("Thiên nhiên")) pool.sort((a) => (a.category === "Thiên nhiên" ? -1 : 1));
-    if (interest.includes("Nghỉ dưỡng")) pool.sort((a) => (a.category === "Nghỉ dưỡng" ? -1 : 1));
-    if (interest.includes("Ẩm thực")) pool = [places[4], places[0], places[2], places[5], places[3], places[1]];
-    if (interest.includes("Văn hóa")) pool = [places[0], places[4], places[5], places[2], places[3], places[1]];
+    const pool = [...places];
+    const targetCategory = interest.includes("Thiên nhiên")
+      ? "Núi rừng & sinh thái"
+      : interest.includes("Nghỉ dưỡng")
+        ? "Nghỉ dưỡng & chữa lành"
+        : interest.includes("Văn hóa")
+          ? "Di sản & tâm linh"
+          : null;
+    pool.sort((a, b) => {
+      const categoryScore = (place: Place) => (targetCategory && place.category === targetCategory ? 3 : 0);
+      const seasonScore = (place: Place) => (isInSeason(place, currentMonth) ? 2 : 0);
+      return categoryScore(b) + seasonScore(b) - categoryScore(a) - seasonScore(a);
+    });
+    if (interest.includes("Ẩm thực")) {
+      pool.sort((a, b) => b.restaurants.length - a.restaurants.length || Number(isInSeason(b, currentMonth)) - Number(isInSeason(a, currentMonth)));
+    }
     setPlan(pool.slice(0, Math.min(days * 2, pool.length)));
-    showToast(`Đã tạo lịch trình ${days} ngày theo sở thích của bạn`);
+    showToast(`Đã ưu tiên điểm phù hợp tháng ${currentMonth} cho lịch trình ${days} ngày`);
   };
 
   const movePlanItem = (index: number, direction: -1 | 1) => {
@@ -418,27 +527,106 @@ export default function Home() {
     setDraggedId(null);
   };
 
-  const speakGuide = (place: Place) => {
+  const stopGuide = () => {
+    if ("speechSynthesis" in window) window.speechSynthesis.cancel();
+    speechRef.current = null;
+    setAudioState("idle");
+    setSpeechPlaceId(null);
+  };
+
+  const toggleGuide = (place: Place) => {
     if (!("speechSynthesis" in window)) {
       showToast("Thiết bị chưa hỗ trợ thuyết minh tự động");
       return;
     }
+
+    if (speechPlaceId === place.id && audioState === "playing") {
+      window.speechSynthesis.pause();
+      setAudioState("paused");
+      return;
+    }
+
+    if (speechPlaceId === place.id && audioState === "paused") {
+      window.speechSynthesis.resume();
+      setAudioState("playing");
+      return;
+    }
+
     window.speechSynthesis.cancel();
-    const utterance = new SpeechSynthesisUtterance(
-      `Bạn đang khám phá ${place.name}. ${place.description}. Một số trải nghiệm nổi bật gồm ${place.tags.join(", ")}.`,
-    );
+    const utterance = new SpeechSynthesisUtterance(place.audioScript);
+    const vietnameseVoices = window.speechSynthesis.getVoices().filter((voice) => voice.lang.toLowerCase().startsWith("vi"));
+    utterance.voice = vietnameseVoices.find((voice) => /google|microsoft|natural/i.test(voice.name)) ?? vietnameseVoices[0] ?? null;
     utterance.lang = "vi-VN";
-    utterance.rate = 0.92;
-    utterance.onstart = () => setIsListening(true);
-    utterance.onend = () => setIsListening(false);
-    utterance.onerror = () => setIsListening(false);
+    utterance.rate = 0.86;
+    utterance.pitch = 0.98;
+    utterance.volume = 1;
+    utterance.onstart = () => {
+      setSpeechPlaceId(place.id);
+      setAudioState("playing");
+    };
+    utterance.onend = stopGuide;
+    utterance.onerror = stopGuide;
+    speechRef.current = utterance;
+    setSpeechPlaceId(place.id);
     window.speechSynthesis.speak(utterance);
+  };
+
+  const selectSearchSuggestion = (place: Place, label: string) => {
+    setCategory("Tất cả");
+    setQuery(label);
+    setSearchFocused(false);
+    openPlace(place);
+  };
+
+  const handleReviewPhotos = async (event: ChangeEvent<HTMLInputElement>) => {
+    const files = Array.from(event.target.files ?? []).slice(0, 2);
+    if (!files.length) return;
+    if (files.some((file) => file.size > 800_000)) {
+      showToast("Mỗi ảnh demo cần nhỏ hơn 800 KB");
+      event.target.value = "";
+      return;
+    }
+    const encoded = await Promise.all(files.map((file) => new Promise<string>((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => resolve(String(reader.result));
+      reader.onerror = () => reject(reader.error);
+      reader.readAsDataURL(file);
+    })));
+    setReviewPhotos((current) => [...current, ...encoded].slice(0, 2));
+    event.target.value = "";
+  };
+
+  const submitReview = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    if (!selected || reviewComment.trim().length < 8) {
+      showToast("Hãy viết nhận xét ít nhất 8 ký tự");
+      return;
+    }
+    const review: UserReview = {
+      id: `${selected.id}-review-${userReviews.length + 1}`,
+      placeId: selected.id,
+      name: reviewName.trim() || "Du khách",
+      rating: reviewRating,
+      comment: reviewComment.trim(),
+      photos: reviewPhotos,
+      createdAt: new Date().toISOString(),
+    };
+    const next = [review, ...userReviews];
+    setUserReviews(next);
+    window.localStorage.setItem("datto-reviews", JSON.stringify(next));
+    setReviewComment("");
+    setReviewPhotos([]);
+    setReviewRating(5);
+    showToast("Đã đăng đánh giá trên thiết bị này");
   };
 
   const distanceFromUser = (place: Place) =>
     position ? formatDistance(haversine(position.lat, position.lng, place.lat, place.lng)) : null;
 
+  const selectedUserReviews = selected ? userReviews.filter((review) => review.placeId === selected.id) : [];
+
   const openPlace = (place: Place) => {
+    stopGuide();
     setDetailMode("eat");
     setSelected(place);
   };
@@ -460,8 +648,14 @@ export default function Home() {
       <button className="place-card__body" onClick={() => openPlace(place)}>
         <span className="eyebrow">{place.location}</span>
         <strong>{place.shortName}</strong>
-        <span className="place-card__meta"><b>★ {place.rating}</b> ({place.reviews.toLocaleString("vi-VN")}) · {place.hours.replace("Mở cửa ", "")}</span>
-        {!compact && <span className="place-card__footer">{place.tags.slice(0, 2).join(" · ")} <i>Khám phá →</i></span>}
+        <span className="place-card__meta"><b>★ {place.rating}</b> ({place.reviews.toLocaleString("vi-VN")}) · {place.bestTime}</span>
+        {!compact && <span className="place-card__highlight">✦ {place.highlights[0]}</span>}
+        {!compact && (
+          <span className="place-card__footer">
+            <span>{distanceFromUser(place) ? `${distanceFromUser(place)} · ${estimateTravel(haversine(position!.lat, position!.lng, place.lat, place.lng))}` : `${place.distanceFromVietTri} km từ Việt Trì · ${place.travelFromVietTri}`}</span>
+            <i>Khám phá →</i>
+          </span>
+        )}
       </button>
     </article>
   );
@@ -493,22 +687,42 @@ export default function Home() {
           <section className="hero">
             <div className="hero__content">
               <span className="kicker">VỀ MIỀN DI SẢN</span>
-              <h1>Phú Thọ<br /><em>đi đâu, ăn gì?</em></h1>
-              <p>Trợ lý bản địa giúp bạn lên đường tự tin — từ điểm đến, quán ngon đến chỗ nghỉ ngay gần bạn.</p>
-              <div className="search-box">
-                <span aria-hidden="true">⌕</span>
-                <input
-                  value={query}
-                  onChange={(event) => setQuery(event.target.value)}
-                  placeholder="Tìm Đền Hùng, món ngon, homestay…"
-                  aria-label="Tìm kiếm điểm đến"
-                />
-                <button onClick={locate} title="Dùng vị trí hiện tại" aria-label="Dùng vị trí hiện tại">⌖</button>
+              <h1>Đi đúng mùa.<br /><em>Chạm đúng Đất Tổ.</em></h1>
+              <p>Tìm đúng nơi, đúng giờ và đúng món ngon — cùng khoảng cách, thời gian di chuyển và kinh nghiệm cần biết trước khi lên đường.</p>
+              <div className="search-area">
+                <div className="search-box">
+                  <span aria-hidden="true">⌕</span>
+                  <input
+                    value={query}
+                    onChange={(event) => { setQuery(event.target.value); setSearchFocused(true); setVisibleCount(8); }}
+                    onFocus={() => setSearchFocused(true)}
+                    onKeyDown={(event) => {
+                      if (event.key === "Escape") setSearchFocused(false);
+                      if (event.key === "Enter" && searchSuggestions[0]) {
+                        selectSearchSuggestion(searchSuggestions[0].place, searchSuggestions[0].label);
+                      }
+                    }}
+                    placeholder="Thử “săn mây”, “thịt chua”, “Hạ Hòa”…"
+                    aria-label="Tìm kiếm điểm đến, món ăn hoặc chỗ nghỉ"
+                    aria-controls="search-suggestions"
+                  />
+                  <button onClick={() => { setSearchFocused(false); locate(); }} title="Dùng vị trí hiện tại" aria-label="Dùng vị trí hiện tại">⌖</button>
+                </div>
+                {searchFocused && searchSuggestions.length > 0 && (
+                  <div className="search-suggestions" id="search-suggestions" role="listbox">
+                    <span className="search-suggestions__label">{query ? "Gợi ý phù hợp" : "Được tìm nhiều"}</span>
+                    {searchSuggestions.map((item) => (
+                      <button key={item.id} role="option" aria-selected="false" onMouseDown={(event) => event.preventDefault()} onClick={() => selectSearchSuggestion(item.place, item.label)}>
+                        <span>{item.icon}</span><p><b>{item.label}</b><small>{item.meta}</small></p><i>↗</i>
+                      </button>
+                    ))}
+                  </div>
+                )}
               </div>
               <div className="hero__trust">
-                <span><b>40+</b> điểm đến chọn lọc</span>
-                <span><b>120+</b> dịch vụ địa phương</span>
-                <span><b>24/7</b> hỗ trợ hành trình</span>
+                <span><b>{places.length}</b> điểm đã biên tập</span>
+                <span><b>5</b> vùng ẩm thực</span>
+                <span><b>Mùa</b> gợi ý theo thời điểm</span>
               </div>
             </div>
             <div className="hero__visual">
@@ -529,7 +743,7 @@ export default function Home() {
             </div>
             <div className="category-row" role="group" aria-label="Lọc theo danh mục">
               {categories.map((item) => (
-                <button key={item.label} onClick={() => setCategory(item.label)} className={category === item.label ? "is-active" : ""}>
+                <button key={item.label} onClick={() => { setCategory(item.label); setSearchFocused(false); setVisibleCount(8); }} className={category === item.label ? "is-active" : ""}>
                   <span>{item.icon}</span>{item.label}
                 </button>
               ))}
@@ -546,9 +760,14 @@ export default function Home() {
               {!position && <button className="location-link" onClick={locate}>⌖ Bật định vị</button>}
             </div>
             {filteredPlaces.length ? (
-              <div className="place-grid">{filteredPlaces.slice(0, 4).map((place) => renderPlaceCard(place))}</div>
+              <>
+                <div className="place-grid">{filteredPlaces.slice(0, visibleCount).map((place) => renderPlaceCard(place))}</div>
+                {filteredPlaces.length > visibleCount && (
+                  <button className="load-more" onClick={() => setVisibleCount((count) => count + 4)}>Xem thêm {Math.min(4, filteredPlaces.length - visibleCount)} địa điểm →</button>
+                )}
+              </>
             ) : (
-              <div className="empty-state"><b>Chưa tìm thấy kết quả</b><span>Thử từ khóa “thiên nhiên”, “Đền Hùng” hoặc chọn danh mục khác.</span></div>
+              <div className="empty-state"><b>Chưa tìm thấy kết quả</b><span>Thử “săn mây”, “thịt chua”, “Hạ Hòa” hoặc chọn một gợi ý trong ô tìm kiếm.</span></div>
             )}
           </section>
 
@@ -564,31 +783,40 @@ export default function Home() {
               <div className="mini-itinerary__top"><span>LỊCH TRÌNH MẪU</span><b>2N1Đ</b></div>
               {[places[0], places[4], places[2], places[3]].map((place, index) => (
                 <div className="mini-stop" key={place.id}>
-                  <span className="mini-stop__time">{["07:30", "11:30", "06:00", "16:00"][index]}</span>
+                  <span className="mini-stop__time">{place.bestStart}</span>
                   <span className="mini-stop__dot" />
                   <img src={place.image} alt="" />
-                  <span><b>{place.shortName}</b><small>{index === 1 ? "Ăn trưa & Hát Xoan" : place.location}</small></span>
+                  <span><b>{place.shortName}</b><small>{index === 1 ? "Hát Xoan · cần đặt lịch" : place.bestTime}</small></span>
                 </div>
               ))}
-              <div className="route-summary"><span>⌁ 148 km tổng tuyến</span><span>≈ 3 giờ 40 phút di chuyển</span></div>
+              <div className="route-summary"><span>⌁ Gom theo cụm Việt Trì – Tân Sơn – Thanh Thủy</span><span>Giờ đến được điều chỉnh theo từng điểm</span></div>
             </div>
           </section>
 
           <section className="content-section local-guide">
-            <div>
-              <span className="kicker">ĂN NHƯ NGƯỜI BẢN ĐỊA</span>
-              <h2>Mỗi điểm đến,<br />một món phải thử.</h2>
+            <div className="local-guide__intro">
+              <span className="kicker">BẢN ĐỒ VỊ GIÁC</span>
+              <h2>Mỗi vùng đất,<br />một vị riêng.</h2>
+              <p>Ẩm thực được chia theo địa phương để bạn ghép món ăn vào đúng cung đường.</p>
             </div>
-            <div className="food-list">
-              {[
-                ["01", "Thịt chua Thanh Sơn", "Lá sung · Thính rang", "Từ 45.000đ"],
-                ["02", "Gà nhiều cựa Xuân Sơn", "Gà bản · Mắc khén", "Từ 320.000đ"],
-                ["03", "Bánh tai Phú Thọ", "Bột gạo · Nhân thịt", "Từ 10.000đ"],
-                ["04", "Bưởi Đoan Hùng", "OCOP · Quà mang về", "Theo mùa"],
-              ].map((food) => (
-                <button key={food[0]} onClick={() => { setQuery(food[1]); setActiveTab("explore"); }}>
-                  <span>{food[0]}</span><b>{food[1]}</b><small>{food[2]}</small><i>{food[3]} →</i>
-                </button>
+            <div className="food-browser">
+              <div className="food-region-tabs" role="tablist" aria-label="Chọn vùng ẩm thực">
+                {foodRegions.map((region) => (
+                  <button key={region.id} role="tab" aria-selected={foodRegionId === region.id} className={foodRegionId === region.id ? "is-active" : ""} onClick={() => setFoodRegionId(region.id)}>{region.label}</button>
+                ))}
+              </div>
+              {foodRegions.filter((region) => region.id === foodRegionId).map((region) => (
+                <div key={region.id} className="food-list">
+                  <p className="food-region-note">{region.subtitle}</p>
+                  {region.dishes.map((food, index) => (
+                    <button key={food.name} onClick={() => {
+                      const place = places.find((item) => item.id === food.placeId);
+                      if (place) selectSearchSuggestion(place, food.name);
+                    }}>
+                      <span>{String(index + 1).padStart(2, "0")}</span><b>{food.name}</b><small>{food.description}</small><i>{food.price}<em>{food.season}</em></i>
+                    </button>
+                  ))}
+                </div>
               ))}
             </div>
           </section>
@@ -630,7 +858,7 @@ export default function Home() {
                 <button onClick={() => showToast("Đã lưu lịch trình trên thiết bị")}>♡ Lưu chuyến đi</button>
               </div>
               <div className="plan-summary">
-                <span><b>{plan.length}</b> điểm dừng</span><span><b>{budget}</b> ngân sách</span><span><b>Hợp lý</b> nhịp di chuyển</span>
+                <span><b>{plan.length}</b> điểm dừng</span><span><b>{Math.round(planDistance)} km</b> giữa các điểm</span><span><b>{estimateTravel(planDistance)}</b> di chuyển</span>
               </div>
               <div className="plan-list">
                 {plan.map((place, index) => (
@@ -643,9 +871,9 @@ export default function Home() {
                     onDrop={() => dropPlanItem(place.id)}
                   >
                     <span className="drag-handle" title="Kéo để sắp xếp">⠿</span>
-                    <span className="plan-time">{index % 2 === 0 ? "08:00" : "14:00"}<small>NGÀY {Math.floor(index / 2) + 1}</small></span>
+                    <span className="plan-time">{place.bestStart}<small>NGÀY {Math.floor(index / 2) + 1}</small></span>
                     <img src={place.image} alt="" />
-                    <button className="plan-item__main" onClick={() => openPlace(place)}><b>{place.shortName}</b><small>{place.location} · {place.category}</small></button>
+                    <button className="plan-item__main" onClick={() => openPlace(place)}><b>{place.shortName}</b><small>{place.bestTime} · {isInSeason(place, currentMonth) ? `Hợp tháng ${currentMonth}` : "Cần kiểm tra mùa"}</small></button>
                     <div className="plan-reorder">
                       <button onClick={() => movePlanItem(index, -1)} disabled={index === 0} aria-label="Di chuyển lên">↑</button>
                       <button onClick={() => movePlanItem(index, 1)} disabled={index === plan.length - 1} aria-label="Di chuyển xuống">↓</button>
@@ -654,7 +882,7 @@ export default function Home() {
                 ))}
               </div>
               <div className="route-card">
-                <div><span>⌁</span><p><b>Tuyến đã được gom theo khu vực</b><small>Giảm quãng đường vòng và kết thúc ở điểm nghỉ dưỡng.</small></p></div>
+                <div><span>⌁</span><p><b>Tuyến ưu tiên mùa và khung giờ</b><small>Ước tính {Math.round(planDistance)} km · {estimateTravel(planDistance)} giữa các điểm, chưa gồm thời gian tham quan.</small></p></div>
                 <a href={`https://www.google.com/maps/dir/${plan.map((item) => `${item.lat},${item.lng}`).join("/")}`} target="_blank" rel="noreferrer">Mở tuyến đường →</a>
               </div>
             </div>
@@ -776,28 +1004,83 @@ export default function Home() {
             <div className="modal-hero">
               <img src={selected.image} alt={selected.name} />
               <span className="modal-hero__shade" />
-              <div><span>{selected.category} · {selected.location}</span><h2 id="place-modal-title">{selected.name}</h2><p><b>★ {selected.rating}</b> ({selected.reviews.toLocaleString("vi-VN")} đánh giá)</p></div>
+              <div><span>{selected.category} · {selected.location}</span><h2 id="place-modal-title">{selected.name}</h2><p><b>★ {selected.rating}</b> ({selected.reviews.toLocaleString("vi-VN")} đánh giá tham khảo) · Ảnh: {selected.imageCredit}</p></div>
               <button className={`heart-button modal-heart ${favorites.includes(selected.id) ? "is-saved" : ""}`} onClick={() => toggleFavorite(selected.id)}>{favorites.includes(selected.id) ? "♥" : "♡"}</button>
             </div>
             <div className="modal-body">
               <div className="modal-main">
-                <div className="fact-row"><span><small>GIỜ HOẠT ĐỘNG</small><b>{selected.hours}</b></span><span><small>CHI PHÍ THAM KHẢO</small><b>{selected.price}</b></span></div>
+                <div className={`season-callout ${isInSeason(selected, currentMonth) ? "is-good" : "is-caution"}`}>
+                  <span>{isInSeason(selected, currentMonth) ? "✓" : "!"}</span>
+                  <p><b>{isInSeason(selected, currentMonth) ? `Phù hợp để đi trong tháng ${currentMonth}` : `Tháng ${currentMonth} cần cân nhắc thời tiết`}</b><small>{selected.season}</small></p>
+                </div>
+                <div className="fact-row fact-row--rich">
+                  <span><small>KHUNG GIỜ ĐẸP</small><b>{selected.bestTime}</b></span>
+                  <span><small>THỜI LƯỢNG</small><b>{selected.duration}</b></span>
+                  <span><small>TỪ VIỆT TRÌ</small><b>{selected.distanceFromVietTri} km · {selected.travelFromVietTri}</b></span>
+                  <span><small>CHI PHÍ THAM KHẢO</small><b>{selected.price}</b></span>
+                </div>
                 <p className="modal-description">{selected.description}</p>
+                <div className="highlight-section"><span>ĐIỂM NỔI BẬT</span><div>{selected.highlights.map((highlight) => <p key={highlight}><i>✦</i>{highlight}</p>)}</div></div>
                 <div className="tag-row">{selected.tags.map((tag) => <span key={tag}>{tag}</span>)}</div>
+                {selected.warning && <div className="travel-warning"><b>Lưu ý trước khi đi</b><p>{selected.warning}</p></div>}
                 <div className="modal-actions">
                   <a className="button button--dark" target="_blank" rel="noreferrer" href={`https://www.google.com/maps/dir/?api=1&destination=${selected.lat},${selected.lng}`}>⌁ Chỉ đường</a>
-                  <button className="button button--outline" onClick={() => speakGuide(selected)}>{isListening ? "◼ Dừng sau đoạn này" : "▶ Nghe thuyết minh"}</button>
+                  <button className="button button--outline" onClick={() => toggleGuide(selected)}>
+                    {speechPlaceId === selected.id && audioState === "playing" ? "Ⅱ Tạm dừng" : speechPlaceId === selected.id && audioState === "paused" ? "▶ Nghe tiếp" : "▶ Nghe thuyết minh"}
+                  </button>
+                  {speechPlaceId === selected.id && audioState !== "idle" && <button className="audio-stop" onClick={stopGuide}>■ Dừng hẳn</button>}
                 </div>
                 <div className="nearby-section">
                   <div className="nearby-tabs"><button className={detailMode === "eat" ? "is-active" : ""} onClick={() => setDetailMode("eat")}>Ăn ngon gần đây</button><button className={detailMode === "stay" ? "is-active" : ""} onClick={() => setDetailMode("stay")}>Chỗ nghỉ gần đây</button></div>
                   {(detailMode === "eat" ? selected.restaurants : selected.stays).map((item) => (
-                    <article key={item.name}><span>{detailMode === "eat" ? "♨" : "⌂"}</span><div><b>{item.name}</b><small>{item.type} · {item.note}</small></div><p>{item.distance}<a target="_blank" rel="noreferrer" href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${item.name} Phú Thọ`)}`}>Xem bản đồ →</a></p></article>
+                    <article className="nearby-card" key={item.name}>
+                      <img src={item.image} alt={`Ảnh minh họa ${item.name}`} />
+                      <div className="nearby-card__content">
+                        <span>{item.type}{item.rating ? ` · ★ ${item.rating} (${item.reviewCount ?? 0})` : ""}</span>
+                        <b>{item.name}</b>
+                        <small>{item.note}</small>
+                        {item.taste && <p><strong>Hương vị:</strong> {item.taste}</p>}
+                        <p><strong>Địa chỉ:</strong> {item.address}</p>
+                        <p><strong>Giờ bán:</strong> {item.hours}</p>
+                        <div className="nearby-card__links">
+                          {item.phone && <a href={`tel:${item.phone}`}>☎ {item.phone.replace(/(\d{4})(\d{3})(\d+)/, "$1 $2 $3")}</a>}
+                          <a target="_blank" rel="noreferrer" href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${item.name} ${item.address}`)}`}>Xem bản đồ →</a>
+                        </div>
+                      </div>
+                      <p className="nearby-card__distance"><b>{item.distance}</b><small>{item.travelTime}</small></p>
+                    </article>
                   ))}
                 </div>
+
+                <section className="community-reviews">
+                  <div className="community-reviews__heading"><span>GÓC NHÌN DU KHÁCH</span><h3>Ảnh thật, nhận xét thật trên thiết bị của bạn.</h3><p>Bản demo lưu nội dung trong trình duyệt; khi có máy chủ, đánh giá sẽ được kiểm duyệt và chia sẻ công khai.</p></div>
+                  <form className="review-form" onSubmit={submitReview}>
+                    <div className="review-form__row">
+                      <label>Tên hiển thị<input value={reviewName} maxLength={30} onChange={(event) => setReviewName(event.target.value)} /></label>
+                      <label>Chấm điểm<span className="rating-picker">{[1, 2, 3, 4, 5].map((rating) => <button type="button" key={rating} className={rating <= reviewRating ? "is-active" : ""} onClick={() => setReviewRating(rating)}>★</button>)}</span></label>
+                    </div>
+                    <label>Chia sẻ trải nghiệm<textarea value={reviewComment} maxLength={500} onChange={(event) => setReviewComment(event.target.value)} placeholder="Bạn thích điều gì? Thời điểm nào đẹp? Có lưu ý gì cho người đi sau?" /></label>
+                    <div className="review-upload">
+                      <label>＋ Thêm tối đa 2 ảnh<input type="file" accept="image/jpeg,image/png,image/webp" multiple onChange={handleReviewPhotos} /></label>
+                      <span>Mỗi ảnh dưới 800 KB</span>
+                    </div>
+                    {reviewPhotos.length > 0 && <div className="review-photo-preview">{reviewPhotos.map((photo, index) => <button type="button" key={`${photo.slice(0, 32)}-${index}`} onClick={() => setReviewPhotos((current) => current.filter((_, itemIndex) => itemIndex !== index))}><img src={photo} alt={`Ảnh đánh giá ${index + 1}`} /><span>×</span></button>)}</div>}
+                    <button className="button button--dark" type="submit">Đăng đánh giá</button>
+                  </form>
+                  <div className="review-list">
+                    {selectedUserReviews.length ? selectedUserReviews.map((review) => (
+                      <article key={review.id}>
+                        <div><span className="review-avatar">{review.name.slice(0, 1).toLocaleUpperCase("vi")}</span><p><b>{review.name}</b><small>{new Date(review.createdAt).toLocaleDateString("vi-VN")} · {"★".repeat(review.rating)}{"☆".repeat(5 - review.rating)}</small></p></div>
+                        <p>{review.comment}</p>
+                        {review.photos.length > 0 && <div className="review-photos">{review.photos.map((photo, index) => <img key={`${review.id}-${index}`} src={photo} alt={`Ảnh của ${review.name}`} />)}</div>}
+                      </article>
+                    )) : <div className="review-empty">Chưa có đánh giá từ người dùng demo. Hãy là người đầu tiên chia sẻ trải nghiệm.</div>}
+                  </div>
+                </section>
               </div>
               <aside className="modal-map">
                 <iframe title={`Bản đồ ${selected.name}`} src={`https://www.openstreetmap.org/export/embed.html?bbox=${selected.lng - 0.035}%2C${selected.lat - 0.025}%2C${selected.lng + 0.035}%2C${selected.lat + 0.025}&layer=mapnik&marker=${selected.lat}%2C${selected.lng}`} loading="lazy" />
-                <div><span>⌖</span><p><b>{selected.location}</b><small>{distanceFromUser(selected) ? `${distanceFromUser(selected)} từ vị trí của bạn` : "Bật GPS để xem khoảng cách"}</small></p></div>
+                <div><span>⌖</span><p><b>{selected.location}</b><small>{position ? `${formatDistance(haversine(position.lat, position.lng, selected.lat, selected.lng))} · ${estimateTravel(haversine(position.lat, position.lng, selected.lat, selected.lng))} từ bạn` : `${selected.distanceFromVietTri} km · ${selected.travelFromVietTri} từ Việt Trì`}</small></p></div>
               </aside>
             </div>
           </section>

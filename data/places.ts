@@ -1,78 +1,42 @@
+import { foodRegions, places, type Category } from "./travel";
+
 export type SearchablePlace = {
   id: string;
   name: string;
   shortName: string;
-  category: "Tâm linh" | "Thiên nhiên" | "Nghỉ dưỡng" | "Văn hóa";
+  category: Exclude<Category, "Tất cả">;
   location: string;
+  district: string;
   tags: string[];
   lat: number;
   lng: number;
 };
 
-export const searchablePlaces: SearchablePlace[] = [
-  {
-    id: "den-hung",
-    name: "Khu di tích lịch sử Đền Hùng",
-    shortName: "Đền Hùng",
-    category: "Tâm linh",
-    location: "Hy Cương, Việt Trì, Phú Thọ",
-    tags: ["di sản", "lịch sử", "tín ngưỡng", "Hát Xoan", "gia đình"],
-    lat: 21.366,
-    lng: 105.3246,
-  },
-  {
-    id: "xuan-son",
-    name: "Vườn quốc gia Xuân Sơn",
-    shortName: "Xuân Sơn",
-    category: "Thiên nhiên",
-    location: "Xuân Sơn, Tân Sơn, Phú Thọ",
-    tags: ["trekking", "Bản Cỏi", "sinh thái", "hang động", "Dao", "Mường"],
-    lat: 21.1506,
-    lng: 104.9327,
-  },
-  {
-    id: "long-coc",
-    name: "Đồi chè Long Cốc",
-    shortName: "Long Cốc",
-    category: "Thiên nhiên",
-    location: "Long Cốc, Tân Sơn, Phú Thọ",
-    tags: ["săn mây", "chụp ảnh", "đồi chè", "bình minh"],
-    lat: 21.1804,
-    lng: 105.0708,
-  },
-  {
-    id: "thanh-thuy",
-    name: "Khoáng nóng Thanh Thủy",
-    shortName: "Thanh Thủy",
-    category: "Nghỉ dưỡng",
-    location: "La Phù, Thanh Thủy, Phú Thọ",
-    tags: ["khoáng nóng", "gia đình", "spa", "resort", "sông Đà"],
-    lat: 21.1511,
-    lng: 105.2971,
-  },
-  {
-    id: "hung-lo",
-    name: "Đình cổ Hùng Lô",
-    shortName: "Hùng Lô",
-    category: "Văn hóa",
-    location: "Hùng Lô, Việt Trì, Phú Thọ",
-    tags: ["Hát Xoan", "làng cổ", "mì gạo", "bánh chưng", "làng nghề"],
-    lat: 21.3712,
-    lng: 105.4077,
-  },
-  {
-    id: "van-lang",
-    name: "Công viên Văn Lang",
-    shortName: "Văn Lang",
-    category: "Văn hóa",
-    location: "Trung tâm Việt Trì, Phú Thọ",
-    tags: ["hoàng hôn", "đi bộ", "buổi tối", "hồ", "ẩm thực"],
-    lat: 21.3066,
-    lng: 105.3998,
-  },
-];
+export const searchablePlaces: SearchablePlace[] = places.map((place) => ({
+  id: place.id,
+  name: place.name,
+  shortName: place.shortName,
+  category: place.category,
+  location: place.location,
+  district: place.district,
+  tags: [
+    ...place.tags,
+    ...place.highlights,
+    place.season,
+    place.bestTime,
+    ...place.restaurants.flatMap((item) => [item.name, item.type, item.address, item.taste ?? ""]),
+    ...place.stays.flatMap((item) => [item.name, item.type, item.address]),
+    ...foodRegions.flatMap((region) =>
+      region.dishes
+        .filter((dish) => dish.placeId === place.id)
+        .flatMap((dish) => [dish.name, dish.description, region.label]),
+    ),
+  ].filter(Boolean),
+  lat: place.lat,
+  lng: place.lng,
+}));
 
-function normalizeVietnamese(value: string) {
+export function normalizeVietnamese(value: string) {
   return value
     .normalize("NFD")
     .replace(/[\u0300-\u036f]/g, "")
@@ -83,7 +47,7 @@ function normalizeVietnamese(value: string) {
 }
 
 export function searchPlaces(query: string, category: string) {
-  const normalizedQuery = normalizeVietnamese(query);
+  const normalizedTerms = normalizeVietnamese(query).split(/\s+/).filter(Boolean);
   const normalizedCategory = normalizeVietnamese(category);
 
   return searchablePlaces.filter((place) => {
@@ -92,11 +56,11 @@ export function searchPlaces(query: string, category: string) {
       normalizedCategory === "tat ca" ||
       normalizeVietnamese(place.category) === normalizedCategory;
     if (!matchesCategory) return false;
-    if (!normalizedQuery) return true;
+    if (!normalizedTerms.length) return true;
 
     const haystack = normalizeVietnamese(
-      [place.name, place.shortName, place.category, place.location, ...place.tags].join(" "),
+      [place.name, place.shortName, place.category, place.location, place.district, ...place.tags].join(" "),
     );
-    return normalizedQuery.split(/\s+/).every((term) => haystack.includes(term));
+    return normalizedTerms.every((term) => haystack.includes(term));
   });
 }
