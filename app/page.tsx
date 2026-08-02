@@ -12,6 +12,7 @@ import {
   type NearbyItem,
   type Place,
 } from "@/data/travel";
+import { culturalEvents } from "@/data/events";
 
 const isStaticDemo = process.env.NEXT_PUBLIC_STATIC_DEMO === "true";
 
@@ -36,6 +37,21 @@ type CartLine = {
 type BookingOffer = {
   place: Place;
   stay: NearbyItem;
+};
+
+type SeasonFilter = "Tất cả" | "Đang hợp mùa" | "Mùa xuân" | "Mùa hè" | "Mùa thu" | "Mùa đông";
+
+type NearItem = {
+  id: string;
+  name: string;
+  type: string;
+  icon: string;
+  lat: number;
+  lng: number;
+  note: string;
+  address?: string;
+  phone?: string;
+  place?: Place;
 };
 
 type SearchSuggestion =
@@ -245,6 +261,14 @@ const services = [
 
 const categories = categoryLabels.map((label) => ({ label, icon: categoryIcons[label] }));
 const foodCatalog = foodRegions.flatMap((region) => region.dishes.map((dish) => ({ dish, region })));
+const seasonFilters: SeasonFilter[] = ["Tất cả", "Đang hợp mùa", "Mùa xuân", "Mùa hè", "Mùa thu", "Mùa đông"];
+const seasonMonths: Record<Exclude<SeasonFilter, "Tất cả" | "Đang hợp mùa">, number[]> = {
+  "Mùa xuân": [1, 2, 3, 4],
+  "Mùa hè": [5, 6, 7],
+  "Mùa thu": [8, 9, 10],
+  "Mùa đông": [11, 12, 1],
+};
+const mapBounds = { minLat: 21.08, maxLat: 21.58, minLng: 104.88, maxLng: 105.48 };
 
 const navigation: { id: Tab; label: string; icon: string }[] = [
   { id: "explore", label: "Khám phá", icon: "⌕" },
@@ -283,6 +307,21 @@ function estimatedStayPrice(stay: NearbyItem) {
   return 450_000;
 }
 
+function mapPosition(lat: number, lng: number, key = "") {
+  const left = ((lng - mapBounds.minLng) / (mapBounds.maxLng - mapBounds.minLng)) * 100;
+  const top = (1 - (lat - mapBounds.minLat) / (mapBounds.maxLat - mapBounds.minLat)) * 100;
+  const hash = [...key].reduce((total, character) => total + character.charCodeAt(0), 0);
+  const slot = hash % 24;
+  const angle = (slot % 8) * (Math.PI / 4);
+  const radius = key ? 44 + Math.floor(slot / 8) * 36 : 0;
+  return {
+    left: `${Math.min(96, Math.max(4, left))}%`,
+    top: `${Math.min(94, Math.max(6, top))}%`,
+    marginLeft: `${Math.cos(angle) * radius}px`,
+    marginTop: `${Math.sin(angle) * radius}px`,
+  };
+}
+
 function normalizeSearch(value: string) {
   return value
     .toLocaleLowerCase("vi")
@@ -307,6 +346,7 @@ function isInSeason(place: Place, month = new Date().getMonth() + 1) {
 export default function Home() {
   const [activeTab, setActiveTab] = useState<Tab>("explore");
   const [category, setCategory] = useState<Category>("Tất cả");
+  const [seasonFilter, setSeasonFilter] = useState<SeasonFilter>("Tất cả");
   const [query, setQuery] = useState("");
   const [searchFocused, setSearchFocused] = useState(false);
   const [visibleCount, setVisibleCount] = useState(8);
@@ -316,6 +356,8 @@ export default function Home() {
   const [selected, setSelected] = useState<Place | null>(null);
   const [detailMode, setDetailMode] = useState<"eat" | "stay">("eat");
   const [days, setDays] = useState(2);
+  const [travelers, setTravelers] = useState(2);
+  const [transport, setTransport] = useState("Ô tô riêng");
   const [budget, setBudget] = useState("2–4 triệu");
   const [interest, setInterest] = useState("Văn hóa & cội nguồn");
   const [plan, setPlan] = useState<Place[]>([places[0], places[4], places[2], places[3]]);
@@ -323,6 +365,7 @@ export default function Home() {
   const [position, setPosition] = useState<{ lat: number; lng: number } | null>(null);
   const [locationMessage, setLocationMessage] = useState("Chưa bật định vị");
   const [serviceFilter, setServiceFilter] = useState("Tất cả");
+  const [selectedNearItemId, setSelectedNearItemId] = useState("place-den-hung");
   const [weather, setWeather] = useState<{ temp: number; label: string }>({ temp: 29, label: "Nắng nhẹ" });
   const [toast, setToast] = useState("");
   const [foodRegionId, setFoodRegionId] = useState(foodRegions[0].id);
@@ -455,6 +498,8 @@ export default function Home() {
     );
   };
 
+  const currentMonth = new Date().getMonth() + 1;
+
   const matchingFoodDishes = useMemo(() => {
     const terms = normalizeSearch(query.trim()).split(/\s+/).filter(Boolean);
     if (!terms.length) return [];
@@ -495,7 +540,15 @@ export default function Home() {
             return terms.every((term) => haystack.includes(term));
           });
 
+    const matchesSeason = (place: Place) => {
+      if (seasonFilter === "Tất cả") return true;
+      if (seasonFilter === "Đang hợp mùa") return isInSeason(place, currentMonth);
+      return seasonMonths[seasonFilter].some((month) => place.seasonMonths.includes(month));
+    };
+
     return matchingPlaces
+      .filter(matchesSeason)
+      .slice()
       .sort((a, b) => {
         if (!position) return Number(Boolean(b.featured)) - Number(Boolean(a.featured));
         return (
@@ -503,7 +556,7 @@ export default function Home() {
           haversine(position.lat, position.lng, b.lat, b.lng)
         );
       });
-  }, [category, position, query, serverResultIds]);
+  }, [category, currentMonth, position, query, seasonFilter, serverResultIds]);
 
   const searchSuggestions = useMemo(() => {
     const needle = normalizeSearch(query.trim());
@@ -550,15 +603,47 @@ export default function Home() {
     return Math.max(1, Math.ceil(milliseconds / 86_400_000));
   }, [bookingCheckIn, bookingCheckOut]);
 
-  const currentMonth = new Date().getMonth() + 1;
   const planDistance = useMemo(
     () => plan.slice(1).reduce((total, item, index) => total + haversine(plan[index].lat, plan[index].lng, item.lat, item.lng) * 1.22, 0),
     [plan],
   );
+  const transportRate = transport === "Xe máy" ? 2_500 : transport === "Taxi / xe hợp đồng" ? 12_000 : 7_000;
+  const planTransportCost = Math.round((planDistance * transportRate) / 10_000) * 10_000;
+  const planMealCost = days * travelers * 220_000;
+  const planStayCost = Math.max(0, days - 1) * Math.ceil(travelers / 2) * (interest.includes("Nghỉ dưỡng") ? 1_100_000 : 650_000);
+  const planTicketCost = plan.length * travelers * 40_000;
+  const estimatedPlanCost = planTransportCost + planMealCost + planStayCost + planTicketCost;
+  const availablePlanPlaces = places.filter((place) => !plan.some((item) => item.id === place.id));
+
+  const nearItems = useMemo<NearItem[]>(() => {
+    const destinationItems = places.map((place) => ({
+      id: `place-${place.id}`, name: place.shortName, type: "Điểm đến", icon: "⌖", lat: place.lat, lng: place.lng,
+      note: `${place.bestTime} · ${place.category}`, address: place.location, place,
+    }));
+    const serviceItems = services.map((item, index) => ({ ...item, id: `service-${index}` }));
+    const restaurantItems = places.flatMap((place, placeIndex) => place.restaurants.slice(0, 2).map((item, itemIndex) => ({
+      id: `eat-${place.id}-${itemIndex}`, name: item.name, type: "Ăn uống", icon: "♨",
+      lat: place.lat + (itemIndex + 1) * 0.0015, lng: place.lng + ((placeIndex % 2 ? -1 : 1) * (itemIndex + 1) * 0.0018),
+      note: `${item.note} · ${item.hours}`, address: item.address, phone: item.phone, place,
+    })));
+    const stayItems = places.flatMap((place, placeIndex) => place.stays.slice(0, 2).map((item, itemIndex) => ({
+      id: `stay-${place.id}-${itemIndex}`, name: item.name, type: "Lưu trú", icon: "⌂",
+      lat: place.lat - (itemIndex + 1) * 0.0014, lng: place.lng + ((placeIndex % 2 ? 1 : -1) * (itemIndex + 1) * 0.0016),
+      note: `${item.note} · ${item.hours}`, address: item.address, phone: item.phone, place,
+    })));
+    return [...destinationItems, ...restaurantItems, ...stayItems, ...serviceItems];
+  }, []);
+  const filteredNearItems = useMemo(() => nearItems
+    .filter((item) => serviceFilter === "Tất cả" || item.type === serviceFilter)
+    .slice()
+    .sort((a, b) => position
+      ? haversine(position.lat, position.lng, a.lat, a.lng) - haversine(position.lat, position.lng, b.lat, b.lng)
+      : a.name.localeCompare(b.name, "vi")), [nearItems, position, serviceFilter]);
+  const selectedNearItem = filteredNearItems.find((item) => item.id === selectedNearItemId) ?? filteredNearItems[0] ?? null;
 
   const generatePlan = () => {
     const pool = [...places];
-    const targetCategory = interest.includes("Thiên nhiên")
+    const targetCategory = interest.includes("Thiên nhiên") || interest.includes("Phượt")
       ? "Núi rừng & sinh thái"
       : interest.includes("Nghỉ dưỡng")
         ? "Nghỉ dưỡng & chữa lành"
@@ -573,6 +658,14 @@ export default function Home() {
     if (interest.includes("Ẩm thực")) {
       pool.sort((a, b) => b.restaurants.length - a.restaurants.length || Number(isInSeason(b, currentMonth)) - Number(isInSeason(a, currentMonth)));
     }
+    if (interest.includes("Gia đình")) {
+      const familyOrder = ["van-lang", "thanh-thuy", "dao-ngoc-xanh", "den-hung"];
+      const familyScore = (place: Place) => {
+        const index = familyOrder.indexOf(place.id);
+        return index === -1 ? 999 : index;
+      };
+      pool.sort((a, b) => familyScore(a) - familyScore(b));
+    }
     setPlan(pool.slice(0, Math.min(days * 2, pool.length)));
     showToast(`Đã ưu tiên điểm phù hợp tháng ${currentMonth} cho lịch trình ${days} ngày`);
   };
@@ -583,6 +676,35 @@ export default function Home() {
     const next = [...plan];
     [next[index], next[target]] = [next[target], next[index]];
     setPlan(next);
+  };
+
+  const removePlanItem = (id: string) => {
+    setPlan((current) => current.filter((item) => item.id !== id));
+    showToast("Đã bỏ điểm khỏi lịch trình");
+  };
+
+  const addPlanItem = (place: Place) => {
+    setPlan((current) => [...current, place]);
+    showToast(`Đã thêm ${place.shortName} vào lịch trình`);
+  };
+
+  const savePlan = () => {
+    window.localStorage.setItem("datto-itinerary", JSON.stringify({ days, travelers, transport, interest, placeIds: plan.map((item) => item.id) }));
+    showToast("Đã lưu lịch trình trên thiết bị");
+  };
+
+  const sharePlan = async () => {
+    const text = [`Lịch trình ${days} ngày tại Phú Thọ cho ${travelers} khách`, ...plan.map((place, index) => `${index + 1}. ${place.shortName} — ${place.bestTime}`), `Ước tính ${Math.round(planDistance)} km · ${formatMoney(estimatedPlanCost)}`].join("\n");
+    try {
+      if (navigator.share) {
+        await navigator.share({ title: "Lịch trình Đất Tổ", text, url: window.location.href });
+        return;
+      }
+      await navigator.clipboard.writeText(`${text}\n${window.location.href}`);
+      showToast("Đã sao chép lịch trình để gửi qua Zalo/Facebook");
+    } catch {
+      showToast("Đã hủy chia sẻ lịch trình");
+    }
   };
 
   const dropPlanItem = (targetId: string) => {
@@ -791,10 +913,11 @@ export default function Home() {
         {!compact && (
           <span className="place-card__footer">
             <span>{distanceFromUser(place) ? `${distanceFromUser(place)} · ${estimateTravel(haversine(position!.lat, position!.lng, place.lat, place.lng))}` : `${place.distanceFromVietTri} km từ Việt Trì · ${place.travelFromVietTri}`}</span>
-            <i>Khám phá →</i>
+            <i>Chi tiết →</i>
           </span>
         )}
       </button>
+      {!compact && <a className="place-card__quick-map" target="_blank" rel="noreferrer" href={`https://www.google.com/maps/dir/?api=1&destination=${place.lat},${place.lng}`} aria-label={`Chỉ đường tới ${place.name}`}>⌁ Chỉ đường</a>}
     </article>
   );
 
@@ -906,7 +1029,7 @@ export default function Home() {
           <section className="content-section category-section">
             <div className="section-heading section-heading--inline">
               <div><span className="section-number">01</span><h2>Khám phá theo cách của&nbsp;bạn</h2></div>
-              <button className="text-link" onClick={() => { setCategory("Tất cả"); setQuery(""); }}>Xem tất cả →</button>
+              <button className="text-link" onClick={() => { setCategory("Tất cả"); setSeasonFilter("Tất cả"); setQuery(""); }}>Xem tất cả →</button>
             </div>
             <div className="category-row" role="group" aria-label="Lọc theo danh mục">
               {categories.map((item) => (
@@ -914,6 +1037,10 @@ export default function Home() {
                   <span>{item.icon}</span>{item.label}
                 </button>
               ))}
+            </div>
+            <div className="season-filter" role="group" aria-label="Lọc địa điểm theo mùa">
+              <span>ĐI THEO MÙA</span>
+              {seasonFilters.map((item) => <button key={item} className={seasonFilter === item ? "is-active" : ""} onClick={() => { setSeasonFilter(item); setVisibleCount(8); }}>{item === "Đang hợp mùa" ? `Hợp tháng ${currentMonth}` : item}</button>)}
             </div>
           </section>
 
@@ -1013,9 +1140,19 @@ export default function Home() {
                   <option>Dưới 2 triệu</option><option>2–4 triệu</option><option>4–7 triệu</option><option>Trên 7 triệu</option>
                 </select>
               </label>
+              <label>Số người
+                <select value={travelers} onChange={(event) => setTravelers(Number(event.target.value))}>
+                  {[1, 2, 3, 4, 5, 6, 8, 10].map((count) => <option key={count} value={count}>{count} người</option>)}
+                </select>
+              </label>
+              <label>Phương tiện
+                <select value={transport} onChange={(event) => setTransport(event.target.value)}>
+                  <option>Ô tô riêng</option><option>Xe máy</option><option>Taxi / xe hợp đồng</option>
+                </select>
+              </label>
               <label>Sở thích chính
                 <select value={interest} onChange={(event) => setInterest(event.target.value)}>
-                  <option>Văn hóa & cội nguồn</option><option>Thiên nhiên & trekking</option><option>Nghỉ dưỡng gia đình</option><option>Ẩm thực bản địa</option>
+                  <option>Văn hóa & cội nguồn</option><option>Gia đình có trẻ nhỏ/người cao tuổi</option><option>Phượt & khám phá</option><option>Nghỉ dưỡng khoáng nóng</option><option>Ẩm thực bản địa</option>
                 </select>
               </label>
               <button className="button button--dark button--full" onClick={generatePlan}>Tạo lịch trình gợi ý ✦</button>
@@ -1024,10 +1161,10 @@ export default function Home() {
             <div className="plan-panel">
               <div className="plan-panel__header">
                 <div><span>LỊCH TRÌNH CỦA BẠN</span><h2>{days} ngày · {interest.split(" & ")[0]}</h2></div>
-                <button onClick={() => showToast("Đã lưu lịch trình trên thiết bị")}>♡ Lưu chuyến đi</button>
+                <div className="plan-header-actions"><button onClick={savePlan}>♡ Lưu</button><button onClick={sharePlan}>↗ Chia sẻ</button><button onClick={() => window.print()}>▤ Lưu PDF</button></div>
               </div>
               <div className="plan-summary">
-                <span><b>{plan.length}</b> điểm dừng</span><span><b>{Math.round(planDistance)} km</b> giữa các điểm</span><span><b>{estimateTravel(planDistance)}</b> di chuyển</span>
+                <span><b>{plan.length}</b> điểm dừng</span><span><b>{Math.round(planDistance)} km</b> giữa các điểm</span><span><b>{estimateTravel(planDistance)}</b> di chuyển</span><span><b>{formatMoney(estimatedPlanCost)}</b> cho {travelers} người</span>
               </div>
               <div className="plan-list">
                 {plan.map((place, index) => (
@@ -1046,13 +1183,16 @@ export default function Home() {
                     <div className="plan-reorder">
                       <button onClick={() => movePlanItem(index, -1)} disabled={index === 0} aria-label="Di chuyển lên">↑</button>
                       <button onClick={() => movePlanItem(index, 1)} disabled={index === plan.length - 1} aria-label="Di chuyển xuống">↓</button>
+                      <button className="plan-remove" onClick={() => removePlanItem(place.id)} aria-label={`Bỏ ${place.shortName} khỏi lịch trình`}>×</button>
                     </div>
                   </article>
                 ))}
               </div>
+              {availablePlanPlaces.length > 0 && <div className="add-stop-panel"><span>THÊM ĐIỂM DỪNG</span><div>{availablePlanPlaces.map((place) => <button key={place.id} onClick={() => addPlanItem(place)}><img src={place.image} alt="" /><span><b>{place.shortName}</b><small>{place.district} · {place.bestTime}</small></span><i>＋</i></button>)}</div></div>}
+              <div className="cost-breakdown"><span><b>Di chuyển</b>{formatMoney(planTransportCost)}</span><span><b>Ăn uống</b>{formatMoney(planMealCost)}</span><span><b>Lưu trú</b>{formatMoney(planStayCost)}</span><span><b>Vé dự phòng</b>{formatMoney(planTicketCost)}</span><p>Chi phí chỉ là ước tính để lập kế hoạch; giá thật cần xác nhận với nơi bán dịch vụ.</p></div>
               <div className="route-card">
                 <div><span>⌁</span><p><b>Tuyến ưu tiên mùa và khung giờ</b><small>Ước tính {Math.round(planDistance)} km · {estimateTravel(planDistance)} giữa các điểm, chưa gồm thời gian tham quan.</small></p></div>
-                <a href={`https://www.google.com/maps/dir/${plan.map((item) => `${item.lat},${item.lng}`).join("/")}`} target="_blank" rel="noreferrer">Mở tuyến đường →</a>
+                {plan.length > 0 && <a href={`https://www.google.com/maps/dir/${plan.map((item) => `${item.lat},${item.lng}`).join("/")}`} target="_blank" rel="noreferrer">Mở tuyến đường →</a>}
               </div>
             </div>
           </div>
@@ -1070,7 +1210,7 @@ export default function Home() {
             </div>
           </div>
           <div className="service-tabs">
-            {["Tất cả", "Y tế", "Trạm xăng", "Bãi đỗ xe", "ATM", "Tiện ích"].map((item) => (
+            {["Tất cả", "Điểm đến", "Ăn uống", "Lưu trú", "Y tế", "Trạm xăng", "Bãi đỗ xe", "ATM", "Tiện ích"].map((item) => (
               <button key={item} className={serviceFilter === item ? "is-active" : ""} onClick={() => setServiceFilter(item)}>{item}</button>
             ))}
           </div>
@@ -1078,19 +1218,24 @@ export default function Home() {
             <div className="map-panel">
               <iframe
                 title="Bản đồ tiện ích du lịch Phú Thọ"
-                src="https://www.openstreetmap.org/export/embed.html?bbox=105.286%2C21.285%2C105.428%2C21.385&layer=mapnik&marker=21.324%2C105.376"
+                src="https://www.openstreetmap.org/export/embed.html?bbox=104.88%2C21.08%2C105.48%2C21.58&layer=mapnik"
                 loading="lazy"
               />
+              <div className="map-pins" aria-label="Các ghim trên bản đồ">
+                {filteredNearItems.slice(0, 24).map((item) => <button key={item.id} style={mapPosition(item.lat, item.lng, item.id)} className={`${selectedNearItem?.id === item.id ? "is-active" : ""} map-pin--${normalizeSearch(item.type).replace(/\s+/g, "-")}`} onClick={() => setSelectedNearItemId(item.id)} title={item.name} aria-label={`${item.type}: ${item.name}`}><span>{item.icon}</span></button>)}
+                {position && <span className="user-map-pin" style={mapPosition(position.lat, position.lng)} title="Vị trí của bạn">Bạn</span>}
+              </div>
+              {selectedNearItem && <div className="map-selection"><span>{selectedNearItem.icon}</span><p><small>{selectedNearItem.type}</small><b>{selectedNearItem.name}</b><em>{position ? `${formatDistance(haversine(position.lat, position.lng, selectedNearItem.lat, selectedNearItem.lng))} từ bạn` : selectedNearItem.address ?? selectedNearItem.note}</em></p><a target="_blank" rel="noreferrer" href={`https://www.google.com/maps/dir/?api=1&destination=${selectedNearItem.lat},${selectedNearItem.lng}`}>Chỉ đường →</a></div>}
               <span className="map-credit">Bản đồ © OpenStreetMap</span>
             </div>
             <div className="service-list">
-              {services.filter((item) => serviceFilter === "Tất cả" || item.type === serviceFilter).map((item) => {
+              {filteredNearItems.slice(0, 10).map((item) => {
                 const distance = position ? formatDistance(haversine(position.lat, position.lng, item.lat, item.lng)) : "—";
                 return (
-                  <article key={item.name}>
+                  <article key={item.id} className={selectedNearItem?.id === item.id ? "is-active" : ""}>
                     <span className="service-icon">{item.icon}</span>
-                    <div><span>{item.type}</span><b>{item.name}</b><small>{item.note}</small></div>
-                    <p><b>{distance}</b><a target="_blank" rel="noreferrer" href={`https://www.google.com/maps/dir/?api=1&destination=${item.lat},${item.lng}`}>Chỉ đường →</a></p>
+                    <button className="service-main" onClick={() => setSelectedNearItemId(item.id)}><span>{item.type}</span><b>{item.name}</b><small>{item.note}</small></button>
+                    <p><b>{distance}</b>{item.phone && <a href={`tel:${item.phone}`}>Gọi ngay</a>}<a target="_blank" rel="noreferrer" href={`https://www.google.com/maps/dir/?api=1&destination=${item.lat},${item.lng}`}>Chỉ đường →</a></p>
                   </article>
                 );
               })}
@@ -1104,6 +1249,15 @@ export default function Home() {
               <a href="tel:115"><b>115</b><small>Cấp cứu</small></a>
             </div>
           </div>
+          <section className="event-calendar">
+            <div className="event-calendar__intro"><span className="kicker">LỊCH VĂN HÓA</span><h2>Đi đúng ngày,<br /><em>chạm đúng lễ hội.</em></h2><p>Ngày âm lịch được giữ nguyên để tránh nhầm giữa các năm. Hãy xác nhận lại với điểm đến trước khi khởi hành.</p></div>
+            <div className="event-list">
+              {culturalEvents.map((event) => {
+                const eventPlace = event.placeId ? places.find((place) => place.id === event.placeId) : null;
+                return <article key={event.id}><span>{event.season}</span><div><h3>{event.name}</h3><p>{event.description}</p><small>⌖ {event.location}</small></div><aside><b>{event.schedule}</b>{event.bookingRequired && <em>CẦN ĐẶT TRƯỚC</em>}{eventPlace && <button onClick={() => openPlace(eventPlace)}>Mở điểm đến →</button>}</aside></article>;
+              })}
+            </div>
+          </section>
         </section>
       )}
 
@@ -1142,7 +1296,7 @@ export default function Home() {
               <span>ĐẶT DỊCH VỤ</span><h2>Mọi thứ cho chuyến đi</h2>
               <button onClick={() => showToast("Form yêu cầu tour đã sẵn sàng kết nối đối tác")}><i>▣</i><b>Đặt tour địa phương</b><small>Gửi yêu cầu trong 1 phút</small><em>→</em></button>
               <button onClick={() => { setCategory("Nghỉ dưỡng & chữa lành"); setQuery(""); setActiveTab("explore"); showToast("Chọn một điểm nghỉ dưỡng rồi mở mục Chỗ nghỉ gần đây để đặt phòng"); }}><i>⌂</i><b>Khách sạn & homestay</b><small>Đặt qua app · đối tác trả hoa hồng</small><em>→</em></button>
-              <button onClick={() => showToast("Khu OCOP sẽ kết nối gian hàng chính hãng")}><i>◇</i><b>Quà OCOP chính hãng</b><small>Chè, bưởi, thịt chua…</small><em>→</em></button>
+              <button onClick={() => { setCategory("Tất cả"); setSeasonFilter("Tất cả"); setQuery("Thịt chua Thanh Sơn"); setActiveFoodId("thit-chua-thanh-son"); setActiveTab("explore"); showToast("Đã mở khu đặc sản; gian hàng thật sẽ cần đối tác xác minh"); }}><i>◇</i><b>Quà OCOP & đặc sản</b><small>Thịt chua, bưởi, chè… có giỏ hàng</small><em>→</em></button>
             </article>
             <article className="partner-card">
               <span>DÀNH CHO ĐỐI TÁC ĐỊA PHƯƠNG</span><h2>Đưa dịch vụ của bạn đến đúng du khách.</h2><p>Nhà hàng, homestay, hướng dẫn viên và cơ sở OCOP có thể đăng ký gian hàng đã xác minh.</p>
@@ -1215,6 +1369,7 @@ export default function Home() {
                           {item.phone && <a href={`tel:${item.phone}`}>☎ {item.phone.replace(/(\d{4})(\d{3})(\d+)/, "$1 $2 $3")}</a>}
                           <a target="_blank" rel="noreferrer" href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${item.name} ${item.address}`)}`}>Xem bản đồ →</a>
                         </div>
+                        {detailMode === "eat" && item.phone && <a className="nearby-reserve-link" href={`tel:${item.phone}`}>Gọi đặt bàn / đặt món trước →</a>}
                         {detailMode === "stay" && <button className="stay-book-button" onClick={() => openBooking(selected, item)}>Đặt phòng qua app · từ {formatMoney(estimatedStayPrice(item))}/đêm →</button>}
                       </div>
                       <p className="nearby-card__distance"><b>{item.distance}</b><small>{item.travelTime}</small></p>
