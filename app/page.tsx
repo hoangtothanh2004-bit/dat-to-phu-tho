@@ -4,8 +4,13 @@ import { useEffect, useMemo, useRef, useState, type ChangeEvent, type FormEvent 
 import {
   categoryIcons,
   categoryLabels,
+  regionLabels,
+  type Region,
+  type PlaceRegion,
   foodRegions,
   places,
+  phuTho100Directory,
+  type DirectoryPlace,
   type Category,
   type FoodDish,
   type FoodSeller,
@@ -13,6 +18,8 @@ import {
   type Place,
 } from "@/data/travel";
 import { culturalEvents } from "@/data/events";
+import { tourTemplates, type TourTemplate } from "@/data/itineraryTemplates";
+import { buildItinerary, type GeneratedItinerary } from "@/lib/guidePlanner";
 
 const isStaticDemo = process.env.NEXT_PUBLIC_STATIC_DEMO === "true";
 
@@ -57,199 +64,6 @@ type NearItem = {
 type SearchSuggestion =
   | { id: string; kind: "place"; label: string; meta: string; icon: string; place: Place }
   | { id: string; kind: "food"; label: string; meta: string; icon: string; dish: FoodDish };
-
-/* Dữ liệu mẫu ban đầu được giữ trong lịch sử Git; dữ liệu sử dụng thực tế nằm ở data/travel.ts.
-type Category = "Tất cả" | "Tâm linh" | "Thiên nhiên" | "Nghỉ dưỡng" | "Văn hóa";
-
-type NearbyItem = {
-  name: string;
-  type: string;
-  distance: string;
-  note: string;
-};
-
-type Place = {
-  id: string;
-  name: string;
-  shortName: string;
-  category: Exclude<Category, "Tất cả">;
-  location: string;
-  image: string;
-  rating: number;
-  reviews: number;
-  hours: string;
-  price: string;
-  description: string;
-  tags: string[];
-  lat: number;
-  lng: number;
-  featured?: boolean;
-  restaurants: NearbyItem[];
-  stays: NearbyItem[];
-};
-
-const places: Place[] = [
-  {
-    id: "den-hung",
-    name: "Khu di tích lịch sử Đền Hùng",
-    shortName: "Đền Hùng",
-    category: "Tâm linh",
-    location: "Hy Cương, Việt Trì",
-    image:
-      "https://commons.wikimedia.org/wiki/Special:Redirect/file/%C4%90%E1%BB%81n_H%C3%B9ng%2C_Ph%C3%BA_Th%E1%BB%8D_%281%29.jpg?width=1400",
-    rating: 4.9,
-    reviews: 2840,
-    hours: "Mở cửa 06:00 – 18:00",
-    price: "Tham quan miễn phí",
-    description:
-      "Quần thể đền thờ các Vua Hùng trên núi Nghĩa Lĩnh — điểm bắt đầu trọn vẹn cho hành trình tìm về cội nguồn dân tộc.",
-    tags: ["Di sản", "Hát Xoan", "Gia đình"],
-    lat: 21.366,
-    lng: 105.3246,
-    featured: true,
-    restaurants: [
-      { name: "Nhà hàng Quê Hương", type: "Ẩm thực Đất Tổ", distance: "0,8 km", note: "Món địa phương • Phù hợp nhóm" },
-      { name: "Bánh tai Phú Thọ", type: "Ăn nhanh", distance: "1,2 km", note: "30–60 nghìn/người" },
-      { name: "Cơm niêu Việt Trì", type: "Cơm Việt", distance: "2,7 km", note: "Có chỗ đỗ ô tô" },
-    ],
-    stays: [
-      { name: "Sài Gòn – Phú Thọ Hotel", type: "Khách sạn", distance: "7,4 km", note: "Trung tâm Việt Trì" },
-      { name: "Mường Thanh Luxury Phú Thọ", type: "Khách sạn", distance: "8,1 km", note: "Phòng gia đình • Hồ bơi" },
-    ],
-  },
-  {
-    id: "xuan-son",
-    name: "Vườn quốc gia Xuân Sơn",
-    shortName: "Xuân Sơn",
-    category: "Thiên nhiên",
-    location: "Xuân Sơn, Tân Sơn",
-    image:
-      "https://commons.wikimedia.org/wiki/Special:Redirect/file/Xuan_Son_3.jpg?width=1400",
-    rating: 4.8,
-    reviews: 968,
-    hours: "Mở cửa cả ngày",
-    price: "Từ 40.000đ/người",
-    description:
-      "Rừng nguyên sinh trên núi đá vôi, hang động, suối và bản làng Dao – Mường. Lý tưởng cho trekking và du lịch cộng đồng.",
-    tags: ["Trekking", "Bản Cỏi", "Sinh thái"],
-    lat: 21.1506,
-    lng: 104.9327,
-    featured: true,
-    restaurants: [
-      { name: "Cơm nhà sàn bản Cỏi", type: "Ẩm thực Mường", distance: "0,4 km", note: "Gà nhiều cựa • Cá suối" },
-      { name: "Bếp bản Dù", type: "Mâm cỗ lá", distance: "1,6 km", note: "Nên đặt trước" },
-    ],
-    stays: [
-      { name: "Xuân Sơn Homestay", type: "Homestay", distance: "0,6 km", note: "Ngủ nhà sàn • Ăn sáng" },
-      { name: "Lâm Homestay", type: "Homestay", distance: "1,1 km", note: "Gần đường trekking" },
-    ],
-  },
-  {
-    id: "long-coc",
-    name: "Đồi chè Long Cốc",
-    shortName: "Long Cốc",
-    category: "Thiên nhiên",
-    location: "Long Cốc, Tân Sơn",
-    image: "https://dulichphutho.gov.vn/uploads/ThuVien/03.jpg",
-    rating: 4.8,
-    reviews: 1240,
-    hours: "Đẹp nhất 05:00 – 08:00",
-    price: "Tham quan miễn phí",
-    description:
-      "Những đồi chè hình bát úp nối tiếp trong sương sớm, thường được gọi là “vịnh Hạ Long vùng trung du”.",
-    tags: ["Săn mây", "Chụp ảnh", "Đồi chè"],
-    lat: 21.1804,
-    lng: 105.0708,
-    featured: true,
-    restaurants: [
-      { name: "Bếp Lá Long Cốc", type: "Mâm cỗ lá", distance: "0,7 km", note: "Đặc sản người Mường" },
-      { name: "Quán chè cô Lan", type: "Trà & ăn nhẹ", distance: "1,3 km", note: "Trà Long Cốc tại vườn" },
-    ],
-    stays: [
-      { name: "Long Cốc Ecolodge", type: "Homestay", distance: "0,9 km", note: "View đồi chè" },
-      { name: "Mường Homestay", type: "Nhà sàn", distance: "2,2 km", note: "Có trải nghiệm bản địa" },
-    ],
-  },
-  {
-    id: "thanh-thuy",
-    name: "Khoáng nóng Thanh Thủy",
-    shortName: "Thanh Thủy",
-    category: "Nghỉ dưỡng",
-    location: "La Phù, Thanh Thủy",
-    image:
-      "https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&w=1400&q=85",
-    rating: 4.7,
-    reviews: 1678,
-    hours: "Mở cửa 08:00 – 22:00",
-    price: "Từ 200.000đ/người",
-    description:
-      "Cụm nghỉ dưỡng khoáng nóng bên sông Đà, phù hợp để thả lỏng sau một ngày khám phá và cho chuyến đi gia đình.",
-    tags: ["Khoáng nóng", "Gia đình", "Spa"],
-    lat: 21.1511,
-    lng: 105.2971,
-    featured: true,
-    restaurants: [
-      { name: "Nhà hàng Sông Đà", type: "Cá sông", distance: "0,5 km", note: "Cá ngạnh • Gà đồi" },
-      { name: "Bếp Việt Thanh Thủy", type: "Cơm Việt", distance: "1,1 km", note: "Có phòng riêng" },
-    ],
-    stays: [
-      { name: "Wyndham Thanh Thủy", type: "Resort", distance: "0,3 km", note: "Khoáng nóng • Hồ bơi" },
-      { name: "Thanh Lâm Resort", type: "Resort", distance: "1,8 km", note: "Phù hợp gia đình" },
-    ],
-  },
-  {
-    id: "hung-lo",
-    name: "Đình cổ Hùng Lô",
-    shortName: "Hùng Lô",
-    category: "Văn hóa",
-    location: "Hùng Lô, Việt Trì",
-    image:
-      "https://images.unsplash.com/photo-1558862107-d49ef2a04d72?auto=format&fit=crop&w=1400&q=85",
-    rating: 4.7,
-    reviews: 426,
-    hours: "Mở cửa 07:00 – 17:30",
-    price: "Tham quan miễn phí",
-    description:
-      "Không gian đình cổ, làng nghề mì gạo và những buổi biểu diễn Hát Xoan đậm bản sắc vùng Đất Tổ.",
-    tags: ["Hát Xoan", "Làng cổ", "Mì gạo"],
-    lat: 21.3712,
-    lng: 105.4077,
-    restaurants: [
-      { name: "Chợ quê Hùng Lô", type: "Đặc sản", distance: "0,2 km", note: "Bánh chưng • Mì gạo" },
-      { name: "Bếp làng Xoan", type: "Cơm quê", distance: "0,8 km", note: "Đặt mâm theo nhóm" },
-    ],
-    stays: [
-      { name: "Việt Trì Garden", type: "Khách sạn", distance: "4,4 km", note: "Gần trung tâm" },
-    ],
-  },
-  {
-    id: "van-lang",
-    name: "Công viên Văn Lang",
-    shortName: "Văn Lang",
-    category: "Văn hóa",
-    location: "Trung tâm Việt Trì",
-    image:
-      "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1400&q=85",
-    rating: 4.6,
-    reviews: 1830,
-    hours: "Mở cửa cả ngày",
-    price: "Miễn phí",
-    description:
-      "Không gian xanh quanh hồ ở trung tâm thành phố, lý tưởng để đi bộ, ngắm hoàng hôn và khám phá ẩm thực buổi tối.",
-    tags: ["Hoàng hôn", "Đi bộ", "Buổi tối"],
-    lat: 21.3066,
-    lng: 105.3998,
-    restaurants: [
-      { name: "Phố ẩm thực Việt Trì", type: "Ăn tối", distance: "0,4 km", note: "Nhiều lựa chọn" },
-      { name: "Bún tôm Đất Tổ", type: "Đặc sản", distance: "0,9 km", note: "40–70 nghìn/người" },
-    ],
-    stays: [
-      { name: "SOJO Hotel Việt Trì", type: "Khách sạn", distance: "0,7 km", note: "Trung tâm • Hiện đại" },
-    ],
-  },
-];
-
-*/
 
 const services = [
   { icon: "✚", name: "Bệnh viện Đa khoa tỉnh", type: "Y tế", lat: 21.3215, lng: 105.3926, note: "Cấp cứu 24/7" },
@@ -345,6 +159,7 @@ function isInSeason(place: Place, month = new Date().getMonth() + 1) {
 
 export default function Home() {
   const [activeTab, setActiveTab] = useState<Tab>("explore");
+  const [selectedRegion, setSelectedRegion] = useState<Region>("Tất cả");
   const [category, setCategory] = useState<Category>("Tất cả");
   const [seasonFilter, setSeasonFilter] = useState<SeasonFilter>("Tất cả");
   const [query, setQuery] = useState("");
@@ -355,12 +170,28 @@ export default function Home() {
   const [favorites, setFavorites] = useState<string[]>([]);
   const [selected, setSelected] = useState<Place | null>(null);
   const [detailMode, setDetailMode] = useState<"eat" | "stay">("eat");
+  const [targetPlaceId, setTargetPlaceId] = useState<string>(places[0]?.id || "den-hung");
+  const [tripRegion, setTripRegion] = useState<string>("Tất cả");
   const [days, setDays] = useState(2);
   const [travelers, setTravelers] = useState(2);
   const [transport, setTransport] = useState("Ô tô riêng");
-  const [budget, setBudget] = useState("2–4 triệu");
+  const [budget, setBudget] = useState("Tiêu chuẩn");
   const [interest, setInterest] = useState("Văn hóa & cội nguồn");
-  const [plan, setPlan] = useState<Place[]>([places[0], places[4], places[2], places[3]]);
+  const [generatedItinerary, setGeneratedItinerary] = useState<GeneratedItinerary>(() =>
+    buildItinerary({
+      anchorPlaceId: places[0]?.id || "den-hung",
+      durationDays: 2,
+      transport: "Ô tô riêng",
+      budget: "Tiêu chuẩn",
+      style: "Văn hóa & cội nguồn",
+      travelers: 2,
+    })
+  );
+  const [audioGuidePlaying, setAudioGuidePlaying] = useState(false);
+  const [show100Directory, setShow100Directory] = useState(false);
+  const [directoryDistrict, setDirectoryDistrict] = useState("Tất cả");
+  const [directorySearch, setDirectorySearch] = useState("");
+  const [plan, setPlan] = useState<Place[]>([places[0], places[1], places[2], places[3]]);
   const [draggedId, setDraggedId] = useState<string | null>(null);
   const [position, setPosition] = useState<{ lat: number; lng: number } | null>(null);
   const [locationMessage, setLocationMessage] = useState("Chưa bật định vị");
@@ -540,6 +371,11 @@ export default function Home() {
             return terms.every((term) => haystack.includes(term));
           });
 
+    const matchesRegion = (place: Place) => {
+      if (selectedRegion === "Tất cả") return true;
+      return place.region === selectedRegion;
+    };
+
     const matchesSeason = (place: Place) => {
       if (seasonFilter === "Tất cả") return true;
       if (seasonFilter === "Đang hợp mùa") return isInSeason(place, currentMonth);
@@ -547,6 +383,7 @@ export default function Home() {
     };
 
     return matchingPlaces
+      .filter(matchesRegion)
       .filter(matchesSeason)
       .slice()
       .sort((a, b) => {
@@ -556,7 +393,7 @@ export default function Home() {
           haversine(position.lat, position.lng, b.lat, b.lng)
         );
       });
-  }, [category, currentMonth, position, query, seasonFilter, serverResultIds]);
+  }, [category, currentMonth, position, query, seasonFilter, selectedRegion, serverResultIds]);
 
   const searchSuggestions = useMemo(() => {
     const needle = normalizeSearch(query.trim());
@@ -670,6 +507,23 @@ export default function Home() {
     showToast(`Đã ưu tiên điểm phù hợp tháng ${currentMonth} cho lịch trình ${days} ngày`);
   };
 
+  const directoryDistricts = useMemo(() => {
+    const set = new Set<string>();
+    phuTho100Directory.forEach((p) => {
+      if (p.district) set.add(p.district);
+    });
+    return ["Tất cả", ...Array.from(set)];
+  }, []);
+
+  const filtered100Places = useMemo(() => {
+    return phuTho100Directory.filter((item) => {
+      if (directoryDistrict !== "Tất cả" && item.district !== directoryDistrict) return false;
+      if (!directorySearch.trim()) return true;
+      const needle = normalizeSearch(directorySearch);
+      return normalizeSearch(`${item.name} ${item.category} ${item.district} ${item.restaurants} ${item.stays} ${item.location}`).includes(needle);
+    });
+  }, [directoryDistrict, directorySearch]);
+
   const movePlanItem = (index: number, direction: -1 | 1) => {
     const target = index + direction;
     if (target < 0 || target >= plan.length) return;
@@ -689,15 +543,21 @@ export default function Home() {
   };
 
   const savePlan = () => {
-    window.localStorage.setItem("datto-itinerary", JSON.stringify({ days, travelers, transport, interest, placeIds: plan.map((item) => item.id) }));
-    showToast("Đã lưu lịch trình trên thiết bị");
+    window.localStorage.setItem("datto-itinerary", JSON.stringify(generatedItinerary));
+    showToast("Đã lưu lịch trình hướng dẫn viên trên thiết bị");
   };
 
   const sharePlan = async () => {
-    const text = [`Lịch trình ${days} ngày tại Phú Thọ cho ${travelers} khách`, ...plan.map((place, index) => `${index + 1}. ${place.shortName} — ${place.bestTime}`), `Ước tính ${Math.round(planDistance)} km · ${formatMoney(estimatedPlanCost)}`].join("\n");
+    const text = [
+      generatedItinerary.title,
+      generatedItinerary.subtitle,
+      `Quãng đường: ${generatedItinerary.totalDistanceKm} km · ${generatedItinerary.totalDriveTime}`,
+      `Chi phí dự kiến: ${formatMoney(generatedItinerary.estimatedCostPerPerson)}/người`,
+      `Xem lộ trình: ${generatedItinerary.googleMapsUrl}`,
+    ].join("\n");
     try {
       if (navigator.share) {
-        await navigator.share({ title: "Lịch trình Đất Tổ", text, url: window.location.href });
+        await navigator.share({ title: generatedItinerary.title, text, url: window.location.href });
         return;
       }
       await navigator.clipboard.writeText(`${text}\n${window.location.href}`);
@@ -705,6 +565,71 @@ export default function Home() {
     } catch {
       showToast("Đã hủy chia sẻ lịch trình");
     }
+  };
+
+  const toggleItineraryAudio = () => {
+    if (!("speechSynthesis" in window)) {
+      showToast("Thiết bị chưa hỗ trợ phát giọng đọc");
+      return;
+    }
+    if (audioGuidePlaying) {
+      window.speechSynthesis.cancel();
+      setAudioGuidePlaying(false);
+      return;
+    }
+    window.speechSynthesis.cancel();
+    const utterance = new SpeechSynthesisUtterance(generatedItinerary.audioGuideScript);
+    const vietnameseVoices = window.speechSynthesis.getVoices().filter((voice) => voice.lang.toLowerCase().startsWith("vi"));
+    utterance.voice = vietnameseVoices.find((voice) => /google|microsoft|natural/i.test(voice.name)) ?? vietnameseVoices[0] ?? null;
+    utterance.lang = "vi-VN";
+    utterance.rate = 0.9;
+    utterance.pitch = 1.0;
+    utterance.onstart = () => setAudioGuidePlaying(true);
+    utterance.onend = () => setAudioGuidePlaying(false);
+    utterance.onerror = () => setAudioGuidePlaying(false);
+    speechRef.current = utterance;
+    window.speechSynthesis.speak(utterance);
+  };
+
+  const handleGenerateItinerary = () => {
+    if ("speechSynthesis" in window) window.speechSynthesis.cancel();
+    setAudioGuidePlaying(false);
+    const res = buildItinerary({
+      anchorPlaceId: targetPlaceId,
+      region: tripRegion,
+      durationDays: days,
+      transport,
+      budget,
+      style: interest,
+      travelers,
+    });
+    setGeneratedItinerary(res);
+    showToast(`✦ Hướng dẫn viên đã tạo lịch trình ${days} ngày cho bạn!`);
+  };
+
+  const handleApplyTourTemplate = (tmpl: TourTemplate) => {
+    if ("speechSynthesis" in window) window.speechSynthesis.cancel();
+    setAudioGuidePlaying(false);
+    setTargetPlaceId(tmpl.anchorPlaceId);
+    setDays(tmpl.durationDays);
+    const tVehicle = tmpl.recommendedTransport.includes("Xe máy")
+      ? "Xe máy"
+      : tmpl.recommendedTransport.includes("Limousine")
+      ? "Limousine / Xe khách"
+      : "Ô tô riêng";
+    setTransport(tVehicle);
+    setInterest(tmpl.theme);
+    const res = buildItinerary({
+      anchorPlaceId: tmpl.anchorPlaceId,
+      region: tmpl.region === "Liên thông 3 vùng" ? "Tất cả" : tmpl.region,
+      durationDays: tmpl.durationDays,
+      transport: tVehicle,
+      budget,
+      style: tmpl.theme,
+      travelers,
+    });
+    setGeneratedItinerary(res);
+    showToast(`Đã chọn: ${tmpl.title}`);
   };
 
   const dropPlanItem = (targetId: string) => {
@@ -896,6 +821,7 @@ export default function Home() {
       <button className="place-card__image-button" onClick={() => openPlace(place)} aria-label={`Xem ${place.name}`}>
         <img className="place-card__image" src={place.image} alt={place.name} />
         <span className="place-card__category">{place.category}</span>
+        <span className="place-card__region-badge">{place.region}</span>
         {distanceFromUser(place) && <span className="place-card__distance">⌖ {distanceFromUser(place)}</span>}
       </button>
       <button
@@ -1029,7 +955,19 @@ export default function Home() {
           <section className="content-section category-section">
             <div className="section-heading section-heading--inline">
               <div><span className="section-number">01</span><h2>Khám phá theo cách của&nbsp;bạn</h2></div>
-              <button className="text-link" onClick={() => { setCategory("Tất cả"); setSeasonFilter("Tất cả"); setQuery(""); }}>Xem tất cả →</button>
+              <button className="text-link" onClick={() => { setCategory("Tất cả"); setSelectedRegion("Tất cả"); setSeasonFilter("Tất cả"); setQuery(""); }}>Xem tất cả →</button>
+            </div>
+            <div className="region-filter-bar" role="group" aria-label="Lọc theo vùng sáp nhập">
+              <span className="region-filter-label">3 VÙNG SÁP NHẬP:</span>
+              {regionLabels.map((reg) => (
+                <button
+                  key={reg}
+                  className={`region-pill ${selectedRegion === reg ? "is-active" : ""}`}
+                  onClick={() => { setSelectedRegion(reg); setVisibleCount(8); }}
+                >
+                  {reg === "Tất cả" ? "🌐 Toàn tỉnh (3 vùng)" : reg === "Phú Thọ lõi" ? "🏛️ Phú Thọ lõi" : reg === "Vùng Vĩnh Phúc" ? "☁️ Vùng Vĩnh Phúc" : "🌲 Vùng Hòa Bình"}
+                </button>
+              ))}
             </div>
             <div className="category-row" role="group" aria-label="Lọc theo danh mục">
               {categories.map((item) => (
@@ -1122,77 +1060,363 @@ export default function Home() {
       {activeTab === "trip" && (
         <section className="inner-page trip-page">
           <div className="inner-page__intro">
-            <span className="kicker">SMART ITINERARY</span>
-            <h1>Lịch trình vừa vặn<br /><em>với riêng bạn.</em></h1>
-            <p>Thay đổi lựa chọn, tạo gợi ý mới rồi kéo thả để sắp xếp theo nhịp đi của bạn.</p>
+            <span className="kicker">AI TOUR GUIDE · PHÚ THỌ MỚI</span>
+            <h1>Lập lịch trình thông minh<br /><em>cùng hướng dẫn viên bản địa.</em></h1>
+            <p>Hệ thống tự động lập lịch trình đầy đủ 4 yếu tố: <b>Đi tham quan ở đâu · Ăn món gì · Ngủ ở đâu · Đi bằng phương tiện nào & thời gian ra sao</b> trên toàn địa bàn 3 vùng (Phú Thọ lõi, Vĩnh Phúc, Hòa Bình).</p>
           </div>
+
           <div className="builder-layout">
             <aside className="builder-card">
-              <span className="builder-card__step">BƯỚC 1 / 2</span>
-              <h2>Bạn muốn đi thế nào?</h2>
-              <label>Số ngày
+              <span className="builder-card__step">BỘ ĐIỀU KHIỂN LỊCH TRÌNH</span>
+              <h2>Bạn muốn đi đâu & như thế nào?</h2>
+
+              <label>
+                Điểm đến trọng tâm
+                <select value={targetPlaceId} onChange={(event) => setTargetPlaceId(event.target.value)}>
+                  <optgroup label="🏛️ Phú Thọ lõi (Vùng Đất Tổ)">
+                    {places.filter((p) => p.region === "Phú Thọ lõi").map((p) => (
+                      <option key={p.id} value={p.id}>{p.name}</option>
+                    ))}
+                  </optgroup>
+                  <optgroup label="☁️ Vùng Vĩnh Phúc (Tam Đảo – Tây Thiên – Đại Lải)">
+                    {places.filter((p) => p.region === "Vùng Vĩnh Phúc").map((p) => (
+                      <option key={p.id} value={p.id}>{p.name}</option>
+                    ))}
+                  </optgroup>
+                  <optgroup label="🌲 Vùng Hòa Bình (Mai Châu – Kim Bôi – Thung Nai)">
+                    {places.filter((p) => p.region === "Vùng Hòa Bình").map((p) => (
+                      <option key={p.id} value={p.id}>{p.name}</option>
+                    ))}
+                  </optgroup>
+                </select>
+              </label>
+
+              <label>
+                Số ngày đi
                 <div className="day-picker">
-                  {[1, 2, 3, 4].map((item) => <button key={item} className={days === item ? "is-active" : ""} onClick={() => setDays(item)}>{item}<small>ngày</small></button>)}
+                  {[1, 2, 3, 4].map((item) => (
+                    <button key={item} className={days === item ? "is-active" : ""} onClick={() => setDays(item)}>
+                      {item}<small>ngày</small>
+                    </button>
+                  ))}
                 </div>
               </label>
-              <label>Ngân sách
-                <select value={budget} onChange={(event) => setBudget(event.target.value)}>
-                  <option>Dưới 2 triệu</option><option>2–4 triệu</option><option>4–7 triệu</option><option>Trên 7 triệu</option>
-                </select>
-              </label>
-              <label>Số người
-                <select value={travelers} onChange={(event) => setTravelers(Number(event.target.value))}>
-                  {[1, 2, 3, 4, 5, 6, 8, 10].map((count) => <option key={count} value={count}>{count} người</option>)}
-                </select>
-              </label>
-              <label>Phương tiện
+
+              <label>
+                Phương tiện di chuyển
                 <select value={transport} onChange={(event) => setTransport(event.target.value)}>
-                  <option>Ô tô riêng</option><option>Xe máy</option><option>Taxi / xe hợp đồng</option>
+                  <option>Ô tô riêng</option>
+                  <option>Xe máy</option>
+                  <option>Limousine / Xe khách</option>
+                  <option>Taxi / xe hợp đồng</option>
                 </select>
               </label>
-              <label>Sở thích chính
+
+              <label>
+                Phong cách chuyến đi
                 <select value={interest} onChange={(event) => setInterest(event.target.value)}>
-                  <option>Văn hóa & cội nguồn</option><option>Gia đình có trẻ nhỏ/người cao tuổi</option><option>Phượt & khám phá</option><option>Nghỉ dưỡng khoáng nóng</option><option>Ẩm thực bản địa</option>
+                  <option>Văn hóa & cội nguồn</option>
+                  <option>Nghỉ dưỡng khoáng nóng & Onsen</option>
+                  <option>Phượt & săn mây sinh thái</option>
+                  <option>Gia đình có trẻ nhỏ/người cao tuổi</option>
+                  <option>Ẩm thực bản địa</option>
                 </select>
               </label>
-              <button className="button button--dark button--full" onClick={generatePlan}>Tạo lịch trình gợi ý ✦</button>
-              <small className="builder-note">Không cần đăng nhập · Có thể chỉnh sửa sau khi tạo</small>
+
+              <label>
+                Tiêu chuẩn ngân sách
+                <select value={budget} onChange={(event) => setBudget(event.target.value)}>
+                  <option>Tiết kiệm</option>
+                  <option>Tiêu chuẩn</option>
+                  <option>Cao cấp / Nghỉ dưỡng</option>
+                </select>
+              </label>
+
+              <label>
+                Số lượng khách
+                <select value={travelers} onChange={(event) => setTravelers(Number(event.target.value))}>
+                  {[1, 2, 3, 4, 5, 6, 8, 10].map((count) => (
+                    <option key={count} value={count}>{count} người</option>
+                  ))}
+                </select>
+              </label>
+
+              <button className="button button--dark button--full" onClick={handleGenerateItinerary}>
+                ✦ Lập Lịch Trình Cùng Hướng Dẫn Viên
+              </button>
+              <small className="builder-note">Tự động tính quãng đường, chi phí, thực đơn và lời thuyết minh</small>
             </aside>
+
             <div className="plan-panel">
-              <div className="plan-panel__header">
-                <div><span>LỊCH TRÌNH CỦA BẠN</span><h2>{days} ngày · {interest.split(" & ")[0]}</h2></div>
-                <div className="plan-header-actions"><button onClick={savePlan}>♡ Lưu</button><button onClick={sharePlan}>↗ Chia sẻ</button><button onClick={() => window.print()}>▤ Lưu PDF</button></div>
-              </div>
-              <div className="plan-summary">
-                <span><b>{plan.length}</b> điểm dừng</span><span><b>{Math.round(planDistance)} km</b> giữa các điểm</span><span><b>{estimateTravel(planDistance)}</b> di chuyển</span><span><b>{formatMoney(estimatedPlanCost)}</b> cho {travelers} người</span>
-              </div>
-              <div className="plan-list">
-                {plan.map((place, index) => (
-                  <article
-                    key={place.id}
-                    className={`plan-item ${draggedId === place.id ? "is-dragging" : ""}`}
-                    draggable
-                    onDragStart={() => setDraggedId(place.id)}
-                    onDragOver={(event) => event.preventDefault()}
-                    onDrop={() => dropPlanItem(place.id)}
-                  >
-                    <span className="drag-handle" title="Kéo để sắp xếp">⠿</span>
-                    <span className="plan-time">{place.bestStart}<small>NGÀY {Math.floor(index / 2) + 1}</small></span>
-                    <img src={place.image} alt="" />
-                    <button className="plan-item__main" onClick={() => openPlace(place)}><b>{place.shortName}</b><small>{place.bestTime} · {isInSeason(place, currentMonth) ? `Hợp tháng ${currentMonth}` : "Cần kiểm tra mùa"}</small></button>
-                    <div className="plan-reorder">
-                      <button onClick={() => movePlanItem(index, -1)} disabled={index === 0} aria-label="Di chuyển lên">↑</button>
-                      <button onClick={() => movePlanItem(index, 1)} disabled={index === plan.length - 1} aria-label="Di chuyển xuống">↓</button>
-                      <button className="plan-remove" onClick={() => removePlanItem(place.id)} aria-label={`Bỏ ${place.shortName} khỏi lịch trình`}>×</button>
+              {/* GUIDE HEADER CARD */}
+              <div className="guide-header-card">
+                <div className="guide-header-card__top">
+                  <div>
+                    <div className="guide-header-card__meta">
+                      <span>{generatedItinerary.region}</span>
+                      <span>{generatedItinerary.durationDays} NGÀY</span>
+                      <span>{generatedItinerary.style}</span>
                     </div>
-                  </article>
-                ))}
+                    <h2>{generatedItinerary.title}</h2>
+                    <p>{generatedItinerary.subtitle}</p>
+                  </div>
+                </div>
+
+                <div className="guide-stat-grid">
+                  <div className="guide-stat-item">
+                    <small>CỰ LY LỘ TRÌNH</small>
+                    <b>~{generatedItinerary.totalDistanceKm} km</b>
+                  </div>
+                  <div className="guide-stat-item">
+                    <small>THỜI GIAN LÁI XE</small>
+                    <b>{generatedItinerary.totalDriveTime}</b>
+                  </div>
+                  <div className="guide-stat-item">
+                    <small>PHƯƠNG TIỆN</small>
+                    <b>{generatedItinerary.transport}</b>
+                  </div>
+                  <div className="guide-stat-item">
+                    <small>DỰ TOÁN / KHÁCH</small>
+                    <b>{formatMoney(generatedItinerary.estimatedCostPerPerson)}</b>
+                  </div>
+                </div>
+
+                {/* AUDIO VOICE TOUR GUIDE */}
+                <div className="guide-audio-bar">
+                  <button className="guide-audio-button" onClick={toggleItineraryAudio}>
+                    {audioGuidePlaying ? "⏸ Tạm dừng thuyết minh" : "▶ Nghe Hướng Dẫn Viên Giới Thiệu"}
+                  </button>
+                  <span className="guide-audio-text">
+                    “{generatedItinerary.audioGuideScript.slice(0, 160)}…”
+                  </span>
+                </div>
+
+                {/* ACTION BAR */}
+                <div className="guide-action-bar">
+                  <a className="guide-action-btn" href={generatedItinerary.googleMapsUrl} target="_blank" rel="noreferrer">
+                    🗺️ Tuyến Google Maps
+                  </a>
+                  <button className="guide-action-btn" onClick={() => window.print()}>
+                    ▤ In / Xuất PDF
+                  </button>
+                  <button className="guide-action-btn" onClick={sharePlan}>
+                    ↗ Chia sẻ lộ trình
+                  </button>
+                  <button className="guide-action-btn" onClick={savePlan}>
+                    ♡ Lưu lịch trình
+                  </button>
+                </div>
+
+                <div className="guide-tips-box">
+                  <b>💡 Lời khuyên Hướng dẫn viên:</b> {generatedItinerary.routeAdvice}
+                  <br />
+                  <b>🛡️ Lưu ý an toàn & di chuyển:</b> {generatedItinerary.cautionAdvice}
+                </div>
               </div>
-              {availablePlanPlaces.length > 0 && <div className="add-stop-panel"><span>THÊM ĐIỂM DỪNG</span><div>{availablePlanPlaces.map((place) => <button key={place.id} onClick={() => addPlanItem(place)}><img src={place.image} alt="" /><span><b>{place.shortName}</b><small>{place.district} · {place.bestTime}</small></span><i>＋</i></button>)}</div></div>}
-              <div className="cost-breakdown"><span><b>Di chuyển</b>{formatMoney(planTransportCost)}</span><span><b>Ăn uống</b>{formatMoney(planMealCost)}</span><span><b>Lưu trú</b>{formatMoney(planStayCost)}</span><span><b>Vé dự phòng</b>{formatMoney(planTicketCost)}</span><p>Chi phí chỉ là ước tính để lập kế hoạch; giá thật cần xác nhận với nơi bán dịch vụ.</p></div>
-              <div className="route-card">
-                <div><span>⌁</span><p><b>Tuyến ưu tiên mùa và khung giờ</b><small>Ước tính {Math.round(planDistance)} km · {estimateTravel(planDistance)} giữa các điểm, chưa gồm thời gian tham quan.</small></p></div>
-                {plan.length > 0 && <a href={`https://www.google.com/maps/dir/${plan.map((item) => `${item.lat},${item.lng}`).join("/")}`} target="_blank" rel="noreferrer">Mở tuyến đường →</a>}
+
+              {/* TIMELINE DAYS */}
+              {generatedItinerary.days.map((dayPlan) => (
+                <div className="timeline-day" key={dayPlan.dayNumber}>
+                  <div className="timeline-day__header">
+                    <div className="timeline-day__header-title">
+                      <span className="timeline-day-pill">NGÀY {dayPlan.dayNumber}</span>
+                      <h3>{dayPlan.dayTitle}</h3>
+                    </div>
+                    <span className="timeline-day__distance">Lộ trình ngày: ~{dayPlan.dayDistanceKm} km ({dayPlan.dateLabel})</span>
+                  </div>
+
+                  <div className="timeline-slots">
+                    {dayPlan.slots.map((slot, sIdx) => {
+                      const periodKey = slot.period.toLowerCase();
+                      const tagModifier = periodKey.includes("sáng")
+                        ? "sang"
+                        : periodKey.includes("trưa")
+                        ? "trua"
+                        : periodKey.includes("chiều")
+                        ? "chieu"
+                        : "toi";
+
+                      return (
+                        <div className="slot-item" key={sIdx}>
+                          <div className="slot-sidebar">
+                            <span className={`slot-period-tag slot-period-tag--${tagModifier}`}>{slot.period}</span>
+                            <span className="slot-time">{slot.timeSlot}</span>
+                          </div>
+
+                          <div className="slot-main">
+                            <div className="slot-main__title">
+                              <h4>{slot.title}</h4>
+                              <span className="slot-cost">{formatMoney(slot.estimatedCostPerPerson)}/người</span>
+                            </div>
+
+                            {/* TRANSPORT TIP */}
+                            <div className="slot-transport-strip">
+                              <span>🚗</span>
+                              <div>
+                                <b>Di chuyển & Lộ trình:</b> {slot.transportAdvice}
+                              </div>
+                            </div>
+
+                            {/* DETAIL BLOCKS */}
+                            <div className="slot-detail-grid">
+                              <div className="slot-detail-box">
+                                <small>🏛️ ĐI THAM QUAN Ở ĐÂU</small>
+                                <p>
+                                  <b>{slot.activity}</b>
+                                  {slot.place && (
+                                    <>
+                                      <br />
+                                      <span>Điểm đến: <b>{slot.place.name}</b> ({slot.place.location})</span>
+                                      <br />
+                                      <span>Điểm nhấn: {slot.place.highlights.slice(0, 3).join(" · ")}</span>
+                                    </>
+                                  )}
+                                </p>
+                              </div>
+
+                              <div className="slot-detail-box">
+                                <small>🍲 ĂN Ở ĐÂU & MÓN GÌ</small>
+                                <p>
+                                  {slot.restaurant ? (
+                                    <>
+                                      <b>{slot.restaurant.name}</b> ({slot.restaurant.type})
+                                      <br />
+                                      <span>Ghi chú: {slot.restaurant.note}</span>
+                                      <br />
+                                      <small style={{ color: "#777" }}>{slot.restaurant.address} · {slot.restaurant.hours}</small>
+                                    </>
+                                  ) : (
+                                    <span>Tự do thưởng thức ẩm thực đặc sản địa phương trên cung đường.</span>
+                                  )}
+                                </p>
+                              </div>
+
+                              {slot.stay && (
+                                <div className="slot-detail-box">
+                                  <small>🛏️ NGỦ NGHỈ Ở ĐÂU</small>
+                                  <p>
+                                    <b>{slot.stay.name}</b> ({slot.stay.type})
+                                    <br />
+                                    <span>Đặc điểm: {slot.stay.note}</span>
+                                    <br />
+                                    <small style={{ color: "#777" }}>Địa chỉ: {slot.stay.address}</small>
+                                  </p>
+                                </div>
+                              )}
+                            </div>
+
+                            {slot.highlightNote && (
+                              <p style={{ margin: 0, fontSize: "12px", color: "var(--muted)", fontStyle: "italic" }}>
+                                💬 Lời dặn: {slot.highlightNote}
+                              </p>
+                            )}
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+              ))}
+
+              {/* QUICK TOUR TEMPLATES */}
+              <div className="tour-template-section">
+                <div className="tour-template-section__heading">
+                  <div>
+                    <span className="kicker">TOUR MẪU THIẾT KẾ SẴN</span>
+                    <h2 style={{ fontSize: "20px", margin: "4px 0" }}>Chọn nhanh hành trình tiêu biểu 3 vùng</h2>
+                  </div>
+                  <span style={{ fontSize: "12px", color: "var(--muted)" }}>Bấm vào tour để xem chi tiết ngay</span>
+                </div>
+
+                <div className="tour-template-grid">
+                  {tourTemplates.map((tmpl) => (
+                    <button
+                      key={tmpl.id}
+                      className="tour-template-card"
+                      onClick={() => handleApplyTourTemplate(tmpl)}
+                    >
+                      <div className="tour-template-card__header">
+                        <span className="tour-template-badge">{tmpl.region}</span>
+                        <span className="tour-template-duration">⏱ {tmpl.durationLabel}</span>
+                      </div>
+                      <h3>{tmpl.title}</h3>
+                      <p>{tmpl.summary}</p>
+                      <div className="tour-template-card__footer">
+                        <span>Phương tiện: {tmpl.recommendedTransport}</span>
+                        <b>{tmpl.estimatedBudgetPerPerson}</b>
+                      </div>
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* 100 DIRECTORY SECTION FROM TÀI LIỆU 3 */}
+              <div className="directory-section">
+                <div className="directory-header">
+                  <div>
+                    <span className="kicker">DỮ LIỆU TỔNG HỢP TỪ TÀI LIỆU 3</span>
+                    <h3>Danh bạ 100 Điểm Du lịch – Ăn uống – Lưu trú Phú Thọ</h3>
+                    <p>Tra cứu thông tin điểm tham quan, ẩm thực gần điểm và địa chỉ lưu trú theo từng huyện/thị thành.</p>
+                  </div>
+                  <button
+                    className="button button--ghost"
+                    onClick={() => setShow100Directory((prev) => !prev)}
+                  >
+                    {show100Directory ? "Thu gọn bảng danh bạ ▲" : `Mở toàn bộ 100 điểm (${phuTho100Directory.length}) ▼`}
+                  </button>
+                </div>
+
+                {show100Directory && (
+                  <>
+                    <div className="directory-controls">
+                      <input
+                        type="text"
+                        className="directory-search-input"
+                        placeholder="Tìm theo tên điểm, món ăn, khách sạn..."
+                        value={directorySearch}
+                        onChange={(e) => setDirectorySearch(e.target.value)}
+                      />
+                      <select
+                        className="directory-select"
+                        value={directoryDistrict}
+                        onChange={(e) => setDirectoryDistrict(e.target.value)}
+                      >
+                        {directoryDistricts.map((d) => (
+                          <option key={d} value={d}>{d === "Tất cả" ? "Tất cả huyện/thị" : `Huyện/Thị: ${d}`}</option>
+                        ))}
+                      </select>
+                    </div>
+
+                    <div className="directory-table-container">
+                      <table className="directory-table">
+                        <thead>
+                          <tr>
+                            <th>STT</th>
+                            <th>Tên điểm đến</th>
+                            <th>Loại hình</th>
+                            <th>Địa bàn</th>
+                            <th>Ẩm thực & Quán ăn gần điểm</th>
+                            <th>Lưu trú / Khách sạn gần điểm</th>
+                            <th>Cự ly</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {filtered100Places.map((row) => (
+                            <tr key={row.stt}>
+                              <td><b>{row.stt}</b></td>
+                              <td><b>{row.name}</b></td>
+                              <td><span className="pill pill--subtle">{row.category}</span></td>
+                              <td>{row.district}</td>
+                              <td>{row.restaurants}</td>
+                              <td>{row.stays}</td>
+                              <td><small>{row.distance}</small></td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
+                  </>
+                )}
               </div>
             </div>
           </div>
@@ -1344,8 +1568,17 @@ export default function Home() {
                 </div>
                 <p className="modal-description">{selected.description}</p>
                 <div className="highlight-section"><span>ĐIỂM NỔI BẬT</span><div>{selected.highlights.map((highlight) => <p key={highlight}><i>✦</i>{highlight}</p>)}</div></div>
-                <div className="tag-row">{selected.tags.map((tag) => <span key={tag}>{tag}</span>)}</div>
                 {selected.warning && <div className="travel-warning"><b>Lưu ý trước khi đi</b><p>{selected.warning}</p></div>}
+                {selected.transportTips && (
+                  <div style={{ background: "var(--surface)", border: "1px solid var(--line)", borderRadius: "var(--radius-sm)", padding: "14px 18px", margin: "16px 0" }}>
+                    <span style={{ fontSize: "10px", fontWeight: "800", color: "var(--muted)", letterSpacing: "0.06em", textTransform: "uppercase" }}>GỢI Ý PHƯƠNG TIỆN & CUNG ĐƯỜNG</span>
+                    <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))", gap: "10px", marginTop: "8px" }}>
+                      <div style={{ fontSize: "12px", lineHeight: "1.4" }}><b>🚗 Phương tiện gợi ý:</b> {selected.transportTips.recommendedVehicle}</div>
+                      <div style={{ fontSize: "12px", lineHeight: "1.4" }}><b>🛣️ Cung đường:</b> {selected.transportTips.routeAdvice}</div>
+                      <div style={{ fontSize: "12px", lineHeight: "1.4" }}><b>⚠️ Lưu ý:</b> {selected.transportTips.caution}</div>
+                    </div>
+                  </div>
+                )}
                 <div className="modal-actions">
                   <a className="button button--dark" target="_blank" rel="noreferrer" href={`https://www.google.com/maps/dir/?api=1&destination=${selected.lat},${selected.lng}`}>⌁ Chỉ đường</a>
                   <button className="button button--outline" onClick={() => toggleGuide(selected)}>

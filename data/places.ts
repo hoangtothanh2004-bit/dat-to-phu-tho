@@ -1,10 +1,11 @@
-import { places, type Category } from "./travel";
+import { places, type Category, type PlaceRegion } from "./travel";
 
 export type SearchablePlace = {
   id: string;
   name: string;
   shortName: string;
   category: Exclude<Category, "Tất cả">;
+  region: PlaceRegion;
   location: string;
   district: string;
   tags: string[];
@@ -17,9 +18,11 @@ export const searchablePlaces: SearchablePlace[] = places.map((place) => ({
   name: place.name,
   shortName: place.shortName,
   category: place.category,
+  region: place.region,
   location: place.location,
   district: place.district,
   tags: [
+    place.region,
     ...place.tags,
     ...place.highlights,
     place.season,

@@ -40,5 +40,6 @@ dev-server.err.log
 
 # typescript
 next-env.d.ts
+*.tsbuildinfo
 /outputs/
 /work/
