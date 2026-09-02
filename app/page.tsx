@@ -810,6 +810,14 @@ export default function Home() {
 
   const selectedUserReviews = selected ? userReviews.filter((review) => review.placeId === selected.id) : [];
 
+  const handleImageError = (e: React.SyntheticEvent<HTMLImageElement, Event>) => {
+    const target = e.currentTarget;
+    if (!target.dataset.fallback) {
+      target.dataset.fallback = "true";
+      target.src = "/images/places/tam-dao.jpg";
+    }
+  };
+
   const openPlace = (place: Place) => {
     stopGuide();
     setDetailMode("eat");
@@ -819,7 +827,7 @@ export default function Home() {
   const renderPlaceCard = (place: Place, compact = false) => (
     <article className={`place-card ${compact ? "place-card--compact" : ""}`} key={place.id}>
       <button className="place-card__image-button" onClick={() => openPlace(place)} aria-label={`Xem ${place.name}`}>
-        <img className="place-card__image" src={place.image} alt={place.name} />
+        <img className="place-card__image" src={place.image} alt={place.name} loading="lazy" onError={handleImageError} />
         <span className="place-card__category">{place.category}</span>
         <span className="place-card__region-badge">{place.region}</span>
         {distanceFromUser(place) && <span className="place-card__distance">⌖ {distanceFromUser(place)}</span>}
@@ -850,7 +858,7 @@ export default function Home() {
   const renderFoodMarket = (dish: FoodDish, context: "search" | "region") => (
     <article className={`food-market food-market--${context}`} key={`${context}-${dish.id}`}>
       <div className="food-market__intro">
-        <img src={dish.image} alt={`Ảnh minh họa ${dish.name}`} />
+        <img src={dish.image} alt={`Ảnh minh họa ${dish.name}`} loading="lazy" onError={handleImageError} />
         <div><span>GIAN HÀNG MẪU · CẦN ĐỐI TÁC XÁC MINH</span><h3>{dish.name}</h3><p>{dish.description}</p></div>
       </div>
       <div className="seller-grid">
@@ -942,7 +950,7 @@ export default function Home() {
               </div>
             </div>
             <div className="hero__visual">
-              <img src={places[0].image} alt="Cổng Khu di tích lịch sử Đền Hùng" />
+              <img src={places[0].image} alt="Cổng Khu di tích lịch sử Đền Hùng" loading="lazy" onError={handleImageError} />
               <div className="hero__caption">
                 <span>GỢI Ý ĐẦU TIÊN</span>
                 <strong>Khu di tích Đền Hùng</strong>
@@ -1019,7 +1027,7 @@ export default function Home() {
                 <div className="mini-stop" key={place.id}>
                   <span className="mini-stop__time">{place.bestStart}</span>
                   <span className="mini-stop__dot" />
-                  <img src={place.image} alt="" />
+                  <img src={place.image} alt="" loading="lazy" onError={handleImageError} />
                   <span><b>{place.shortName}</b><small>{index === 1 ? "Hát Xoan · cần đặt lịch" : place.bestTime}</small></span>
                 </div>
               ))}
@@ -1045,7 +1053,7 @@ export default function Home() {
                   {region.dishes.map((food, index) => (
                     <div className="food-entry" key={food.id}>
                       <button className="food-row" aria-expanded={activeFoodId === food.id} onClick={() => setActiveFoodId((current) => current === food.id ? null : food.id)}>
-                        <span>{String(index + 1).padStart(2, "0")}</span><img src={food.image} alt="" /><b>{food.name}</b><small>{food.description}</small><i>{food.price}<em>{food.season}</em></i><strong>{activeFoodId === food.id ? "Thu gọn −" : "Xem điểm bán +"}</strong>
+                        <span>{String(index + 1).padStart(2, "0")}</span><img src={food.image} alt={food.name} loading="lazy" onError={handleImageError} /><b>{food.name}</b><small>{food.description}</small><i>{food.price}<em>{food.season}</em></i><strong>{activeFoodId === food.id ? "Thu gọn −" : "Xem điểm bán +"}</strong>
                       </button>
                       {activeFoodId === food.id && renderFoodMarket(food, "region")}
                     </div>
@@ -1549,7 +1557,7 @@ export default function Home() {
           <section className="place-modal" role="dialog" aria-modal="true" aria-labelledby="place-modal-title">
             <button className="modal-close" onClick={() => setSelected(null)} aria-label="Đóng">×</button>
             <div className="modal-hero">
-              <img src={selected.image} alt={selected.name} />
+              <img src={selected.image} alt={selected.name} onError={handleImageError} />
               <span className="modal-hero__shade" />
               <div><span>{selected.category} · {selected.location}</span><h2 id="place-modal-title">{selected.name}</h2><p><b>★ {selected.rating}</b> ({selected.reviews.toLocaleString("vi-VN")} đánh giá tham khảo) · Ảnh: {selected.imageCredit}</p></div>
               <button className={`heart-button modal-heart ${favorites.includes(selected.id) ? "is-saved" : ""}`} onClick={() => toggleFavorite(selected.id)}>{favorites.includes(selected.id) ? "♥" : "♡"}</button>
