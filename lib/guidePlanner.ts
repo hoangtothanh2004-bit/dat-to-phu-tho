@@ -48,8 +48,144 @@ export type GeneratedItinerary = {
   googleMapsUrl: string;
 };
 
+export type DistrictGuide = {
+  district: string;
+  region: string;
+  distanceFromHanoi: string;
+  travelTime: string;
+  recommendedTransport: string;
+  bestRoutes: string;
+  highlights: string[];
+  signatureFoods: string[];
+};
+
+export const DISTRICT_TRAVEL_GUIDES: Record<string, DistrictGuide> = {
+  "TP. Việt Trì": {
+    district: "TP. Việt Trì",
+    region: "Phú Thọ lõi",
+    distanceFromHanoi: "70 km",
+    travelTime: "60 phút",
+    recommendedTransport: "Ô tô riêng / Xe khách Mỹ Đình / Tàu hỏa",
+    bestRoutes: "Từ Hà Nội theo cao tốc Nội Bài - Lào Cai (rẽ nút giao IC7) hoặc theo trục Quốc lộ 2 qua cầu Vĩnh Thịnh/Hạc Trì.",
+    highlights: ["Khu di tích lịch sử Đền Hùng", "Làng cổ & Đình cổ Hùng Lô (hát Xoan)", "Cầu đi bộ Công viên Văn Lang"],
+    signatureFoods: ["Cá lăng sông Lô om chuối đậu", "Bánh tai Gia Cẩm", "Thịt chua Thanh Sơn"],
+  },
+  "Huyện Tân Sơn": {
+    district: "Huyện Tân Sơn",
+    region: "Phú Thọ lõi",
+    distanceFromHanoi: "115 km (80 km từ Việt Trì)",
+    travelTime: "2 giờ 15 phút",
+    recommendedTransport: "Ô tô gầm cao / Xe máy phượt ngắm cảnh",
+    bestRoutes: "Từ Việt Trì hoặc Hà Nội đi theo QL32 qua Thanh Sơn, rẽ ĐT316 vào Tân Sơn. Đường nhựa đồi núi uốn lượn phong cảnh hữu tình.",
+    highlights: ["Đồi chè Long Cốc (ốc đảo chè đẹp nhất Việt Nam)", "Vườn quốc gia Xuân Sơn (rừng nguyên sinh, hang Lạng)"],
+    signatureFoods: ["Gà nhiều cựa Xuân Sơn nướng than", "Lợn lửng xào lăn hạt dổi", "Rau sắng rừng & Xôi ngũ sắc"],
+  },
+  "Huyện Thanh Thủy": {
+    district: "Huyện Thanh Thủy",
+    region: "Phú Thọ lõi",
+    distanceFromHanoi: "65 km (40 km từ Việt Trì)",
+    travelTime: "1 giờ 15 phút",
+    recommendedTransport: "Ô tô riêng / Xe Limousine đón trả tận nơi",
+    bestRoutes: "Từ Hà Nội theo Đại lộ Thăng Long qua cầu Đồng Quang hoặc cầu Trung Hà, rẽ ĐT317 chạy thẳng vào trung tâm khoáng nóng.",
+    highlights: ["Quần thể nghỉ dưỡng suối khoáng nóng Radon", "Đền Lăng Sương", "Đảo Ngọc Xanh"],
+    signatureFoods: ["Cá ngạnh sông Đà nướng riềng mẻ", "Gà đồi Thanh Thủy hấp lá chanh", "Tắm Onsen thư giãn"],
+  },
+  "Huyện Hạ Hòa": {
+    district: "Huyện Hạ Hòa",
+    region: "Phú Thọ lõi",
+    distanceFromHanoi: "120 km (65 km từ Việt Trì)",
+    travelTime: "1 giờ 20 phút",
+    recommendedTransport: "Ô tô riêng / Xe khách cao tốc",
+    bestRoutes: "Từ Hà Nội đi thẳng cao tốc Nội Bài - Lào Cai, rẽ nút giao IC10 (Hạ Hòa), chỉ 10 phút sau là tới Đền Mẫu và Đầm Ao Châu.",
+    highlights: ["Đền Mẫu Âu Cơ (cội nguồn Mẹ Đất Việt)", "Khu du lịch sinh thái Đầm Ao Châu (99 ngách nước non)"],
+    signatureFoods: ["Trám đen kho thịt", "Chuối phấn Hạ Hòa", "Cá đầm Ao Châu nướng giòn"],
+  },
+  "Huyện Tam Đảo": {
+    district: "Huyện Tam Đảo",
+    region: "Vùng Vĩnh Phúc",
+    distanceFromHanoi: "75 km",
+    travelTime: "1 giờ 30 phút",
+    recommendedTransport: "Ô tô riêng / Limousine khứ hồi / Xe máy (cần tay lái vững)",
+    bestRoutes: "Từ Hà Nội theo cao tốc Nội Bài - Lào Cai rẽ nút giao IC4 -> đường QL2B lên Tam Đảo (đoạn đèo dốc 13km trải nhựa êm, có rào chắn bảo vệ).",
+    highlights: ["Thị trấn sương mù Tam Đảo (khí hậu 4 mùa)", "Quần thể Di tích & Danh thắng Tây Thiên (cáp treo, Thiền viện)"],
+    signatureFoods: ["Ngọn su su xào tỏi giòn ngọt", "Gà đồi bọc đất sét nướng than", "Lợn mán gác bếp"],
+  },
+  "TP. Phúc Yên": {
+    district: "TP. Phúc Yên",
+    region: "Vùng Vĩnh Phúc",
+    distanceFromHanoi: "45 km (cách sân bay Nội Bài 15km)",
+    travelTime: "45 phút",
+    recommendedTransport: "Ô tô riêng / Taxi sân bay / Xe buýt",
+    bestRoutes: "Từ Hà Nội qua Cầu Nhật Tân -> đường Võ Nguyên Giáp -> QL2 hoặc ĐT301 chạy thẳng vào khu vực Hồ Đại Lải.",
+    highlights: ["Hồ Đại Lải thơ mộng", "Flamingo Đại Lải Resort & Bảo tàng nghệ thuật trong rừng", "Đảo Ngọc"],
+    signatureFoods: ["Thịt trâu nhúng mẻ / xào rau muống", "Cá hồ Đại Lải nướng", "Thịt lợn quay giòn"],
+  },
+  "TP. Vĩnh Yên": {
+    district: "TP. Vĩnh Yên",
+    region: "Vùng Vĩnh Phúc",
+    distanceFromHanoi: "55 km",
+    travelTime: "50 phút",
+    recommendedTransport: "Ô tô riêng / Tàu hỏa / Xe buýt liên tỉnh",
+    bestRoutes: "Theo cao tốc Nội Bài - Lào Cai rẽ IC3 hoặc đi đường Quốc lộ 2 qua cầu Thăng Long.",
+    highlights: ["Chùa Hà Tiên linh thiêng", "Đầm Vạc", "Quảng trường Hồ Chí Minh"],
+    signatureFoods: ["Tép dầu Đầm Vạc chiên giòn", "Chè kho Tứ Yên", "Gỏi cá mè Vĩnh Yên"],
+  },
+  "Huyện Bình Xuyên": {
+    district: "Huyện Bình Xuyên",
+    region: "Vùng Vĩnh Phúc",
+    distanceFromHanoi: "50 km (kề cận Vĩnh Yên)",
+    travelTime: "45 phút",
+    recommendedTransport: "Ô tô riêng / Xe buýt",
+    bestRoutes: "Chạy dọc Quốc lộ 2 hoặc nút giao cao tốc Bình Xuyên.",
+    highlights: ["Làng gốm sành cổ Hương Canh 300 năm di sản", "Tháp gốm Bình Sơn"],
+    signatureFoods: ["Bánh hòn Hương Canh", "Cháo se Hương Canh"],
+  },
+  "Huyện Mai Châu": {
+    district: "Huyện Mai Châu",
+    region: "Vùng Hòa Bình",
+    distanceFromHanoi: "135 km",
+    travelTime: "3 giờ 30 phút",
+    recommendedTransport: "Ô tô riêng / Limousine đón tận homestay / Xe máy phượt",
+    bestRoutes: "Từ Hà Nội theo Đại lộ Thăng Long -> Cao tốc Hòa Lạc - Hòa Bình -> Quốc lộ 6 vượt Đèo Thung Khe (Đèo Đá Trắng) xuống thung lũng Mai Châu.",
+    highlights: ["Bản Lác & Thung lũng Mai Châu thơ mộng", "Điểm săn mây & Chợ phiên Pà Cò", "Đèo Đá Trắng Thung Khe"],
+    signatureFoods: ["Cơm lam nếp nương nướng than", "Thịt lợn mán hạt dổi xứ Mường", "Cá suối chiên giòn & Rượu cần"],
+  },
+  "Huyện Kim Bôi": {
+    district: "Huyện Kim Bôi",
+    region: "Vùng Hòa Bình",
+    distanceFromHanoi: "75 km",
+    travelTime: "1 giờ 45 phút",
+    recommendedTransport: "Ô tô riêng / Xe Limousine / Xe khách",
+    bestRoutes: "Từ Hà Nội theo QL6 qua thị trấn Xuân Mai tới ngã ba Bãi Chạo (Lương Sơn), rẽ vào đường ATK Bãi Chạo chạy thẳng vào thung lũng khoáng nóng.",
+    highlights: ["Suối khoáng nóng tự nhiên Kim Bôi (36°C giàu khoáng chất)", "Serena Resort Kim Bôi"],
+    signatureFoods: ["Gà đồi nướng mọi", "Măng đắng xào thịt bò", "Rau rừng đồ chấm lòng cá"],
+  },
+  "Huyện Cao Phong": {
+    district: "Huyện Cao Phong",
+    region: "Vùng Hòa Bình",
+    distanceFromHanoi: "88 km",
+    travelTime: "2 giờ",
+    recommendedTransport: "Ô tô riêng / Xe du lịch",
+    bestRoutes: "Từ Hà Nội đi cao tốc Hòa Lạc - Hòa Bình, qua TP. Hòa Bình theo QL6 chừng 12km tới thị trấn Cao Phong, rẽ vào bến cảng Thung Nai.",
+    highlights: ["Lòng hồ sông Đà Thung Nai (du thuyền Vịnh Hạ Long trên núi)", "Đền Bà Chúa Thác Bờ linh thiêng"],
+    signatureFoods: ["Cá lăng sông Đà nướng than lá chuối", "Cam Cao Phong lòng vàng", "Gà thả đồi nướng"],
+  },
+  "TP. Hòa Bình": {
+    district: "TP. Hòa Bình",
+    region: "Vùng Hòa Bình",
+    distanceFromHanoi: "75 km",
+    travelTime: "1 giờ 15 phút",
+    recommendedTransport: "Ô tô riêng / Xe khách Mỹ Đình/Yên Nghĩa",
+    bestRoutes: "Đi thẳng Đại lộ Thăng Long kết nối cao tốc Hòa Lạc - Hòa Bình (CT08), đường rộng 4 làn xe chạy rất nhanh và êm ái.",
+    highlights: ["Nhà máy Thủy điện Hòa Bình kỳ vĩ", "Bảo tàng Không gian Văn hóa Mường", "Tượng đài Bác Hồ núi Ông Tượng"],
+    signatureFoods: ["Cỗ lá Mường truyền thống", "Chả cuốn lá bưởi thơm lừng", "Cá chiên sông Đà"],
+  },
+};
+
 export type PlannerOptions = {
   anchorPlaceId?: string;
+  selectedPlaceIds?: string[];
+  district?: string;
   region?: string;
   durationDays: number;
   transport: string;
@@ -72,6 +208,8 @@ function haversineDistance(lat1: number, lon1: number, lat2: number, lon2: numbe
 export function buildItinerary(options: PlannerOptions): GeneratedItinerary {
   const {
     anchorPlaceId,
+    selectedPlaceIds = [],
+    district,
     region,
     durationDays = 2,
     transport = "Ô tô riêng",
@@ -80,10 +218,23 @@ export function buildItinerary(options: PlannerOptions): GeneratedItinerary {
     travelers = 2,
   } = options;
 
-  // 1. Tìm điểm neo khởi đầu
-  let anchor = places.find((p) => p.id === anchorPlaceId);
+  // 1. Xác định danh sách các điểm được người dùng ưu tiên ghép
+  const userChosenPlaces: Place[] = [];
+  if (selectedPlaceIds.length > 0) {
+    for (const pid of selectedPlaceIds) {
+      const found = places.find((p) => p.id === pid);
+      if (found && !userChosenPlaces.some((cp) => cp.id === found.id)) {
+        userChosenPlaces.push(found);
+      }
+    }
+  }
+
+  // Nếu không chọn mảng điểm, tìm điểm neo khởi đầu
+  let anchor = userChosenPlaces[0] || places.find((p) => p.id === anchorPlaceId);
   if (!anchor) {
-    if (region && region !== "Tất cả") {
+    if (district) {
+      anchor = places.find((p) => p.district === district) || places[0];
+    } else if (region && region !== "Tất cả") {
       anchor = places.find((p) => p.region === region) || places[0];
     } else {
       anchor = places[0]; // Default Đền Hùng
@@ -91,23 +242,34 @@ export function buildItinerary(options: PlannerOptions): GeneratedItinerary {
   }
 
   // 2. Gom cụm các điểm đến phù hợp theo cự ly và chủ đề
-  const otherPlaces = places.filter((p) => p.id !== anchor!.id);
-  // Sắp xếp các điểm còn lại theo cự ly tới điểm neo hoặc liên vùng nếu đi 3-4 ngày
-  const sortedNearby = [...otherPlaces].sort((a, b) => {
-    const distA = haversineDistance(anchor!.lat, anchor!.lng, a.lat, a.lng);
-    const distB = haversineDistance(anchor!.lat, anchor!.lng, b.lat, b.lng);
-    // Nếu cùng vùng ưu tiên trước
-    if (a.region === anchor!.region && b.region !== anchor!.region) return -1;
-    if (b.region === anchor!.region && a.region !== anchor!.region) return 1;
-    return distA - distB;
-  });
+  const neededStops = Math.max(durationDays * 2, userChosenPlaces.length);
+  const chosenPlaces: Place[] = [...userChosenPlaces];
 
-  // Chọn danh sách điểm dừng: mỗi ngày 2 điểm tham quan chính
-  const chosenPlaces: Place[] = [anchor];
-  const neededStops = Math.min(durationDays * 2, places.length);
-  for (const candidate of sortedNearby) {
-    if (chosenPlaces.length >= neededStops) break;
-    chosenPlaces.push(candidate);
+  if (!chosenPlaces.some((p) => p.id === anchor.id)) {
+    chosenPlaces.unshift(anchor);
+  }
+
+  // Nếu vẫn chưa đủ điểm cho số ngày, tự động bổ sung các điểm lân cận
+  if (chosenPlaces.length < neededStops) {
+    const existingIds = new Set(chosenPlaces.map((p) => p.id));
+    const pool = places.filter((p) => !existingIds.has(p.id));
+
+    // Ưu tiên cùng huyện trước, sau đó cùng vùng, sau đó theo cự ly
+    pool.sort((a, b) => {
+      const lastPlace = chosenPlaces[chosenPlaces.length - 1] || anchor;
+      if (district && a.district === district && b.district !== district) return -1;
+      if (district && b.district === district && a.district !== district) return 1;
+      if (a.region === lastPlace.region && b.region !== lastPlace.region) return -1;
+      if (b.region === lastPlace.region && a.region !== lastPlace.region) return 1;
+      const distA = haversineDistance(lastPlace.lat, lastPlace.lng, a.lat, a.lng);
+      const distB = haversineDistance(lastPlace.lat, lastPlace.lng, b.lat, b.lng);
+      return distA - distB;
+    });
+
+    for (const candidate of pool) {
+      if (chosenPlaces.length >= neededStops) break;
+      chosenPlaces.push(candidate);
+    }
   }
 
   // 3. Xây dựng từng ngày
@@ -246,12 +408,22 @@ export function buildItinerary(options: PlannerOptions): GeneratedItinerary {
   const remMinutes = totalMinutes % 60;
   const totalDriveTime = `${hoursDrive > 0 ? `${hoursDrive} giờ ` : ""}${remMinutes} phút lái xe`;
 
+  const districtGuide = district && DISTRICT_TRAVEL_GUIDES[district] ? DISTRICT_TRAVEL_GUIDES[district] : null;
+
+  const displayTitle = userChosenPlaces.length > 1
+    ? `Hành trình ${durationDays}N${durationDays > 1 ? `${durationDays - 1}Đ` : ""}: Ghép tuyến ${userChosenPlaces.slice(0, 3).map(p => p.shortName).join(" – ")}${userChosenPlaces.length > 3 ? ` (+${userChosenPlaces.length - 3})` : ""}`
+    : `Hành trình ${durationDays}N${durationDays > 1 ? `${durationDays - 1}Đ` : ""}: Khám phá ${anchor.shortName}`;
+
+  const defaultRouteAdvice = districtGuide
+    ? `${districtGuide.bestRoutes} (Cự ly ~${districtGuide.distanceFromHanoi}, thời gian ~${districtGuide.travelTime}).`
+    : (anchor.transportTips?.routeAdvice || "Cung đường liên huyện và cao tốc bằng phẳng, dễ di chuyển.");
+
   return {
     id: `plan-${Date.now()}`,
-    title: `Hành trình ${durationDays}N${durationDays > 1 ? `${durationDays - 1}Đ` : ""}: Khám phá ${anchor.shortName}`,
-    subtitle: `${anchor.region} · Phương tiện ${transport} · ${style}`,
-    targetDestination: anchor.name,
-    region: anchor.region,
+    title: displayTitle,
+    subtitle: `${district ? `${district} · ` : ""}${anchor.region} · Phương tiện ${transport} · ${style}`,
+    targetDestination: userChosenPlaces.length > 1 ? userChosenPlaces.map(p => p.shortName).join(", ") : anchor.name,
+    region: userChosenPlaces.length > 1 ? "Liên tuyến đa điểm" : anchor.region,
     durationDays,
     durationLabel: `${durationDays} ngày ${durationDays > 1 ? `${durationDays - 1} đêm` : "(trong ngày)"}`,
     transport,
@@ -263,7 +435,7 @@ export function buildItinerary(options: PlannerOptions): GeneratedItinerary {
     totalCost,
     overviewNarrative,
     audioGuideScript,
-    routeAdvice: anchor.transportTips?.routeAdvice || "Cung đường liên huyện và cao tốc bằng phẳng, dễ di chuyển.",
+    routeAdvice: defaultRouteAdvice,
     cautionAdvice: anchor.warning || "Chú ý theo dõi thời tiết và chuẩn bị trang phục phù hợp với từng điểm đến.",
     days,
     googleMapsUrl,

@@ -19,7 +19,7 @@ import {
 } from "@/data/travel";
 import { culturalEvents } from "@/data/events";
 import { tourTemplates, type TourTemplate } from "@/data/itineraryTemplates";
-import { buildItinerary, type GeneratedItinerary } from "@/lib/guidePlanner";
+import { buildItinerary, DISTRICT_TRAVEL_GUIDES, type GeneratedItinerary } from "@/lib/guidePlanner";
 
 const isStaticDemo = process.env.NEXT_PUBLIC_STATIC_DEMO === "true";
 
@@ -172,6 +172,8 @@ export default function Home() {
   const [detailMode, setDetailMode] = useState<"eat" | "stay">("eat");
   const [targetPlaceId, setTargetPlaceId] = useState<string>(places[0]?.id || "den-hung");
   const [tripRegion, setTripRegion] = useState<string>("Tất cả");
+  const [tripDistrict, setTripDistrict] = useState<string>("Tất cả");
+  const [selectedPlaceIds, setSelectedPlaceIds] = useState<string[]>([places[0]?.id || "den-hung"]);
   const [days, setDays] = useState(2);
   const [travelers, setTravelers] = useState(2);
   const [transport, setTransport] = useState("Ô tô riêng");
@@ -180,6 +182,7 @@ export default function Home() {
   const [generatedItinerary, setGeneratedItinerary] = useState<GeneratedItinerary>(() =>
     buildItinerary({
       anchorPlaceId: places[0]?.id || "den-hung",
+      selectedPlaceIds: [places[0]?.id || "den-hung"],
       durationDays: 2,
       transport: "Ô tô riêng",
       budget: "Tiêu chuẩn",
@@ -188,6 +191,75 @@ export default function Home() {
     })
   );
   const [audioGuidePlaying, setAudioGuidePlaying] = useState(false);
+
+  const availableDistricts = useMemo(() => {
+    if (tripRegion === "Phú Thọ lõi") {
+      return ["Tất cả", "TP. Việt Trì", "Huyện Tân Sơn", "Huyện Thanh Thủy", "Huyện Hạ Hòa"];
+    }
+    if (tripRegion === "Vùng Vĩnh Phúc") {
+      return ["Tất cả", "Huyện Tam Đảo", "TP. Phúc Yên", "TP. Vĩnh Yên", "Huyện Bình Xuyên"];
+    }
+    if (tripRegion === "Vùng Hòa Bình") {
+      return ["Tất cả", "Huyện Mai Châu", "Huyện Kim Bôi", "Huyện Cao Phong", "TP. Hòa Bình"];
+    }
+    return [
+      "Tất cả",
+      "TP. Việt Trì", "Huyện Tân Sơn", "Huyện Thanh Thủy", "Huyện Hạ Hòa",
+      "Huyện Tam Đảo", "TP. Phúc Yên", "TP. Vĩnh Yên", "Huyện Bình Xuyên",
+      "Huyện Mai Châu", "Huyện Kim Bôi", "Huyện Cao Phong", "TP. Hòa Bình"
+    ];
+  }, [tripRegion]);
+
+  const activeDistrictGuide = tripDistrict !== "Tất cả" && DISTRICT_TRAVEL_GUIDES[tripDistrict]
+    ? DISTRICT_TRAVEL_GUIDES[tripDistrict]
+    : null;
+
+  const availablePlacesForSelection = useMemo(() => {
+    return places.filter((p) => {
+      if (tripRegion !== "Tất cả" && p.region !== tripRegion) return false;
+      if (tripDistrict !== "Tất cả" && p.district !== tripDistrict) return false;
+      return true;
+    });
+  }, [tripRegion, tripDistrict]);
+
+  const togglePlaceSelection = (placeId: string) => {
+    setSelectedPlaceIds((current) => {
+      if (current.includes(placeId)) {
+        if (current.length === 1) {
+          showToast("Cần giữ ít nhất 1 điểm đến trong lịch trình!");
+          return current;
+        }
+        return current.filter((id) => id !== placeId);
+      } else {
+        return [...current, placeId];
+      }
+    });
+  };
+
+  const selectAllFilteredPlaces = () => {
+    const ids = availablePlacesForSelection.map((p) => p.id);
+    setSelectedPlaceIds((current) => {
+      const merged = Array.from(new Set([...current, ...ids]));
+      return merged;
+    });
+    showToast(`Đã thêm ${availablePlacesForSelection.length} điểm vào hành trình!`);
+  };
+
+  const applyQuickCombination = (name: string, placeIds: string[], daysCount: number) => {
+    setSelectedPlaceIds(placeIds);
+    setDays(daysCount);
+    const res = buildItinerary({
+      anchorPlaceId: placeIds[0],
+      selectedPlaceIds: placeIds,
+      durationDays: daysCount,
+      transport,
+      budget,
+      style: interest,
+      travelers,
+    });
+    setGeneratedItinerary(res);
+    showToast(`✦ Đã áp dụng ${name}!`);
+  };
   const [show100Directory, setShow100Directory] = useState(false);
   const [directoryDistrict, setDirectoryDistrict] = useState("Tất cả");
   const [directorySearch, setDirectorySearch] = useState("");
@@ -595,8 +667,10 @@ export default function Home() {
     if ("speechSynthesis" in window) window.speechSynthesis.cancel();
     setAudioGuidePlaying(false);
     const res = buildItinerary({
-      anchorPlaceId: targetPlaceId,
-      region: tripRegion,
+      anchorPlaceId: selectedPlaceIds[0] || targetPlaceId,
+      selectedPlaceIds,
+      district: tripDistrict !== "Tất cả" ? tripDistrict : undefined,
+      region: tripRegion !== "Tất cả" ? tripRegion : undefined,
       durationDays: days,
       transport,
       budget,
@@ -604,7 +678,7 @@ export default function Home() {
       travelers,
     });
     setGeneratedItinerary(res);
-    showToast(`✦ Hướng dẫn viên đã tạo lịch trình ${days} ngày cho bạn!`);
+    showToast(`✦ Hướng dẫn viên đã tạo lịch trình ${days} ngày với ${selectedPlaceIds.length} điểm đã chọn!`);
   };
 
   const handleApplyTourTemplate = (tmpl: TourTemplate) => {
@@ -1078,26 +1152,155 @@ export default function Home() {
               <span className="builder-card__step">BỘ ĐIỀU KHIỂN LỊCH TRÌNH</span>
               <h2>Bạn muốn đi đâu & như thế nào?</h2>
 
-              <label>
-                Điểm đến trọng tâm
-                <select value={targetPlaceId} onChange={(event) => setTargetPlaceId(event.target.value)}>
-                  <optgroup label="🏛️ Phú Thọ lõi (Vùng Đất Tổ)">
-                    {places.filter((p) => p.region === "Phú Thọ lõi").map((p) => (
-                      <option key={p.id} value={p.id}>{p.name}</option>
-                    ))}
-                  </optgroup>
-                  <optgroup label="☁️ Vùng Vĩnh Phúc (Tam Đảo – Tây Thiên – Đại Lải)">
-                    {places.filter((p) => p.region === "Vùng Vĩnh Phúc").map((p) => (
-                      <option key={p.id} value={p.id}>{p.name}</option>
-                    ))}
-                  </optgroup>
-                  <optgroup label="🌲 Vùng Hòa Bình (Mai Châu – Kim Bôi – Thung Nai)">
-                    {places.filter((p) => p.region === "Vùng Hòa Bình").map((p) => (
-                      <option key={p.id} value={p.id}>{p.name}</option>
-                    ))}
-                  </optgroup>
+              {/* 1. CHỌN VÙNG / TỈNH */}
+              <div className="builder-group">
+                <label>1. Chọn Tỉnh / Vùng du lịch</label>
+                <div className="region-pill-group">
+                  {[
+                    { id: "Tất cả", label: "✨ Ghép 3 Tỉnh" },
+                    { id: "Phú Thọ lõi", label: "🏛️ Phú Thọ" },
+                    { id: "Vùng Vĩnh Phúc", label: "☁️ Vĩnh Phúc" },
+                    { id: "Vùng Hòa Bình", label: "🌲 Hòa Bình" },
+                  ].map((r) => (
+                    <button
+                      key={r.id}
+                      type="button"
+                      className={`region-pill ${tripRegion === r.id ? "is-active" : ""}`}
+                      onClick={() => {
+                        setTripRegion(r.id);
+                        setTripDistrict("Tất cả");
+                      }}
+                    >
+                      {r.label}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* 2. CHỌN HUYỆN / THỊ XÃ & HƯỚNG DẪN ĐƯỜNG ĐI */}
+              <div className="builder-group">
+                <label>2. Chọn Huyện / Thị xã muốn tới</label>
+                <select
+                  value={tripDistrict}
+                  onChange={(event) => setTripDistrict(event.target.value)}
+                  className="district-select"
+                >
+                  <option value="Tất cả">Toàn bộ các huyện (Lập tuyến tự do)</option>
+                  {availableDistricts.filter((d) => d !== "Tất cả").map((d) => (
+                    <option key={d} value={d}>{d}</option>
+                  ))}
                 </select>
-              </label>
+
+                {/* HỘP HƯỚNG DẪN ĐƯỜNG ĐI TỚI HUYỆN */}
+                {activeDistrictGuide && (
+                  <div className="district-travel-tip">
+                    <div className="district-travel-tip__head">
+                      <span>🧭 HƯỚNG DẪN ĐƯỜNG ĐI: <b>{activeDistrictGuide.district}</b></span>
+                      <small>{activeDistrictGuide.region}</small>
+                    </div>
+                    <div className="district-travel-tip__metrics">
+                      <span>📏 <b>{activeDistrictGuide.distanceFromHanoi}</b></span>
+                      <span>⏱ <b>{activeDistrictGuide.travelTime}</b></span>
+                      <span>🚗 <b>{activeDistrictGuide.recommendedTransport}</b></span>
+                    </div>
+                    <p className="district-travel-tip__route">
+                      <strong>Tuyến đường:</strong> {activeDistrictGuide.bestRoutes}
+                    </p>
+                    <p className="district-travel-tip__foods">
+                      <strong>Món ngon đặc sản:</strong> {activeDistrictGuide.signatureFoods.join(" · ")}
+                    </p>
+                  </div>
+                )}
+              </div>
+
+              {/* 3. GHÉP CÁC ĐỊA ĐIỂM VÀO LỊCH TRÌNH */}
+              <div className="builder-group">
+                <div className="group-header">
+                  <label>3. Ghép các điểm đến vào tour</label>
+                  <span className="count-tag">Đã chọn <b>{selectedPlaceIds.length}</b> điểm</span>
+                </div>
+
+                {/* GỢI Ý GHÉP NHANH CÁC TUYẾN PHỔ BIẾN */}
+                <div className="quick-combo-bar">
+                  <small>Gợi ý tuyến ghép nhanh:</small>
+                  <div className="quick-combo-chips">
+                    <button
+                      type="button"
+                      className="quick-chip"
+                      onClick={() => applyQuickCombination("Tour Cội Nguồn & Khoáng Nóng", ["den-hung", "hung-lo", "thanh-thuy"], 2)}
+                    >
+                      <span>🏛️ Đền Hùng + Khoáng nóng Thanh Thủy</span>
+                      <b>2N1Đ →</b>
+                    </button>
+                    <button
+                      type="button"
+                      className="quick-chip"
+                      onClick={() => applyQuickCombination("Tour Mây Núi 2 Tỉnh", ["tam-dao", "tay-thien", "ban-lac-mai-chau"], 2)}
+                    >
+                      <span>☁️ Tam Đảo + Thung lũng Mai Châu</span>
+                      <b>2N1Đ →</b>
+                    </button>
+                    <button
+                      type="button"
+                      className="quick-chip"
+                      onClick={() => applyQuickCombination("Tour Suối Khoáng 2 Vùng", ["thanh-thuy", "khoang-nong-kim-boi"], 2)}
+                    >
+                      <span>♨️ Khoáng nóng Thanh Thủy + Kim Bôi</span>
+                      <b>2N1Đ →</b>
+                    </button>
+                    <button
+                      type="button"
+                      className="quick-chip"
+                      onClick={() => applyQuickCombination("Đại Hành Trình 3 Tỉnh", ["den-hung", "tam-dao", "ban-lac-mai-chau", "khoang-nong-kim-boi"], 3)}
+                    >
+                      <span>✨ Trọn Vẹn 3 Tỉnh (Phú Thọ – Vĩnh Phúc – Hòa Bình)</span>
+                      <b>3N2Đ →</b>
+                    </button>
+                  </div>
+                </div>
+
+                {/* LƯỚI CHỌN TỪNG ĐIỂM THAM QUAN */}
+                <div className="place-check-grid">
+                  {availablePlacesForSelection.map((p) => {
+                    const isChecked = selectedPlaceIds.includes(p.id);
+                    return (
+                      <button
+                        type="button"
+                        key={p.id}
+                        className={`place-check-card ${isChecked ? "is-checked" : ""}`}
+                        onClick={() => togglePlaceSelection(p.id)}
+                        aria-pressed={isChecked}
+                      >
+                        <div className="place-check-card__box">
+                          <span>{isChecked ? "✓" : "+"}</span>
+                        </div>
+                        <img src={p.image} alt={p.name} className="place-check-card__thumb" loading="lazy" onError={handleImageError} />
+                        <div className="place-check-card__meta">
+                          <b>{p.shortName}</b>
+                          <small>{p.district} · {p.category}</small>
+                        </div>
+                      </button>
+                    );
+                  })}
+                </div>
+
+                {availablePlacesForSelection.length > 0 && (
+                  <div className="place-check-actions">
+                    <button type="button" onClick={selectAllFilteredPlaces} className="link-btn">
+                      + Thêm tất cả ({availablePlacesForSelection.length} điểm)
+                    </button>
+                    {selectedPlaceIds.length > 1 && (
+                      <button
+                        type="button"
+                        onClick={() => setSelectedPlaceIds([availablePlacesForSelection[0]?.id || "den-hung"])}
+                        className="link-btn link-btn--danger"
+                      >
+                        ↺ Đặt lại (chỉ giữ 1 điểm)
+                      </button>
+                    )}
+                  </div>
+                )}
+              </div>
 
               <label>
                 Số ngày đi
@@ -1150,7 +1353,7 @@ export default function Home() {
               </label>
 
               <button className="button button--dark button--full" onClick={handleGenerateItinerary}>
-                ✦ Lập Lịch Trình Cùng Hướng Dẫn Viên
+                ✦ Lập Lịch Trình Tuyến Đã Ghép ({selectedPlaceIds.length} Điểm)
               </button>
               <small className="builder-note">Tự động tính quãng đường, chi phí, thực đơn và lời thuyết minh</small>
             </aside>
@@ -1187,16 +1390,6 @@ export default function Home() {
                     <small>DỰ TOÁN / KHÁCH</small>
                     <b>{formatMoney(generatedItinerary.estimatedCostPerPerson)}</b>
                   </div>
-                </div>
-
-                {/* AUDIO VOICE TOUR GUIDE */}
-                <div className="guide-audio-bar">
-                  <button className="guide-audio-button" onClick={toggleItineraryAudio}>
-                    {audioGuidePlaying ? "⏸ Tạm dừng thuyết minh" : "▶ Nghe Hướng Dẫn Viên Giới Thiệu"}
-                  </button>
-                  <span className="guide-audio-text">
-                    “{generatedItinerary.audioGuideScript.slice(0, 160)}…”
-                  </span>
                 </div>
 
                 {/* ACTION BAR */}
