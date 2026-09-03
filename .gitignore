@@ -13,6 +13,16 @@
 
 # testing
 /coverage
+/.pnp
+.pnp.*
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/versions
+
+# testing
+/coverage
 
 # next.js
 /.next/
@@ -22,6 +32,7 @@
 # misc
 .DS_Store
 *.pem
+~$*
 
 # debug
 npm-debug.log*

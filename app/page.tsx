@@ -770,6 +770,17 @@ export default function Home() {
     showToast(`Đã thêm "${dish.name}" vào giỏ hàng`);
   };
 
+  const goToFoodSection = () => {
+    setCartOpen(false);
+    setActiveTab("explore");
+    window.setTimeout(() => {
+      const el = document.getElementById("food-browser-section");
+      if (el) {
+        el.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+    }, 120);
+  };
+
   const changeCartQuantity = (dishId: string, sellerId: string, change: number) => {
     const next = cart
       .map((line) => line.dishId === dishId && line.sellerId === sellerId ? { ...line, quantity: line.quantity + change } : line)
@@ -1175,7 +1186,7 @@ export default function Home() {
           </section>
 
           {/* LOCAL GASTRONOMY (BẢN ĐỒ VỊ GIÁC) */}
-          <section className="content-section local-guide">
+          <section className="content-section local-guide" id="food-browser-section">
             <div className="local-guide__intro">
               <span className="kicker">BẢN ĐỒ ẨM THỰC ĐẶC SẢN</span>
               <h2>Mỗi vùng đất,<br />một phong vị riêng.</h2>
@@ -1210,11 +1221,10 @@ export default function Home() {
         </>
       )}
 
-      {/* TAB 2: LỊCH TRÌNH (TRIP - AI TOUR GUIDE) */}
+      {/* TAB 2: LỊCH TRÌNH (TRIP - TOUR GUIDE) */}
       {activeTab === "trip" && (
         <section className="inner-page trip-page">
           <div className="inner-page__intro">
-            <span className="kicker">AI TOUR GUIDE · TRỢ LÝ HÀNH TRÌNH 3 TỈNH</span>
             <h1>Lập lịch trình thông minh<br /><em>cùng hướng dẫn viên bản địa.</em></h1>
             <p>Tự động thiết kế hành trình tối ưu theo 4 yếu tố cốt lõi: <b>🏛️ Lộ trình tham quan · 🍲 Món ngon đặc sản · 🛏️ Khách sạn nghỉ dưỡng · 🚗 Phương tiện & thời gian di chuyển</b> trên toàn địa bàn Phú Thọ, Vĩnh Phúc, Hòa Bình.</p>
           </div>
@@ -2329,7 +2339,7 @@ export default function Home() {
                 <span>🛒</span>
                 <h3>Giỏ hàng đang trống</h3>
                 <p>Khám phá bản đồ ẩm thực và thêm các món đặc sản vào giỏ.</p>
-                <button type="button" className="button button--dark" onClick={() => { setCartOpen(false); setActiveTab("explore"); }}>Xem đặc sản ngay →</button>
+                <button type="button" className="button button--dark" onClick={goToFoodSection}>Xem đặc sản ngay →</button>
               </div>
             ) : (
               <>
