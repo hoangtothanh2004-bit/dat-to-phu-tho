@@ -1939,8 +1939,8 @@ h3,
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  background: var(--foreground);
-  color: var(--background);
+  background: #ffffff;
+  color: #111827;
   border: 0;
   padding: 10px 18px;
   border-radius: 999px;
@@ -1948,35 +1948,39 @@ h3,
   font-weight: 700;
   cursor: pointer;
   transition: all 0.2s ease;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
 }
 .audio-play-btn:hover {
-  background: var(--accent);
+  background: #ecfdf5;
+  color: #065f46;
   transform: translateY(-1px);
 }
 .audio-play-btn.is-playing {
-  background: #059669;
+  background: #10b981;
+  color: #ffffff;
 }
 .audio-stop-btn {
-  background: var(--surface);
-  color: #dc2626;
-  border: 1px solid var(--line);
+  background: rgba(239, 68, 68, 0.18);
+  color: #fca5a5;
+  border: 1px solid rgba(239, 68, 68, 0.4);
   padding: 9px 14px;
   border-radius: 999px;
   font-size: 13px;
   font-weight: 700;
   cursor: pointer;
+  transition: all 0.15s ease;
 }
 .audio-stop-btn:hover {
-  background: #fee2e2;
-  border-color: #fca5a5;
+  background: #ef4444;
+  color: #ffffff;
+  border-color: #ef4444;
 }
 
 /* Audio Language Switcher */
 .audio-lang-switcher {
   display: inline-flex;
-  background: var(--surface);
-  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.2);
   padding: 3px;
   border-radius: 999px;
   gap: 3px;
@@ -1985,21 +1989,21 @@ h3,
 .audio-lang-btn {
   background: transparent;
   border: 0;
-  padding: 5px 12px;
+  padding: 6px 13px;
   border-radius: 999px;
   font-size: 12.5px;
   font-weight: 700;
-  color: var(--muted);
+  color: #d1d5db;
   cursor: pointer;
   transition: all 0.15s ease;
 }
 .audio-lang-btn:hover {
-  color: var(--foreground);
+  color: #ffffff;
 }
 .audio-lang-btn.is-active {
-  background: var(--foreground);
-  color: var(--background);
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.15);
+  background: #ffffff;
+  color: #111827;
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.3);
 }
 
 .audio-settings-strip {
@@ -2008,42 +2012,48 @@ h3,
   justify-content: space-between;
   gap: 16px;
   flex-wrap: wrap;
-  padding-top: 10px;
-  border-top: 1px dashed rgba(24, 51, 44, 0.1);
+  padding-top: 12px;
+  border-top: 1px dashed rgba(255, 255, 255, 0.15);
 }
 
-/* Audio Voice Selector */
+/* Audio Voice Selector in Trip Dark Card */
 .audio-voice-control {
   display: flex;
   align-items: center;
   gap: 8px;
   font-size: 13px;
   font-weight: 600;
-  color: var(--foreground);
+  color: #f3f4f6;
   flex: 1 1 240px;
-  max-width: 380px;
+  max-width: 400px;
 }
 .audio-voice-control label {
   white-space: nowrap;
-  color: var(--muted);
-  font-size: 12.5px;
+  color: #e5e7eb;
+  font-size: 13px;
+  font-weight: 600;
 }
 .audio-voice-select {
   flex: 1;
-  height: 34px;
-  padding: 0 10px;
-  font-size: 12.5px;
+  height: 36px;
+  padding: 0 12px;
+  font-size: 13px;
   font-weight: 600;
-  background: var(--surface);
-  border: 1px solid var(--line);
+  background-color: #232c25;
+  border: 1px solid rgba(255, 255, 255, 0.25);
   border-radius: 8px;
-  color: var(--foreground);
+  color: #ffffff;
   cursor: pointer;
   outline: none;
   transition: border-color 0.15s ease;
 }
 .audio-voice-select:focus {
-  border-color: var(--accent);
+  border-color: #10b981;
+}
+.audio-voice-select option {
+  background-color: #1e2621;
+  color: #ffffff;
+  padding: 8px 10px;
 }
 
 .audio-volume-control {
@@ -2052,11 +2062,18 @@ h3,
   gap: 8px;
   font-size: 13px;
   font-weight: 600;
-  color: var(--foreground);
+  color: #f3f4f6;
+}
+.audio-volume-control span {
+  color: #e5e7eb;
+}
+.audio-volume-control small {
+  color: #93c5fd;
+  font-weight: 700;
 }
 .audio-volume-control input[type="range"] {
   width: 100px;
-  accent-color: var(--accent);
+  accent-color: #3b82f6;
   cursor: pointer;
 }
 .audio-rate-control {
@@ -2065,21 +2082,77 @@ h3,
   gap: 6px;
   font-size: 13px;
   font-weight: 600;
-  color: var(--muted);
+  color: #e5e7eb;
 }
 .rate-btn {
-  background: var(--surface);
-  border: 1px solid var(--line);
-  padding: 3px 8px;
+  background: #232c25;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #e5e7eb;
+  padding: 4px 9px;
   border-radius: 6px;
-  font-size: 12px;
+  font-size: 12.5px;
   font-weight: 700;
   cursor: pointer;
+  transition: all 0.15s ease;
+}
+.rate-btn:hover {
+  background: rgba(255, 255, 255, 0.15);
+  color: #ffffff;
 }
 .rate-btn.is-active {
-  background: var(--foreground);
-  color: var(--background);
-  border-color: var(--foreground);
+  background: #ffffff;
+  color: #111827;
+  border-color: #ffffff;
+}
+
+/* Modal Audio Box Styles (Inside Light Theme Modal) */
+.modal-audio-box {
+  padding: 12px 14px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  margin-top: 14px;
+}
+.modal-audio-box .audio-settings-strip {
+  border-top-color: #e2e8f0;
+}
+.modal-audio-box .audio-voice-control label,
+.modal-audio-box .audio-volume-control span,
+.modal-audio-box .audio-rate-control span {
+  color: #334155;
+}
+.modal-audio-box .audio-volume-control small {
+  color: #0284c7;
+}
+.modal-audio-box .audio-voice-select {
+  background-color: #ffffff;
+  color: #0f172a;
+  border: 1px solid #cbd5e1;
+}
+.modal-audio-box .audio-voice-select option {
+  background-color: #ffffff;
+  color: #0f172a;
+}
+.modal-audio-box .audio-lang-switcher {
+  background: #e2e8f0;
+  border: 1px solid #cbd5e1;
+}
+.modal-audio-box .audio-lang-btn {
+  color: #475569;
+}
+.modal-audio-box .audio-lang-btn.is-active {
+  background: #0f172a;
+  color: #ffffff;
+}
+.modal-audio-box .rate-btn {
+  background: #ffffff;
+  color: #334155;
+  border: 1px solid #cbd5e1;
+}
+.modal-audio-box .rate-btn.is-active {
+  background: #0f172a;
+  color: #ffffff;
+  border-color: #0f172a;
 }
 
 /* Saved Subtabs */
