@@ -329,6 +329,13 @@ export default function Home() {
     return () => window.clearTimeout(favoritesTimer);
   }, []);
 
+  // Tự động cuộn lên đầu trang khi chuyển tab
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      window.scrollTo({ top: 0, left: 0, behavior: "instant" });
+    }
+  }, [activeTab]);
+
   useEffect(() => {
     if (isStaticDemo) return;
 
@@ -2085,11 +2092,34 @@ export default function Home() {
 
           <div className="near-layout">
             <div className="map-panel">
-              <iframe
-                title="Bản đồ tiện ích du lịch Phú Thọ, Vĩnh Phúc, Hòa Bình"
-                src="https://www.openstreetmap.org/export/embed.html?bbox=104.85%2C20.55%2C105.75%2C21.65&layer=mapnik"
-                loading="lazy"
-              />
+              <svg className="map-vector-bg" viewBox="0 0 800 500" preserveAspectRatio="none" aria-hidden="true">
+                <defs>
+                  <linearGradient id="mapBgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stopColor="#eef2ef" />
+                    <stop offset="50%" stopColor="#e5ece7" />
+                    <stop offset="100%" stopColor="#dbe5de" />
+                  </linearGradient>
+                  <pattern id="mapGrid" width="40" height="40" patternUnits="userSpaceOnUse">
+                    <path d="M 40 0 L 0 0 0 40" fill="none" stroke="rgba(24, 51, 44, 0.05)" strokeWidth="1" />
+                  </pattern>
+                </defs>
+                <rect width="100%" height="100%" fill="url(#mapBgGrad)" />
+                <rect width="100%" height="100%" fill="url(#mapGrid)" />
+                {/* Major water bodies: Sông Lô, Sông Hồng, Sông Đà */}
+                <path d="M 120 0 Q 280 180 440 260 T 800 380" fill="none" stroke="#9bbdc9" strokeWidth="14" strokeLinecap="round" opacity="0.65" />
+                <path d="M 440 0 Q 430 140 440 260" fill="none" stroke="#a4c6d1" strokeWidth="10" strokeLinecap="round" opacity="0.65" />
+                <path d="M 0 320 Q 260 360 440 260" fill="none" stroke="#9bbdc9" strokeWidth="12" strokeLinecap="round" opacity="0.65" />
+                {/* Main highways */}
+                <path d="M 0 120 L 800 310" fill="none" stroke="#d5c8ad" strokeWidth="4" strokeDasharray="8 4" opacity="0.75" />
+                <path d="M 300 0 L 520 500" fill="none" stroke="#d5c8ad" strokeWidth="3" opacity="0.75" />
+                {/* Territory watermark labels */}
+                <text x="310" y="210" fill="#72857c" fontSize="20" fontWeight="700" letterSpacing="6" opacity="0.5">PHÚ THỌ</text>
+                <text x="560" y="140" fill="#72857c" fontSize="17" fontWeight="700" letterSpacing="4" opacity="0.5">VĨNH PHÚC</text>
+                <text x="240" y="420" fill="#72857c" fontSize="17" fontWeight="700" letterSpacing="4" opacity="0.5">HÒA BÌNH</text>
+                {/* Confluence */}
+                <circle cx="440" cy="260" r="14" fill="rgba(155, 189, 201, 0.5)" />
+                <text x="445" y="250" fill="#3b6271" fontSize="10.5" fontWeight="800">Ngã Ba Bạch Hạc</text>
+              </svg>
               <div className="map-pins" aria-label="Các ghim trên bản đồ">
                 {filteredNearItems.slice(0, 30).map((item) => (
                   <button
@@ -2116,7 +2146,7 @@ export default function Home() {
                   <a target="_blank" rel="noreferrer" href={`https://www.google.com/maps/dir/?api=1&destination=${selectedNearItem.lat},${selectedNearItem.lng}`}>Chỉ đường →</a>
                 </div>
               )}
-              <span className="map-credit">Bản đồ © OpenStreetMap</span>
+              <span className="map-credit">Bản đồ số Vùng Đất Tổ</span>
             </div>
 
             <div className="service-list">
