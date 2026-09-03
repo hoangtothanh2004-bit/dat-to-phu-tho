@@ -1349,14 +1349,26 @@ export default function Home() {
                 <div key={region.id} className="food-list">
                   <p className="food-region-note">{region.subtitle}</p>
                   {region.dishes.map((food, index) => (
-                    <div className="food-entry" key={food.id}>
-                      <button className="food-row" aria-expanded={activeFoodId === food.id} onClick={() => setActiveFoodId((current) => current === food.id ? null : food.id)}>
-                        <span>{String(index + 1).padStart(2, "0")}</span>
-                        <img src={food.image} alt={food.name} loading="lazy" onError={handleImageError} />
-                        <b>{food.name}</b>
-                        <small>{food.description}</small>
-                        <i>{food.price}<em>{food.season}</em></i>
-                        <strong>{activeFoodId === food.id ? "Thu gọn −" : "Xem điểm bán +"}</strong>
+                    <div className={`food-entry ${activeFoodId === food.id ? "is-active" : ""}`} key={food.id}>
+                      <button
+                        type="button"
+                        className={`food-row ${activeFoodId === food.id ? "is-expanded" : ""}`}
+                        aria-expanded={activeFoodId === food.id}
+                        onClick={() => setActiveFoodId((current) => current === food.id ? null : food.id)}
+                      >
+                        <span className="food-row__num">{String(index + 1).padStart(2, "0")}</span>
+                        <img className="food-row__thumb" src={food.image} alt={food.name} loading="lazy" onError={handleImageError} />
+                        <div className="food-row__main">
+                          <div className="food-row__header">
+                            <b className="food-row__title">{food.name}</b>
+                            <span className="food-row__price">{food.price}</span>
+                          </div>
+                          <p className="food-row__desc">{food.description}</p>
+                          <div className="food-row__footer">
+                            <span className="food-row__season">🗓️ {food.season}</span>
+                            <span className="food-row__toggle">{activeFoodId === food.id ? "Thu gọn ▲" : "Xem điểm bán OCOP ▼"}</span>
+                          </div>
+                        </div>
                       </button>
                       {activeFoodId === food.id && renderFoodMarket(food, "region")}
                     </div>

@@ -391,16 +391,114 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
 .food-region-note { margin: 10px 0 14px; color: var(--red); font-size: 9px; font-weight: 900; letter-spacing: .08em; text-transform: uppercase; }
 .food-row i { display: grid; gap: 3px; text-align: right; }
 .food-row i em { color: var(--muted); font-size: 11px; font-style: normal; font-weight: 500; }
-.food-list { border-top: 1px solid var(--ink); }
-.food-entry { border-bottom: 1px solid var(--line); }
-.food-list .food-row { width: 100%; min-height: 98px; display: grid; grid-template-columns: 34px 68px minmax(150px, .9fr) minmax(170px, 1.1fr) auto auto; align-items: center; gap: 14px; padding: 10px 0; border: 0; background: transparent; text-align: left; cursor: pointer; }
-.food-list .food-row:hover { background: var(--cream); padding-left: 10px; padding-right: 10px; }
-.food-row > span { font-size: 11px; color: var(--red); font-weight: 900; }
-.food-row > img { width: 68px; height: 64px; object-fit: cover; border-radius: 2px; }
-.food-row > b { font: 500 21px var(--font-display), Georgia, serif; }
-.food-row > small { color: var(--muted); font-size: 12px; line-height: 1.5; }
-.food-row > i { font-style: normal; font-size: 12px; font-weight: 800; }
-.food-row > strong { color: var(--red); font-size: 11px; white-space: nowrap; }
+.food-list {
+  border-top: 1.5px solid var(--ink);
+  display: flex;
+  flex-direction: column;
+}
+.food-entry {
+  border-bottom: 1px solid var(--line);
+  transition: all 0.2s ease;
+}
+.food-entry.is-active {
+  background: #fdfaf3;
+  border-bottom-color: #d7ab5a;
+}
+.food-row {
+  width: 100%;
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 16px 12px;
+  border: 0;
+  background: transparent;
+  text-align: left;
+  cursor: pointer;
+  border-radius: 10px;
+  transition: background 0.15s ease;
+}
+.food-row:hover {
+  background: rgba(24, 51, 44, 0.04);
+}
+.food-row__num {
+  font-size: 15px;
+  font-weight: 900;
+  color: var(--red);
+  width: 24px;
+  flex-shrink: 0;
+  margin-top: 4px;
+}
+.food-row__thumb {
+  width: 76px;
+  height: 76px;
+  object-fit: cover;
+  border-radius: 10px;
+  flex-shrink: 0;
+  border: 1px solid var(--line);
+}
+.food-row__main {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.food-row__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.food-row__title {
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--ink);
+  line-height: 1.3;
+}
+.food-row__price {
+  font-size: 13px;
+  font-weight: 800;
+  color: #b78027;
+  background: #fdf8eb;
+  padding: 3px 10px;
+  border-radius: 999px;
+  border: 1px solid #fae8be;
+  white-space: nowrap;
+}
+.food-row__desc {
+  margin: 0;
+  color: #4b5d56;
+  font-size: 13.5px;
+  line-height: 1.55;
+}
+.food-row__footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: 2px;
+}
+.food-row__season {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--muted);
+}
+.food-row__toggle {
+  font-size: 12px;
+  font-weight: 800;
+  color: var(--red);
+  background: rgba(207, 77, 56, 0.08);
+  padding: 4px 12px;
+  border-radius: 999px;
+  transition: all 0.15s ease;
+  white-space: nowrap;
+}
+.food-row:hover .food-row__toggle,
+.food-row.is-expanded .food-row__toggle {
+  background: var(--red);
+  color: #ffffff;
+}
 
 .commerce-search-results { display: grid; gap: 22px; margin-top: 30px; }
 .related-places-heading { margin-top: 42px; padding-top: 22px; border-top: 1px solid var(--line); }
@@ -1552,19 +1650,67 @@ h3,
   .mini-stop:not(:last-of-type)::after { left: 48px; }
   .local-guide { grid-template-columns: 1fr; gap: 35px; }
   .local-guide h2 { font-size: 45px; }
-  .food-list .food-row { grid-template-columns: 24px 58px minmax(0, 1fr) auto; gap: 8px; padding: 11px 0; }
-  .food-row > img { width: 58px; height: 58px; }
-  .food-row > b { font-size: 18px; }
-  .food-row > small { grid-column: 3 / 5; font-size: 11px; }
-  .food-row > i { font-size: 11px; }
-  .food-row > strong { grid-column: 3 / 5; font-size: 10px; }
-  .food-market { padding: 14px; }
+  .food-list .food-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 14px 6px;
+  }
+  .food-row__num {
+    font-size: 13.5px;
+    margin-top: 2px;
+    width: 20px;
+  }
+  .food-row__thumb {
+    width: 64px;
+    height: 64px;
+    border-radius: 8px;
+  }
+  .food-row__main {
+    gap: 5px;
+  }
+  .food-row__header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 6px;
+  }
+  .food-row__title {
+    font-size: 17px;
+    line-height: 1.25;
+  }
+  .food-row__price {
+    font-size: 11.5px;
+    padding: 2px 7px;
+  }
+  .food-row__desc {
+    font-size: 13px;
+    line-height: 1.45;
+    color: #4a5c55;
+  }
+  .food-row__footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 6px;
+    margin-top: 4px;
+  }
+  .food-row__season {
+    font-size: 11.5px;
+  }
+  .food-row__toggle {
+    font-size: 11.5px;
+    padding: 3px 10px;
+  }
+  .food-market { padding: 14px; border-radius: 12px; }
   .food-market__intro { grid-template-columns: 86px 1fr; gap: 12px; }
-  .food-market__intro > img { width: 86px; height: 86px; }
-  .food-market__intro h3 { font-size: 23px; }
-  .seller-grid { grid-template-columns: 1fr; }
-  .seller-card__buy { align-items: flex-start; flex-direction: column; }
-  .seller-card__buy > button { width: 100%; }
+  .food-market__intro > img { width: 86px; height: 86px; border-radius: 8px; }
+  .food-market__intro h3 { font-size: 21px; }
+  .seller-grid { grid-template-columns: 1fr; gap: 10px; }
+  .seller-card { padding: 14px; border-radius: 10px; }
+  .seller-card__buy { align-items: flex-start; flex-direction: column; gap: 8px; }
+  .seller-card__buy > button { width: 100%; border-radius: 6px; }
   .food-region-tabs { margin-right: -17px; }
   .inner-page { padding: 58px 17px 100px; }
   .inner-page__intro h1, .near-header h1 { font-size: 58px; }
