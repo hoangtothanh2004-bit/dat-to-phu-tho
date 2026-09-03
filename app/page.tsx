@@ -1092,7 +1092,7 @@ export default function Home() {
       setAdminPassword("");
       showToast("🛡️ Đăng nhập Quản Trị Viên (Admin) thành công! Bạn có toàn quyền quản lý hệ thống và phân quyền Gmail.");
     } else {
-      setAdminLoginError("Tên đăng nhập hoặc mật khẩu không chính xác! (Mặc định: admin / 123456)");
+      setAdminLoginError("Tên đăng nhập hoặc mật khẩu Quản Trị Viên không chính xác!");
     }
   };
 
@@ -4213,7 +4213,7 @@ function doPost(e) {
                     required
                     value={adminUsername}
                     onChange={(e) => setAdminUsername(e.target.value)}
-                    placeholder="Nhập: admin"
+                    placeholder="Nhập tên đăng nhập"
                     autoComplete="username"
                   />
                 </label>
@@ -4226,7 +4226,7 @@ function doPost(e) {
                       required
                       value={adminPassword}
                       onChange={(e) => setAdminPassword(e.target.value)}
-                      placeholder="Nhập: 123456"
+                      placeholder="Nhập mật khẩu"
                       autoComplete="current-password"
                       style={{ paddingRight: "40px" }}
                     />
@@ -4243,10 +4243,6 @@ function doPost(e) {
                 <button type="submit" className="button button--dark button--full" style={{ height: "46px", marginTop: "4px" }}>
                   Đăng nhập Quản Trị Viên (Admin) →
                 </button>
-
-                <small style={{ color: "var(--muted)", textAlign: "center", display: "block" }}>
-                  Tài khoản Admin mặc định: <b>admin</b> · Mật khẩu: <b>123456</b>
-                </small>
               </form>
             )}
 
@@ -4364,7 +4360,7 @@ function doPost(e) {
                   <span>🔒</span>
                   <p>
                     {googleSelectedAccount.isMerchant
-                      ? "Đây là tài khoản Doanh nghiệp. Vui lòng nhập mật khẩu do Admin cấp (Mặc định: 123456)."
+                      ? "Đây là tài khoản Doanh nghiệp. Vui lòng nhập mật khẩu do Admin cấp để truy cập."
                       : "Vui lòng nhập mật khẩu tài khoản (nếu là lần đầu đăng nhập, mật khẩu bạn nhập sẽ trở thành mật khẩu bảo vệ của tài khoản này)."}
                   </p>
                 </div>
