@@ -1895,10 +1895,13 @@ h3,
   }
   .audio-voice-select {
     width: 100%;
-    height: 40px;
+    height: 42px;
+    min-height: 42px;
+    max-height: 42px;
     font-size: 13px;
     padding: 0 10px;
     border-radius: 8px;
+    box-sizing: border-box;
   }
   .audio-volume-control {
     display: flex;
@@ -1914,14 +1917,34 @@ h3,
   }
   .audio-rate-control {
     display: flex;
-    align-items: center;
-    justify-content: space-between;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
     width: 100%;
+  }
+  .audio-rate-control span {
     font-size: 12.5px;
+    font-weight: 700;
+    color: #e5e7eb;
+  }
+  .audio-rate-pills {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    overflow-x: auto;
+    width: 100%;
+    padding-bottom: 2px;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  .audio-rate-pills::-webkit-scrollbar {
+    display: none;
   }
   .rate-btn {
-    padding: 4px 10px;
-    font-size: 12px;
+    flex: 0 0 auto;
+    padding: 4px 8px;
+    font-size: 11.5px;
+    font-weight: 700;
   }
 
   /* Guide Actions 2x2 Grid on Mobile */
@@ -2408,7 +2431,9 @@ h3,
 }
 .audio-voice-select {
   flex: 1;
-  height: 36px;
+  height: 38px;
+  min-height: 38px;
+  max-height: 38px;
   padding: 0 12px;
   font-size: 13px;
   font-weight: 600;
@@ -2418,6 +2443,7 @@ h3,
   color: #ffffff;
   cursor: pointer;
   outline: none;
+  box-sizing: border-box;
   transition: border-color 0.15s ease;
 }
 .audio-voice-select:focus {
@@ -2452,21 +2478,28 @@ h3,
 .audio-rate-control {
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 8px;
   font-size: 13px;
   font-weight: 600;
   color: #e5e7eb;
+}
+.audio-rate-pills {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  flex-wrap: wrap;
 }
 .rate-btn {
   background: #232c25;
   border: 1px solid rgba(255, 255, 255, 0.2);
   color: #e5e7eb;
-  padding: 4px 9px;
+  padding: 4px 8px;
   border-radius: 6px;
-  font-size: 12.5px;
+  font-size: 12px;
   font-weight: 700;
   cursor: pointer;
   transition: all 0.15s ease;
+  white-space: nowrap;
 }
 .rate-btn:hover {
   background: rgba(255, 255, 255, 0.15);

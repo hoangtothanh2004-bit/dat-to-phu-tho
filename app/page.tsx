@@ -1789,16 +1789,22 @@ export default function Home() {
 
                     <div className="audio-rate-control">
                       <span>{audioLang === "vi" ? "Tốc độ:" : "Speed:"}</span>
-                      {[0.8, 0.9, 1.0, 1.1].map((r) => (
-                        <button
-                          type="button"
-                          key={r}
-                          className={`rate-btn ${audioRate === r ? "is-active" : ""}`}
-                          onClick={() => setAudioRate(r)}
-                        >
-                          {r}x
-                        </button>
-                      ))}
+                      <div className="audio-rate-pills">
+                        {[0.75, 1.0, 1.25, 1.5, 1.75, 2.0, 2.25, 2.5].map((r) => (
+                          <button
+                            type="button"
+                            key={r}
+                            className={`rate-btn ${audioRate === r ? "is-active" : ""}`}
+                            onClick={() => {
+                              setAudioRate(r);
+                              if (htmlAudioRef.current) htmlAudioRef.current.playbackRate = r;
+                              if (speechRef.current) speechRef.current.rate = r;
+                            }}
+                          >
+                            {r}x
+                          </button>
+                        ))}
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -2503,16 +2509,22 @@ export default function Home() {
 
                     <div className="audio-rate-control">
                       <span>{audioLang === "vi" ? "Tốc độ:" : "Speed:"}</span>
-                      {[0.8, 0.9, 1.0, 1.1].map((r) => (
-                        <button
-                          type="button"
-                          key={r}
-                          className={`rate-btn ${audioRate === r ? "is-active" : ""}`}
-                          onClick={() => setAudioRate(r)}
-                        >
-                          {r}x
-                        </button>
-                      ))}
+                      <div className="audio-rate-pills">
+                        {[0.75, 1.0, 1.25, 1.5, 1.75, 2.0, 2.25, 2.5].map((r) => (
+                          <button
+                            type="button"
+                            key={r}
+                            className={`rate-btn ${audioRate === r ? "is-active" : ""}`}
+                            onClick={() => {
+                              setAudioRate(r);
+                              if (htmlAudioRef.current) htmlAudioRef.current.playbackRate = r;
+                              if (speechRef.current) speechRef.current.rate = r;
+                            }}
+                          >
+                            {r}x
+                          </button>
+                        ))}
+                      </div>
                     </div>
                   </div>
                 </div>
