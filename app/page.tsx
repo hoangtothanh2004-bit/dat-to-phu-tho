@@ -277,13 +277,65 @@ export default function Home() {
     email: string;
     phone?: string;
     avatar?: string;
-    provider: "google" | "facebook" | "local";
+    provider: "google" | "facebook" | "admin" | "local";
     role: "customer" | "merchant" | "admin";
     merchantName?: string;
   } | null>(null);
   const [authModalOpen, setAuthModalOpen] = useState(false);
-  const [authRoleSelect, setAuthRoleSelect] = useState<"customer" | "merchant" | "admin">("customer");
+  const [authModalTab, setAuthModalTab] = useState<"user" | "admin">("user");
   const [customerOrdersOpen, setCustomerOrdersOpen] = useState(false);
+
+  // Admin login credentials (admin / 123456)
+  const [adminUsername, setAdminUsername] = useState("");
+  const [adminPassword, setAdminPassword] = useState("");
+  const [adminLoginError, setAdminLoginError] = useState("");
+
+  // Google OAuth real account chooser simulation modal
+  const [googleOAuthModalOpen, setGoogleOAuthModalOpen] = useState(false);
+  const [googleInputEmail, setGoogleInputEmail] = useState("");
+  const [googleInputName, setGoogleInputName] = useState("");
+
+  // Merchant Whitelist managed by Admin
+  const DEFAULT_MERCHANTS = [
+    {
+      email: "thitchuanghithinh@gmail.com",
+      merchantName: "Thịt chua Nghị Thịnh",
+      phone: "0987 654 321",
+      address: "Thị trấn Thanh Sơn, Phú Thọ",
+      createdAt: "01/01/2026",
+    },
+    {
+      email: "calangviettri@gmail.com",
+      merchantName: "Nhà hàng Cá Lăng Việt Trì",
+      phone: "0912 888 999",
+      address: "Đường Bạch Hạc, TP. Việt Trì",
+      createdAt: "01/01/2026",
+    },
+    {
+      email: "chelongcoc@gmail.com",
+      merchantName: "HTX Chè Búp Long Cốc",
+      phone: "0936 123 456",
+      address: "Đồi chè Long Cốc, Tân Sơn, Phú Thọ",
+      createdAt: "01/01/2026",
+    },
+    {
+      email: "banhtaiphuong@gmail.com",
+      merchantName: "Cơ sở Bánh Tai Phú Thọ",
+      phone: "0945 678 901",
+      address: "TP. Việt Trì, Phú Thọ",
+      createdAt: "01/01/2026",
+    },
+  ];
+  const [merchantWhitelist, setMerchantWhitelist] = useState<Array<{
+    email: string;
+    merchantName: string;
+    phone: string;
+    address?: string;
+    createdAt: string;
+  }>>(DEFAULT_MERCHANTS);
+  const [newMerchantEmail, setNewMerchantEmail] = useState("");
+  const [newMerchantName, setNewMerchantName] = useState("");
+  const [newMerchantPhone, setNewMerchantPhone] = useState("");
 
   // Cart & Checkout & Google Sheets Orders
   const [cart, setCart] = useState<CartLine[]>([]);
@@ -318,6 +370,11 @@ export default function Home() {
           setAuthUser(u);
           setCheckoutName(u.name);
           if (u.phone) setCheckoutPhone(u.phone);
+        }
+
+        const storedMerchants = window.localStorage.getItem("datto-merchant-whitelist");
+        if (storedMerchants) {
+          setMerchantWhitelist(JSON.parse(storedMerchants));
         }
 
         const stored = window.localStorage.getItem("datto-favorites");
@@ -959,48 +1016,134 @@ export default function Home() {
     window.localStorage.setItem("datto-cart", JSON.stringify(next));
   };
 
-  const handleOAuthLogin = (provider: "google" | "facebook" | "local", role: "customer" | "merchant" | "admin" = authRoleSelect) => {
-    let name = "Thanh Hoàng";
-    let email = "thanhhoang.travel@gmail.com";
-    let avatar = "TH";
-    let merchantName = undefined;
-    let phone = "0912 345 678";
+  // Handle Admin Credentials Login (admin / 123456)
+  const handleAdminLogin = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (adminUsername.trim().toLowerCase() === "admin" && adminPassword === "123456") {
+      const adminUser = {
+        id: "usr-admin-root",
+        name: "Quản Trị Viên (Admin)",
+        email: "admin@dat-to.vn",
+        phone: "0900 888 999",
+        avatar: "AD",
+        provider: "admin" as const,
+        role: "admin" as const,
+      };
+      setAuthUser(adminUser);
+      window.localStorage.setItem("datto-auth-user", JSON.stringify(adminUser));
+      setAuthModalOpen(false);
+      setAdminLoginError("");
+      setAdminUsername("");
+      setAdminPassword("");
+      showToast("🛡️ Đăng nhập Quản Trị Viên (Admin) thành công! Bạn có toàn quyền quản lý hệ thống và phân quyền Gmail.");
+    } else {
+      setAdminLoginError("Tên đăng nhập hoặc mật khẩu không chính xác! (Mặc định: admin / 123456)");
+    }
+  };
 
-    if (role === "merchant") {
-      name = "Anh Nghị (Cơ sở OCOP)";
-      email = "thitchuanghithinh@gmail.com";
-      avatar = "NT";
-      merchantName = "Thịt chua Nghị Thịnh";
-      phone = "0987 654 321";
-    } else if (role === "admin") {
-      name = "Ban Quản Trị Đất Tổ";
-      email = "admin@dat-to.vn";
-      avatar = "AD";
-      phone = "0900 888 999";
-    } else if (provider === "facebook") {
-      name = "Thanh Hoàng (Facebook)";
-      email = "thanhhoang.fb@gmail.com";
-      avatar = "FB";
-      phone = "0912 345 678";
+  // Handle Google / Gmail Login with Automatic Merchant Whitelist Matching
+  const handleGoogleAccountLogin = (inputEmail: string, inputName?: string) => {
+    const cleanEmail = inputEmail.trim().toLowerCase();
+    if (!cleanEmail || !cleanEmail.includes("@")) {
+      showToast("Vui lòng nhập địa chỉ Gmail hợp lệ!");
+      return;
     }
 
-    const user = {
-      id: `usr-${Date.now().toString().slice(-6)}`,
-      name,
-      email,
-      phone,
-      avatar,
-      provider,
-      role,
-      merchantName,
-    };
+    const matchedMerchant = merchantWhitelist.find(
+      (m) => m.email.toLowerCase() === cleanEmail
+    );
+
+    const displayName = inputName?.trim() || (matchedMerchant ? matchedMerchant.merchantName : cleanEmail.split("@")[0]);
+    const avatar = displayName.slice(0, 2).toUpperCase();
+
+    let user;
+    if (matchedMerchant) {
+      user = {
+        id: `usr-${Date.now().toString().slice(-6)}`,
+        name: displayName,
+        email: cleanEmail,
+        phone: matchedMerchant.phone,
+        avatar: avatar,
+        provider: "google" as const,
+        role: "merchant" as const,
+        merchantName: matchedMerchant.merchantName,
+      };
+      showToast(`🏪 Đăng nhập thành công với quyền CHỦ CƠ SỞ OCOP: ${matchedMerchant.merchantName}!`);
+    } else {
+      user = {
+        id: `usr-${Date.now().toString().slice(-6)}`,
+        name: displayName,
+        email: cleanEmail,
+        phone: "0912 345 678",
+        avatar: avatar,
+        provider: "google" as const,
+        role: "customer" as const,
+      };
+      showToast(`👤 Đăng nhập thành công tài khoản Du khách (${cleanEmail})!`);
+    }
 
     setAuthUser(user);
     window.localStorage.setItem("datto-auth-user", JSON.stringify(user));
-    setAuthModalOpen(false);
     setCheckoutName(user.name);
-    setCheckoutPhone(user.phone || "");
-    showToast(`✓ Đăng nhập thành công với ${provider === "google" ? "Gmail (Google)" : provider === "facebook" ? "Facebook" : "Email"}! (${role === "admin" ? "Quản trị viên" : role === "merchant" ? "Chủ cơ sở OCOP" : "Du khách"})`);
+    if (user.phone) setCheckoutPhone(user.phone);
+    setGoogleOAuthModalOpen(false);
+    setAuthModalOpen(false);
+  };
+
+  // Handle Facebook Login
+  const handleFacebookLogin = () => {
+    const user = {
+      id: `usr-fb-${Date.now().toString().slice(-6)}`,
+      name: "Thanh Hoàng (Facebook)",
+      email: "thanhhoang.fb@gmail.com",
+      phone: "0912 345 678",
+      avatar: "FB",
+      provider: "facebook" as const,
+      role: "customer" as const,
+    };
+    setAuthUser(user);
+    window.localStorage.setItem("datto-auth-user", JSON.stringify(user));
+    setCheckoutName(user.name);
+    if (user.phone) setCheckoutPhone(user.phone);
+    setAuthModalOpen(false);
+    showToast("✓ Đăng nhập thành công với Facebook (Du khách)!");
+  };
+
+  // Admin Adds new Merchant Gmail
+  const addMerchantToWhitelist = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (!newMerchantEmail.trim() || !newMerchantName.trim()) {
+      showToast("Vui lòng nhập địa chỉ Gmail và Tên cơ sở OCOP!");
+      return;
+    }
+    const cleanEmail = newMerchantEmail.trim().toLowerCase();
+    if (merchantWhitelist.some((m) => m.email.toLowerCase() === cleanEmail)) {
+      showToast("Địa chỉ Gmail này đã được cấp quyền trước đó!");
+      return;
+    }
+    const next = [
+      ...merchantWhitelist,
+      {
+        email: cleanEmail,
+        merchantName: newMerchantName.trim(),
+        phone: newMerchantPhone.trim() || "0987 654 321",
+        createdAt: new Date().toLocaleDateString("vi-VN"),
+      },
+    ];
+    setMerchantWhitelist(next);
+    window.localStorage.setItem("datto-merchant-whitelist", JSON.stringify(next));
+    setNewMerchantEmail("");
+    setNewMerchantName("");
+    setNewMerchantPhone("");
+    showToast(`✓ Đã cấp quyền Chủ cơ sở cho Gmail: ${cleanEmail}!`);
+  };
+
+  // Admin Removes a Merchant Gmail
+  const removeMerchantFromWhitelist = (email: string) => {
+    const next = merchantWhitelist.filter((m) => m.email.toLowerCase() !== email.toLowerCase());
+    setMerchantWhitelist(next);
+    window.localStorage.setItem("datto-merchant-whitelist", JSON.stringify(next));
+    showToast(`Đã thu hồi quyền Chủ cơ sở của: ${email}`);
   };
 
   const handleLogout = () => {
@@ -2950,7 +3093,7 @@ export default function Home() {
                       <button
                         type="button"
                         className="auth-btn auth-btn--google"
-                        onClick={() => handleOAuthLogin("google", "customer")}
+                        onClick={() => setGoogleOAuthModalOpen(true)}
                       >
                         <svg width="18" height="18" viewBox="0 0 24 24"><path fill="#EA4335" d="M12 5c1.6 0 3 .6 4.1 1.7l3.1-3.1C17.3 1.8 14.8 1 12 1 7.5 1 3.7 3.6 1.9 7.3l3.7 2.9C6.5 7.4 9 5 12 5z"/><path fill="#4285F4" d="M23.5 12.3c0-.8-.1-1.7-.2-2.3H12v4.6h6.5c-.3 1.5-1.1 2.8-2.4 3.7l3.7 2.9c2.2-2 3.7-5 3.7-8.9z"/><path fill="#FBBC05" d="M5.6 14.8c-.2-.7-.4-1.5-.4-2.8s.2-2.1.4-2.8L1.9 6.3C.7 8.7 0 10.8 0 12s.7 3.3 1.9 5.7l3.7-2.9z"/><path fill="#34A853" d="M12 23c3.2 0 6-1.1 8-3l-3.7-2.9c-1.1.7-2.5 1.2-4.3 1.2-3 0-5.5-2.4-6.4-5.2L1.9 16C3.7 19.7 7.5 23 12 23z"/></svg>
                         Đăng nhập bằng Gmail (Google)
@@ -2958,7 +3101,7 @@ export default function Home() {
                       <button
                         type="button"
                         className="auth-btn auth-btn--facebook"
-                        onClick={() => handleOAuthLogin("facebook", "customer")}
+                        onClick={handleFacebookLogin}
                       >
                         <svg width="18" height="18" viewBox="0 0 24 24" fill="#1877F2"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
                         Đăng nhập bằng Facebook
@@ -2969,9 +3112,12 @@ export default function Home() {
                       type="button"
                       className="text-link"
                       style={{ fontSize: "12px", marginTop: "4px" }}
-                      onClick={() => setAuthModalOpen(true)}
+                      onClick={() => {
+                        setAuthModalTab("admin");
+                        setAuthModalOpen(true);
+                      }}
                     >
-                      Hoặc đăng nhập vai trò Chủ cơ sở / Quản trị viên →
+                      🛡️ Đăng nhập Quản Trị Viên (Admin) →
                     </button>
                   </div>
                 ) : (
@@ -3314,29 +3460,30 @@ export default function Home() {
 
             {/* Google Sheets Webhook Integration Section (Admin Only) */}
             {authUser?.role === "admin" && (
-              <div className="sheets-webhook-box">
-                <div className="sheets-webhook-title">
-                  <span>🔗</span>
-                  <div>
-                    <b>Đồng bộ tự động về Google Sheets:</b>
-                    <p>Nhập Google Apps Script Webhook URL để mỗi đơn hàng mới tự động ghi 1 dòng vào file Google Sheet quản lý chung.</p>
+              <>
+                <div className="sheets-webhook-box">
+                  <div className="sheets-webhook-title">
+                    <span>🔗</span>
+                    <div>
+                      <b>Đồng bộ tự động về Google Sheets:</b>
+                      <p>Nhập Google Apps Script Webhook URL để mỗi đơn hàng mới tự động ghi 1 dòng vào file Google Sheet quản lý chung.</p>
+                    </div>
                   </div>
-                </div>
-                <div className="sheets-webhook-input-group">
-                  <input
-                    type="url"
-                    placeholder="https://script.google.com/macros/s/.../exec"
-                    value={sheetWebhookUrl}
-                    onChange={(e) => setSheetWebhookUrl(e.target.value)}
-                  />
-                  <button type="button" className="button button--dark" onClick={() => saveCustomSheetWebhook(sheetWebhookUrl)}>
-                    Lưu kết nối Sheet
-                  </button>
-                </div>
-                <details className="sheets-script-details">
-                  <summary>👉 Xem mã Google Apps Script 1-Click để tạo Webhook Google Sheets</summary>
-                  <div className="sheets-code-block">
-                    <pre>{`// Dán mã này vào Tiện ích mở rộng > Apps Script trong Google Sheet của bạn:
+                  <div className="sheets-webhook-input-group">
+                    <input
+                      type="url"
+                      placeholder="https://script.google.com/macros/s/.../exec"
+                      value={sheetWebhookUrl}
+                      onChange={(e) => setSheetWebhookUrl(e.target.value)}
+                    />
+                    <button type="button" className="button button--dark" onClick={() => saveCustomSheetWebhook(sheetWebhookUrl)}>
+                      Lưu kết nối Sheet
+                    </button>
+                  </div>
+                  <details className="sheets-script-details">
+                    <summary>👉 Xem mã Google Apps Script 1-Click để tạo Webhook Google Sheets</summary>
+                    <div className="sheets-code-block">
+                      <pre>{`// Dán mã này vào Tiện ích mở rộng > Apps Script trong Google Sheet của bạn:
 function doPost(e) {
   try {
     var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
@@ -3351,11 +3498,11 @@ function doPost(e) {
     return ContentService.createTextOutput(JSON.stringify({status:"error",message:err.toString()})).setMimeType(ContentService.MimeType.JSON);
   }
 }`}</pre>
-                    <button
-                      type="button"
-                      className="button button--small button--dark"
-                      onClick={() => {
-                        navigator.clipboard.writeText(`function doPost(e) {
+                      <button
+                        type="button"
+                        className="button button--small button--dark"
+                        onClick={() => {
+                          navigator.clipboard.writeText(`function doPost(e) {
   try {
     var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
     if (sheet.getLastRow() === 0) {
@@ -3369,15 +3516,86 @@ function doPost(e) {
     return ContentService.createTextOutput(JSON.stringify({status:"error",message:err.toString()})).setMimeType(ContentService.MimeType.JSON);
   }
 }`);
-                        setSheetScriptCopied(true);
-                        showToast("Đã sao chép mã Apps Script! Hãy dán vào Google Sheet của bạn.");
-                      }}
-                    >
-                      {sheetScriptCopied ? "✓ Đã sao chép mã!" : "📋 Sao chép mã Google Apps Script"}
-                    </button>
+                          setSheetScriptCopied(true);
+                          showToast("Đã sao chép mã Apps Script! Hãy dán vào Google Sheet của bạn.");
+                        }}
+                      >
+                        {sheetScriptCopied ? "✓ Đã sao chép mã!" : "📋 Sao chép mã Google Apps Script"}
+                      </button>
+                    </div>
+                  </details>
+                </div>
+
+                {/* ADMIN MERCHANT WHITELIST MANAGEMENT */}
+                <div className="admin-merchant-mgmt-box">
+                  <div className="admin-box-header">
+                    <span>🏪</span>
+                    <div>
+                      <b>Quản lý phân quyền Gmail Chủ Doanh Nghiệp OCOP:</b>
+                      <p>Chỉ những Gmail có trong danh sách dưới đây khi đăng nhập Google mới được cấp quyền Chủ doanh nghiệp. Khách hàng thông thường đăng nhập sẽ là tài khoản Du khách.</p>
+                    </div>
                   </div>
-                </details>
-              </div>
+
+                  <form onSubmit={addMerchantToWhitelist} className="admin-add-merchant-form">
+                    <input
+                      type="email"
+                      required
+                      placeholder="Nhập Gmail cấp quyền (VD: chucoso@gmail.com)"
+                      value={newMerchantEmail}
+                      onChange={(e) => setNewMerchantEmail(e.target.value)}
+                    />
+                    <input
+                      type="text"
+                      required
+                      placeholder="Tên Cơ sở OCOP / Doanh nghiệp"
+                      value={newMerchantName}
+                      onChange={(e) => setNewMerchantName(e.target.value)}
+                    />
+                    <input
+                      type="tel"
+                      placeholder="Hotline (VD: 0987 654 321)"
+                      value={newMerchantPhone}
+                      onChange={(e) => setNewMerchantPhone(e.target.value)}
+                    />
+                    <button type="submit" className="button button--dark">
+                      ＋ Cấp quyền Chủ Doanh Nghiệp
+                    </button>
+                  </form>
+
+                  <div className="merchant-whitelist-table-wrap">
+                    <table className="merchant-whitelist-table">
+                      <thead>
+                        <tr>
+                          <th>Gmail Được Cấp Quyền</th>
+                          <th>Tên Cơ Sở OCOP</th>
+                          <th>Hotline</th>
+                          <th>Ngày Cấp</th>
+                          <th>Thao Tác</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {merchantWhitelist.map((m) => (
+                          <tr key={m.email}>
+                            <td><b>✉️ {m.email}</b></td>
+                            <td><span className="pill pill--subtle">{m.merchantName}</span></td>
+                            <td><a href={`tel:${m.phone}`}>{m.phone}</a></td>
+                            <td><small>{m.createdAt}</small></td>
+                            <td>
+                              <button
+                                type="button"
+                                className="text-link text-link--danger"
+                                onClick={() => removeMerchantFromWhitelist(m.email)}
+                              >
+                                Thu hồi quyền
+                              </button>
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </>
             )}
 
             {/* Real-time Sheets Table */}
@@ -3502,7 +3720,7 @@ function doPost(e) {
         </div>
       )}
 
-      {/* AUTHENTICATION MODAL (GMAIL & FACEBOOK & ROLE SELECT) */}
+      {/* AUTHENTICATION MODAL (GOOGLE / FACEBOOK FOR USERS & ADMIN LOGIN FOR ADMIN) */}
       {authModalOpen && (
         <div className="commerce-overlay" role="presentation" onMouseDown={(e) => { if (e.target === e.currentTarget) setAuthModalOpen(false); }}>
           <div className="auth-dialog-modal" role="dialog" aria-labelledby="auth-dialog-title">
@@ -3511,68 +3729,191 @@ function doPost(e) {
                 <span className="brand__mark">Đ</span>
                 <span><strong>Đất Tổ Travel</strong><small>HỆ THỐNG TÀI KHOẢN SỐ</small></span>
               </div>
-              <h2 id="auth-dialog-title">Đăng Nhập Tài Khoản</h2>
-              <p>Đăng nhập để đặt đặc sản OCOP, quản lý đơn hàng và truy cập bảng điều phối doanh nghiệp.</p>
+              <h2 id="auth-dialog-title">Đăng Nhập Hệ Thống</h2>
+              <p>Đăng nhập bằng Gmail để đặt hàng hoặc đăng nhập Quản trị viên để quản lý hệ thống.</p>
               <button type="button" className="booking-dialog__close" onClick={() => setAuthModalOpen(false)} aria-label="Đóng">×</button>
             </div>
 
-            {/* Role Selection Segmented Control */}
-            <div className="auth-role-selector">
-              <label>CHỌN VAI TRÒ ĐĂNG NHẬP:</label>
-              <div className="auth-role-buttons">
+            {/* Auth Mode Tabs: User / Merchant VS Admin */}
+            <div className="auth-tab-switch">
+              <button
+                type="button"
+                className={`auth-tab-btn ${authModalTab === "user" ? "is-active" : ""}`}
+                onClick={() => setAuthModalTab("user")}
+              >
+                👥 Du khách & Chủ Doanh Nghiệp
+              </button>
+              <button
+                type="button"
+                className={`auth-tab-btn ${authModalTab === "admin" ? "is-active" : ""}`}
+                onClick={() => setAuthModalTab("admin")}
+              >
+                🛡️ Quản Trị Viên (Admin)
+              </button>
+            </div>
+
+            {/* TAB 1: SOCIAL LOGIN (GOOGLE / FACEBOOK) */}
+            {authModalTab === "user" ? (
+              <div className="auth-options-group">
                 <button
                   type="button"
-                  className={`auth-role-btn ${authRoleSelect === "customer" ? "is-active" : ""}`}
-                  onClick={() => setAuthRoleSelect("customer")}
+                  className="auth-btn auth-btn--google auth-btn--lg"
+                  onClick={() => setGoogleOAuthModalOpen(true)}
                 >
-                  <span>👤</span>
-                  <b>Du khách</b>
-                  <small>Đặt món & lưu tour</small>
+                  <svg width="20" height="20" viewBox="0 0 24 24"><path fill="#EA4335" d="M12 5c1.6 0 3 .6 4.1 1.7l3.1-3.1C17.3 1.8 14.8 1 12 1 7.5 1 3.7 3.6 1.9 7.3l3.7 2.9C6.5 7.4 9 5 12 5z"/><path fill="#4285F4" d="M23.5 12.3c0-.8-.1-1.7-.2-2.3H12v4.6h6.5c-.3 1.5-1.1 2.8-2.4 3.7l3.7 2.9c2.2-2 3.7-5 3.7-8.9z"/><path fill="#FBBC05" d="M5.6 14.8c-.2-.7-.4-1.5-.4-2.8s.2-2.1.4-2.8L1.9 6.3C.7 8.7 0 10.8 0 12s.7 3.3 1.9 5.7l3.7-2.9z"/><path fill="#34A853" d="M12 23c3.2 0 6-1.1 8-3l-3.7-2.9c-1.1.7-2.5 1.2-4.3 1.2-3 0-5.5-2.4-6.4-5.2L1.9 16C3.7 19.7 7.5 23 12 23z"/></svg>
+                  <span>Tiếp tục với <b>Google (Gmail)</b></span>
                 </button>
+
                 <button
                   type="button"
-                  className={`auth-role-btn ${authRoleSelect === "merchant" ? "is-active" : ""}`}
-                  onClick={() => setAuthRoleSelect("merchant")}
+                  className="auth-btn auth-btn--facebook auth-btn--lg"
+                  onClick={handleFacebookLogin}
                 >
-                  <span>🏪</span>
-                  <b>Chủ cơ sở OCOP</b>
-                  <small>Xem đơn & giao hàng</small>
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="#1877F2"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+                  <span>Tiếp tục với <b>Facebook</b></span>
                 </button>
-                <button
-                  type="button"
-                  className={`auth-role-btn ${authRoleSelect === "admin" ? "is-active" : ""}`}
-                  onClick={() => setAuthRoleSelect("admin")}
-                >
-                  <span>🛡️</span>
-                  <b>Quản trị viên</b>
-                  <small>Toàn quyền & Sheets</small>
-                </button>
+
+                <div className="auth-hint-box">
+                  <span>💡</span>
+                  <p><b>Cơ chế phân quyền tự động:</b> Nếu Gmail của bạn đã được Admin cấp quyền chủ doanh nghiệp, bạn sẽ được chuyển thẳng vào giao diện Điều phối đơn hàng OCOP; nếu là Gmail cá nhân thông thường bạn sẽ là tài khoản Du khách.</p>
+                </div>
               </div>
-            </div>
+            ) : (
+              /* TAB 2: ADMIN CREDENTIALS LOGIN */
+              <form onSubmit={handleAdminLogin} className="admin-login-form">
+                <div className="admin-login-notice">
+                  🛡️ Đăng nhập dành riêng cho Ban Quản Trị Hệ Thống.
+                </div>
 
-            {/* Quick OAuth Login Options */}
-            <div className="auth-options-group">
-              <button
-                type="button"
-                className="auth-btn auth-btn--google auth-btn--lg"
-                onClick={() => handleOAuthLogin("google", authRoleSelect)}
-              >
-                <svg width="20" height="20" viewBox="0 0 24 24"><path fill="#EA4335" d="M12 5c1.6 0 3 .6 4.1 1.7l3.1-3.1C17.3 1.8 14.8 1 12 1 7.5 1 3.7 3.6 1.9 7.3l3.7 2.9C6.5 7.4 9 5 12 5z"/><path fill="#4285F4" d="M23.5 12.3c0-.8-.1-1.7-.2-2.3H12v4.6h6.5c-.3 1.5-1.1 2.8-2.4 3.7l3.7 2.9c2.2-2 3.7-5 3.7-8.9z"/><path fill="#FBBC05" d="M5.6 14.8c-.2-.7-.4-1.5-.4-2.8s.2-2.1.4-2.8L1.9 6.3C.7 8.7 0 10.8 0 12s.7 3.3 1.9 5.7l3.7-2.9z"/><path fill="#34A853" d="M12 23c3.2 0 6-1.1 8-3l-3.7-2.9c-1.1.7-2.5 1.2-4.3 1.2-3 0-5.5-2.4-6.4-5.2L1.9 16C3.7 19.7 7.5 23 12 23z"/></svg>
-                <span>Tiếp tục với <b>Google (Gmail)</b></span>
-              </button>
+                {adminLoginError && (
+                  <div className="admin-login-error">
+                    ⚠️ {adminLoginError}
+                  </div>
+                )}
 
-              <button
-                type="button"
-                className="auth-btn auth-btn--facebook auth-btn--lg"
-                onClick={() => handleOAuthLogin("facebook", authRoleSelect)}
-              >
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="#1877F2"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
-                <span>Tiếp tục với <b>Facebook</b></span>
-              </button>
-            </div>
+                <label className="commerce-field">
+                  Tên đăng nhập Quản Trị Viên <small style={{ color: "red" }}>*</small>
+                  <input
+                    type="text"
+                    required
+                    value={adminUsername}
+                    onChange={(e) => setAdminUsername(e.target.value)}
+                    placeholder="Nhập: admin"
+                    autoComplete="username"
+                  />
+                </label>
+
+                <label className="commerce-field">
+                  Mật khẩu Quản Trị Viên <small style={{ color: "red" }}>*</small>
+                  <input
+                    type="password"
+                    required
+                    value={adminPassword}
+                    onChange={(e) => setAdminPassword(e.target.value)}
+                    placeholder="Nhập: 123456"
+                    autoComplete="current-password"
+                  />
+                </label>
+
+                <button type="submit" className="button button--dark button--full" style={{ height: "46px", marginTop: "4px" }}>
+                  Đăng nhập Quản Trị Viên (Admin) →
+                </button>
+
+                <small style={{ color: "var(--muted)", textAlign: "center", display: "block" }}>
+                  Tài khoản Admin mặc định: <b>admin</b> · Mật khẩu: <b>123456</b>
+                </small>
+              </form>
+            )}
 
             <div className="auth-dialog-footer">
               <p>Bằng việc đăng nhập, bạn đồng ý với Điều khoản dịch vụ và Chính sách bảo mật của Đất Tổ Travel.</p>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* GOOGLE ACCOUNT CHOOSER (SIMULATING OFFICIAL GOOGLE OAUTH POPUP) */}
+      {googleOAuthModalOpen && (
+        <div className="commerce-overlay" role="presentation" onMouseDown={(e) => { if (e.target === e.currentTarget) setGoogleOAuthModalOpen(false); }}>
+          <div className="google-oauth-modal" role="dialog" aria-labelledby="google-oauth-title">
+            <div className="google-oauth-header">
+              <svg width="28" height="28" viewBox="0 0 24 24"><path fill="#EA4335" d="M12 5c1.6 0 3 .6 4.1 1.7l3.1-3.1C17.3 1.8 14.8 1 12 1 7.5 1 3.7 3.6 1.9 7.3l3.7 2.9C6.5 7.4 9 5 12 5z"/><path fill="#4285F4" d="M23.5 12.3c0-.8-.1-1.7-.2-2.3H12v4.6h6.5c-.3 1.5-1.1 2.8-2.4 3.7l3.7 2.9c2.2-2 3.7-5 3.7-8.9z"/><path fill="#FBBC05" d="M5.6 14.8c-.2-.7-.4-1.5-.4-2.8s.2-2.1.4-2.8L1.9 6.3C.7 8.7 0 10.8 0 12s.7 3.3 1.9 5.7l3.7-2.9z"/><path fill="#34A853" d="M12 23c3.2 0 6-1.1 8-3l-3.7-2.9c-1.1.7-2.5 1.2-4.3 1.2-3 0-5.5-2.4-6.4-5.2L1.9 16C3.7 19.7 7.5 23 12 23z"/></svg>
+              <div>
+                <h3 id="google-oauth-title">Đăng nhập bằng Google</h3>
+                <p>Chọn tài khoản Gmail để tiếp tục tới <b>Đất Tổ Travel</b></p>
+              </div>
+              <button type="button" className="booking-dialog__close" onClick={() => setGoogleOAuthModalOpen(false)} aria-label="Đóng">×</button>
+            </div>
+
+            {/* Quick Select Accounts */}
+            <div className="google-account-list">
+              <div className="google-account-list-label">TÀI KHOẢN CÓ SẴN / ĐÃ ĐƯỢC PHÂN QUYỀN:</div>
+              
+              {/* Whitelisted Merchant Accounts */}
+              {merchantWhitelist.map((m) => (
+                <button
+                  key={m.email}
+                  type="button"
+                  className="google-account-item"
+                  onClick={() => handleGoogleAccountLogin(m.email, m.merchantName)}
+                >
+                  <span className="google-account-avatar" style={{ background: "#fef3c7", color: "#92400e" }}>🏪</span>
+                  <div className="google-account-info">
+                    <b>{m.merchantName} <small className="pill pill--subtle" style={{ color: "#b45309" }}>Chủ cơ sở OCOP</small></b>
+                    <span>{m.email}</span>
+                  </div>
+                  <em>→</em>
+                </button>
+              ))}
+
+              {/* Customer Account */}
+              <button
+                type="button"
+                className="google-account-item"
+                onClick={() => handleGoogleAccountLogin("hoangthanh.phutho@gmail.com", "Thanh Hoàng")}
+              >
+                <span className="google-account-avatar">TH</span>
+                <div className="google-account-info">
+                  <b>Thanh Hoàng <small className="pill pill--subtle">Du khách cá nhân</small></b>
+                  <span>hoangthanh.phutho@gmail.com</span>
+                </div>
+                <em>→</em>
+              </button>
+            </div>
+
+            {/* Custom Email Input */}
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                handleGoogleAccountLogin(googleInputEmail, googleInputName);
+              }}
+              className="google-custom-login-form"
+            >
+              <div className="google-form-divider">
+                <span>HOẶC SỬ DỤNG GMAIL THẬT CỦA BẠN</span>
+              </div>
+              <div className="google-input-group">
+                <input
+                  type="email"
+                  required
+                  placeholder="Nhập địa chỉ Gmail của bạn (VD: name@gmail.com)"
+                  value={googleInputEmail}
+                  onChange={(e) => setGoogleInputEmail(e.target.value)}
+                />
+                <input
+                  type="text"
+                  placeholder="Họ và tên hiển thị (Tùy chọn)"
+                  value={googleInputName}
+                  onChange={(e) => setGoogleInputName(e.target.value)}
+                />
+                <button type="submit" className="button button--dark" style={{ height: "42px" }}>
+                  Đăng nhập với Gmail này →
+                </button>
+              </div>
+            </form>
+
+            <div className="google-oauth-footer">
+              <small>Google sẽ chia sẻ tên và địa chỉ email của bạn để xác thực tài khoản an toàn.</small>
             </div>
           </div>
         </div>

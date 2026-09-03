@@ -3148,53 +3148,300 @@ h3,
   line-height: 1.4;
 }
 
-.auth-role-selector {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-.auth-role-selector label {
-  font-size: 11px;
-  font-weight: 800;
-  color: var(--muted);
-  letter-spacing: 0.05em;
-}
-.auth-role-buttons {
+.auth-tab-switch {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 8px;
-}
-.auth-role-btn {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  padding: 12px 6px;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 6px;
+  background: var(--surface);
+  padding: 4px;
   border-radius: 8px;
-  border: 1.5px solid var(--line);
-  background: white;
+}
+.auth-tab-btn {
+  padding: 10px 8px;
+  border-radius: 6px;
+  border: none;
+  background: transparent;
+  font-size: 12.5px;
+  font-weight: 700;
+  color: var(--muted);
   cursor: pointer;
   transition: all 0.2s ease;
+  text-align: center;
 }
-.auth-role-btn span {
-  font-size: 22px;
-  margin-bottom: 4px;
-}
-.auth-role-btn b {
-  font-size: 12.5px;
+.auth-tab-btn.is-active {
+  background: white;
   color: var(--dark);
+  box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+}
+
+.auth-hint-box {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  background: #f8fafc;
+  border: 1px solid var(--line);
+  padding: 12px 14px;
+  border-radius: 8px;
+}
+.auth-hint-box span {
+  font-size: 18px;
+}
+.auth-hint-box p {
+  font-size: 12px;
+  color: #475569;
+  margin: 0;
+  line-height: 1.4;
+}
+
+/* Admin Credentials Login Form */
+.admin-login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  background: white;
+  border: 1.5px solid var(--line);
+  border-radius: 8px;
+  padding: 16px;
+}
+.admin-login-notice {
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--dark);
+  background: #eff6ff;
+  border: 1px solid #bfdbfe;
+  padding: 8px 12px;
+  border-radius: 6px;
+}
+.admin-login-error {
+  font-size: 12.5px;
+  color: #b91c1c;
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-weight: 600;
+}
+
+/* Admin Merchant Management Box */
+.admin-merchant-mgmt-box {
+  background: #fefce8;
+  border: 1.5px solid #fde047;
+  border-radius: var(--radius-sm);
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.admin-box-header {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+}
+.admin-box-header span {
+  font-size: 26px;
+}
+.admin-box-header b {
+  font-size: 14.5px;
+  color: #854d0e;
   display: block;
 }
-.auth-role-btn small {
-  font-size: 10.5px;
-  color: var(--muted);
-  margin-top: 2px;
-  line-height: 1.2;
+.admin-box-header p {
+  font-size: 12.5px;
+  color: #a16207;
+  margin: 3px 0 0;
+  line-height: 1.4;
 }
-.auth-role-btn.is-active {
-  border-color: var(--red);
-  background: #fff5f5;
-  box-shadow: 0 0 0 1px var(--red);
+
+.admin-add-merchant-form {
+  display: grid;
+  grid-template-columns: 1.5fr 1.5fr 1fr auto;
+  gap: 8px;
+  background: white;
+  border: 1px solid #fef08a;
+  border-radius: 8px;
+  padding: 10px;
+}
+@media (max-width: 768px) {
+  .admin-add-merchant-form {
+    grid-template-columns: 1fr;
+  }
+}
+.admin-add-merchant-form input {
+  height: 38px;
+  padding: 0 10px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  font-size: 12.5px;
+}
+
+.merchant-whitelist-table-wrap {
+  background: white;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  overflow-x: auto;
+}
+.merchant-whitelist-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12px;
+  text-align: left;
+}
+.merchant-whitelist-table th {
+  background: #fef9c3;
+  padding: 8px 12px;
+  font-size: 11px;
+  font-weight: 800;
+  color: #713f12;
+  border-bottom: 1.5px solid #fef08a;
+}
+.merchant-whitelist-table td {
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--line);
+}
+.merchant-whitelist-table tr:hover {
+  background: #fffbeb;
+}
+
+/* Google OAuth Chooser Modal */
+.google-oauth-modal {
+  width: min(500px, 94vw);
+  background: white;
+  border-radius: 12px;
+  padding: 28px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  box-shadow: 0 24px 70px rgba(0,0,0,0.3);
+}
+.google-oauth-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.google-oauth-header h3 {
+  font-size: 18px;
+  margin: 0;
+  color: #202124;
+}
+.google-oauth-header p {
+  font-size: 12.5px;
+  color: #5f6368;
+  margin: 2px 0 0;
+}
+
+.google-account-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.google-account-list-label {
+  font-size: 10.5px;
+  font-weight: 800;
+  color: #5f6368;
+  letter-spacing: 0.05em;
+}
+.google-account-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  background: white;
+  border: 1px solid #dadce0;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-align: left;
+  width: 100%;
+}
+.google-account-item:hover {
+  background: #f8fafd;
+  border-color: #4285f4;
+}
+.google-account-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: #1a73e8;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 13px;
+  flex-shrink: 0;
+}
+.google-account-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.google-account-info b {
+  font-size: 13px;
+  color: #202124;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+.google-account-info span {
+  font-size: 12px;
+  color: #5f6368;
+}
+.google-account-item em {
+  color: #5f6368;
+  font-size: 16px;
+  font-style: normal;
+}
+
+.google-custom-login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.google-form-divider {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  font-size: 11px;
+  font-weight: 800;
+  color: #5f6368;
+  margin: 6px 0 2px;
+}
+.google-form-divider::before,
+.google-form-divider::after {
+  content: '';
+  flex: 1;
+  border-bottom: 1px solid #dadce0;
+}
+.google-form-divider span {
+  padding: 0 10px;
+}
+.google-input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.google-input-group input {
+  height: 40px;
+  padding: 0 12px;
+  border: 1px solid #dadce0;
+  border-radius: 6px;
+  font-size: 13px;
+}
+.google-input-group input:focus {
+  border-color: #1a73e8;
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(26,115,232,0.2);
+}
+.google-oauth-footer {
+  font-size: 11.5px;
+  color: #5f6368;
+  text-align: center;
+  line-height: 1.4;
+  border-top: 1px solid #dadce0;
+  padding-top: 10px;
 }
 
 .auth-options-group {
