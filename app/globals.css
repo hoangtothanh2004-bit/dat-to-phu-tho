@@ -1771,8 +1771,387 @@ h3,
   }
 }
 
+/* ==========================================================================
+   ENHANCED STYLES: STEPPERS, AUDIO CONTROLLER, HEADER CART, SAVED TABS
+   ========================================================================== */
+
+/* Header Cart Button */
+.header-cart-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  padding: 6px 14px;
+  border-radius: 999px;
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--foreground);
+  cursor: pointer;
+  position: relative;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.header-cart-btn:hover {
+  border-color: var(--accent);
+  background: rgba(199, 93, 44, 0.06);
+  transform: translateY(-1px);
+}
+.cart-icon {
+  font-size: 16px;
+}
+.cart-badge {
+  background: #dc2626;
+  color: #ffffff;
+  font-size: 11px;
+  font-weight: 800;
+  min-width: 18px;
+  height: 18px;
+  border-radius: 9px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 4px;
+  box-shadow: 0 2px 6px rgba(220, 38, 38, 0.35);
+}
+.nav-badge {
+  background: var(--accent);
+  color: #ffffff;
+  font-size: 10px;
+  font-weight: 700;
+  padding: 1px 6px;
+  border-radius: 99px;
+  margin-left: 4px;
+}
+.bottom-nav-dot {
+  position: absolute;
+  top: 6px;
+  right: 25%;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--accent);
+}
+
+/* Stepper Control: [-] [Value] [+] */
+.stepper-control {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--surface);
+  border: 1.5px solid var(--line);
+  border-radius: var(--radius-sm);
+  padding: 4px;
+  margin-top: 6px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
+}
+.stepper-btn {
+  width: 44px;
+  height: 44px;
+  border-radius: calc(var(--radius-sm) - 2px);
+  border: 1px solid var(--line);
+  background: var(--background);
+  color: var(--foreground);
+  font-size: 20px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+.stepper-btn:hover:not(:disabled) {
+  background: var(--accent);
+  color: #ffffff;
+  border-color: var(--accent);
+}
+.stepper-btn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+.stepper-value {
+  display: flex;
+  align-items: baseline;
+  gap: 5px;
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--foreground);
+}
+.stepper-value small {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--muted);
+}
+.stepper-badge {
+  font-size: 12.5px;
+  font-weight: 700;
+  color: var(--accent);
+  background: rgba(199, 93, 44, 0.08);
+  padding: 3px 8px;
+  border-radius: 99px;
+}
+
+/* Quick Stepper Chips */
+.quick-stepper-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 8px;
+}
+.quick-step-chip {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  padding: 4px 10px;
+  border-radius: 99px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--muted);
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+.quick-step-chip:hover {
+  color: var(--foreground);
+  border-color: var(--line-strong);
+}
+.quick-step-chip.is-active {
+  background: var(--foreground);
+  color: var(--background);
+  border-color: var(--foreground);
+}
+
+/* Audio Guide Player Toolbar */
+.audio-controller-bar {
+  background: linear-gradient(135deg, rgba(24, 51, 44, 0.04), rgba(199, 93, 44, 0.05));
+  border: 1.5px solid rgba(24, 51, 44, 0.12);
+  border-radius: var(--radius-md);
+  padding: 14px 16px;
+  margin: 16px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.audio-controller-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.audio-play-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--foreground);
+  color: var(--background);
+  border: 0;
+  padding: 10px 18px;
+  border-radius: 999px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+.audio-play-btn:hover {
+  background: var(--accent);
+  transform: translateY(-1px);
+}
+.audio-play-btn.is-playing {
+  background: #059669;
+}
+.audio-stop-btn {
+  background: var(--surface);
+  color: #dc2626;
+  border: 1px solid var(--line);
+  padding: 9px 14px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+}
+.audio-stop-btn:hover {
+  background: #fee2e2;
+  border-color: #fca5a5;
+}
+
+.audio-settings-strip {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  padding-top: 10px;
+  border-top: 1px dashed rgba(24, 51, 44, 0.1);
+}
+.audio-volume-control {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--foreground);
+}
+.audio-volume-control input[type="range"] {
+  width: 110px;
+  accent-color: var(--accent);
+  cursor: pointer;
+}
+.audio-rate-control {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--muted);
+}
+.rate-btn {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  padding: 3px 8px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+}
+.rate-btn.is-active {
+  background: var(--foreground);
+  color: var(--background);
+  border-color: var(--foreground);
+}
+
+/* Saved Subtabs */
+.saved-subtabs {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+  border-bottom: 1.5px solid var(--line);
+  padding-bottom: 12px;
+}
+.saved-subtabs button {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  padding: 9px 18px;
+  border-radius: 999px;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--muted);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.saved-subtabs button:hover {
+  color: var(--foreground);
+  border-color: var(--line-strong);
+}
+.saved-subtabs button.is-active {
+  background: var(--foreground);
+  color: var(--background);
+  border-color: var(--foreground);
+}
+
+/* Saved Itinerary List & Cards */
+.saved-itinerary-list {
+  display: grid;
+  gap: 16px;
+}
+.saved-itinerary-card {
+  background: var(--surface);
+  border: 1.5px solid var(--line);
+  border-radius: var(--radius-md);
+  padding: 20px 24px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
+}
+.saved-itinerary-card__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+}
+.saved-itinerary-card__header h3 {
+  font-size: 19px;
+  font-weight: 800;
+  margin: 6px 0 4px;
+}
+.saved-itinerary-card__header p {
+  color: var(--muted);
+  font-size: 13.5px;
+  margin: 0;
+}
+.saved-itinerary-card__stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin: 14px 0;
+  padding: 10px 14px;
+  background: var(--background);
+  border-radius: var(--radius-sm);
+  font-size: 13.5px;
+  font-weight: 700;
+}
+.saved-itinerary-card__actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+/* Service Filters Wrapper */
+.service-filters-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+.service-province-tabs {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--muted);
+}
+.province-tab {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  padding: 5px 12px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--foreground);
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+.province-tab.is-active {
+  background: var(--accent);
+  color: #ffffff;
+  border-color: var(--accent);
+}
+
+/* Commerce Fields */
+.commerce-form-fields {
+  display: grid;
+  gap: 12px;
+  margin: 16px 0;
+}
+.cart-empty-state {
+  text-align: center;
+  padding: 40px 20px;
+}
+.cart-empty-state span {
+  font-size: 44px;
+  display: block;
+  margin-bottom: 10px;
+}
+.cart-empty-state h3 {
+  font-size: 19px;
+  margin: 0 0 6px;
+}
+.cart-empty-state p {
+  color: var(--muted);
+  font-size: 14px;
+  margin-bottom: 20px;
+}
+
 @media print {
-  .topbar, .site-footer, .bottom-nav, .builder-card, .plan-header-actions, .plan-reorder, .add-stop-panel, .route-card a, .toast, .cart-dock { display: none !important; }
+  .topbar, .site-footer, .bottom-nav, .builder-card, .plan-header-actions, .plan-reorder, .add-stop-panel, .route-card a, .toast, .cart-dock, .header-cart-btn { display: none !important; }
   body, .app-shell, .inner-page { background: white !important; }
   .inner-page { max-width: none; padding: 20px; }
   .inner-page__intro { margin-bottom: 22px; }

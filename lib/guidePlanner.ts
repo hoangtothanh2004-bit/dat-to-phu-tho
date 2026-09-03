@@ -62,7 +62,7 @@ export type DistrictGuide = {
 export const DISTRICT_TRAVEL_GUIDES: Record<string, DistrictGuide> = {
   "TP. Việt Trì": {
     district: "TP. Việt Trì",
-    region: "Phú Thọ lõi",
+    region: "Phú Thọ",
     distanceFromHanoi: "70 km",
     travelTime: "60 phút",
     recommendedTransport: "Ô tô riêng / Xe khách Mỹ Đình / Tàu hỏa",
@@ -72,7 +72,7 @@ export const DISTRICT_TRAVEL_GUIDES: Record<string, DistrictGuide> = {
   },
   "Huyện Tân Sơn": {
     district: "Huyện Tân Sơn",
-    region: "Phú Thọ lõi",
+    region: "Phú Thọ",
     distanceFromHanoi: "115 km (80 km từ Việt Trì)",
     travelTime: "2 giờ 15 phút",
     recommendedTransport: "Ô tô gầm cao / Xe máy phượt ngắm cảnh",
@@ -82,7 +82,7 @@ export const DISTRICT_TRAVEL_GUIDES: Record<string, DistrictGuide> = {
   },
   "Huyện Thanh Thủy": {
     district: "Huyện Thanh Thủy",
-    region: "Phú Thọ lõi",
+    region: "Phú Thọ",
     distanceFromHanoi: "65 km (40 km từ Việt Trì)",
     travelTime: "1 giờ 15 phút",
     recommendedTransport: "Ô tô riêng / Xe Limousine đón trả tận nơi",
@@ -92,7 +92,7 @@ export const DISTRICT_TRAVEL_GUIDES: Record<string, DistrictGuide> = {
   },
   "Huyện Hạ Hòa": {
     district: "Huyện Hạ Hòa",
-    region: "Phú Thọ lõi",
+    region: "Phú Thọ",
     distanceFromHanoi: "120 km (65 km từ Việt Trì)",
     travelTime: "1 giờ 20 phút",
     recommendedTransport: "Ô tô riêng / Xe khách cao tốc",
@@ -102,7 +102,7 @@ export const DISTRICT_TRAVEL_GUIDES: Record<string, DistrictGuide> = {
   },
   "Huyện Tam Đảo": {
     district: "Huyện Tam Đảo",
-    region: "Vùng Vĩnh Phúc",
+    region: "Vĩnh Phúc",
     distanceFromHanoi: "75 km",
     travelTime: "1 giờ 30 phút",
     recommendedTransport: "Ô tô riêng / Limousine khứ hồi / Xe máy (cần tay lái vững)",
@@ -112,7 +112,7 @@ export const DISTRICT_TRAVEL_GUIDES: Record<string, DistrictGuide> = {
   },
   "TP. Phúc Yên": {
     district: "TP. Phúc Yên",
-    region: "Vùng Vĩnh Phúc",
+    region: "Vĩnh Phúc",
     distanceFromHanoi: "45 km (cách sân bay Nội Bài 15km)",
     travelTime: "45 phút",
     recommendedTransport: "Ô tô riêng / Taxi sân bay / Xe buýt",
@@ -122,7 +122,7 @@ export const DISTRICT_TRAVEL_GUIDES: Record<string, DistrictGuide> = {
   },
   "TP. Vĩnh Yên": {
     district: "TP. Vĩnh Yên",
-    region: "Vùng Vĩnh Phúc",
+    region: "Vĩnh Phúc",
     distanceFromHanoi: "55 km",
     travelTime: "50 phút",
     recommendedTransport: "Ô tô riêng / Tàu hỏa / Xe buýt liên tỉnh",
@@ -132,7 +132,7 @@ export const DISTRICT_TRAVEL_GUIDES: Record<string, DistrictGuide> = {
   },
   "Huyện Bình Xuyên": {
     district: "Huyện Bình Xuyên",
-    region: "Vùng Vĩnh Phúc",
+    region: "Vĩnh Phúc",
     distanceFromHanoi: "50 km (kề cận Vĩnh Yên)",
     travelTime: "45 phút",
     recommendedTransport: "Ô tô riêng / Xe buýt",
@@ -142,7 +142,7 @@ export const DISTRICT_TRAVEL_GUIDES: Record<string, DistrictGuide> = {
   },
   "Huyện Mai Châu": {
     district: "Huyện Mai Châu",
-    region: "Vùng Hòa Bình",
+    region: "Hòa Bình",
     distanceFromHanoi: "135 km",
     travelTime: "3 giờ 30 phút",
     recommendedTransport: "Ô tô riêng / Limousine đón tận homestay / Xe máy phượt",
@@ -152,7 +152,7 @@ export const DISTRICT_TRAVEL_GUIDES: Record<string, DistrictGuide> = {
   },
   "Huyện Kim Bôi": {
     district: "Huyện Kim Bôi",
-    region: "Vùng Hòa Bình",
+    region: "Hòa Bình",
     distanceFromHanoi: "75 km",
     travelTime: "1 giờ 45 phút",
     recommendedTransport: "Ô tô riêng / Xe Limousine / Xe khách",
@@ -162,7 +162,7 @@ export const DISTRICT_TRAVEL_GUIDES: Record<string, DistrictGuide> = {
   },
   "Huyện Cao Phong": {
     district: "Huyện Cao Phong",
-    region: "Vùng Hòa Bình",
+    region: "Hòa Bình",
     distanceFromHanoi: "88 km",
     travelTime: "2 giờ",
     recommendedTransport: "Ô tô riêng / Xe du lịch",
@@ -172,7 +172,7 @@ export const DISTRICT_TRAVEL_GUIDES: Record<string, DistrictGuide> = {
   },
   "TP. Hòa Bình": {
     district: "TP. Hòa Bình",
-    region: "Vùng Hòa Bình",
+    region: "Hòa Bình",
     distanceFromHanoi: "75 km",
     travelTime: "1 giờ 15 phút",
     recommendedTransport: "Ô tô riêng / Xe khách Mỹ Đình/Yên Nghĩa",
@@ -384,18 +384,19 @@ export function buildItinerary(options: PlannerOptions): GeneratedItinerary {
     });
   }
 
-  // Ước tính chi phí
-  const baseCostPerPerson =
-    budget === "Tiết kiệm"
-      ? durationDays * 550000
-      : budget === "Cao cấp"
-      ? durationDays * 1600000
-      : durationDays * 950000;
+  // Ước tính chi phí bám sát tiêu chuẩn ngân sách
+  const isBudgetLow = budget.includes("Tiết kiệm");
+  const isBudgetHigh = budget.includes("Cao cấp") || budget.includes("Nghỉ dưỡng");
+  const baseCostPerPerson = isBudgetLow
+    ? durationDays * 500000
+    : isBudgetHigh
+    ? durationDays * 1950000
+    : durationDays * 950000;
 
   const totalCost = baseCostPerPerson * travelers;
 
   // Lời thoại hướng dẫn viên ảo
-  const audioGuideScript = `Kính chào quý khách! Tôi là hướng dẫn viên ảo của Du lịch Đất Tổ Phú Thọ mở rộng. Tôi rất vinh hạnh đồng hành cùng quý khách trong hành trình ${durationDays} ngày khám phá ${anchor.name} và các danh thắng lân cận. Trong suốt chuyến đi, chúng ta sẽ lần lượt chiêm ngưỡng cảnh quan thiên nhiên hùng vĩ, thưởng thức trọn vẹn các món ăn đặc sản nức tiếng và trải nghiệm những nét văn hóa ngàn đời. Chúc quý khách một chuyến đi an toàn, ngập tràn niềm vui và những bức ảnh kỷ niệm tuyệt đẹp!`;
+  const audioGuideScript = `Chào mừng quý khách đến với hành trình du lịch ${anchor.shortName} và vùng đất cội nguồn Phú Thọ – Vĩnh Phúc – Hòa Bình. Tôi là trợ lý hướng dẫn viên số, rất vui được đồng hành cùng quý khách trong chuyến đi ${durationDays} ngày này. Lịch trình đã được tối ưu cân đối giữa thời gian tham quan, thưởng thức ẩm thực đặc sản và nghỉ dưỡng phục hồi sức khỏe. Kính chúc quý khách một chuyến đi trọn vẹn, an toàn và nhiều trải nghiệm đáng nhớ!`;
 
   const overviewNarrative = `Hành trình ${durationDays} ngày ${durationDays > 1 ? `${durationDays - 1} đêm` : "(trong ngày)"} được thiết kế tối ưu hóa lộ trình di chuyển bằng ${transport}, kết nối những tinh hoa đặc sắc nhất của ${anchor.region}: từ di sản tâm linh, cảnh quan mây núi đến ẩm thực đặc sản bản địa. Lịch trình phân bổ nhịp nhàng giữa thời gian tham quan, thưởng thức ẩm thực và nghỉ ngơi tái tạo năng lượng.`;
 

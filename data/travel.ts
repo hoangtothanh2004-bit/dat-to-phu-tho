@@ -9,9 +9,9 @@ export const categoryLabels = [
 
 export const regionLabels = [
   "Tất cả",
-  "Phú Thọ lõi",
-  "Vùng Vĩnh Phúc",
-  "Vùng Hòa Bình",
+  "Phú Thọ",
+  "Vĩnh Phúc",
+  "Hòa Bình",
 ] as const;
 
 export type Category = (typeof categoryLabels)[number];
@@ -101,7 +101,7 @@ export const places: Place[] = [
     name: "Khu di tích lịch sử Đền Hùng",
     shortName: "Đền Hùng",
     category: "Di sản & tâm linh",
-    region: "Phú Thọ lõi",
+    region: "Phú Thọ",
     district: "Việt Trì",
     location: "Khu 8, xã Hy Cương, TP. Việt Trì",
     image: "/images/places/den-hung.png",
@@ -198,7 +198,7 @@ export const places: Place[] = [
     name: "Vườn quốc gia Xuân Sơn",
     shortName: "Xuân Sơn",
     category: "Núi rừng & sinh thái",
-    region: "Phú Thọ lõi",
+    region: "Phú Thọ",
     district: "Tân Sơn",
     location: "Xã Xuân Sơn, huyện Tân Sơn",
     image: "/images/places/xuan-son.png",
@@ -266,7 +266,7 @@ export const places: Place[] = [
     name: "Đồi chè Long Cốc",
     shortName: "Long Cốc",
     category: "Check-in & vui chơi",
-    region: "Phú Thọ lõi",
+    region: "Phú Thọ",
     district: "Tân Sơn",
     location: "Xã Long Cốc, huyện Tân Sơn",
     image: "/images/places/long-coc.jpg",
@@ -334,7 +334,7 @@ export const places: Place[] = [
     name: "Suối khoáng nóng Thanh Thủy",
     shortName: "Khoáng nóng Thanh Thủy",
     category: "Nghỉ dưỡng & chữa lành",
-    region: "Phú Thọ lõi",
+    region: "Phú Thọ",
     district: "Thanh Thủy",
     location: "Thị trấn Thanh Thủy & Xã Bảo Yên, huyện Thanh Thủy",
     image: "/images/places/thanh-thuy.jpg",
@@ -416,7 +416,7 @@ export const places: Place[] = [
     name: "Làng cổ & Đình cổ Hùng Lô",
     shortName: "Làng cổ Hùng Lô",
     category: "Văn hóa & làng nghề",
-    region: "Phú Thọ lõi",
+    region: "Phú Thọ",
     district: "Việt Trì",
     location: "Xã Hùng Lô, TP. Việt Trì",
     image: "/images/places/hung-lo.jpg",
@@ -483,7 +483,7 @@ export const places: Place[] = [
     name: "Đền Mẫu Âu Cơ Hạ Hòa",
     shortName: "Đền Mẫu Âu Cơ",
     category: "Di sản & tâm linh",
-    region: "Phú Thọ lõi",
+    region: "Phú Thọ",
     district: "Hạ Hòa",
     location: "Xã Hiền Lương, huyện Hạ Hòa",
     image: "/images/places/den-mau-au-co.jpg",
@@ -549,7 +549,7 @@ export const places: Place[] = [
     name: "Khu du lịch sinh thái Đầm Ao Châu",
     shortName: "Đầm Ao Châu",
     category: "Núi rừng & sinh thái",
-    region: "Phú Thọ lõi",
+    region: "Phú Thọ",
     district: "Hạ Hòa",
     location: "Thị trấn Hạ Hòa và các xã Ấm Hạ, Y Sơn, huyện Hạ Hòa",
     image: "/images/places/dam-ao-chau.jpg",
@@ -617,9 +617,9 @@ export const places: Place[] = [
     name: "Khu du lịch Quốc gia Tam Đảo",
     shortName: "Tam Đảo",
     category: "Nghỉ dưỡng & chữa lành",
-    region: "Vùng Vĩnh Phúc",
+    region: "Vĩnh Phúc",
     district: "Tam Đảo",
-    location: "Thị trấn Tam Đảo, huyện Tam Đảo (tỉnh Phú Thọ mới)",
+    location: "Thị trấn Tam Đảo, huyện Tam Đảo ",
     image: "/images/places/tam-dao.jpg",
     imageCredit: "Cổng thông tin du lịch Tam Đảo",
     rating: 4.8,
@@ -714,9 +714,9 @@ export const places: Place[] = [
     name: "Quần thể Di tích & Danh thắng Tây Thiên",
     shortName: "Tây Thiên",
     category: "Di sản & tâm linh",
-    region: "Vùng Vĩnh Phúc",
+    region: "Vĩnh Phúc",
     district: "Tam Đảo",
-    location: "Xã Đại Đình, huyện Tam Đảo (tỉnh Phú Thọ mới)",
+    location: "Xã Đại Đình, huyện Tam Đảo ",
     image: "/images/places/tay-thien.jpg",
     imageCredit: "Ban Quản lý Di tích Quốc gia đặc biệt Tây Thiên",
     rating: 4.9,
@@ -782,9 +782,9 @@ export const places: Place[] = [
     name: "Khu du lịch sinh thái Hồ Đại Lải",
     shortName: "Hồ Đại Lải",
     category: "Check-in & vui chơi",
-    region: "Vùng Vĩnh Phúc",
+    region: "Vĩnh Phúc",
     district: "Phúc Yên",
-    location: "Xã Ngọc Thanh, TP. Phúc Yên (tỉnh Phú Thọ mới)",
+    location: "Xã Ngọc Thanh, TP. Phúc Yên ",
     image: "/images/places/ho-dai-lai.jpg",
     imageCredit: "Cổng thông tin xúc tiến du lịch Vĩnh Phúc",
     rating: 4.7,
@@ -862,7 +862,7 @@ export const places: Place[] = [
     name: "Chùa Hà Tiên (Chùa Hà Vĩnh Yên)",
     shortName: "Chùa Hà Tiên",
     category: "Di sản & tâm linh",
-    region: "Vùng Vĩnh Phúc",
+    region: "Vĩnh Phúc",
     district: "Vĩnh Yên",
     location: "Đường Trần Phú, phường Tích Sơn, TP. Vĩnh Yên",
     image: "/images/places/chua-ha-tien.jpg",
@@ -928,9 +928,9 @@ export const places: Place[] = [
     name: "Làng gốm sành cổ Hương Canh",
     shortName: "Làng gốm Hương Canh",
     category: "Văn hóa & làng nghề",
-    region: "Vùng Vĩnh Phúc",
+    region: "Vĩnh Phúc",
     district: "Bình Xuyên",
-    location: "Thị trấn Hương Canh, huyện Bình Xuyên (tỉnh Phú Thọ mới)",
+    location: "Thị trấn Hương Canh, huyện Bình Xuyên ",
     image: "/images/places/lang-gom-huong-canh.jpg",
     imageCredit: "Hội Làng nghề truyền thống gốm Hương Canh",
     rating: 4.7,
@@ -996,9 +996,9 @@ export const places: Place[] = [
     name: "Bản Lác & Thung lũng Mai Châu",
     shortName: "Mai Châu – Bản Lác",
     category: "Văn hóa & làng nghề",
-    region: "Vùng Hòa Bình",
+    region: "Hòa Bình",
     district: "Mai Châu",
-    location: "Xã Mai Châu, huyện Mai Châu (tỉnh Phú Thọ mới)",
+    location: "Xã Mai Châu, huyện Mai Châu ",
     image: "/images/places/ban-lac-mai-chau.jpg",
     imageCredit: "Du lịch cộng đồng thung lũng Mai Châu",
     rating: 4.9,
@@ -1078,9 +1078,9 @@ export const places: Place[] = [
     name: "Suối khoáng nóng Kim Bôi",
     shortName: "Khoáng nóng Kim Bôi",
     category: "Nghỉ dưỡng & chữa lành",
-    region: "Vùng Hòa Bình",
+    region: "Hòa Bình",
     district: "Kim Bôi",
-    location: "Xóm Mớ Đá, thị trấn Bo, huyện Kim Bôi (tỉnh Phú Thọ mới)",
+    location: "Xóm Mớ Đá, thị trấn Bo, huyện Kim Bôi ",
     image: "/images/places/khoang-nong-kim-boi.jpg",
     imageCredit: "Khu du lịch sinh thái suối khoáng Kim Bôi",
     rating: 4.8,
@@ -1160,9 +1160,9 @@ export const places: Place[] = [
     name: "Khu du lịch lòng hồ sông Đà Thung Nai",
     shortName: "Thung Nai Sông Đà",
     category: "Núi rừng & sinh thái",
-    region: "Vùng Hòa Bình",
+    region: "Hòa Bình",
     district: "Cao Phong",
-    location: "Xã Thung Nai, huyện Cao Phong (tỉnh Phú Thọ mới)",
+    location: "Xã Thung Nai, huyện Cao Phong ",
     image: "/images/places/thung-nai-song-da.jpg",
     imageCredit: "Cổng thông tin xúc tiến du lịch lòng hồ Hòa Bình",
     rating: 4.8,
@@ -1228,9 +1228,9 @@ export const places: Place[] = [
     name: "Điểm săn mây & Chợ phiên Pà Cò",
     shortName: "Săn mây Pà Cò",
     category: "Check-in & vui chơi",
-    region: "Vùng Hòa Bình",
+    region: "Hòa Bình",
     district: "Mai Châu",
-    location: "Xã Pà Cò, huyện Mai Châu (tỉnh Phú Thọ mới)",
+    location: "Xã Pà Cò, huyện Mai Châu ",
     image: "/images/places/pa-co-san-may.jpg",
     imageCredit: "Cổng thông tin du lịch Pà Cò",
     rating: 4.8,
@@ -1295,9 +1295,9 @@ export const places: Place[] = [
     name: "Bảo tàng Không gian Văn hóa Mường",
     shortName: "Bảo tàng Mường",
     category: "Văn hóa & làng nghề",
-    region: "Vùng Hòa Bình",
+    region: "Hòa Bình",
     district: "TP. Hòa Bình cũ",
-    location: "Số 202 đường Tây Tiến, phường Thái Bình (tỉnh Phú Thọ mới)",
+    location: "Số 202 đường Tây Tiến, phường Thái Bình ",
     image: "/images/places/bao-tang-muong.jpg",
     imageCredit: "Bảo tàng Không gian Văn hóa Mường",
     rating: 4.8,
@@ -2507,7 +2507,7 @@ export const foodRegions: FoodRegion[] = [
         description: "Đặc sản người Mường Thanh Sơn lên men tự nhiên từ thịt lợn mán tươi ủ thính ngô rang thơm lừng, cuốn lá sung chấm tương ớt.",
         price: "Từ 45.000đ/hộp",
         season: "Quanh năm",
-        region: "Phú Thọ lõi",
+        region: "Phú Thọ",
         sellers: [
           {
             id: "thit-chua-nghi-khue",
@@ -2531,7 +2531,7 @@ export const foodRegions: FoodRegion[] = [
         description: "Cá lăng tự nhiên bắt từ ngã ba sông Hạc Trì và sông Đà, thịt giòn ngọt ít xương dăm, nướng riềng mẻ vàng ruộm hoặc om mầm măng cay.",
         price: "Từ 250.000đ/phần",
         season: "Quanh năm",
-        region: "Phú Thọ lõi",
+        region: "Phú Thọ",
         sellers: [
           {
             id: "ca-song-hac-tri",
@@ -2555,7 +2555,7 @@ export const foodRegions: FoodRegion[] = [
         description: "Món quà sáng bình dị hình tai heo từ bột gạo tẻ dẻo thơm bọc nhân thịt nạc mỡ hành tiêu thơm phức, ăn lúc vừa hấp nóng hổi.",
         price: "Từ 5.000đ/chiếc",
         season: "Quanh năm",
-        region: "Phú Thọ lõi",
+        region: "Phú Thọ",
         sellers: [
           {
             id: "banh-tai-ba-dinh",
@@ -2576,7 +2576,7 @@ export const foodRegions: FoodRegion[] = [
   },
   {
     id: "vinh-phuc-dac-san",
-    label: "Vùng Vĩnh Phúc",
+    label: "Vĩnh Phúc",
     subtitle: "Sản vật mây ngàn & Làng nghề: Ngọn su su Tam Đảo, thịt trâu Đại Lải, tép Đầm Vạc",
     dishes: [
       {
@@ -2586,7 +2586,7 @@ export const foodRegions: FoodRegion[] = [
         description: "Ngọn su su tươi non mơn mởn trồng trên sườn núi mây Tam Đảo quanh năm mát mẻ, khi xào tỏi giòn sần sật và ngọt thanh tự nhiên.",
         price: "Từ 60.000đ/đĩa",
         season: "Quanh năm, tươi nhất mùa đông xuân",
-        region: "Vùng Vĩnh Phúc",
+        region: "Vĩnh Phúc",
         sellers: [
           {
             id: "su-su-phuc-huong-vien",
@@ -2610,7 +2610,7 @@ export const foodRegions: FoodRegion[] = [
         description: "Thịt trâu giật tươi nguyên tảng nướng trên than hồng, chấm tương bần hoặc muối ớt tiêu chanh, ăn kèm rau rừng và cơm lam.",
         price: "Từ 180.000đ/đĩa",
         season: "Quanh năm",
-        region: "Vùng Vĩnh Phúc",
+        region: "Vĩnh Phúc",
         sellers: [
           {
             id: "trau-phi-xuyen",
@@ -2631,7 +2631,7 @@ export const foodRegions: FoodRegion[] = [
   },
   {
     id: "hoa-binh-dac-san",
-    label: "Vùng Hòa Bình",
+    label: "Hòa Bình",
     subtitle: "Ẩm thực Mường & Thung lũng: Cỗ lá lợn mán, cơm lam Mai Châu, cá sông Đà nướng que",
     dishes: [
       {
@@ -2641,7 +2641,7 @@ export const foodRegions: FoodRegion[] = [
         description: "Mâm cỗ lá chuối hột bày các món lợn mán luộc, nướng than hoa, lòng dồi chấm muối ớt hạt dổi cay thơm ngào ngạt.",
         price: "Từ 150.000đ/người",
         season: "Quanh năm",
-        region: "Vùng Hòa Bình",
+        region: "Hòa Bình",
         sellers: [
           {
             id: "bep-muong-thai-binh",
@@ -2665,7 +2665,7 @@ export const foodRegions: FoodRegion[] = [
         description: "Gạo nếp nương thơm dẻo ngâm nước suối đầu nguồn nướng trong ống tre nứa non trên than hồng, chấm muối vừng ngọt bùi mê mẩn.",
         price: "Từ 15.000đ/ống",
         season: "Quanh năm",
-        region: "Vùng Hòa Bình",
+        region: "Hòa Bình",
         sellers: [
           {
             id: "com-lam-ban-lac",
@@ -2694,3 +2694,50 @@ export const categoryIcons: Record<Category, string> = {
   "Văn hóa & làng nghề": "🏮",
   "Check-in & vui chơi": "📸",
 };
+
+
+export type ServiceItem = {
+  id: string;
+  icon: string;
+  name: string;
+  type: "Trạm xăng" | "Bãi đỗ xe" | "Y tế" | "ATM" | "Trạm sạc EV" | "Cứu hộ" | "Tiện ích";
+  province: "Phú Thọ" | "Vĩnh Phúc" | "Hòa Bình";
+  district: string;
+  lat: number;
+  lng: number;
+  note: string;
+  address: string;
+  phone?: string;
+};
+
+export const comprehensiveServices: ServiceItem[] = [
+  // --- PHÚ THỌ ---
+  { id: "srv-pt-1", icon: "✚", name: "Bệnh viện Đa khoa tỉnh Phú Thọ", type: "Y tế", province: "Phú Thọ", district: "TP. Việt Trì", lat: 21.3215, lng: 105.3926, note: "Cấp cứu 24/7 · Tuyến đầu", address: "Đường Nguyễn Tất Thành, P. Tân Dân, TP. Việt Trì", phone: "02103955555" },
+  { id: "srv-pt-2", icon: "⛽", name: "Trạm xăng Petrolimex Hùng Vương", type: "Trạm xăng", province: "Phú Thọ", district: "TP. Việt Trì", lat: 21.3341, lng: 105.3835, note: "Mở cửa 24/24 · Xăng A95, E5, Dầu DO", address: "Đại lộ Hùng Vương, TP. Việt Trì", phone: "02103846123" },
+  { id: "srv-pt-3", icon: "🅿️", name: "Bãi đỗ xe trung tâm Đền Hùng", type: "Bãi đỗ xe", province: "Phú Thọ", district: "TP. Việt Trì", lat: 21.3612, lng: 105.3297, note: "Sức chứa 2000 xe · Có xe điện trung chuyển", address: "Khu 8, xã Hy Cương, TP. Việt Trì", phone: "02103860012" },
+  { id: "srv-pt-4", icon: "⚡", name: "Trạm sạc VinFast Vincom Plaza Việt Trì", type: "Trạm sạc EV", province: "Phú Thọ", district: "TP. Việt Trì", lat: 21.3175, lng: 105.4012, note: "Sạc siêu nhanh 250kW & 60kW", address: "Đường Hùng Vương, P. Tiên Cát, TP. Việt Trì" },
+  { id: "srv-pt-5", icon: "▣", name: "ATM Vietcombank Việt Trì 24/7", type: "ATM", province: "Phú Thọ", district: "TP. Việt Trì", lat: 21.3048, lng: 105.4028, note: "Rút tiền, chuyển khoản đa ngân hàng", address: "Số 668 Đại lộ Hùng Vương, TP. Việt Trì" },
+  { id: "srv-pt-6", icon: "🛠️", name: "Cứu hộ giao thông Phú Thọ 116", type: "Cứu hộ", province: "Phú Thọ", district: "TP. Việt Trì", lat: 21.312, lng: 105.395, note: "Cứu hộ xe tai nạn, chết máy, vá lốp 24/7", address: "Toàn tỉnh Phú Thọ & Cao tốc Nội Bài - Lào Cai", phone: "0983116116" },
+  { id: "srv-pt-7", icon: "⛽", name: "Trạm xăng Petrolimex Thanh Thủy", type: "Trạm xăng", province: "Phú Thọ", district: "Huyện Thanh Thủy", lat: 21.178, lng: 105.289, note: "Mở cửa cả ngày · Bơm xe, nước làm mát", address: "Khu 3, xã La Phù, Huyện Thanh Thủy", phone: "02103878234" },
+  { id: "srv-pt-8", icon: "✚", name: "Trung tâm Y tế Huyện Thanh Thủy", type: "Y tế", province: "Phú Thọ", district: "Huyện Thanh Thủy", lat: 21.182, lng: 105.295, note: "Trực cấp cứu 24/7", address: "Khu 5, thị trấn Thanh Thủy", phone: "02103877115" },
+  { id: "srv-pt-9", icon: "🅿️", name: "Bãi đỗ xe Khu du lịch Long Cốc", type: "Bãi đỗ xe", province: "Phú Thọ", district: "Huyện Tân Sơn", lat: 21.205, lng: 105.082, note: "Bãi xe chân đồi chè · Có dịch vụ xe ôm bản địa", address: "Xã Long Cốc, huyện Tân Sơn" },
+  { id: "srv-pt-10", icon: "⛽", name: "Trạm xăng ngã ba Tân Sơn - VQG Xuân Sơn", type: "Trạm xăng", province: "Phú Thọ", district: "Huyện Tân Sơn", lat: 21.124, lng: 104.985, note: "Trạm xăng cuối cùng trước khi vào rừng nguyên sinh", address: "Xã Xuân Đài, huyện Tân Sơn" },
+
+  // --- VĨNH PHÚC ---
+  { id: "srv-vp-1", icon: "⛽", name: "Trạm xăng Petrolimex Chân Đèo Tam Đảo", type: "Trạm xăng", province: "Vĩnh Phúc", district: "Huyện Tam Đảo", lat: 21.412, lng: 105.618, note: "Cần đổ đầy bình trước khi lên dốc đèo 13km", address: "Ngã ba Hợp Châu, QL2B, Huyện Tam Đảo", phone: "02113853112" },
+  { id: "srv-vp-2", icon: "🅿️", name: "Bãi đỗ xe Trung tâm Thị trấn Tam Đảo", type: "Bãi đỗ xe", province: "Vĩnh Phúc", district: "Huyện Tam Đảo", lat: 21.458, lng: 105.648, note: "Bãi xe Quảng trường & Khách sạn trung tâm", address: "Khu 1, thị trấn Tam Đảo", phone: "02113824123" },
+  { id: "srv-vp-3", icon: "🛠️", name: "Đội cứu hộ đèo dốc Tam Đảo 24/7", type: "Cứu hộ", province: "Vĩnh Phúc", district: "Huyện Tam Đảo", lat: 21.442, lng: 105.635, note: "Hỗ trợ mất phanh, hỏng số đèo Tam Đảo & Tây Thiên", address: "Dọc tuyến đèo QL2B Tam Đảo", phone: "0915998116" },
+  { id: "srv-vp-4", icon: "🅿️", name: "Bãi đỗ xe Cáp treo Tây Thiên", type: "Bãi đỗ xe", province: "Vĩnh Phúc", district: "Huyện Tam Đảo", lat: 21.492, lng: 105.592, note: "Bãi xe rộng hàng nghìn m2 · Điểm xuất phát cáp treo", address: "Xã Đại Đình, huyện Tam Đảo" },
+  { id: "srv-vp-5", icon: "✚", name: "Bệnh viện Đa khoa tỉnh Vĩnh Phúc", type: "Y tế", province: "Vĩnh Phúc", district: "TP. Vĩnh Yên", lat: 21.315, lng: 105.589, note: "Cấp cứu 24/7 · Trang thiết bị hiện đại", address: "Đường Lạc Long Quân, P. Định Trung, TP. Vĩnh Yên", phone: "02113861206" },
+  { id: "srv-vp-6", icon: "⚡", name: "Trạm sạc VinFast Flamingo Đại Lải Resort", type: "Trạm sạc EV", province: "Vĩnh Phúc", district: "TP. Phúc Yên", lat: 21.332, lng: 105.715, note: "Sạc công cộng cho khách du lịch và cư dân", address: "Khu nghỉ dưỡng Flamingo Đại Lải, Phúc Yên" },
+  { id: "srv-vp-7", icon: "▣", name: "ATM BIDV Phúc Yên - Đại Lải", type: "ATM", province: "Vĩnh Phúc", district: "TP. Phúc Yên", lat: 21.325, lng: 105.702, note: "Hoạt động liên tục 24/7", address: "Đường Nguyễn Tất Thành, TP. Phúc Yên" },
+
+  // --- HÒA BÌNH ---
+  { id: "srv-hb-1", icon: "⛽", name: "Trạm xăng Petrolimex Bản Lác Mai Châu", type: "Trạm xăng", province: "Hòa Bình", district: "Huyện Mai Châu", lat: 20.665, lng: 105.085, note: "Phục vụ khách du lịch thung lũng Mai Châu", address: "Ngã ba thị trấn Mai Châu", phone: "02183867234" },
+  { id: "srv-hb-2", icon: "🅿️", name: "Bãi đỗ xe Du lịch Cộng đồng Bản Lác 1 & 2", type: "Bãi đỗ xe", province: "Hòa Bình", district: "Huyện Mai Châu", lat: 20.658, lng: 105.078, note: "Bãi xe ô tô du lịch · Cho thuê xe đạp/xe điện", address: "Bản Lác, xã Mai Châu" },
+  { id: "srv-hb-3", icon: "🛠️", name: "Cứu hộ giao thông Đèo Thung Khe (Đèo Đá Trắng)", type: "Cứu hộ", province: "Hòa Bình", district: "Huyện Mai Châu", lat: 20.695, lng: 105.155, note: "Cứu hộ sương mù, trơn trượt dốc đèo QL6", address: "Đỉnh đèo Thung Khe, Quốc lộ 6", phone: "0978116116" },
+  { id: "srv-hb-4", icon: "⛽", name: "Trạm xăng ngã ba Bo - Kim Bôi", type: "Trạm xăng", province: "Hòa Bình", district: "Huyện Kim Bôi", lat: 20.682, lng: 105.535, note: "Trung tâm thị trấn Bo · Gần khu suối khoáng", address: "Khu Mớ Đá, thị trấn Bo, Kim Bôi", phone: "02183871112" },
+  { id: "srv-hb-5", icon: "✚", name: "Bệnh viện Đa khoa tỉnh Hòa Bình", type: "Y tế", province: "Hòa Bình", district: "TP. Hòa Bình", lat: 20.814, lng: 105.338, note: "Cấp cứu 24/7", address: "Đường Cù Chính Lan, P. Đồng Tiến, TP. Hòa Bình", phone: "02183852115" },
+  { id: "srv-hb-6", icon: "🅿️", name: "Bãi đỗ xe Cảng du lịch Thung Nai Sông Đà", type: "Bãi đỗ xe", province: "Hòa Bình", district: "Huyện Cao Phong", lat: 20.768, lng: 105.242, note: "Trông giữ xe qua đêm đi tàu lòng hồ Sông Đà", address: "Bến cảng Thung Nai, huyện Cao Phong" },
+  { id: "srv-hb-7", icon: "⚡", name: "Trạm sạc VinFast TP. Hòa Bình", type: "Trạm sạc EV", province: "Hòa Bình", district: "TP. Hòa Bình", lat: 20.825, lng: 105.342, note: "Trạm sạc nhanh Vincom Plaza Hòa Bình", address: "Đường Cù Chính Lan, TP. Hòa Bình" }
+];

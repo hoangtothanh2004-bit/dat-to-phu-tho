@@ -3,7 +3,7 @@ export type TourTemplate = {
   title: string;
   durationDays: number;
   durationLabel: string;
-  region: "Phú Thọ lõi" | "Vùng Vĩnh Phúc" | "Vùng Hòa Bình" | "Liên thông 3 vùng";
+  region: "Phú Thọ" | "Vĩnh Phúc" | "Hòa Bình" | "Liên thông 3 tỉnh";
   badge: string;
   theme: string;
   recommendedTransport: string;
@@ -19,7 +19,7 @@ export const tourTemplates: TourTemplate[] = [
     title: "Về Cội Nguồn Đất Tổ: Đền Hùng – Làng Cổ Hùng Lô",
     durationDays: 1,
     durationLabel: "1 ngày (Trong ngày)",
-    region: "Phú Thọ lõi",
+    region: "Phú Thọ",
     badge: "Phổ biến nhất",
     theme: "Di sản & Tâm linh",
     recommendedTransport: "Ô tô riêng / Xe khách",
@@ -33,7 +33,7 @@ export const tourTemplates: TourTemplate[] = [
     title: "Săn Mây Tam Đảo & Chiêm Bái Thiền Tự Tây Thiên",
     durationDays: 2,
     durationLabel: "2 ngày 1 đêm",
-    region: "Vùng Vĩnh Phúc",
+    region: "Vĩnh Phúc",
     badge: "Nghỉ dưỡng & Sống ảo",
     theme: "Nghỉ dưỡng & Chữa lành",
     recommendedTransport: "Ô tô riêng / Xe Limousine / Xe máy",
@@ -47,7 +47,7 @@ export const tourTemplates: TourTemplate[] = [
     title: "Mai Châu Bản Lác & Khoáng Nóng Onsen Kim Bôi",
     durationDays: 2,
     durationLabel: "2 ngày 1 đêm",
-    region: "Vùng Hòa Bình",
+    region: "Hòa Bình",
     badge: "Văn hóa & Trị liệu",
     theme: "Văn hóa & Làng nghề",
     recommendedTransport: "Ô tô riêng / Xe gia đình",
@@ -61,7 +61,7 @@ export const tourTemplates: TourTemplate[] = [
     title: "Săn Mây Long Cốc – Trekking Xuân Sơn – Onsen Thanh Thủy",
     durationDays: 2,
     durationLabel: "2 ngày 1 đêm",
-    region: "Phú Thọ lõi",
+    region: "Phú Thọ",
     badge: "Thiên nhiên kỳ vĩ",
     theme: "Núi rừng & Sinh thái",
     recommendedTransport: "Ô tô gầm cao / Xe máy phượt",
@@ -75,7 +75,7 @@ export const tourTemplates: TourTemplate[] = [
     title: "Du Thuyền Lòng Hồ Sông Đà: Thung Nai – Đền Chúa Thác Bờ",
     durationDays: 1,
     durationLabel: "1 ngày (Trong ngày)",
-    region: "Vùng Hòa Bình",
+    region: "Hòa Bình",
     badge: "Sơn thủy hữu tình",
     theme: "Núi rừng & Sinh thái",
     recommendedTransport: "Ô tô tới bến cảng + Tàu thủy",
@@ -89,13 +89,13 @@ export const tourTemplates: TourTemplate[] = [
     title: "Đại Hành Trình Di Sản: Đất Tổ – Mây Ngàn Tam Đảo – Thung Lũng Mai Châu",
     durationDays: 3,
     durationLabel: "3 ngày 2 đêm",
-    region: "Liên thông 3 vùng",
-    badge: "Siêu tour 3 vùng",
+    region: "Liên thông 3 tỉnh",
+    badge: "Siêu tour 3 tỉnh",
     theme: "Khám phá toàn diện",
     recommendedTransport: "Ô tô riêng / Xe du lịch hợp đồng",
     anchorPlaceId: "den-hung",
-    summary: "Hành trình trọn vẹn kết nối 3 không gian di sản của tỉnh Phú Thọ mới: Ngày 1 dâng hương Đền Hùng & tắm khoáng Thanh Thủy; Ngày 2 vượt núi săn mây Tam Đảo; Ngày 3 xuôi về thung lũng Bản Lác Mai Châu.",
+    summary: "Hành trình trọn vẹn kết nối 3 không gian di sản tiêu biểu: Ngày 1 dâng hương Đền Hùng & tắm khoáng Thanh Thủy; Ngày 2 vượt núi săn mây Tam Đảo; Ngày 3 xuôi về thung lũng Bản Lác Mai Châu.",
     estimatedBudgetPerPerson: "2.400.000 – 4.500.000đ",
-    highlights: ["Khám phá trọn vẹn 3 vùng đất Phú Thọ - Vĩnh Phúc - Hòa Bình", "Hội tụ đủ: Tâm linh, Nghỉ dưỡng mây núi, Suối khoáng Onsen, Du lịch cộng đồng", "Thưởng thức thực đơn tinh hoa: Cá sông Lô, Ngọn su su Tam Đảo, Cơm lam Mai Châu"]
+    highlights: ["Khám phá trọn vẹn 3 tỉnh Phú Thọ - Vĩnh Phúc - Hòa Bình", "Hội tụ đủ: Tâm linh, Nghỉ dưỡng mây núi, Suối khoáng Onsen, Du lịch cộng đồng", "Thưởng thức thực đơn tinh hoa: Cá sông Lô, Ngọn su su Tam Đảo, Cơm lam Mai Châu"]
   }
 ];
