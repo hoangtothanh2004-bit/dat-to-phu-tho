@@ -270,13 +270,18 @@ export default function Home() {
   const [reviewPhotos, setReviewPhotos] = useState<string[]>([]);
   const [activeFoodId, setActiveFoodId] = useState<string | null>(null);
   
-  // Cart & Checkout
+  // Cart & Checkout & Google Sheets Orders
   const [cart, setCart] = useState<CartLine[]>([]);
   const [cartOpen, setCartOpen] = useState(false);
   const [checkoutName, setCheckoutName] = useState("");
   const [checkoutPhone, setCheckoutPhone] = useState("");
   const [checkoutAddress, setCheckoutAddress] = useState("");
   const [checkoutNote, setCheckoutNote] = useState("");
+  const [confirmedOrder, setConfirmedOrder] = useState<any | null>(null);
+  const [ordersDashboardOpen, setOrdersDashboardOpen] = useState(false);
+  const [orderList, setOrderList] = useState<any[]>([]);
+  const [sheetWebhookUrl, setSheetWebhookUrl] = useState("");
+  const [sheetScriptCopied, setSheetScriptCopied] = useState(false);
 
   // Booking
   const [bookingOffer, setBookingOffer] = useState<BookingOffer | null>(null);
@@ -306,6 +311,12 @@ export default function Home() {
 
         const storedCart = window.localStorage.getItem("datto-cart");
         if (storedCart) setCart(JSON.parse(storedCart));
+
+        const storedOrders = window.localStorage.getItem("datto-demo-orders");
+        if (storedOrders) setOrderList(JSON.parse(storedOrders));
+
+        const storedWebhook = window.localStorage.getItem("datto-sheet-webhook");
+        if (storedWebhook) setSheetWebhookUrl(storedWebhook);
       } catch {
         window.localStorage.removeItem("datto-favorites");
         window.localStorage.removeItem("datto-saved-dishes");
@@ -925,7 +936,7 @@ export default function Home() {
     window.localStorage.setItem("datto-cart", JSON.stringify(next));
   };
 
-  const submitDemoOrder = (event: FormEvent<HTMLFormElement>) => {
+  const submitDemoOrder = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (!checkoutName.trim()) {
       showToast("Vui lòng nhập họ và tên người mua");
@@ -935,26 +946,131 @@ export default function Home() {
       showToast("Hãy nhập số điện thoại hợp lệ để xác nhận đơn hàng");
       return;
     }
-    const stored = JSON.parse(window.localStorage.getItem("datto-demo-orders") ?? "[]") as unknown[];
-    const order = {
-      id: `DT-${String(stored.length + 1).padStart(6, "0")}`,
-      customerName: checkoutName.trim(),
-      phone: checkoutPhone.trim(),
-      address: checkoutAddress.trim(),
-      note: checkoutNote.trim(),
-      items: cartDetails,
-      total: cartSubtotal,
-      createdAt: new Date().toISOString()
-    };
-    window.localStorage.setItem("datto-demo-orders", JSON.stringify([order, ...stored]));
-    setCart([]);
-    window.localStorage.removeItem("datto-cart");
-    setCartOpen(false);
-    setCheckoutName("");
-    setCheckoutPhone("");
-    setCheckoutAddress("");
-    setCheckoutNote("");
-    showToast(`✦ Đã tạo đơn hàng ${order.id} cho quý khách ${order.customerName}!`);
+
+    try {
+      const payload = {
+        customerName: checkoutName.trim(),
+        phone: checkoutPhone.trim(),
+        address: checkoutAddress.trim() || "Giao tại khách sạn / điểm hẹn",
+        note: checkoutNote.trim() || "Không có",
+        items: cartDetails.map((c) => ({
+          dishName: c.dish.name,
+          sellerName: c.seller.name,
+          sellerPhone: c.seller.phone,
+          sellerAddress: c.seller.address,
+          quantity: c.quantity,
+          unitPrice: c.seller.price,
+          totalPrice: c.seller.price * c.quantity,
+        })),
+        totalAmount: cartSubtotal,
+        customSheetWebhook: sheetWebhookUrl || undefined,
+      };
+
+      const res = await fetch("/api/orders", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+
+      const data = await res.json();
+      if (data.success && data.order) {
+        const stored = JSON.parse(window.localStorage.getItem("datto-demo-orders") ?? "[]") as any[];
+        const nextOrders = [data.order, ...stored];
+        window.localStorage.setItem("datto-demo-orders", JSON.stringify(nextOrders));
+        setOrderList(nextOrders);
+        setConfirmedOrder(data);
+        setCart([]);
+        window.localStorage.removeItem("datto-cart");
+        setCartOpen(false);
+        setCheckoutName("");
+        setCheckoutPhone("");
+        setCheckoutAddress("");
+        setCheckoutNote("");
+        showToast(`✦ Đã tạo đơn ${data.order.id} & thông báo cho cơ sở OCOP!`);
+      } else {
+        throw new Error(data.error || "Lỗi xử lý đơn");
+      }
+    } catch {
+      // Fallback offline / local
+      const stored = JSON.parse(window.localStorage.getItem("datto-demo-orders") ?? "[]") as any[];
+      const fallbackOrder = {
+        id: `DT-${Date.now().toString().slice(-6)}`,
+        customerName: checkoutName.trim(),
+        phone: checkoutPhone.trim(),
+        address: checkoutAddress.trim() || "Giao tại điểm hẹn",
+        note: checkoutNote.trim() || "Không có",
+        items: cartDetails.map((c) => ({
+          dishName: c.dish.name,
+          sellerName: c.seller.name,
+          sellerPhone: c.seller.phone,
+          sellerAddress: c.seller.address,
+          quantity: c.quantity,
+          unitPrice: c.seller.price,
+          totalPrice: c.seller.price * c.quantity,
+        })),
+        totalAmount: cartSubtotal,
+        createdAt: new Date().toLocaleString("vi-VN"),
+        status: "Chờ xác nhận",
+      };
+      const nextOrders = [fallbackOrder, ...stored];
+      window.localStorage.setItem("datto-demo-orders", JSON.stringify(nextOrders));
+      setOrderList(nextOrders);
+      setConfirmedOrder({
+        order: fallbackOrder,
+        sheetSyncStatus: "Đã lưu vào bộ quản lý đơn hàng hệ thống",
+        merchantNotifications: fallbackOrder.items.map((it) => ({
+          sellerName: it.sellerName,
+          sellerPhone: it.sellerPhone,
+          message: `🔔 [ĐẤT TỔ TRAVEL] ĐƠN HÀNG MỚI #${fallbackOrder.id}\n• Món: ${it.dishName} x${it.quantity}\n• Khách: ${fallbackOrder.customerName} (${fallbackOrder.phone})\n• Giao tại: ${fallbackOrder.address}\n• Ghi chú: ${fallbackOrder.note}`,
+          zaloUrl: it.sellerPhone ? `https://zalo.me/${it.sellerPhone.replace(/\D/g, "")}` : undefined,
+        })),
+      });
+      setCart([]);
+      window.localStorage.removeItem("datto-cart");
+      setCartOpen(false);
+      setCheckoutName("");
+      setCheckoutPhone("");
+      setCheckoutAddress("");
+      setCheckoutNote("");
+      showToast(`✦ Đã tạo đơn hàng ${fallbackOrder.id}!`);
+    }
+  };
+
+  const exportOrdersToCSV = () => {
+    if (!orderList.length) {
+      showToast("Chưa có đơn hàng nào trong hệ thống");
+      return;
+    }
+    const headers = ["Mã Đơn", "Thời Gian Đặt", "Tên Khách Hàng", "Số Điện Thoại", "Địa Chỉ Giao Hàng", "Chi Tiết Món & SL", "Cơ Sở Cung Cấp", "Tổng Tiền (VNĐ)", "Ghi Chú", "Trạng Thái"];
+    const rows = orderList.map((o) => [
+      o.id,
+      `"${o.createdAt}"`,
+      `"${o.customerName}"`,
+      `"${o.phone}"`,
+      `"${o.address}"`,
+      `"${(o.items || []).map((i: any) => `${i.dishName} x${i.quantity}`).join("; ")}"`,
+      `"${(o.items || []).map((i: any) => i.sellerName).join(", ")}"`,
+      o.totalAmount,
+      `"${o.note || ''}"`,
+      `"${o.status || 'Chờ xác nhận'}"`,
+    ]);
+
+    const csvContent = "\uFEFF" + [headers.join(","), ...rows.map((r) => r.join(","))].join("\n");
+    const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.setAttribute("href", url);
+    link.setAttribute("download", `Don_Hang_Dat_To_${new Date().toISOString().slice(0, 10)}.csv`);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    showToast("✓ Đã xuất file CSV Trang Tính Đơn Hàng thành công!");
+  };
+
+  const saveCustomSheetWebhook = (url: string) => {
+    setSheetWebhookUrl(url);
+    window.localStorage.setItem("datto-sheet-webhook", url);
+    showToast("✓ Đã lưu Webhook kết nối Google Sheets!");
   };
 
   const openBooking = (place: Place, stay: NearbyItem) => {
@@ -2373,6 +2489,9 @@ export default function Home() {
               <button onClick={() => { setCartOpen(true); }}>
                 <i>◇</i><b>Đặc sản làm quà (OCOP)</b><small>Thịt chua, ngọn su su, cơm lam… ({cartQuantity} món trong giỏ)</small><em>→</em>
               </button>
+              <button onClick={() => setOrdersDashboardOpen(true)}>
+                <i>📊</i><b>Quản lý đơn hàng (Google Sheets)</b><small>{orderList.length} đơn đã đặt · Xuất Excel / CSV & Kết nối Sheets</small><em>→</em>
+              </button>
             </article>
             <article className="partner-card">
               <span>DÀNH CHO ĐỐI TÁC ĐỊA PHƯƠNG</span>
@@ -2808,6 +2927,292 @@ export default function Home() {
               Gửi yêu cầu đặt phòng →
             </button>
           </form>
+        </div>
+      )}
+
+      {/* ORDER CONFIRMATION & MERCHANT DISPATCH MODAL */}
+      {confirmedOrder && (
+        <div className="commerce-overlay" role="presentation" onMouseDown={(e) => { if (e.target === e.currentTarget) setConfirmedOrder(null); }}>
+          <div className="order-success-modal" role="dialog" aria-labelledby="order-success-title">
+            <div className="order-success-header">
+              <span className="order-success-icon">🎉</span>
+              <div>
+                <span className="kicker" style={{ color: "#10b981" }}>ĐẶT HÀNG THÀNH CÔNG</span>
+                <h2 id="order-success-title">Đơn hàng #{confirmedOrder.order.id}</h2>
+              </div>
+              <button type="button" className="booking-dialog__close" onClick={() => setConfirmedOrder(null)} aria-label="Đóng">×</button>
+            </div>
+
+            {/* Google Sheets Sync Badge */}
+            <div className="order-sheet-badge">
+              <span>📊</span>
+              <div>
+                <b>Tình trạng Trang Tính Google Sheets:</b>
+                <p>{confirmedOrder.sheetSyncStatus}</p>
+              </div>
+            </div>
+
+            {/* Order Details */}
+            <div className="order-summary-box">
+              <div className="order-summary-grid">
+                <div>
+                  <small>👤 NGƯỜI ĐẶT</small>
+                  <b>{confirmedOrder.order.customerName}</b>
+                  <span>📞 {confirmedOrder.order.phone}</span>
+                </div>
+                <div>
+                  <small>📍 GIAO TỚI ĐÂU</small>
+                  <b>{confirmedOrder.order.address}</b>
+                  <span>Ghi chú: {confirmedOrder.order.note || "Không có"}</span>
+                </div>
+                <div>
+                  <small>🕒 THỜI GIAN ĐẶT</small>
+                  <b>{confirmedOrder.order.createdAt}</b>
+                </div>
+                <div>
+                  <small>💰 TỔNG TIỀN THANH TOÁN</small>
+                  <b style={{ color: "var(--red)", fontSize: "17px" }}>{formatMoney(confirmedOrder.order.totalAmount)}</b>
+                </div>
+              </div>
+
+              <div className="order-items-list">
+                <small>DANH SÁCH MÓN ĐẶT & DOANH NGHIỆP CUNG CẤP:</small>
+                {confirmedOrder.order.items.map((it: any, idx: number) => (
+                  <div key={idx} className="order-item-row">
+                    <span><b>{it.dishName}</b> × {it.quantity} phần</span>
+                    <span className="pill pill--subtle">{it.sellerName}</span>
+                    <b>{formatMoney(it.totalPrice)}</b>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* MERCHANT NOTIFICATION & DISPATCH SECTION */}
+            <div className="merchant-dispatch-section">
+              <div className="merchant-dispatch-header">
+                <span className="kicker" style={{ color: "var(--red)" }}>KẾT NỐI DOANH NGHIỆP & CHỦ CƠ SỞ</span>
+                <h3>Thông báo đã tạo để Doanh nghiệp chuẩn bị đồ & Ship</h3>
+                <p>Hệ thống tự động kết nối thông tin đơn tới chủ cơ sở OCOP để sẵn sàng đóng gói và giao hàng cho quý khách.</p>
+              </div>
+
+              <div className="merchant-card-list">
+                {confirmedOrder.merchantNotifications.map((notif: any, idx: number) => (
+                  <div key={idx} className="merchant-dispatch-card">
+                    <div className="merchant-dispatch-top">
+                      <div>
+                        <b>🏪 {notif.sellerName}</b>
+                        {notif.sellerPhone && <small>Hotline: {notif.sellerPhone}</small>}
+                      </div>
+                      <div className="merchant-actions">
+                        {notif.zaloUrl && (
+                          <a
+                            href={notif.zaloUrl}
+                            target="_blank"
+                            rel="noreferrer"
+                            className="button button--small button--dark"
+                            title="Gửi tin nhắn Zalo cho chủ cơ sở"
+                          >
+                            💬 Nhắn Zalo chủ cơ sở
+                          </a>
+                        )}
+                        {notif.sellerPhone && (
+                          <a
+                            href={`tel:${notif.sellerPhone}`}
+                            className="button button--small button--outline"
+                          >
+                            📞 Gọi chủ quán
+                          </a>
+                        )}
+                        <button
+                          type="button"
+                          className="button button--small button--ghost"
+                          onClick={() => {
+                            navigator.clipboard.writeText(notif.message);
+                            showToast(`Đã sao chép tin nhắn gửi tới ${notif.sellerName}!`);
+                          }}
+                        >
+                          📋 Sao chép
+                        </button>
+                      </div>
+                    </div>
+                    <pre className="merchant-message-preview">{notif.message}</pre>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Modal Actions */}
+            <div className="order-success-actions">
+              <button
+                type="button"
+                className="button button--dark"
+                onClick={() => {
+                  setConfirmedOrder(null);
+                  setOrdersDashboardOpen(true);
+                }}
+              >
+                📊 Xem Bảng Quản Lý Đơn Hàng (Sheets View)
+              </button>
+              <button
+                type="button"
+                className="button button--ghost"
+                onClick={() => setConfirmedOrder(null)}
+              >
+                Tiếp tục khám phá
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* ORDERS GOOGLE SHEETS DASHBOARD MODAL */}
+      {ordersDashboardOpen && (
+        <div className="commerce-overlay" role="presentation" onMouseDown={(e) => { if (e.target === e.currentTarget) setOrdersDashboardOpen(false); }}>
+          <div className="orders-dashboard-modal" role="dialog" aria-labelledby="orders-dashboard-title">
+            <div className="orders-dashboard-header">
+              <div>
+                <span className="kicker" style={{ color: "#10b981" }}>HỆ THỐNG QUẢN LÝ ĐẶT HÀNG & ĐIỀU PHỐI</span>
+                <h2 id="orders-dashboard-title">Bảng Quản Lý Đơn Hàng (Google Sheets Dispatch)</h2>
+                <p>Theo dõi thời gian đặt, số lượng, cơ sở cung cấp, địa chỉ giao và xuất dữ liệu sang Google Sheets / Excel.</p>
+              </div>
+              <button type="button" className="booking-dialog__close" onClick={() => setOrdersDashboardOpen(false)} aria-label="Đóng">×</button>
+            </div>
+
+            {/* Dashboard Control Bar */}
+            <div className="orders-control-bar">
+              <div className="orders-stat-pills">
+                <span className="orders-stat-pill"><b>{orderList.length}</b> Đơn hàng</span>
+                <span className="orders-stat-pill"><b>{orderList.reduce((acc, o) => acc + (o.totalAmount || 0), 0).toLocaleString("vi-VN")}đ</b> Doanh thu</span>
+              </div>
+              <div className="orders-action-buttons">
+                <button type="button" className="button button--dark" onClick={exportOrdersToCSV}>
+                  📥 Tải file CSV / Excel ({orderList.length} đơn)
+                </button>
+              </div>
+            </div>
+
+            {/* Google Sheets Webhook Integration Section */}
+            <div className="sheets-webhook-box">
+              <div className="sheets-webhook-title">
+                <span>🔗</span>
+                <div>
+                  <b>Đồng bộ tự động về Google Sheets cá nhân:</b>
+                  <p>Nhập Google Apps Script Webhook URL của bạn để mỗi đơn hàng mới tự động ghi 1 dòng vào file Google Sheet của bạn.</p>
+                </div>
+              </div>
+              <div className="sheets-webhook-input-group">
+                <input
+                  type="url"
+                  placeholder="https://script.google.com/macros/s/.../exec"
+                  value={sheetWebhookUrl}
+                  onChange={(e) => setSheetWebhookUrl(e.target.value)}
+                />
+                <button type="button" className="button button--dark" onClick={() => saveCustomSheetWebhook(sheetWebhookUrl)}>
+                  Lưu kết nối Sheet
+                </button>
+              </div>
+              <details className="sheets-script-details">
+                <summary>👉 Xem mã Google Apps Script 1-Click để tạo Webhook Google Sheets</summary>
+                <div className="sheets-code-block">
+                  <pre>{`// Dán mã này vào Tiện ích mở rộng > Apps Script trong Google Sheet của bạn:
+function doPost(e) {
+  try {
+    var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
+    if (sheet.getLastRow() === 0) {
+      sheet.appendRow(["Mã Đơn", "Thời Gian", "Khách Hàng", "SĐT", "Địa Chỉ Giao", "Món & Số Lượng", "Doanh Nghiệp / Cơ Sở OCOP", "Tổng Tiền (VNĐ)", "Ghi Chú", "Trạng Thái"]);
+      sheet.getRange("A1:J1").setFontWeight("bold").setBackground("#e6f4ea");
+    }
+    var data = JSON.parse(e.postData.contents);
+    sheet.appendRow([data.orderId, data.orderTime, data.customerName, "'" + data.phone, data.deliveryAddress, data.itemsDetail, data.sellersList, data.totalAmount, data.note, data.status]);
+    return ContentService.createTextOutput(JSON.stringify({status:"success"})).setMimeType(ContentService.MimeType.JSON);
+  } catch(err) {
+    return ContentService.createTextOutput(JSON.stringify({status:"error",message:err.toString()})).setMimeType(ContentService.MimeType.JSON);
+  }
+}`}</pre>
+                  <button
+                    type="button"
+                    className="button button--small button--dark"
+                    onClick={() => {
+                      navigator.clipboard.writeText(`function doPost(e) {
+  try {
+    var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
+    if (sheet.getLastRow() === 0) {
+      sheet.appendRow(["Mã Đơn", "Thời Gian", "Khách Hàng", "SĐT", "Địa Chỉ Giao", "Món & Số Lượng", "Doanh Nghiệp / Cơ Sở OCOP", "Tổng Tiền (VNĐ)", "Ghi Chú", "Trạng Thái"]);
+      sheet.getRange("A1:J1").setFontWeight("bold").setBackground("#e6f4ea");
+    }
+    var data = JSON.parse(e.postData.contents);
+    sheet.appendRow([data.orderId, data.orderTime, data.customerName, "'" + data.phone, data.deliveryAddress, data.itemsDetail, data.sellersList, data.totalAmount, data.note, data.status]);
+    return ContentService.createTextOutput(JSON.stringify({status:"success"})).setMimeType(ContentService.MimeType.JSON);
+  } catch(err) {
+    return ContentService.createTextOutput(JSON.stringify({status:"error",message:err.toString()})).setMimeType(ContentService.MimeType.JSON);
+  }
+}`);
+                      setSheetScriptCopied(true);
+                      showToast("Đã sao chép mã Apps Script! Hãy dán vào Google Sheet của bạn.");
+                    }}
+                  >
+                    {sheetScriptCopied ? "✓ Đã sao chép mã!" : "📋 Sao chép mã Google Apps Script"}
+                  </button>
+                </div>
+              </details>
+            </div>
+
+            {/* Real-time Sheets Table */}
+            <div className="orders-table-wrapper">
+              {orderList.length === 0 ? (
+                <div className="orders-empty-state">
+                  <span>📋</span>
+                  <h3>Chưa có đơn hàng nào được tạo</h3>
+                  <p>Khi du khách đặt đặc sản OCOP, các đơn hàng sẽ tự động xuất hiện tại bảng này theo thời gian thực.</p>
+                </div>
+              ) : (
+                <table className="orders-sheet-table">
+                  <thead>
+                    <tr>
+                      <th>Mã Đơn</th>
+                      <th>Thời Gian Đặt</th>
+                      <th>Khách Hàng</th>
+                      <th>Số Điện Thoại</th>
+                      <th>Địa Chỉ Giao Hàng</th>
+                      <th>Món Đặt & Số Lượng</th>
+                      <th>Cơ Sở / Doanh Nghiệp OCOP</th>
+                      <th>Tổng Tiền</th>
+                      <th>Trạng Thái</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {orderList.map((order: any) => (
+                      <tr key={order.id}>
+                        <td><b>{order.id}</b></td>
+                        <td><small>{order.createdAt}</small></td>
+                        <td><b>{order.customerName}</b></td>
+                        <td><a href={`tel:${order.phone}`}>{order.phone}</a></td>
+                        <td><small>{order.address}</small></td>
+                        <td>
+                          {(order.items || []).map((it: any, i: number) => (
+                            <div key={i}>• {it.dishName} <b>×{it.quantity}</b></div>
+                          ))}
+                        </td>
+                        <td>
+                          {(order.items || []).map((it: any, i: number) => (
+                            <span key={i} className="pill pill--subtle" style={{ marginRight: "4px", marginBottom: "2px", display: "inline-block" }}>
+                              {it.sellerName}
+                            </span>
+                          ))}
+                        </td>
+                        <td><b style={{ color: "var(--red)" }}>{Number(order.totalAmount || 0).toLocaleString("vi-VN")}đ</b></td>
+                        <td>
+                          <span className="order-status-badge">
+                            {order.status || "Chờ xác nhận"}
+                          </span>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              )}
+            </div>
+          </div>
         </div>
       )}
 
