@@ -270,6 +270,21 @@ export default function Home() {
   const [reviewPhotos, setReviewPhotos] = useState<string[]>([]);
   const [activeFoodId, setActiveFoodId] = useState<string | null>(null);
   
+  // User Authentication & Role-Based Access Control
+  const [authUser, setAuthUser] = useState<{
+    id: string;
+    name: string;
+    email: string;
+    phone?: string;
+    avatar?: string;
+    provider: "google" | "facebook" | "local";
+    role: "customer" | "merchant" | "admin";
+    merchantName?: string;
+  } | null>(null);
+  const [authModalOpen, setAuthModalOpen] = useState(false);
+  const [authRoleSelect, setAuthRoleSelect] = useState<"customer" | "merchant" | "admin">("customer");
+  const [customerOrdersOpen, setCustomerOrdersOpen] = useState(false);
+
   // Cart & Checkout & Google Sheets Orders
   const [cart, setCart] = useState<CartLine[]>([]);
   const [cartOpen, setCartOpen] = useState(false);
@@ -297,6 +312,14 @@ export default function Home() {
   useEffect(() => {
     const favoritesTimer = window.setTimeout(() => {
       try {
+        const storedUser = window.localStorage.getItem("datto-auth-user");
+        if (storedUser) {
+          const u = JSON.parse(storedUser);
+          setAuthUser(u);
+          setCheckoutName(u.name);
+          if (u.phone) setCheckoutPhone(u.phone);
+        }
+
         const stored = window.localStorage.getItem("datto-favorites");
         if (stored) setFavorites(JSON.parse(stored));
         
@@ -936,8 +959,63 @@ export default function Home() {
     window.localStorage.setItem("datto-cart", JSON.stringify(next));
   };
 
+  const handleOAuthLogin = (provider: "google" | "facebook" | "local", role: "customer" | "merchant" | "admin" = authRoleSelect) => {
+    let name = "Thanh Hoàng";
+    let email = "thanhhoang.travel@gmail.com";
+    let avatar = "TH";
+    let merchantName = undefined;
+    let phone = "0912 345 678";
+
+    if (role === "merchant") {
+      name = "Anh Nghị (Cơ sở OCOP)";
+      email = "thitchuanghithinh@gmail.com";
+      avatar = "NT";
+      merchantName = "Thịt chua Nghị Thịnh";
+      phone = "0987 654 321";
+    } else if (role === "admin") {
+      name = "Ban Quản Trị Đất Tổ";
+      email = "admin@dat-to.vn";
+      avatar = "AD";
+      phone = "0900 888 999";
+    } else if (provider === "facebook") {
+      name = "Thanh Hoàng (Facebook)";
+      email = "thanhhoang.fb@gmail.com";
+      avatar = "FB";
+      phone = "0912 345 678";
+    }
+
+    const user = {
+      id: `usr-${Date.now().toString().slice(-6)}`,
+      name,
+      email,
+      phone,
+      avatar,
+      provider,
+      role,
+      merchantName,
+    };
+
+    setAuthUser(user);
+    window.localStorage.setItem("datto-auth-user", JSON.stringify(user));
+    setAuthModalOpen(false);
+    setCheckoutName(user.name);
+    setCheckoutPhone(user.phone || "");
+    showToast(`✓ Đăng nhập thành công với ${provider === "google" ? "Gmail (Google)" : provider === "facebook" ? "Facebook" : "Email"}! (${role === "admin" ? "Quản trị viên" : role === "merchant" ? "Chủ cơ sở OCOP" : "Du khách"})`);
+  };
+
+  const handleLogout = () => {
+    setAuthUser(null);
+    window.localStorage.removeItem("datto-auth-user");
+    showToast("Đã đăng xuất tài khoản.");
+  };
+
   const submitDemoOrder = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    if (!authUser) {
+      setAuthModalOpen(true);
+      showToast("⚠️ Vui lòng đăng nhập bằng Gmail hoặc Facebook để đặt hàng!");
+      return;
+    }
     if (!checkoutName.trim()) {
       showToast("Vui lòng nhập họ và tên người mua");
       return;
@@ -1309,7 +1387,14 @@ export default function Home() {
             {cartQuantity > 0 && <span className="cart-badge">{cartQuantity}</span>}
           </button>
 
-          <button className="avatar" onClick={() => setActiveTab("profile")} aria-label="Trang cá nhân">TH</button>
+          <button
+            className="avatar"
+            onClick={() => setActiveTab("profile")}
+            aria-label="Trang cá nhân"
+            title={authUser ? `${authUser.name} (${authUser.role === "admin" ? "Quản trị viên" : authUser.role === "merchant" ? "Chủ cơ sở OCOP" : "Du khách"})` : "Đăng nhập tài khoản"}
+          >
+            {authUser ? (authUser.avatar || authUser.name.slice(0, 2).toUpperCase()) : "👤"}
+          </button>
         </div>
       </header>
 
@@ -2461,9 +2546,36 @@ export default function Home() {
       {activeTab === "profile" && (
         <section className="inner-page profile-page">
           <div className="profile-hero">
-            <div className="profile-avatar">TH</div>
-            <div><span>DU KHÁCH ĐẤT TỔ</span><h1>Thanh Hoàng</h1><p>Khám phá vùng đất cội nguồn Phú Thọ, Vĩnh Phúc, Hòa Bình.</p></div>
-            <button onClick={() => showToast("Hồ sơ demo sẵn sàng")}>Chỉnh sửa hồ sơ</button>
+            <div className="profile-avatar">
+              {authUser ? (authUser.avatar || authUser.name.slice(0, 2).toUpperCase()) : "👤"}
+            </div>
+            <div>
+              <span>
+                {authUser
+                  ? authUser.role === "admin"
+                    ? "🛡️ QUẢN TRỊ VIÊN HỆ THỐNG"
+                    : authUser.role === "merchant"
+                    ? `🏪 CHỦ CƠ SỞ OCOP: ${authUser.merchantName || "ĐỐI TÁC"}`
+                    : "👤 DU KHÁCH ĐẤT TỔ"
+                  : "CHƯA ĐĂNG NHẬP"}
+              </span>
+              <h1>{authUser ? authUser.name : "Khách vãng lai"}</h1>
+              <p>
+                {authUser
+                  ? `${authUser.email} · Đăng nhập qua ${authUser.provider === "google" ? "Gmail (Google)" : authUser.provider === "facebook" ? "Facebook" : "Email"}`
+                  : "Đăng nhập bằng Gmail hoặc Facebook để đặt đặc sản OCOP và quản lý đơn hàng."}
+              </p>
+            </div>
+            {authUser ? (
+              <div style={{ display: "flex", gap: "8px" }}>
+                <button type="button" onClick={() => setAuthModalOpen(true)}>Đổi tài khoản</button>
+                <button type="button" onClick={handleLogout} style={{ color: "var(--red)" }}>Đăng xuất</button>
+              </div>
+            ) : (
+              <button type="button" onClick={() => setAuthModalOpen(true)} style={{ background: "var(--red)", color: "white" }}>
+                🔑 Đăng nhập ngay
+              </button>
+            )}
           </div>
           <div className="profile-grid">
             <article className="passport-card">
@@ -2489,9 +2601,45 @@ export default function Home() {
               <button onClick={() => { setCartOpen(true); }}>
                 <i>◇</i><b>Đặc sản làm quà (OCOP)</b><small>Thịt chua, ngọn su su, cơm lam… ({cartQuantity} món trong giỏ)</small><em>→</em>
               </button>
-              <button onClick={() => setOrdersDashboardOpen(true)}>
-                <i>📊</i><b>Quản lý đơn hàng (Google Sheets)</b><small>{orderList.length} đơn đã đặt · Xuất Excel / CSV & Kết nối Sheets</small><em>→</em>
-              </button>
+
+              {/* ROLE-BASED ORDER MANAGEMENT VISIBILITY */}
+              {authUser && (authUser.role === "admin" || authUser.role === "merchant") ? (
+                <button
+                  onClick={() => setOrdersDashboardOpen(true)}
+                  style={{ background: "#f0fdf4", border: "1.5px solid #86efac" }}
+                >
+                  <i>📊</i>
+                  <b>Bảng Quản Lý Đơn Hàng (Google Sheets)</b>
+                  <small>
+                    {authUser.role === "admin"
+                      ? `Quyền Admin: Quản lý ${orderList.length} đơn · Điều phối & Xuất Sheets`
+                      : `Chủ cơ sở (${authUser.merchantName}): Quản lý đơn & giao hàng`}
+                  </small>
+                  <em>→</em>
+                </button>
+              ) : authUser ? (
+                <button
+                  onClick={() => setCustomerOrdersOpen(true)}
+                  style={{ background: "#f8fafc", border: "1px solid var(--line)" }}
+                >
+                  <i>🛍️</i>
+                  <b>Đơn hàng của tôi</b>
+                  <small>
+                    {orderList.filter(o => o.phone === authUser.phone || o.customerName === authUser.name).length} đơn đã đặt · Theo dõi tình trạng giao
+                  </small>
+                  <em>→</em>
+                </button>
+              ) : (
+                <button
+                  onClick={() => setAuthModalOpen(true)}
+                  style={{ opacity: 0.85 }}
+                >
+                  <i>🔒</i>
+                  <b>Đăng nhập Chủ cơ sở / Quản trị viên</b>
+                  <small>Mở khóa Bảng Quản Lý Đơn Hàng & Google Sheets</small>
+                  <em>→</em>
+                </button>
+              )}
             </article>
             <article className="partner-card">
               <span>DÀNH CHO ĐỐI TÁC ĐỊA PHƯƠNG</span>
@@ -2787,7 +2935,59 @@ export default function Home() {
                   <b>{formatMoney(cartSubtotal)}</b>
                 </div>
 
-                <div className="commerce-form-fields">
+                {/* AUTH GATE OR USER STATUS IN CART */}
+                {!authUser ? (
+                  <div className="cart-auth-gate">
+                    <div className="cart-auth-gate__header">
+                      <span className="cart-auth-gate__icon">🔒</span>
+                      <div>
+                        <b>Yêu cầu đăng nhập để đặt hàng</b>
+                        <p>Đăng nhập bằng Gmail hoặc Facebook để lưu đơn và nhận thông báo từ cơ sở OCOP.</p>
+                      </div>
+                    </div>
+
+                    <div className="auth-social-buttons">
+                      <button
+                        type="button"
+                        className="auth-btn auth-btn--google"
+                        onClick={() => handleOAuthLogin("google", "customer")}
+                      >
+                        <svg width="18" height="18" viewBox="0 0 24 24"><path fill="#EA4335" d="M12 5c1.6 0 3 .6 4.1 1.7l3.1-3.1C17.3 1.8 14.8 1 12 1 7.5 1 3.7 3.6 1.9 7.3l3.7 2.9C6.5 7.4 9 5 12 5z"/><path fill="#4285F4" d="M23.5 12.3c0-.8-.1-1.7-.2-2.3H12v4.6h6.5c-.3 1.5-1.1 2.8-2.4 3.7l3.7 2.9c2.2-2 3.7-5 3.7-8.9z"/><path fill="#FBBC05" d="M5.6 14.8c-.2-.7-.4-1.5-.4-2.8s.2-2.1.4-2.8L1.9 6.3C.7 8.7 0 10.8 0 12s.7 3.3 1.9 5.7l3.7-2.9z"/><path fill="#34A853" d="M12 23c3.2 0 6-1.1 8-3l-3.7-2.9c-1.1.7-2.5 1.2-4.3 1.2-3 0-5.5-2.4-6.4-5.2L1.9 16C3.7 19.7 7.5 23 12 23z"/></svg>
+                        Đăng nhập bằng Gmail (Google)
+                      </button>
+                      <button
+                        type="button"
+                        className="auth-btn auth-btn--facebook"
+                        onClick={() => handleOAuthLogin("facebook", "customer")}
+                      >
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="#1877F2"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+                        Đăng nhập bằng Facebook
+                      </button>
+                    </div>
+
+                    <button
+                      type="button"
+                      className="text-link"
+                      style={{ fontSize: "12px", marginTop: "4px" }}
+                      onClick={() => setAuthModalOpen(true)}
+                    >
+                      Hoặc đăng nhập vai trò Chủ cơ sở / Quản trị viên →
+                    </button>
+                  </div>
+                ) : (
+                  <div className="cart-user-badge">
+                    <div>
+                      <span>👤 Tài khoản đặt hàng:</span>
+                      <b>{authUser.name} ({authUser.email})</b>
+                      <span className="pill pill--subtle" style={{ marginTop: "2px", display: "inline-block" }}>
+                        {authUser.role === "admin" ? "🛡️ Quản trị viên" : authUser.role === "merchant" ? `🏪 Chủ cơ sở: ${authUser.merchantName}` : "👤 Du khách"}
+                      </span>
+                    </div>
+                    <button type="button" className="text-link" onClick={() => setAuthModalOpen(true)}>Đổi</button>
+                  </div>
+                )}
+
+                <div className="commerce-form-fields" style={{ opacity: authUser ? 1 : 0.6, pointerEvents: authUser ? "auto" : "none" }}>
                   <label className="commerce-field">
                     Họ và tên người mua <small style={{ color: "red" }}>*</small>
                     <input
@@ -2832,9 +3032,19 @@ export default function Home() {
                   </label>
                 </div>
 
-                <button className="button button--dark button--full" type="submit">
-                  Xác nhận đặt hàng ({formatMoney(cartSubtotal)}) →
-                </button>
+                {authUser ? (
+                  <button className="button button--dark button--full" type="submit">
+                    Xác nhận đặt hàng ({formatMoney(cartSubtotal)}) →
+                  </button>
+                ) : (
+                  <button
+                    className="button button--dark button--full"
+                    type="button"
+                    onClick={() => setAuthModalOpen(true)}
+                  >
+                    🔒 Đăng nhập để hoàn tất đặt hàng →
+                  </button>
+                )}
               </>
             )}
           </form>
@@ -3065,15 +3275,23 @@ export default function Home() {
         </div>
       )}
 
-      {/* ORDERS GOOGLE SHEETS DASHBOARD MODAL */}
+      {/* ORDERS GOOGLE SHEETS DASHBOARD MODAL (ADMIN & MERCHANT ONLY) */}
       {ordersDashboardOpen && (
         <div className="commerce-overlay" role="presentation" onMouseDown={(e) => { if (e.target === e.currentTarget) setOrdersDashboardOpen(false); }}>
           <div className="orders-dashboard-modal" role="dialog" aria-labelledby="orders-dashboard-title">
             <div className="orders-dashboard-header">
               <div>
-                <span className="kicker" style={{ color: "#10b981" }}>HỆ THỐNG QUẢN LÝ ĐẶT HÀNG & ĐIỀU PHỐI</span>
-                <h2 id="orders-dashboard-title">Bảng Quản Lý Đơn Hàng (Google Sheets Dispatch)</h2>
-                <p>Theo dõi thời gian đặt, số lượng, cơ sở cung cấp, địa chỉ giao và xuất dữ liệu sang Google Sheets / Excel.</p>
+                <span className="kicker" style={{ color: "#10b981" }}>
+                  {authUser?.role === "admin"
+                    ? "🛡️ QUYỀN HẠN: QUẢN TRỊ VIÊN HỆ THỐNG (ADMIN)"
+                    : `🏪 QUYỀN HẠN: CHỦ CƠ SỞ OCOP - ${authUser?.merchantName || "ĐỐI TÁC"}`}
+                </span>
+                <h2 id="orders-dashboard-title">Bảng Quản Lý Đơn Hàng & Google Sheets</h2>
+                <p>
+                  {authUser?.role === "admin"
+                    ? "Theo dõi toàn bộ đơn hàng của tất cả cơ sở OCOP, xuất dữ liệu và đồng bộ Google Sheets Webhook."
+                    : `Theo dõi các đơn hàng liên quan đến cơ sở ${authUser?.merchantName || "của bạn"} để chuẩn bị đồ và giao cho khách.`}
+                </p>
               </div>
               <button type="button" className="booking-dialog__close" onClick={() => setOrdersDashboardOpen(false)} aria-label="Đóng">×</button>
             </div>
@@ -3081,8 +3299,11 @@ export default function Home() {
             {/* Dashboard Control Bar */}
             <div className="orders-control-bar">
               <div className="orders-stat-pills">
-                <span className="orders-stat-pill"><b>{orderList.length}</b> Đơn hàng</span>
+                <span className="orders-stat-pill"><b>{orderList.length}</b> Tổng đơn</span>
                 <span className="orders-stat-pill"><b>{orderList.reduce((acc, o) => acc + (o.totalAmount || 0), 0).toLocaleString("vi-VN")}đ</b> Doanh thu</span>
+                <span className="orders-stat-pill" style={{ background: "#ecfdf5", color: "#065f46" }}>
+                  👤 Đang đăng nhập: <b>{authUser?.name}</b>
+                </span>
               </div>
               <div className="orders-action-buttons">
                 <button type="button" className="button button--dark" onClick={exportOrdersToCSV}>
@@ -3091,30 +3312,31 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Google Sheets Webhook Integration Section */}
-            <div className="sheets-webhook-box">
-              <div className="sheets-webhook-title">
-                <span>🔗</span>
-                <div>
-                  <b>Đồng bộ tự động về Google Sheets cá nhân:</b>
-                  <p>Nhập Google Apps Script Webhook URL của bạn để mỗi đơn hàng mới tự động ghi 1 dòng vào file Google Sheet của bạn.</p>
+            {/* Google Sheets Webhook Integration Section (Admin Only) */}
+            {authUser?.role === "admin" && (
+              <div className="sheets-webhook-box">
+                <div className="sheets-webhook-title">
+                  <span>🔗</span>
+                  <div>
+                    <b>Đồng bộ tự động về Google Sheets:</b>
+                    <p>Nhập Google Apps Script Webhook URL để mỗi đơn hàng mới tự động ghi 1 dòng vào file Google Sheet quản lý chung.</p>
+                  </div>
                 </div>
-              </div>
-              <div className="sheets-webhook-input-group">
-                <input
-                  type="url"
-                  placeholder="https://script.google.com/macros/s/.../exec"
-                  value={sheetWebhookUrl}
-                  onChange={(e) => setSheetWebhookUrl(e.target.value)}
-                />
-                <button type="button" className="button button--dark" onClick={() => saveCustomSheetWebhook(sheetWebhookUrl)}>
-                  Lưu kết nối Sheet
-                </button>
-              </div>
-              <details className="sheets-script-details">
-                <summary>👉 Xem mã Google Apps Script 1-Click để tạo Webhook Google Sheets</summary>
-                <div className="sheets-code-block">
-                  <pre>{`// Dán mã này vào Tiện ích mở rộng > Apps Script trong Google Sheet của bạn:
+                <div className="sheets-webhook-input-group">
+                  <input
+                    type="url"
+                    placeholder="https://script.google.com/macros/s/.../exec"
+                    value={sheetWebhookUrl}
+                    onChange={(e) => setSheetWebhookUrl(e.target.value)}
+                  />
+                  <button type="button" className="button button--dark" onClick={() => saveCustomSheetWebhook(sheetWebhookUrl)}>
+                    Lưu kết nối Sheet
+                  </button>
+                </div>
+                <details className="sheets-script-details">
+                  <summary>👉 Xem mã Google Apps Script 1-Click để tạo Webhook Google Sheets</summary>
+                  <div className="sheets-code-block">
+                    <pre>{`// Dán mã này vào Tiện ích mở rộng > Apps Script trong Google Sheet của bạn:
 function doPost(e) {
   try {
     var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
@@ -3129,11 +3351,11 @@ function doPost(e) {
     return ContentService.createTextOutput(JSON.stringify({status:"error",message:err.toString()})).setMimeType(ContentService.MimeType.JSON);
   }
 }`}</pre>
-                  <button
-                    type="button"
-                    className="button button--small button--dark"
-                    onClick={() => {
-                      navigator.clipboard.writeText(`function doPost(e) {
+                    <button
+                      type="button"
+                      className="button button--small button--dark"
+                      onClick={() => {
+                        navigator.clipboard.writeText(`function doPost(e) {
   try {
     var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
     if (sheet.getLastRow() === 0) {
@@ -3147,15 +3369,16 @@ function doPost(e) {
     return ContentService.createTextOutput(JSON.stringify({status:"error",message:err.toString()})).setMimeType(ContentService.MimeType.JSON);
   }
 }`);
-                      setSheetScriptCopied(true);
-                      showToast("Đã sao chép mã Apps Script! Hãy dán vào Google Sheet của bạn.");
-                    }}
-                  >
-                    {sheetScriptCopied ? "✓ Đã sao chép mã!" : "📋 Sao chép mã Google Apps Script"}
-                  </button>
-                </div>
-              </details>
-            </div>
+                        setSheetScriptCopied(true);
+                        showToast("Đã sao chép mã Apps Script! Hãy dán vào Google Sheet của bạn.");
+                      }}
+                    >
+                      {sheetScriptCopied ? "✓ Đã sao chép mã!" : "📋 Sao chép mã Google Apps Script"}
+                    </button>
+                  </div>
+                </details>
+              </div>
+            )}
 
             {/* Real-time Sheets Table */}
             <div className="orders-table-wrapper">
@@ -3211,6 +3434,145 @@ function doPost(e) {
                   </tbody>
                 </table>
               )}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* CUSTOMER PERSONAL ORDERS MODAL */}
+      {customerOrdersOpen && (
+        <div className="commerce-overlay" role="presentation" onMouseDown={(e) => { if (e.target === e.currentTarget) setCustomerOrdersOpen(false); }}>
+          <div className="orders-dashboard-modal" style={{ maxWidth: "720px" }} role="dialog" aria-labelledby="customer-orders-title">
+            <div className="orders-dashboard-header">
+              <div>
+                <span className="kicker" style={{ color: "var(--red)" }}>LỊCH SỬ MUA SẮM CÁ NHÂN</span>
+                <h2 id="customer-orders-title">Đơn hàng của bạn</h2>
+                <p>Theo dõi các món đặc sản OCOP bạn đã đặt và tiến độ giao nhận.</p>
+              </div>
+              <button type="button" className="booking-dialog__close" onClick={() => setCustomerOrdersOpen(false)} aria-label="Đóng">×</button>
+            </div>
+
+            {orderList.filter(o => o.phone === authUser?.phone || o.customerName === authUser?.name).length === 0 ? (
+              <div className="orders-empty-state">
+                <span>🛍️</span>
+                <h3>Bạn chưa đặt món đặc sản nào</h3>
+                <p>Khám phá bản đồ đặc sản OCOP và đặt món để thưởng thức hương vị Đất Tổ.</p>
+                <button
+                  type="button"
+                  className="button button--dark"
+                  onClick={() => {
+                    setCustomerOrdersOpen(false);
+                    goToFoodSection();
+                  }}
+                >
+                  Khám phá đặc sản OCOP →
+                </button>
+              </div>
+            ) : (
+              <div className="customer-order-cards">
+                {orderList
+                  .filter(o => o.phone === authUser?.phone || o.customerName === authUser?.name)
+                  .map((order: any) => (
+                    <article key={order.id} className="customer-order-card">
+                      <div className="customer-order-top">
+                        <div>
+                          <span className="order-status-badge">✓ {order.status || "Đang xử lý"}</span>
+                          <b>Đơn hàng #{order.id}</b>
+                          <small>🕒 {order.createdAt}</small>
+                        </div>
+                        <b style={{ color: "var(--red)", fontSize: "16px" }}>{Number(order.totalAmount || 0).toLocaleString("vi-VN")}đ</b>
+                      </div>
+
+                      <div className="customer-order-body">
+                        <p><b>Địa chỉ giao:</b> {order.address}</p>
+                        <div className="customer-order-items">
+                          {(order.items || []).map((it: any, i: number) => (
+                            <div key={i} className="customer-order-item-row">
+                              <span>• {it.dishName} (×{it.quantity})</span>
+                              <span className="pill pill--subtle">{it.sellerName}</span>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    </article>
+                  ))}
+              </div>
+            )}
+          </div>
+        </div>
+      )}
+
+      {/* AUTHENTICATION MODAL (GMAIL & FACEBOOK & ROLE SELECT) */}
+      {authModalOpen && (
+        <div className="commerce-overlay" role="presentation" onMouseDown={(e) => { if (e.target === e.currentTarget) setAuthModalOpen(false); }}>
+          <div className="auth-dialog-modal" role="dialog" aria-labelledby="auth-dialog-title">
+            <div className="auth-dialog-header">
+              <div className="brand brand--footer" style={{ marginBottom: "6px" }}>
+                <span className="brand__mark">Đ</span>
+                <span><strong>Đất Tổ Travel</strong><small>HỆ THỐNG TÀI KHOẢN SỐ</small></span>
+              </div>
+              <h2 id="auth-dialog-title">Đăng Nhập Tài Khoản</h2>
+              <p>Đăng nhập để đặt đặc sản OCOP, quản lý đơn hàng và truy cập bảng điều phối doanh nghiệp.</p>
+              <button type="button" className="booking-dialog__close" onClick={() => setAuthModalOpen(false)} aria-label="Đóng">×</button>
+            </div>
+
+            {/* Role Selection Segmented Control */}
+            <div className="auth-role-selector">
+              <label>CHỌN VAI TRÒ ĐĂNG NHẬP:</label>
+              <div className="auth-role-buttons">
+                <button
+                  type="button"
+                  className={`auth-role-btn ${authRoleSelect === "customer" ? "is-active" : ""}`}
+                  onClick={() => setAuthRoleSelect("customer")}
+                >
+                  <span>👤</span>
+                  <b>Du khách</b>
+                  <small>Đặt món & lưu tour</small>
+                </button>
+                <button
+                  type="button"
+                  className={`auth-role-btn ${authRoleSelect === "merchant" ? "is-active" : ""}`}
+                  onClick={() => setAuthRoleSelect("merchant")}
+                >
+                  <span>🏪</span>
+                  <b>Chủ cơ sở OCOP</b>
+                  <small>Xem đơn & giao hàng</small>
+                </button>
+                <button
+                  type="button"
+                  className={`auth-role-btn ${authRoleSelect === "admin" ? "is-active" : ""}`}
+                  onClick={() => setAuthRoleSelect("admin")}
+                >
+                  <span>🛡️</span>
+                  <b>Quản trị viên</b>
+                  <small>Toàn quyền & Sheets</small>
+                </button>
+              </div>
+            </div>
+
+            {/* Quick OAuth Login Options */}
+            <div className="auth-options-group">
+              <button
+                type="button"
+                className="auth-btn auth-btn--google auth-btn--lg"
+                onClick={() => handleOAuthLogin("google", authRoleSelect)}
+              >
+                <svg width="20" height="20" viewBox="0 0 24 24"><path fill="#EA4335" d="M12 5c1.6 0 3 .6 4.1 1.7l3.1-3.1C17.3 1.8 14.8 1 12 1 7.5 1 3.7 3.6 1.9 7.3l3.7 2.9C6.5 7.4 9 5 12 5z"/><path fill="#4285F4" d="M23.5 12.3c0-.8-.1-1.7-.2-2.3H12v4.6h6.5c-.3 1.5-1.1 2.8-2.4 3.7l3.7 2.9c2.2-2 3.7-5 3.7-8.9z"/><path fill="#FBBC05" d="M5.6 14.8c-.2-.7-.4-1.5-.4-2.8s.2-2.1.4-2.8L1.9 6.3C.7 8.7 0 10.8 0 12s.7 3.3 1.9 5.7l3.7-2.9z"/><path fill="#34A853" d="M12 23c3.2 0 6-1.1 8-3l-3.7-2.9c-1.1.7-2.5 1.2-4.3 1.2-3 0-5.5-2.4-6.4-5.2L1.9 16C3.7 19.7 7.5 23 12 23z"/></svg>
+                <span>Tiếp tục với <b>Google (Gmail)</b></span>
+              </button>
+
+              <button
+                type="button"
+                className="auth-btn auth-btn--facebook auth-btn--lg"
+                onClick={() => handleOAuthLogin("facebook", authRoleSelect)}
+              >
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="#1877F2"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+                <span>Tiếp tục với <b>Facebook</b></span>
+              </button>
+            </div>
+
+            <div className="auth-dialog-footer">
+              <p>Bằng việc đăng nhập, bạn đồng ý với Điều khoản dịch vụ và Chính sách bảo mật của Đất Tổ Travel.</p>
             </div>
           </div>
         </div>
