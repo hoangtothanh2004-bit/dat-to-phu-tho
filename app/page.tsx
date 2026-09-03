@@ -1065,24 +1065,42 @@ export default function Home() {
       </button>
       <button
         className={`heart-button ${favorites.includes(place.id) ? "is-saved" : ""}`}
-        onClick={() => toggleFavorite(place.id)}
+        onClick={(e) => {
+          e.stopPropagation();
+          toggleFavorite(place.id);
+        }}
         aria-label={favorites.includes(place.id) ? `Bỏ lưu ${place.name}` : `Lưu ${place.name}`}
       >
         {favorites.includes(place.id) ? "♥" : "♡"}
       </button>
-      <button className="place-card__body" onClick={() => openPlace(place)}>
+      <div className="place-card__body" onClick={() => openPlace(place)}>
         <span className="eyebrow">{place.location}</span>
         <strong>{place.shortName}</strong>
         <span className="place-card__meta"><b>★ {place.rating}</b> ({place.reviews.toLocaleString("vi-VN")}) · {place.bestTime}</span>
         {!compact && <span className="place-card__highlight">✦ {place.highlights[0]}</span>}
         {!compact && (
-          <span className="place-card__footer">
-            <span>{distanceFromUser(place) ? `${distanceFromUser(place)} · ${estimateTravel(haversine(position!.lat, position!.lng, place.lat, place.lng))}` : `${place.distanceFromVietTri} km từ Việt Trì · ${place.travelFromVietTri}`}</span>
-            <i>Chi tiết →</i>
-          </span>
+          <div className="place-card__footer">
+            <span className="place-card__distance-info">
+              {distanceFromUser(place)
+                ? `${distanceFromUser(place)} · ${estimateTravel(haversine(position!.lat, position!.lng, place.lat, place.lng))}`
+                : `${place.distanceFromVietTri} km từ Việt Trì`}
+            </span>
+            <div className="place-card__actions-row">
+              <a
+                className="place-card__quick-map-btn"
+                target="_blank"
+                rel="noreferrer"
+                href={`https://www.google.com/maps/dir/?api=1&destination=${place.lat},${place.lng}`}
+                onClick={(e) => e.stopPropagation()}
+                aria-label={`Chỉ đường tới ${place.name}`}
+              >
+                ⌁ Chỉ đường
+              </a>
+              <span className="place-card__detail-link">Chi tiết →</span>
+            </div>
+          </div>
         )}
-      </button>
-      {!compact && <a className="place-card__quick-map" target="_blank" rel="noreferrer" href={`https://www.google.com/maps/dir/?api=1&destination=${place.lat},${place.lng}`} aria-label={`Chỉ đường tới ${place.name}`}>⌁ Chỉ đường</a>}
+      </div>
     </article>
   );
 
