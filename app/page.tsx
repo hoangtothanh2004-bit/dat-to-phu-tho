@@ -196,16 +196,17 @@ export default function Home() {
     })
   );
 
-  // Audio guide controls & voice customization
+  // Audio guide controls & voice customization (AI TTS + Browser Speech)
   const [audioLang, setAudioLang] = useState<"vi" | "en">("vi");
   const [availableVoices, setAvailableVoices] = useState<SpeechSynthesisVoice[]>([]);
-  const [selectedVoiceURI, setSelectedVoiceURI] = useState<string>("default");
+  const [selectedVoiceURI, setSelectedVoiceURI] = useState<string>("ai-female-north");
   const [audioGuidePlaying, setAudioGuidePlaying] = useState(false);
   const [audioState, setAudioState] = useState<AudioState>("idle");
   const [speechPlaceId, setSpeechPlaceId] = useState<string | null>(null);
   const [audioVolume, setAudioVolume] = useState(0.75);
   const [audioRate, setAudioRate] = useState(0.9);
   const speechRef = useRef<SpeechSynthesisUtterance | null>(null);
+  const htmlAudioRef = useRef<HTMLAudioElement | null>(null);
 
   useEffect(() => {
     if (typeof window === "undefined" || !("speechSynthesis" in window)) return;
@@ -224,32 +225,27 @@ export default function Home() {
     };
   }, []);
 
-  const filteredVoices = useMemo(() => {
+  const voiceOptions = useMemo(() => {
     if (audioLang === "vi") {
-      return availableVoices.filter((v) => v.lang.toLowerCase().startsWith("vi"));
+      const aiVoices = [
+        { id: "ai-female-north", label: "🌸 Giọng AI Nữ Hà Nội (Chuẩn Studio - Êm ái)" },
+        { id: "ai-male-north", label: "🎙️ Giọng AI Nam Trầm Ấm (Truyền cảm)" },
+      ];
+      const browserVoices = availableVoices
+        .filter((v) => v.lang.toLowerCase().startsWith("vi"))
+        .map((v) => ({ id: v.voiceURI, label: `🖥️ ${v.name} (Hệ thống)` }));
+      return [...aiVoices, ...browserVoices];
     } else {
-      return availableVoices.filter((v) => v.lang.toLowerCase().startsWith("en"));
+      const aiVoices = [
+        { id: "ai-en-us", label: "🇺🇸 US Natural Female (American Standard)" },
+        { id: "ai-en-uk", label: "🇬🇧 UK British Female (Oxford Standard)" },
+      ];
+      const browserVoices = availableVoices
+        .filter((v) => v.lang.toLowerCase().startsWith("en"))
+        .map((v) => ({ id: v.voiceURI, label: `🖥️ ${v.name} (Hệ thống)` }));
+      return [...aiVoices, ...browserVoices];
     }
   }, [availableVoices, audioLang]);
-
-  const formatVoiceLabel = (v: SpeechSynthesisVoice) => {
-    const name = v.name;
-    const isFemale = /female|mai|hoaimy|an|nu|jenny|aria|sonia|zira|samantha|victoria/i.test(name);
-    const isMale = /male|nam|namminh|minh|guy|christopher|ryan|david|george|alex/i.test(name);
-    let prefix = isFemale ? "🌸 Giọng Nữ" : isMale ? "🎙️ Giọng Nam" : "🔊 Giọng đọc";
-    if (audioLang === "en") {
-      prefix = isFemale ? "🌸 Female" : isMale ? "🎙️ Male" : "🔊 Voice";
-    }
-    const cleanName = name
-      .replace(/Microsoft\s+/i, "MS ")
-      .replace(/Google\s+/i, "Google ")
-      .replace(/Online\s*\(Natural\)\s*-\s*/i, "")
-      .replace(/\s*\(Natural\)/i, " (Tự nhiên)")
-      .replace(/Vietnamese\s*\(Vietnam\)/i, "Tiếng Việt")
-      .replace(/English\s*\(United States\)/i, "US English")
-      .replace(/English\s*\(United Kingdom\)/i, "UK English");
-    return `${prefix}: ${cleanName}`;
-  };
 
   // Directory 100
   const [show100Directory, setShow100Directory] = useState(false);
@@ -676,35 +672,68 @@ export default function Home() {
     }
   };
 
+  const stopAllAudio = () => {
+    if (htmlAudioRef.current) {
+      htmlAudioRef.current.pause();
+      htmlAudioRef.current = null;
+    }
+    if (typeof window !== "undefined" && "speechSynthesis" in window) {
+      window.speechSynthesis.cancel();
+    }
+    speechRef.current = null;
+    setAudioGuidePlaying(false);
+    setAudioState("idle");
+    setSpeechPlaceId(null);
+  };
+
   const playSpeechText = (
     textVi: string,
     textEn: string | undefined,
     onStateChange?: (playing: boolean) => void
   ) => {
-    if (!("speechSynthesis" in window)) {
-      showToast("Thiết bị chưa hỗ trợ thuyết minh tự động");
+    stopAllAudio();
+
+    const textToSpeak = audioLang === "en" ? (textEn || textVi) : textVi;
+    const isAiVoice = selectedVoiceURI.startsWith("ai-");
+
+    if (isAiVoice) {
+      const lang = audioLang === "en" ? "en" : "vi";
+      const audioUrl = `/api/tts?text=${encodeURIComponent(textToSpeak)}&lang=${lang}`;
+      const audio = new Audio(audioUrl);
+      audio.playbackRate = audioRate;
+      audio.volume = audioVolume;
+
+      audio.onplay = () => {
+        onStateChange?.(true);
+      };
+      audio.onended = () => {
+        onStateChange?.(false);
+        stopAllAudio();
+      };
+      audio.onerror = () => {
+        onStateChange?.(false);
+        stopAllAudio();
+        showToast("Không thể tải âm thanh AI, vui lòng thử lại");
+      };
+
+      htmlAudioRef.current = audio;
+      audio.play().catch(() => {
+        onStateChange?.(false);
+      });
       return;
     }
-    window.speechSynthesis.cancel();
-    const textToSpeak = audioLang === "en" ? (textEn || textVi) : textVi;
+
+    // Fallback or explicit system voice selection
+    if (typeof window === "undefined" || !("speechSynthesis" in window)) {
+      showToast("Thiết bị chưa hỗ trợ phát giọng đọc hệ thống");
+      return;
+    }
+
     const utterance = new SpeechSynthesisUtterance(textToSpeak);
-
-    let voiceToUse: SpeechSynthesisVoice | null = null;
-    if (selectedVoiceURI !== "default") {
-      voiceToUse = availableVoices.find((v) => v.voiceURI === selectedVoiceURI) || null;
+    const matchedVoice = availableVoices.find((v) => v.voiceURI === selectedVoiceURI);
+    if (matchedVoice) {
+      utterance.voice = matchedVoice;
     }
-
-    if (!voiceToUse) {
-      if (audioLang === "vi") {
-        const viVoices = availableVoices.filter((v) => v.lang.toLowerCase().startsWith("vi"));
-        voiceToUse = viVoices.find((v) => /natural|hoaimy|google|mai/i.test(v.name)) ?? viVoices[0] ?? null;
-      } else {
-        const enVoices = availableVoices.filter((v) => v.lang.toLowerCase().startsWith("en"));
-        voiceToUse = enVoices.find((v) => /natural|jenny|aria|google/i.test(v.name)) ?? enVoices[0] ?? null;
-      }
-    }
-
-    if (voiceToUse) utterance.voice = voiceToUse;
     utterance.lang = audioLang === "vi" ? "vi-VN" : "en-US";
     utterance.rate = audioRate;
     utterance.pitch = 1.0;
@@ -718,8 +747,7 @@ export default function Home() {
 
   const toggleItineraryAudio = () => {
     if (audioGuidePlaying) {
-      if ("speechSynthesis" in window) window.speechSynthesis.cancel();
-      setAudioGuidePlaying(false);
+      stopAllAudio();
       return;
     }
     playSpeechText(
@@ -729,51 +757,66 @@ export default function Home() {
     );
   };
 
-  const stopAllAudio = () => {
-    if ("speechSynthesis" in window) window.speechSynthesis.cancel();
-    speechRef.current = null;
-    setAudioGuidePlaying(false);
-    setAudioState("idle");
-    setSpeechPlaceId(null);
-  };
-
   const togglePlaceAudio = (place: Place) => {
-    if (!("speechSynthesis" in window)) {
-      showToast("Thiết bị chưa hỗ trợ thuyết minh tự động");
-      return;
-    }
-
     if (speechPlaceId === place.id && audioState === "playing") {
-      window.speechSynthesis.pause();
+      if (htmlAudioRef.current) {
+        htmlAudioRef.current.pause();
+      } else if (typeof window !== "undefined" && "speechSynthesis" in window) {
+        window.speechSynthesis.pause();
+      }
       setAudioState("paused");
       return;
     }
 
     if (speechPlaceId === place.id && audioState === "paused") {
-      window.speechSynthesis.resume();
+      if (htmlAudioRef.current) {
+        htmlAudioRef.current.play();
+      } else if (typeof window !== "undefined" && "speechSynthesis" in window) {
+        window.speechSynthesis.resume();
+      }
       setAudioState("playing");
       return;
     }
 
     stopAllAudio();
     const textToSpeak = audioLang === "en" ? (place.audioScriptEn || place.audioScript) : place.audioScript;
+    const isAiVoice = selectedVoiceURI.startsWith("ai-");
+
+    if (isAiVoice) {
+      const lang = audioLang === "en" ? "en" : "vi";
+      const audioUrl = `/api/tts?text=${encodeURIComponent(textToSpeak)}&lang=${lang}`;
+      const audio = new Audio(audioUrl);
+      audio.playbackRate = audioRate;
+      audio.volume = audioVolume;
+
+      audio.onplay = () => {
+        setSpeechPlaceId(place.id);
+        setAudioState("playing");
+      };
+      audio.onended = () => {
+        stopAllAudio();
+      };
+      audio.onerror = () => {
+        stopAllAudio();
+      };
+
+      htmlAudioRef.current = audio;
+      setSpeechPlaceId(place.id);
+      audio.play().catch(() => {
+        stopAllAudio();
+      });
+      return;
+    }
+
+    if (typeof window === "undefined" || !("speechSynthesis" in window)) {
+      showToast("Thiết bị chưa hỗ trợ thuyết minh tự động");
+      return;
+    }
+
     const utterance = new SpeechSynthesisUtterance(textToSpeak);
+    const matchedVoice = availableVoices.find((v) => v.voiceURI === selectedVoiceURI);
+    if (matchedVoice) utterance.voice = matchedVoice;
 
-    let voiceToUse: SpeechSynthesisVoice | null = null;
-    if (selectedVoiceURI !== "default") {
-      voiceToUse = availableVoices.find((v) => v.voiceURI === selectedVoiceURI) || null;
-    }
-    if (!voiceToUse) {
-      if (audioLang === "vi") {
-        const viVoices = availableVoices.filter((v) => v.lang.toLowerCase().startsWith("vi"));
-        voiceToUse = viVoices.find((v) => /natural|hoaimy|google|mai/i.test(v.name)) ?? viVoices[0] ?? null;
-      } else {
-        const enVoices = availableVoices.filter((v) => v.lang.toLowerCase().startsWith("en"));
-        voiceToUse = enVoices.find((v) => /natural|jenny|aria|google/i.test(v.name)) ?? enVoices[0] ?? null;
-      }
-    }
-
-    if (voiceToUse) utterance.voice = voiceToUse;
     utterance.lang = audioLang === "vi" ? "vi-VN" : "en-US";
     utterance.rate = audioRate;
     utterance.pitch = 1.0;
@@ -1655,7 +1698,7 @@ export default function Home() {
                         onClick={() => {
                           stopAllAudio();
                           setAudioLang("vi");
-                          setSelectedVoiceURI("default");
+                          setSelectedVoiceURI("ai-female-north");
                         }}
                       >
                         🇻🇳 Tiếng Việt
@@ -1666,7 +1709,7 @@ export default function Home() {
                         onClick={() => {
                           stopAllAudio();
                           setAudioLang("en");
-                          setSelectedVoiceURI("default");
+                          setSelectedVoiceURI("ai-en-us");
                         }}
                       >
                         🇬🇧 English
@@ -1687,14 +1730,9 @@ export default function Home() {
                           if (audioGuidePlaying) stopAllAudio();
                         }}
                       >
-                        <option value="default">
-                          {audioLang === "vi"
-                            ? "✨ Tự động (Giọng truyền cảm chuẩn)"
-                            : "✨ Auto (Natural International Voice)"}
-                        </option>
-                        {filteredVoices.map((v) => (
-                          <option key={v.voiceURI} value={v.voiceURI}>
-                            {formatVoiceLabel(v)}
+                        {voiceOptions.map((opt) => (
+                          <option key={opt.id} value={opt.id}>
+                            {opt.label}
                           </option>
                         ))}
                       </select>
@@ -2376,7 +2414,7 @@ export default function Home() {
                         onClick={() => {
                           stopAllAudio();
                           setAudioLang("vi");
-                          setSelectedVoiceURI("default");
+                          setSelectedVoiceURI("ai-female-north");
                         }}
                       >
                         🇻🇳 Việt
@@ -2387,7 +2425,7 @@ export default function Home() {
                         onClick={() => {
                           stopAllAudio();
                           setAudioLang("en");
-                          setSelectedVoiceURI("default");
+                          setSelectedVoiceURI("ai-en-us");
                         }}
                       >
                         🇬🇧 Eng
@@ -2407,14 +2445,9 @@ export default function Home() {
                           if (speechPlaceId) stopAllAudio();
                         }}
                       >
-                        <option value="default">
-                          {audioLang === "vi"
-                            ? "✨ Tự động (Chuẩn truyền cảm)"
-                            : "✨ Auto (Natural Voice)"}
-                        </option>
-                        {filteredVoices.map((v) => (
-                          <option key={v.voiceURI} value={v.voiceURI}>
-                            {formatVoiceLabel(v)}
+                        {voiceOptions.map((opt) => (
+                          <option key={opt.id} value={opt.id}>
+                            {opt.label}
                           </option>
                         ))}
                       </select>
