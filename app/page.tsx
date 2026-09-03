@@ -3545,14 +3545,24 @@ export default function Home() {
               <button type="button" className="booking-dialog__close" onClick={() => setConfirmedOrder(null)} aria-label="Đóng">×</button>
             </div>
 
-            {/* Google Sheets Sync Badge */}
-            <div className="order-sheet-badge">
-              <span>📊</span>
-              <div>
-                <b>Tình trạng Trang Tính Google Sheets:</b>
-                <p>{confirmedOrder.sheetSyncStatus}</p>
+            {/* Status Badge: Friendly for Customer, Sheets Sync for Admin/Merchant */}
+            {authUser?.role === "admin" || authUser?.role === "merchant" ? (
+              <div className="order-sheet-badge">
+                <span>📊</span>
+                <div>
+                  <b>Tình trạng Trang Tính Google Sheets:</b>
+                  <p>{confirmedOrder.sheetSyncStatus}</p>
+                </div>
               </div>
-            </div>
+            ) : (
+              <div className="order-sheet-badge" style={{ background: "#ecfdf5", borderColor: "#a7f3d0" }}>
+                <span>✅</span>
+                <div>
+                  <b style={{ color: "#065f46" }}>Đơn hàng đã được tiếp nhận thành công</b>
+                  <p style={{ color: "#047857" }}>Thông tin món đặt đã được gửi tới chủ cơ sở OCOP để sẵn sàng chuẩn bị và giao hàng cho bạn.</p>
+                </div>
+              </div>
+            )}
 
             {/* Order Details */}
             <div className="order-summary-box">
@@ -3645,16 +3655,29 @@ export default function Home() {
 
             {/* Modal Actions */}
             <div className="order-success-actions">
-              <button
-                type="button"
-                className="button button--dark"
-                onClick={() => {
-                  setConfirmedOrder(null);
-                  setOrdersDashboardOpen(true);
-                }}
-              >
-                📊 Xem Bảng Quản Lý Đơn Hàng (Sheets View)
-              </button>
+              {authUser?.role === "admin" || authUser?.role === "merchant" ? (
+                <button
+                  type="button"
+                  className="button button--dark"
+                  onClick={() => {
+                    setConfirmedOrder(null);
+                    setOrdersDashboardOpen(true);
+                  }}
+                >
+                  📊 Xem Bảng Quản Lý Đơn Hàng (Sheets View)
+                </button>
+              ) : (
+                <button
+                  type="button"
+                  className="button button--dark"
+                  onClick={() => {
+                    setConfirmedOrder(null);
+                    setCustomerOrdersOpen(true);
+                  }}
+                >
+                  🛍️ Xem Đơn Hàng Của Tôi
+                </button>
+              )}
               <button
                 type="button"
                 className="button button--ghost"
