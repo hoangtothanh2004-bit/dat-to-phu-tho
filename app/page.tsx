@@ -318,6 +318,9 @@ export default function Home() {
   const [showGooglePassword, setShowGooglePassword] = useState(false);
   const [googleInputEmail, setGoogleInputEmail] = useState("");
   const [googleInputName, setGoogleInputName] = useState("");
+  const [googleInputPassword, setGoogleInputPassword] = useState("");
+  const [showGoogleInputPassword, setShowGoogleInputPassword] = useState(false);
+  const [googleInputError, setGoogleInputError] = useState("");
 
   // Registered Customer Database
   const DEFAULT_CUSTOMERS = [
@@ -1341,6 +1344,116 @@ export default function Home() {
       setGoogleOAuthModalOpen(false);
       setAuthModalOpen(false);
       setGoogleSelectedAccount(null);
+      showToast(`🎉 Đã tạo mật khẩu và đăng nhập thành công tài khoản Google: ${cleanEmail}!`);
+    }
+  };
+
+  // Handle Custom Google Gmail Submission with Password
+  const handleCustomGoogleLogin = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setGoogleInputError("");
+    const cleanEmail = googleInputEmail.trim().toLowerCase();
+    if (!cleanEmail || !cleanEmail.includes("@")) {
+      setGoogleInputError("Vui lòng nhập địa chỉ Gmail hợp lệ!");
+      return;
+    }
+    if (!googleInputPassword.trim()) {
+      setGoogleInputError("Vui lòng nhập mật khẩu để bảo vệ tài khoản của bạn!");
+      return;
+    }
+
+    // Check if Merchant
+    const matchedMerchant = merchantWhitelist.find(m => m.email.toLowerCase() === cleanEmail);
+    if (matchedMerchant) {
+      if (matchedMerchant.password === googleInputPassword) {
+        const user = {
+          id: `usr-${Date.now().toString().slice(-6)}`,
+          name: matchedMerchant.merchantName,
+          email: cleanEmail,
+          phone: matchedMerchant.phone,
+          avatar: matchedMerchant.merchantName.slice(0, 2).toUpperCase(),
+          provider: "google" as const,
+          role: "merchant" as const,
+          merchantName: matchedMerchant.merchantName,
+        };
+        setAuthUser(user);
+        window.localStorage.setItem("datto-auth-user", JSON.stringify(user));
+        setCheckoutName(user.name);
+        if (user.phone) setCheckoutPhone(user.phone);
+        setGoogleOAuthModalOpen(false);
+        setAuthModalOpen(false);
+        setGoogleInputEmail("");
+        setGoogleInputName("");
+        setGoogleInputPassword("");
+        showToast(`🏪 Đăng nhập thành công CHỦ CƠ SỞ OCOP: ${matchedMerchant.merchantName}!`);
+        return;
+      } else {
+        setGoogleInputError("Mật khẩu Doanh nghiệp không chính xác! (Mật khẩu do Admin cấp)");
+        return;
+      }
+    }
+
+    // Check if existing customer
+    const existingCustomer = registeredUsers.find(u => u.email.toLowerCase() === cleanEmail);
+    if (existingCustomer) {
+      if (existingCustomer.password === googleInputPassword) {
+        const user = {
+          id: existingCustomer.id,
+          name: existingCustomer.name,
+          email: cleanEmail,
+          phone: existingCustomer.phone || "0912 345 678",
+          avatar: existingCustomer.name.slice(0, 2).toUpperCase(),
+          provider: "google" as const,
+          role: "customer" as const,
+        };
+        setAuthUser(user);
+        window.localStorage.setItem("datto-auth-user", JSON.stringify(user));
+        setCheckoutName(user.name);
+        if (user.phone) setCheckoutPhone(user.phone);
+        setGoogleOAuthModalOpen(false);
+        setAuthModalOpen(false);
+        setGoogleInputEmail("");
+        setGoogleInputName("");
+        setGoogleInputPassword("");
+        showToast(`👤 Đăng nhập thành công tài khoản Du khách (${cleanEmail})!`);
+        return;
+      } else {
+        setGoogleInputError("Mật khẩu tài khoản không chính xác!");
+        return;
+      }
+    } else {
+      // New Customer via Custom Google input: create new user with this password!
+      const displayName = googleInputName.trim() || cleanEmail.split("@")[0];
+      const newCust = {
+        id: `usr-${Date.now().toString().slice(-6)}`,
+        name: displayName,
+        email: cleanEmail,
+        phone: "0912 345 678",
+        password: googleInputPassword,
+        createdAt: new Date().toLocaleDateString("vi-VN"),
+      };
+      const nextCusts = [...registeredUsers, newCust];
+      setRegisteredUsers(nextCusts);
+      window.localStorage.setItem("datto-registered-users", JSON.stringify(nextCusts));
+
+      const user = {
+        id: newCust.id,
+        name: newCust.name,
+        email: cleanEmail,
+        phone: newCust.phone,
+        avatar: newCust.name.slice(0, 2).toUpperCase(),
+        provider: "google" as const,
+        role: "customer" as const,
+      };
+      setAuthUser(user);
+      window.localStorage.setItem("datto-auth-user", JSON.stringify(user));
+      setCheckoutName(user.name);
+      if (user.phone) setCheckoutPhone(user.phone);
+      setGoogleOAuthModalOpen(false);
+      setAuthModalOpen(false);
+      setGoogleInputEmail("");
+      setGoogleInputName("");
+      setGoogleInputPassword("");
       showToast(`🎉 Đã tạo mật khẩu và đăng nhập thành công tài khoản Google: ${cleanEmail}!`);
     }
   };
@@ -4304,18 +4417,16 @@ function doPost(e) {
                   </button>
                 </div>
 
-                {/* Custom Email Input */}
-                <form
-                  onSubmit={(e) => {
-                    e.preventDefault();
-                    if (!googleInputEmail.trim()) return;
-                    handleGoogleAccountSelect(googleInputEmail, googleInputName);
-                  }}
-                  className="google-custom-login-form"
-                >
+                {/* Custom Email Input with Password */}
+                <form onSubmit={handleCustomGoogleLogin} className="google-custom-login-form">
                   <div className="google-form-divider">
                     <span>HOẶC SỬ DỤNG GMAIL THẬT CỦA BẠN</span>
                   </div>
+
+                  {googleInputError && (
+                    <div className="admin-login-error">⚠️ {googleInputError}</div>
+                  )}
+
                   <div className="google-input-group">
                     <input
                       type="email"
@@ -4326,12 +4437,29 @@ function doPost(e) {
                     />
                     <input
                       type="text"
-                      placeholder="Họ và tên hiển thị (Tùy chọn)"
+                      placeholder="Họ và tên của bạn (Tùy chọn)"
                       value={googleInputName}
                       onChange={(e) => setGoogleInputName(e.target.value)}
                     />
+                    <div style={{ position: "relative" }}>
+                      <input
+                        type={showGoogleInputPassword ? "text" : "password"}
+                        required
+                        placeholder="Mật khẩu bảo vệ (Tạo mới nếu là khách mới)"
+                        value={googleInputPassword}
+                        onChange={(e) => setGoogleInputPassword(e.target.value)}
+                        style={{ width: "100%", paddingRight: "40px" }}
+                      />
+                      <button
+                        type="button"
+                        onClick={() => setShowGoogleInputPassword(!showGoogleInputPassword)}
+                        style={{ position: "absolute", right: "10px", top: "50%", transform: "translateY(-50%)", background: "none", border: "none", cursor: "pointer", fontSize: "14px" }}
+                      >
+                        {showGoogleInputPassword ? "🙈" : "👁️"}
+                      </button>
+                    </div>
                     <button type="submit" className="button button--dark" style={{ height: "42px" }}>
-                      Tiếp tục với Gmail này →
+                      Đăng nhập / Tạo tài khoản với Gmail này →
                     </button>
                   </div>
                 </form>
