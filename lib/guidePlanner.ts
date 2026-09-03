@@ -42,6 +42,7 @@ export type GeneratedItinerary = {
   totalCost: number;
   overviewNarrative: string;
   audioGuideScript: string;
+  audioGuideScriptEn: string;
   routeAdvice: string;
   cautionAdvice: string;
   days: ItineraryDay[];
@@ -395,8 +396,10 @@ export function buildItinerary(options: PlannerOptions): GeneratedItinerary {
 
   const totalCost = baseCostPerPerson * travelers;
 
-  // Lời thoại hướng dẫn viên ảo
+  // Lời thoại hướng dẫn viên ảo (Tiếng Việt & English)
   const audioGuideScript = `Chào mừng quý khách đến với hành trình du lịch ${anchor.shortName} và vùng đất cội nguồn Phú Thọ – Vĩnh Phúc – Hòa Bình. Tôi là trợ lý hướng dẫn viên số, rất vui được đồng hành cùng quý khách trong chuyến đi ${durationDays} ngày này. Lịch trình đã được tối ưu cân đối giữa thời gian tham quan, thưởng thức ẩm thực đặc sản và nghỉ dưỡng phục hồi sức khỏe. Kính chúc quý khách một chuyến đi trọn vẹn, an toàn và nhiều trải nghiệm đáng nhớ!`;
+
+  const audioGuideScriptEn = `Welcome to your journey exploring ${anchor.shortName} and the northern cultural heritage of Phu Tho, Vinh Phuc, and Hoa Binh. I am your digital tour guide, delighted to accompany you on this ${durationDays}-day trip. This itinerary is carefully optimized for sightseeing, authentic regional gastronomy, and relaxing stays. Wishing you a wonderful, safe, and memorable trip in Vietnam!`;
 
   const overviewNarrative = `Hành trình ${durationDays} ngày ${durationDays > 1 ? `${durationDays - 1} đêm` : "(trong ngày)"} được thiết kế tối ưu hóa lộ trình di chuyển bằng ${transport}, kết nối những tinh hoa đặc sắc nhất của ${anchor.region}: từ di sản tâm linh, cảnh quan mây núi đến ẩm thực đặc sản bản địa. Lịch trình phân bổ nhịp nhàng giữa thời gian tham quan, thưởng thức ẩm thực và nghỉ ngơi tái tạo năng lượng.`;
 
@@ -436,6 +439,7 @@ export function buildItinerary(options: PlannerOptions): GeneratedItinerary {
     totalCost,
     overviewNarrative,
     audioGuideScript,
+    audioGuideScriptEn,
     routeAdvice: defaultRouteAdvice,
     cautionAdvice: anchor.warning || "Chú ý theo dõi thời tiết và chuẩn bị trang phục phù hợp với từng điểm đến.",
     days,

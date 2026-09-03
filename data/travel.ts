@@ -70,6 +70,7 @@ export type Place = {
   lng: number;
   featured?: boolean;
   audioScript: string;
+  audioScriptEn?: string;
   restaurants: NearbyItem[];
   stays: NearbyItem[];
   transportTips?: TransportTip;
@@ -125,6 +126,7 @@ export const places: Place[] = [
     lng: 105.3246,
     featured: true,
     audioScript: "Chào mừng quý khách đến với Khu di tích lịch sử Quốc gia đặc biệt Đền Hùng trên núi Nghĩa Lĩnh. Đây là nơi hội tụ cội nguồn của toàn thể dân tộc Việt Nam. Quý khách sẽ tuần tự chiêm bái từ cổng chính, Đền Hạ nơi mẹ Âu Cơ sinh bọc trăm trứng, qua Đền Trung nơi các Vua Hùng bàn việc nước, lên Đền Thượng trên đỉnh núi cao 175 mét và kính viếng Lăng Hùng Vương.",
+    audioScriptEn: "Welcome to the Hung King Temple Special National Historical Relic Site on Nghia Linh Mountain. This is the sacred birthplace of the Vietnamese nation. Visitors ascend the stone steps through Ha Temple where Mother Au Co gave birth to the hundred-egg sac, Trung Temple where the Hung Kings held councils, and Thuong Temple at the 175-meter summit to pay homage to the ancestral Kings.",
     restaurants: [
       {
         name: "Nhà hàng A Thảo Gà cựa",
@@ -222,6 +224,7 @@ export const places: Place[] = [
     lng: 104.9327,
     featured: true,
     audioScript: "Chào mừng quý khách đến với Vườn Quốc gia Xuân Sơn - lá phổi xanh của vùng Tây Bắc Phú Thọ. Nơi đây sở hữu kiểu rừng nguyên sinh trên núi đá vôi độc đáo, cùng các bản làng người Dao Tiền còn lưu giữ nguyên vẹn nếp nhà sàn, nghề nhuộm chàm và ẩm thực cỗ lá đặc sắc.",
+    audioScriptEn: "Welcome to Xuan Son National Park, the primary limestone rainforest sanctuary in Phu Tho. Here, untouched primeval forests, pristine waterfalls, Lang Cave, and authentic Dao and Muong ethnic villages like Ban Coi and Ban Du offer an unforgettable eco-trekking experience.",
     restaurants: [
       {
         name: "Cơm nhà sàn Bản Cỏi",
@@ -290,6 +293,7 @@ export const places: Place[] = [
     lng: 105.0708,
     featured: true,
     audioScript: "Đồi chè Long Cốc là một trong những cảnh quan nông nghiệp kỳ vĩ nhất miền Bắc. Vào buổi sáng sớm mùa thu - đông, biển sương trắng bồng bềnh phủ ngang sườn đồi, chỉ nhô lên những chỏm chè xanh ngát như những chiếc ốc đảo thần tiên trong truyện cổ tích.",
+    audioScriptEn: "Welcome to Long Coc Tea Hills in Tan Son, celebrated as one of Vietnam's most scenic undulating tea landscapes. In the early morning mist, hundreds of dome-shaped tea hills emerge like giant green tea bowls floating in an ocean of clouds.",
     restaurants: [
       {
         name: "Nhà hàng Bếp Mường Long Cốc",
@@ -358,6 +362,7 @@ export const places: Place[] = [
     lng: 105.2971,
     featured: true,
     audioScript: "Khu du lịch khoáng nóng Thanh Thủy nằm uốn mình bên dòng sông Đà hùng vĩ. Mạch nước nóng ngầm tự nhiên chứa hàm lượng chất khoáng cao và khí Radon quý hiếm, giúp cơ thể thư giãn sâu và phục hồi sức khỏe tuyệt vời sau những ngày làm việc bận rộn.",
+    audioScriptEn: "Welcome to Thanh Thuy Hot Mineral Spring Resort. Rich in natural radon and therapeutic minerals heated by geothermal activity, this destination provides premier Japanese-style onsen and holistic mineral wellness retreats.",
     restaurants: [
       {
         name: "Nhà hàng Sông Đà Thanh Thủy",
@@ -439,6 +444,7 @@ export const places: Place[] = [
     lat: 21.3712,
     lng: 105.4077,
     audioScript: "Đình Hùng Lô là viên ngọc quý của kiến trúc điêu khắc dân gian Việt Nam thế kỷ 17. Đình thờ Vua Hùng và các vị thần che chở xóm làng. Tại khoảng sân đình rợp bóng cây cổ thụ này, du khách sẽ được lắng nghe những câu Hát Xoan mượt mà, di sản văn hóa phi vật thể đại diện của nhân loại được UNESCO vinh danh.",
+    audioScriptEn: "Welcome to Hung Lo Ancient Village and its 300-year-old communal house on the banks of Lo River. Here, visitors admire intricate wood carvings, ancient brick alleyways, and listen to the UNESCO-recognized Xoan singing heritage.",
     restaurants: [
       {
         name: "Nhà cổ Hùng Lô ẩm thực dân gian",
@@ -505,6 +511,7 @@ export const places: Place[] = [
     lat: 21.5794,
     lng: 105.0212,
     audioScript: "Đền Mẫu Âu Cơ nằm tại xã Hiền Lương, huyện Hạ Hòa là chốn linh thiêng phụng thờ Người Mẹ đầu tiên của trăm họ Việt. Truyền thuyết kể rằng sau khi chia 50 người con lên rừng và 50 người con xuống biển, Mẹ Âu Cơ đã dừng chân khai khẩn đất hoang tại vùng đất trù phú này trước khi bay về trời.",
+    audioScriptEn: "Welcome to Mother Au Co Temple in Hien Luong, Ha Hoa. Nestled beneath sacred banyan trees beside the Red River, this temple is dedicated to the Great Mother Au Co, celebrating the primordial legend of the Dragon and Fairy heritage.",
     restaurants: [
       {
         name: "Nhà hàng Đầm Ao Châu",
@@ -571,6 +578,7 @@ export const places: Place[] = [
     lat: 21.5833,
     lng: 104.9833,
     audioScript: "Đầm Ao Châu là một kiệt tác tự nhiên nằm giữa vùng đồi bát úp của huyện Hạ Hòa. Mặt nước đầm quanh năm trong xanh phẳng lặng, soi bóng những vạt đồi trồng vải, mít và chè bạt ngàn. Ngồi trên mạn thuyền rẽ sóng qua từng ngách vịnh, du khách sẽ cảm nhận sự thanh bình thoát tục của đất trời trung du.",
+    audioScriptEn: "Welcome to Ao Chau Lagoon in Ha Hoa, known as the Halong Bay of Phu Tho with 99 scenic branches, crystal clear waters, surrounding lush fruit hills, and boat eco-tours.",
     restaurants: [
       {
         name: "Ẩm thực Thuyền Chài Ao Châu",
@@ -641,6 +649,7 @@ export const places: Place[] = [
     lng: 105.6483,
     featured: true,
     audioScript: "Chào mừng quý khách đến với thị trấn trong sương Tam Đảo. Tọa lạc trên dãy núi cao gần 1.000 mét so với mặt biển, Tam Đảo đón quý khách bằng bầu không khí mát rượi và sương mây bảng lảng quanh những tòa lâu đài đá cổ kính. Buổi tối dạo bước quanh quảng trường, thưởng thức xiên nướng nóng hổi và đĩa ngọn su su giòn ngọt sẽ là kỷ niệm khó quên.",
+    audioScriptEn: "Welcome to the misty mountain resort town of Tam Dao, perched over 900 meters above sea level in Vinh Phuc. Enjoy four distinct seasons in a single day, stroll around the century-old stone church, and savor fresh local chayote greens and grilled hill chicken.",
     restaurants: [
       {
         name: "Nhà hàng Phúc Hương Viên Tam Đảo",
@@ -738,6 +747,7 @@ export const places: Place[] = [
     lng: 105.6125,
     featured: true,
     audioScript: "Đến với Tây Thiên là đến với miền đất Phật, về với cội nguồn tâm linh thanh tịnh. Quý khách có thể lựa chọn hành hương bằng cáp treo lướt qua tán rừng nguyên sinh đại ngàn, chiêm bái Đền Thượng thờ Quốc Mẫu Tây Thiên trên đỉnh núi cao và lắng lòng trong tiếng chuông chùa Thiền viện Trúc Lâm.",
+    audioScriptEn: "Welcome to the Tay Thien Scenic and Spiritual Relic Complex in Tam Dao, Vinh Phuc. Home to the great Truc Lam Tay Thien Zen Monastery and the Great Mandala Stupa, it is an auspicious sanctuary harmonizing Buddhism and Mother Goddess worship amidst cloud-capped peaks.",
     restaurants: [
       {
         name: "Nhà hàng Chân Núi Tây Thiên",
@@ -804,6 +814,7 @@ export const places: Place[] = [
     lat: 21.3417,
     lng: 105.7194,
     audioScript: "Hồ Đại Lải là điểm hẹn nghỉ dưỡng tuyệt vời với mặt hồ mênh mông và rừng thông xanh rì rào trong gió. Tại đây, du khách có thể thảnh thơi chèo thuyền lướt sóng, đạp xe dưới tán rừng mát rượi và thưởng thức bữa tiệc ẩm thực trâu nướng thơm lừng bên bờ hồ thơ mộng.",
+    audioScriptEn: "Welcome to Dai Lai Lake Eco-Tourism Area in Phuc Yen, Vinh Phuc. Spanning over 500 hectares surrounded by pine forests, bird sanctuaries, and luxury eco-resorts, it is a perfect weekend getaway for sailing, kayaking, and family retreats.",
     restaurants: [
       {
         name: "Nhà hàng Trâu Tươi Phi Xuyên Đại Lải",
@@ -884,6 +895,7 @@ export const places: Place[] = [
     lat: 21.3125,
     lng: 105.5917,
     audioScript: "Chùa Hà Tiên tọa lạc trên thế đất rồng ngậm ngọc ở đồi Hà, trung tâm thành phố Vĩnh Yên. Dân gian truyền tụng 'Cầu tài cầu lộc tới đền, cầu tình cầu duyên ghé chùa Hà'. Tiếng chuông chiều ngân vang giữa vườn cây cổ thụ tạo nên không gian thanh tịnh giúp tâm hồn thư thái nhẹ nhõm.",
+    audioScriptEn: "Welcome to Ha Tien Pagoda in Vinh Yen, Vinh Phuc. Originally built in the 18th century, this grand Buddhist sanctuary features majestic tiered towers, the legendary jade well, and tranquil contemplation halls.",
     restaurants: [
       {
         name: "Quán Tép Dầu Đầm Vạc & Món Quê Vĩnh Yên",
@@ -950,6 +962,7 @@ export const places: Place[] = [
     lat: 21.2833,
     lng: 105.65,
     audioScript: "Làng gốm Hương Canh bên dòng sông Cà Lồ là niềm tự hào của nghề thủ công xứ Bắc. Khác với gốm men Bát Tràng hay Phù Lãng, gốm sành Hương Canh mộc mạc không men, đanh chắc bền bỉ với thời gian. Đến đây, du khách sẽ được các nghệ nhân hướng dẫn từng động tác chuốt đất trên bàn xoay và thưởng thức món Bánh hòn, Cháo se nức tiếng.",
+    audioScriptEn: "Welcome to Huong Canh Ancient Pottery Village in Binh Xuyen, Vinh Phuc. With over 300 years of heritage, the village is renowned for rustic, watertight terracotta and earthenware jars crafted through traditional wood-fired kilns.",
     restaurants: [
       {
         name: "Quán Đặc sản Bánh Hòn Cháo Se Hương Canh",
@@ -1020,6 +1033,7 @@ export const places: Place[] = [
     lng: 105.0833,
     featured: true,
     audioScript: "Chào mừng quý khách đến với thung lũng Mai Châu thơ mộng. Nằm e ấp giữa những dãy núi đá vôi sừng sững, Bản Lác đón du khách với những nếp nhà sàn gầm cao thoáng mát, con suối róc rách và lòng hiếu khách nồng hậu của các cô gái Thái duyên dáng trong điệu xòe hoa.",
+    audioScriptEn: "Welcome to Ban Lac in the peaceful valley of Mai Chau, Hoa Binh. Cycling along lush green rice paddies, staying in traditional wooden stilt houses of the White Thai ethnic group, and tasting bamboo-tube sticky rice create an authentic northern highland experience.",
     restaurants: [
       {
         name: "Nhà hàng Bếp Thái Bản Lác 1",
@@ -1102,6 +1116,7 @@ export const places: Place[] = [
     lng: 105.5333,
     featured: true,
     audioScript: "Suối khoáng nóng Kim Bôi là món quà vô giá của mẹ thiên nhiên dành tặng cho vùng đất Mường Động. Nguồn nước khoáng ấm áp chứa nhiều nguyên tố vi lượng quý giá giúp làn da mịn màng, làm dịu những cơn đau nhức xương khớp và mang lại giấc ngủ sâu êm dịu.",
+    audioScriptEn: "Welcome to Kim Boi Natural Hot Spring in Hoa Binh. Emerging naturally at a soothing 36 degrees Celsius, this mineral-rich geothermal water promotes revitalization, wellness, and relaxation in a tranquil mountain valley setting.",
     restaurants: [
       {
         name: "Nhà hàng Nón Serena Resort Kim Bôi",
@@ -1184,6 +1199,7 @@ export const places: Place[] = [
     lng: 105.2833,
     featured: true,
     audioScript: "Lòng hồ Thung Nai là một trong những kỳ quan hồ nhân tạo đẹp nhất Đông Nam Á hình thành sau khi ngăn dòng sông Đà xây dựng nhà máy thủy điện. Mặt nước xanh như ngọc bích soi bóng mây trời và những hòn đảo hoang sơ. Du khách thập phương về đây không chỉ để vãn cảnh sơn thủy hữu tình mà còn thành kính dâng hương Đền Bà Chúa Thác Bờ cầu bình an hạnh phúc.",
+    audioScriptEn: "Welcome to Thung Nai on the Da River Reservoir in Hoa Binh, often called the Halong Bay on the mountains. Take a scenic boat tour across emerald waters to explore limestone islets, Bo Market, and the sacred Thac Bo Goddess Temple.",
     restaurants: [
       {
         name: "Nhà hàng Đảo Cối Xay Gió Thung Nai",
@@ -1251,6 +1267,7 @@ export const places: Place[] = [
     lat: 20.7333,
     lng: 104.9167,
     audioScript: "Pà Cò nằm trên cổng trời ngút ngàn của vùng cao xứ Mường - Thái. Nơi đây như chốn bồng lai tiên cảnh khi ánh bình minh ló rạng, nhuộm hồng biển mây cuồn cuộn dưới chân. Vào sáng Chủ Nhật, tiếng khèn Mông rộn rã kéo du khách về với phiên chợ đầy sắc màu váy hoa sặc sỡ và hương thắng cố nồng nàn.",
+    audioScriptEn: "Welcome to Hang Kia and Pa Co Cloud Hunting Peak in Mai Chau, Hoa Binh. Perched over 1,200 meters high, it offers magnificent seas of clouds at dawn, vibrant weekend ethnic markets, and plum blossom valleys in spring.",
     restaurants: [
       {
         name: "Bếp Mông Quán Pà Cò",
@@ -1317,6 +1334,7 @@ export const places: Place[] = [
     lat: 20.8167,
     lng: 105.3167,
     audioScript: "Bảo tàng Không gian Văn hóa Mường tọa lạc trên một ngọn đồi thoai thoải rợp bóng mát tại phường Thái Bình. Đây là bảo tàng sống bảo tồn trọn vẹn hồn cốt của văn hóa Mường - một trong những cái nôi văn hóa lâu đời gắn bó mật thiết với cư dân Đất Tổ thời các Vua Hùng dựng nước.",
+    audioScriptEn: "Welcome to the Muong Cultural Heritage Space Museum in Hoa Binh City. Set on an open hillside, it preserves the authentic four social tiers of traditional Muong stilt houses, bronze drums, hunting tools, and millennia-old indigenous wisdom.",
     restaurants: [
       {
         name: "Nhà hàng Cỗ Lá Bảo Tàng Mường",

@@ -196,13 +196,60 @@ export default function Home() {
     })
   );
 
-  // Audio guide controls
+  // Audio guide controls & voice customization
+  const [audioLang, setAudioLang] = useState<"vi" | "en">("vi");
+  const [availableVoices, setAvailableVoices] = useState<SpeechSynthesisVoice[]>([]);
+  const [selectedVoiceURI, setSelectedVoiceURI] = useState<string>("default");
   const [audioGuidePlaying, setAudioGuidePlaying] = useState(false);
   const [audioState, setAudioState] = useState<AudioState>("idle");
   const [speechPlaceId, setSpeechPlaceId] = useState<string | null>(null);
   const [audioVolume, setAudioVolume] = useState(0.75);
   const [audioRate, setAudioRate] = useState(0.9);
   const speechRef = useRef<SpeechSynthesisUtterance | null>(null);
+
+  useEffect(() => {
+    if (typeof window === "undefined" || !("speechSynthesis" in window)) return;
+    const updateVoices = () => {
+      const voices = window.speechSynthesis.getVoices();
+      if (voices.length > 0) {
+        setAvailableVoices(voices);
+      }
+    };
+    updateVoices();
+    window.speechSynthesis.onvoiceschanged = updateVoices;
+    return () => {
+      if ("speechSynthesis" in window) {
+        window.speechSynthesis.onvoiceschanged = null;
+      }
+    };
+  }, []);
+
+  const filteredVoices = useMemo(() => {
+    if (audioLang === "vi") {
+      return availableVoices.filter((v) => v.lang.toLowerCase().startsWith("vi"));
+    } else {
+      return availableVoices.filter((v) => v.lang.toLowerCase().startsWith("en"));
+    }
+  }, [availableVoices, audioLang]);
+
+  const formatVoiceLabel = (v: SpeechSynthesisVoice) => {
+    const name = v.name;
+    const isFemale = /female|mai|hoaimy|an|nu|jenny|aria|sonia|zira|samantha|victoria/i.test(name);
+    const isMale = /male|nam|namminh|minh|guy|christopher|ryan|david|george|alex/i.test(name);
+    let prefix = isFemale ? "🌸 Giọng Nữ" : isMale ? "🎙️ Giọng Nam" : "🔊 Giọng đọc";
+    if (audioLang === "en") {
+      prefix = isFemale ? "🌸 Female" : isMale ? "🎙️ Male" : "🔊 Voice";
+    }
+    const cleanName = name
+      .replace(/Microsoft\s+/i, "MS ")
+      .replace(/Google\s+/i, "Google ")
+      .replace(/Online\s*\(Natural\)\s*-\s*/i, "")
+      .replace(/\s*\(Natural\)/i, " (Tự nhiên)")
+      .replace(/Vietnamese\s*\(Vietnam\)/i, "Tiếng Việt")
+      .replace(/English\s*\(United States\)/i, "US English")
+      .replace(/English\s*\(United Kingdom\)/i, "UK English");
+    return `${prefix}: ${cleanName}`;
+  };
 
   // Directory 100
   const [show100Directory, setShow100Directory] = useState(false);
@@ -629,16 +676,36 @@ export default function Home() {
     }
   };
 
-  const playSpeechText = (text: string, onStateChange?: (playing: boolean) => void) => {
+  const playSpeechText = (
+    textVi: string,
+    textEn: string | undefined,
+    onStateChange?: (playing: boolean) => void
+  ) => {
     if (!("speechSynthesis" in window)) {
       showToast("Thiết bị chưa hỗ trợ thuyết minh tự động");
       return;
     }
     window.speechSynthesis.cancel();
-    const utterance = new SpeechSynthesisUtterance(text);
-    const vietnameseVoices = window.speechSynthesis.getVoices().filter((voice) => voice.lang.toLowerCase().startsWith("vi"));
-    utterance.voice = vietnameseVoices.find((voice) => /google|microsoft|natural|vietnamese/i.test(voice.name)) ?? vietnameseVoices[0] ?? null;
-    utterance.lang = "vi-VN";
+    const textToSpeak = audioLang === "en" ? (textEn || textVi) : textVi;
+    const utterance = new SpeechSynthesisUtterance(textToSpeak);
+
+    let voiceToUse: SpeechSynthesisVoice | null = null;
+    if (selectedVoiceURI !== "default") {
+      voiceToUse = availableVoices.find((v) => v.voiceURI === selectedVoiceURI) || null;
+    }
+
+    if (!voiceToUse) {
+      if (audioLang === "vi") {
+        const viVoices = availableVoices.filter((v) => v.lang.toLowerCase().startsWith("vi"));
+        voiceToUse = viVoices.find((v) => /natural|hoaimy|google|mai/i.test(v.name)) ?? viVoices[0] ?? null;
+      } else {
+        const enVoices = availableVoices.filter((v) => v.lang.toLowerCase().startsWith("en"));
+        voiceToUse = enVoices.find((v) => /natural|jenny|aria|google/i.test(v.name)) ?? enVoices[0] ?? null;
+      }
+    }
+
+    if (voiceToUse) utterance.voice = voiceToUse;
+    utterance.lang = audioLang === "vi" ? "vi-VN" : "en-US";
     utterance.rate = audioRate;
     utterance.pitch = 1.0;
     utterance.volume = audioVolume;
@@ -655,7 +722,11 @@ export default function Home() {
       setAudioGuidePlaying(false);
       return;
     }
-    playSpeechText(generatedItinerary.audioGuideScript, setAudioGuidePlaying);
+    playSpeechText(
+      generatedItinerary.audioGuideScript,
+      generatedItinerary.audioGuideScriptEn,
+      setAudioGuidePlaying
+    );
   };
 
   const stopAllAudio = () => {
@@ -685,10 +756,25 @@ export default function Home() {
     }
 
     stopAllAudio();
-    const utterance = new SpeechSynthesisUtterance(place.audioScript);
-    const vietnameseVoices = window.speechSynthesis.getVoices().filter((voice) => voice.lang.toLowerCase().startsWith("vi"));
-    utterance.voice = vietnameseVoices.find((voice) => /google|microsoft|natural/i.test(voice.name)) ?? vietnameseVoices[0] ?? null;
-    utterance.lang = "vi-VN";
+    const textToSpeak = audioLang === "en" ? (place.audioScriptEn || place.audioScript) : place.audioScript;
+    const utterance = new SpeechSynthesisUtterance(textToSpeak);
+
+    let voiceToUse: SpeechSynthesisVoice | null = null;
+    if (selectedVoiceURI !== "default") {
+      voiceToUse = availableVoices.find((v) => v.voiceURI === selectedVoiceURI) || null;
+    }
+    if (!voiceToUse) {
+      if (audioLang === "vi") {
+        const viVoices = availableVoices.filter((v) => v.lang.toLowerCase().startsWith("vi"));
+        voiceToUse = viVoices.find((v) => /natural|hoaimy|google|mai/i.test(v.name)) ?? viVoices[0] ?? null;
+      } else {
+        const enVoices = availableVoices.filter((v) => v.lang.toLowerCase().startsWith("en"));
+        voiceToUse = enVoices.find((v) => /natural|jenny|aria|google/i.test(v.name)) ?? enVoices[0] ?? null;
+      }
+    }
+
+    if (voiceToUse) utterance.voice = voiceToUse;
+    utterance.lang = audioLang === "vi" ? "vi-VN" : "en-US";
     utterance.rate = audioRate;
     utterance.pitch = 1.0;
     utterance.volume = audioVolume;
@@ -1541,7 +1627,7 @@ export default function Home() {
                   </div>
                 </div>
 
-                {/* AUDIO GUIDE PLAYER WITH VOLUME & SPEED CONTROLS */}
+                {/* AUDIO GUIDE PLAYER WITH BILINGUAL & VOICE SWITCHER */}
                 <div className="audio-controller-bar">
                   <div className="audio-controller-head">
                     <button
@@ -1549,19 +1635,73 @@ export default function Home() {
                       className={`audio-play-btn ${audioGuidePlaying ? "is-playing" : ""}`}
                       onClick={toggleItineraryAudio}
                     >
-                      <span>{audioGuidePlaying ? "⏸ Tạm dừng" : "▶ Nghe Thuyết Minh Lịch Trình"}</span>
+                      <span>
+                        {audioGuidePlaying
+                          ? (audioLang === "vi" ? "⏸ Tạm dừng" : "⏸ Pause")
+                          : (audioLang === "vi" ? "▶ Nghe Thuyết Minh Lịch Trình" : "▶ Listen to Audio Guide")}
+                      </span>
                     </button>
                     {audioGuidePlaying && (
                       <button type="button" className="audio-stop-btn" onClick={stopAllAudio}>
-                        ■ Dừng
+                        ■ {audioLang === "vi" ? "Dừng" : "Stop"}
                       </button>
                     )}
+
+                    {/* Language Switcher */}
+                    <div className="audio-lang-switcher" role="group" aria-label="Chọn ngôn ngữ thuyết minh">
+                      <button
+                        type="button"
+                        className={`audio-lang-btn ${audioLang === "vi" ? "is-active" : ""}`}
+                        onClick={() => {
+                          stopAllAudio();
+                          setAudioLang("vi");
+                          setSelectedVoiceURI("default");
+                        }}
+                      >
+                        🇻🇳 Tiếng Việt
+                      </button>
+                      <button
+                        type="button"
+                        className={`audio-lang-btn ${audioLang === "en" ? "is-active" : ""}`}
+                        onClick={() => {
+                          stopAllAudio();
+                          setAudioLang("en");
+                          setSelectedVoiceURI("default");
+                        }}
+                      >
+                        🇬🇧 English
+                      </button>
+                    </div>
                   </div>
 
-                  {/* Volume Slider & Speed Controls */}
+                  {/* Voice Selector, Volume Slider & Speed Controls */}
                   <div className="audio-settings-strip">
+                    <div className="audio-voice-control">
+                      <label htmlFor="voice-select">🗣️ {audioLang === "vi" ? "Giọng đọc:" : "Voice:"}</label>
+                      <select
+                        id="voice-select"
+                        className="audio-voice-select"
+                        value={selectedVoiceURI}
+                        onChange={(e) => {
+                          setSelectedVoiceURI(e.target.value);
+                          if (audioGuidePlaying) stopAllAudio();
+                        }}
+                      >
+                        <option value="default">
+                          {audioLang === "vi"
+                            ? "✨ Tự động (Giọng truyền cảm chuẩn)"
+                            : "✨ Auto (Natural International Voice)"}
+                        </option>
+                        {filteredVoices.map((v) => (
+                          <option key={v.voiceURI} value={v.voiceURI}>
+                            {formatVoiceLabel(v)}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+
                     <div className="audio-volume-control">
-                      <span>🔊 Âm lượng:</span>
+                      <span>🔊 {audioLang === "vi" ? "Âm lượng:" : "Volume:"}</span>
                       <input
                         type="range"
                         min="0.1"
@@ -1580,7 +1720,7 @@ export default function Home() {
                     </div>
 
                     <div className="audio-rate-control">
-                      <span>Tốc độ:</span>
+                      <span>{audioLang === "vi" ? "Tốc độ:" : "Speed:"}</span>
                       {[0.8, 0.9, 1.0, 1.1].map((r) => (
                         <button
                           type="button"
@@ -2216,16 +2356,72 @@ export default function Home() {
                       ⌁ Mở chỉ đường
                     </a>
                     <button className="button button--outline" onClick={() => togglePlaceAudio(selected)}>
-                      {speechPlaceId === selected.id && audioState === "playing" ? "⏸ Tạm dừng" : speechPlaceId === selected.id && audioState === "paused" ? "▶ Nghe tiếp" : "▶ Nghe thuyết minh danh thắng"}
+                      {speechPlaceId === selected.id && audioState === "playing"
+                        ? (audioLang === "vi" ? "⏸ Tạm dừng" : "⏸ Pause")
+                        : speechPlaceId === selected.id && audioState === "paused"
+                        ? (audioLang === "vi" ? "▶ Nghe tiếp" : "▶ Resume")
+                        : (audioLang === "vi" ? "▶ Nghe thuyết minh danh thắng" : "▶ Listen to Audio Guide")}
                     </button>
                     {speechPlaceId === selected.id && audioState !== "idle" && (
-                      <button className="audio-stop" onClick={stopAllAudio}>■ Dừng</button>
+                      <button className="audio-stop" onClick={stopAllAudio}>
+                        ■ {audioLang === "vi" ? "Dừng" : "Stop"}
+                      </button>
                     )}
+
+                    {/* Language Switcher in Modal */}
+                    <div className="audio-lang-switcher" role="group" aria-label="Ngôn ngữ thuyết minh">
+                      <button
+                        type="button"
+                        className={`audio-lang-btn ${audioLang === "vi" ? "is-active" : ""}`}
+                        onClick={() => {
+                          stopAllAudio();
+                          setAudioLang("vi");
+                          setSelectedVoiceURI("default");
+                        }}
+                      >
+                        🇻🇳 Việt
+                      </button>
+                      <button
+                        type="button"
+                        className={`audio-lang-btn ${audioLang === "en" ? "is-active" : ""}`}
+                        onClick={() => {
+                          stopAllAudio();
+                          setAudioLang("en");
+                          setSelectedVoiceURI("default");
+                        }}
+                      >
+                        🇬🇧 Eng
+                      </button>
+                    </div>
                   </div>
 
                   <div className="audio-settings-strip" style={{ marginTop: "10px", padding: "8px 12px", background: "var(--surface)", borderRadius: "var(--radius-sm)" }}>
+                    <div className="audio-voice-control">
+                      <label htmlFor="modal-voice-select">🗣️ {audioLang === "vi" ? "Giọng:" : "Voice:"}</label>
+                      <select
+                        id="modal-voice-select"
+                        className="audio-voice-select"
+                        value={selectedVoiceURI}
+                        onChange={(e) => {
+                          setSelectedVoiceURI(e.target.value);
+                          if (speechPlaceId) stopAllAudio();
+                        }}
+                      >
+                        <option value="default">
+                          {audioLang === "vi"
+                            ? "✨ Tự động (Chuẩn truyền cảm)"
+                            : "✨ Auto (Natural Voice)"}
+                        </option>
+                        {filteredVoices.map((v) => (
+                          <option key={v.voiceURI} value={v.voiceURI}>
+                            {formatVoiceLabel(v)}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+
                     <div className="audio-volume-control">
-                      <span>🔊 Âm lượng:</span>
+                      <span>🔊 {audioLang === "vi" ? "Âm lượng:" : "Volume:"}</span>
                       <input
                         type="range"
                         min="0.1"
@@ -2241,8 +2437,9 @@ export default function Home() {
                       />
                       <small>{Math.round(audioVolume * 100)}%</small>
                     </div>
+
                     <div className="audio-rate-control">
-                      <span>Tốc độ:</span>
+                      <span>{audioLang === "vi" ? "Tốc độ:" : "Speed:"}</span>
                       {[0.8, 0.9, 1.0, 1.1].map((r) => (
                         <button
                           type="button"
