@@ -648,7 +648,18 @@ export default function Home() {
   const [currencyDropdownOpen, setCurrencyDropdownOpen] = useState(false);
   const [langDropdownOpen, setLangDropdownOpen] = useState(false);
 
-  // Compute User's Filtered Order List (always guarantees customer sees their orders)
+  // Helper to filter orders by Shopee-style statuses
+  const filterOrderByStatus = (order: any, tabId: string) => {
+    if (tabId === "all") return true;
+    if (tabId === "pending") return !order.status || order.status === "Chờ xác nhận" || order.status === "pending";
+    if (tabId === "processing") return order.status === "Đang xử lý" || order.status === "Đã xác nhận" || order.status === "Đang chuẩn bị" || order.status === "Chờ lấy hàng" || order.status === "processing";
+    if (tabId === "shipping") return order.status === "Đang giao hàng" || order.status === "Đang giao" || order.status === "shipping";
+    if (tabId === "completed") return order.status === "Hoàn thành" || order.status === "Đã giao" || order.status === "completed";
+    if (tabId === "cancelled") return order.status === "Đã hủy" || order.status === "cancelled";
+    return true;
+  };
+
+  // Compute User's Filtered Order List (Strictly scoped to current account/session)
   const userOrderList = useMemo(() => {
     if (!orderList || orderList.length === 0) return [];
     if (authUser?.role === "admin") return orderList;
@@ -658,15 +669,16 @@ export default function Home() {
       );
     }
     if (authUser) {
-      const matched = orderList.filter(
-        (o) =>
-          o.phone === authUser.phone ||
-          o.customerName === authUser.name ||
-          (authUser.email && o.customerEmail === authUser.email)
-      );
-      return matched.length > 0 ? matched : orderList;
+      return orderList.filter((o) => {
+        if (o.userId && o.userId === authUser.id) return true;
+        if (o.customerEmail && authUser.email && o.customerEmail.toLowerCase() === authUser.email.toLowerCase()) return true;
+        if (o.userEmail && authUser.email && o.userEmail.toLowerCase() === authUser.email.toLowerCase()) return true;
+        if (authUser.phone && o.phone && o.phone.replace(/\D/g, "") === authUser.phone.replace(/\D/g, "")) return true;
+        return false;
+      });
     }
-    return orderList;
+    // Guest with no login: show orders without userId/email created on this device
+    return orderList.filter((o) => !o.userId && !o.customerEmail && !o.userEmail);
   }, [orderList, authUser]);
 
   // Vouchers & Promotions States
@@ -1877,6 +1889,9 @@ export default function Home() {
 
     try {
       const payload = {
+        userId: authUser?.id,
+        userEmail: authUser?.email,
+        customerEmail: authUser?.email,
         customerName: checkoutName.trim(),
         phone: checkoutPhone.trim(),
         address: checkoutAddress.trim() || "Giao tại khách sạn / điểm hẹn",
@@ -1906,7 +1921,14 @@ export default function Home() {
       const data = await res.json();
       if (data.success && data.order) {
         const stored = JSON.parse(window.localStorage.getItem("datto-demo-orders") ?? "[]") as any[];
-        const fullOrder = { ...data.order, paymentMethod: selectedPayLabel, status: "Chờ xác nhận" };
+        const fullOrder = {
+          ...data.order,
+          userId: authUser?.id,
+          userEmail: authUser?.email,
+          customerEmail: authUser?.email,
+          paymentMethod: selectedPayLabel,
+          status: "Chờ xác nhận",
+        };
         const nextOrders = [fullOrder, ...stored];
         window.localStorage.setItem("datto-demo-orders", JSON.stringify(nextOrders));
         setOrderList(nextOrders);
@@ -1927,6 +1949,9 @@ export default function Home() {
       const stored = JSON.parse(window.localStorage.getItem("datto-demo-orders") ?? "[]") as any[];
       const fallbackOrder = {
         id: `DT-${Date.now().toString().slice(-6)}`,
+        userId: authUser?.id,
+        userEmail: authUser?.email,
+        customerEmail: authUser?.email,
         customerName: checkoutName.trim(),
         phone: checkoutPhone.trim(),
         address: checkoutAddress.trim() || "Giao tại điểm hẹn",
@@ -1969,6 +1994,128 @@ export default function Home() {
       setCheckoutNote("");
       showToast(`✦ Đã tạo đơn hàng ${fallbackOrder.id}!`);
     }
+  };
+
+  const clearMyOrders = () => {
+    if (window.confirm("Bạn có chắc chắn muốn xóa toàn bộ lịch sử đơn hàng của tài khoản này không?")) {
+      const remaining = orderList.filter((o) => !userOrderList.some((uo) => uo.id === o.id));
+      setOrderList(remaining);
+      window.localStorage.setItem("datto-demo-orders", JSON.stringify(remaining));
+      showToast("✓ Đã xóa sạch danh sách đơn hàng của bạn!");
+    }
+  };
+
+  // Render Shopee-style 5 Status Icon Hub (Mục 3 trong Góp ý)
+  const renderShopeeOrderHub = (target: "profile" | "drawer" | "modal" = "profile") => {
+    const pendingCount = userOrderList.filter(o => !o.status || o.status === "Chờ xác nhận" || o.status === "pending").length;
+    const processingCount = userOrderList.filter(o => o.status === "Đang xử lý" || o.status === "Đã xác nhận" || o.status === "Đang chuẩn bị" || o.status === "Chờ lấy hàng" || o.status === "processing").length;
+    const shippingCount = userOrderList.filter(o => o.status === "Đang giao hàng" || o.status === "Đang giao" || o.status === "shipping").length;
+    const completedCount = userOrderList.filter(o => o.status === "Hoàn thành" || o.status === "Đã giao" || o.status === "completed").length;
+    const cancelledCount = userOrderList.filter(o => o.status === "Đã hủy" || o.status === "cancelled").length;
+
+    const handleSelectStatus = (statusId: string) => {
+      setOrderStatusTab(statusId);
+      if (target === "profile") {
+        setCartDrawerTab("orders");
+        setCartOpen(true);
+      }
+    };
+
+    return (
+      <div className="shopee-order-hub">
+        <div className="shopee-order-hub-header">
+          <h3>
+            <span>🛍️</span>
+            <b>Đơn mua</b>
+          </h3>
+          <button
+            type="button"
+            onClick={() => {
+              setOrderStatusTab("all");
+              if (target === "profile") {
+                setCartDrawerTab("orders");
+                setCartOpen(true);
+              }
+            }}
+          >
+            <span>Xem lịch sử mua hàng</span>
+            <b>❯</b>
+          </button>
+        </div>
+
+        <div className="shopee-order-status-grid">
+          {/* 1. Chờ xác nhận */}
+          <button
+            type="button"
+            className={`shopee-status-btn ${orderStatusTab === "pending" ? "is-active" : ""}`}
+            onClick={() => handleSelectStatus("pending")}
+            title="Đơn hàng chờ xác nhận"
+          >
+            <div className="shopee-status-icon-box">
+              <span>💳</span>
+              {pendingCount > 0 && <span className="shopee-status-badge">{pendingCount}</span>}
+            </div>
+            <span className="shopee-status-label">Chờ xác nhận</span>
+          </button>
+
+          {/* 2. Chờ lấy hàng */}
+          <button
+            type="button"
+            className={`shopee-status-btn ${orderStatusTab === "processing" ? "is-active" : ""}`}
+            onClick={() => handleSelectStatus("processing")}
+            title="Đơn hàng đang chuẩn bị / chờ lấy hàng"
+          >
+            <div className="shopee-status-icon-box">
+              <span>📦</span>
+              {processingCount > 0 && <span className="shopee-status-badge">{processingCount}</span>}
+            </div>
+            <span className="shopee-status-label">Chờ lấy hàng</span>
+          </button>
+
+          {/* 3. Chờ giao hàng */}
+          <button
+            type="button"
+            className={`shopee-status-btn ${orderStatusTab === "shipping" ? "is-active" : ""}`}
+            onClick={() => handleSelectStatus("shipping")}
+            title="Đơn hàng đang vận chuyển giao tới bạn"
+          >
+            <div className="shopee-status-icon-box">
+              <span>🚚</span>
+              {shippingCount > 0 && <span className="shopee-status-badge">{shippingCount}</span>}
+            </div>
+            <span className="shopee-status-label">Chờ giao hàng</span>
+          </button>
+
+          {/* 4. Đánh giá / Hoàn thành */}
+          <button
+            type="button"
+            className={`shopee-status-btn ${orderStatusTab === "completed" ? "is-active" : ""}`}
+            onClick={() => handleSelectStatus("completed")}
+            title="Đơn hàng đã hoàn thành / đánh giá"
+          >
+            <div className="shopee-status-icon-box">
+              <span>⭐</span>
+              {completedCount > 0 && <span className="shopee-status-badge">{completedCount}</span>}
+            </div>
+            <span className="shopee-status-label">Đánh giá</span>
+          </button>
+
+          {/* 5. Đã hủy */}
+          <button
+            type="button"
+            className={`shopee-status-btn ${orderStatusTab === "cancelled" ? "is-active" : ""}`}
+            onClick={() => handleSelectStatus("cancelled")}
+            title="Đơn hàng đã hủy"
+          >
+            <div className="shopee-status-icon-box">
+              <span>✕</span>
+              {cancelledCount > 0 && <span className="shopee-status-badge">{cancelledCount}</span>}
+            </div>
+            <span className="shopee-status-label">Đã hủy</span>
+          </button>
+        </div>
+      </div>
+    );
   };
 
   const exportOrdersToCSV = () => {
@@ -3586,6 +3733,12 @@ export default function Home() {
               </button>
             )}
           </div>
+
+          {/* SHOPEE-STYLE ORDER HUB (MỤC 3 GÓP Ý - THEO DÕI ĐƠN HÀNG) */}
+          <div style={{ marginBottom: "20px" }}>
+            {renderShopeeOrderHub("profile")}
+          </div>
+
           <div className="profile-grid">
             <article className="passport-card">
               <span className="kicker kicker--light">HỘ CHIẾU DU LỊCH 3 TỈNH</span>
@@ -4200,47 +4353,13 @@ export default function Home() {
             {/* TAB 2: MY ORDERS WITH SHOPEE-STYLE STATUS TABS */}
             {cartDrawerTab === "orders" && (
               <div>
-                {/* Shopee-style Status Tabs */}
-                <div className="order-status-tabs">
-                  {[
-                    { id: "all", label: t.orderStatusAll },
-                    { id: "pending", label: t.orderStatusPending },
-                    { id: "processing", label: t.orderStatusProcessing },
-                    { id: "completed", label: t.orderStatusCompleted },
-                    { id: "cancelled", label: t.orderStatusCancelled },
-                  ].map((tab) => {
-                    const count = userOrderList.filter((o) => {
-                      if (tab.id === "all") return true;
-                      if (tab.id === "pending") return !o.status || o.status === "Chờ xác nhận";
-                      if (tab.id === "processing") return o.status === "Đang xử lý" || o.status === "Đã xác nhận" || o.status === "Đang chuẩn bị";
-                      if (tab.id === "completed") return o.status === "Hoàn thành" || o.status === "Đã giao";
-                      if (tab.id === "cancelled") return o.status === "Đã hủy";
-                      return true;
-                    }).length;
-
-                    return (
-                      <button
-                        key={tab.id}
-                        type="button"
-                        className={`order-status-tab ${orderStatusTab === tab.id ? "is-active" : ""}`}
-                        onClick={() => setOrderStatusTab(tab.id)}
-                      >
-                        <span>{tab.label}</span>
-                        <span className="order-status-tab-count">{count}</span>
-                      </button>
-                    );
-                  })}
+                {/* Shopee-style Order Hub */}
+                <div style={{ marginBottom: "14px" }}>
+                  {renderShopeeOrderHub("drawer")}
                 </div>
 
                 {/* Filtered Order Cards */}
-                {userOrderList.filter((o) => {
-                  if (orderStatusTab === "all") return true;
-                  if (orderStatusTab === "pending") return !o.status || o.status === "Chờ xác nhận";
-                  if (orderStatusTab === "processing") return o.status === "Đang xử lý" || o.status === "Đã xác nhận" || o.status === "Đang chuẩn bị";
-                  if (orderStatusTab === "completed") return o.status === "Hoàn thành" || o.status === "Đã giao";
-                  if (orderStatusTab === "cancelled") return o.status === "Đã hủy";
-                  return true;
-                }).length === 0 ? (
+                {userOrderList.filter((o) => filterOrderByStatus(o, orderStatusTab)).length === 0 ? (
                   <div className="orders-empty-state" style={{ padding: "30px 10px" }}>
                     <span style={{ fontSize: "36px" }}>📦</span>
                     <h3 style={{ fontSize: "16px" }}>Không có đơn hàng nào trong mục này</h3>
@@ -4248,15 +4367,26 @@ export default function Home() {
                   </div>
                 ) : (
                   <div className="customer-order-cards">
+                    {userOrderList.length > 0 && (
+                      <div style={{ display: "flex", justifyContent: "flex-end", marginBottom: "8px" }}>
+                        <button
+                          type="button"
+                          onClick={clearMyOrders}
+                          style={{
+                            background: "transparent",
+                            border: "none",
+                            color: "#94a3b8",
+                            fontSize: "11px",
+                            cursor: "pointer",
+                            textDecoration: "underline",
+                          }}
+                        >
+                          🗑️ Xóa sạch lịch sử đơn
+                        </button>
+                      </div>
+                    )}
                     {userOrderList
-                      .filter((o) => {
-                        if (orderStatusTab === "all") return true;
-                        if (orderStatusTab === "pending") return !o.status || o.status === "Chờ xác nhận";
-                        if (orderStatusTab === "processing") return o.status === "Đang xử lý" || o.status === "Đã xác nhận" || o.status === "Đang chuẩn bị";
-                        if (orderStatusTab === "completed") return o.status === "Hoàn thành" || o.status === "Đã giao";
-                        if (orderStatusTab === "cancelled") return o.status === "Đã hủy";
-                        return true;
-                      })
+                      .filter((o) => filterOrderByStatus(o, orderStatusTab))
                       .map((order: any) => {
                         const isPending = !order.status || order.status === "Chờ xác nhận";
                         const isCancelled = order.status === "Đã hủy";
@@ -4830,46 +4960,31 @@ function doPost(e) {
               <button type="button" className="booking-dialog__close" onClick={() => setCustomerOrdersOpen(false)} aria-label="Đóng">×</button>
             </div>
 
-            {/* Shopee-style Status Tabs */}
-            <div className="order-status-tabs">
-              {[
-                { id: "all", label: t.orderStatusAll },
-                { id: "pending", label: t.orderStatusPending },
-                { id: "processing", label: t.orderStatusProcessing },
-                { id: "completed", label: t.orderStatusCompleted },
-                { id: "cancelled", label: t.orderStatusCancelled },
-              ].map((tab) => {
-                const count = userOrderList.filter((o) => {
-                  if (tab.id === "all") return true;
-                  if (tab.id === "pending") return !o.status || o.status === "Chờ xác nhận";
-                  if (tab.id === "processing") return o.status === "Đang xử lý" || o.status === "Đã xác nhận" || o.status === "Đang chuẩn bị";
-                  if (tab.id === "completed") return o.status === "Hoàn thành" || o.status === "Đã giao";
-                  if (tab.id === "cancelled") return o.status === "Đã hủy";
-                  return true;
-                }).length;
-
-                return (
-                  <button
-                    key={tab.id}
-                    type="button"
-                    className={`order-status-tab ${orderStatusTab === tab.id ? "is-active" : ""}`}
-                    onClick={() => setOrderStatusTab(tab.id)}
-                  >
-                    <span>{tab.label}</span>
-                    <span className="order-status-tab-count">{count}</span>
-                  </button>
-                );
-              })}
+            {/* Shopee-style Order Hub */}
+            <div style={{ marginBottom: "16px" }}>
+              {renderShopeeOrderHub("modal")}
             </div>
 
-            {userOrderList.filter((o) => {
-              if (orderStatusTab === "all") return true;
-              if (orderStatusTab === "pending") return !o.status || o.status === "Chờ xác nhận";
-              if (orderStatusTab === "processing") return o.status === "Đang xử lý" || o.status === "Đã xác nhận" || o.status === "Đang chuẩn bị";
-              if (orderStatusTab === "completed") return o.status === "Hoàn thành" || o.status === "Đã giao";
-              if (orderStatusTab === "cancelled") return o.status === "Đã hủy";
-              return true;
-            }).length === 0 ? (
+            {userOrderList.length > 0 && (
+              <div style={{ display: "flex", justifyContent: "flex-end", marginBottom: "8px" }}>
+                <button
+                  type="button"
+                  onClick={clearMyOrders}
+                  style={{
+                    background: "transparent",
+                    border: "none",
+                    color: "#94a3b8",
+                    fontSize: "11px",
+                    cursor: "pointer",
+                    textDecoration: "underline",
+                  }}
+                >
+                  🗑️ Xóa sạch lịch sử đơn
+                </button>
+              </div>
+            )}
+
+            {userOrderList.filter((o) => filterOrderByStatus(o, orderStatusTab)).length === 0 ? (
               <div className="orders-empty-state">
                 <span>🛍️</span>
                 <h3>Chưa có đơn hàng nào trong mục này</h3>
@@ -4888,14 +5003,7 @@ function doPost(e) {
             ) : (
               <div className="customer-order-cards">
                 {userOrderList
-                  .filter((o) => {
-                    if (orderStatusTab === "all") return true;
-                    if (orderStatusTab === "pending") return !o.status || o.status === "Chờ xác nhận";
-                    if (orderStatusTab === "processing") return o.status === "Đang xử lý" || o.status === "Đã xác nhận" || o.status === "Đang chuẩn bị";
-                    if (orderStatusTab === "completed") return o.status === "Hoàn thành" || o.status === "Đã giao";
-                    if (orderStatusTab === "cancelled") return o.status === "Đã hủy";
-                    return true;
-                  })
+                  .filter((o) => filterOrderByStatus(o, orderStatusTab))
                   .map((order: any) => {
                     const isPending = !order.status || order.status === "Chờ xác nhận";
                     const isCancelled = order.status === "Đã hủy";
