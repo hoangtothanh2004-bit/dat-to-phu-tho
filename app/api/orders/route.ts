@@ -34,6 +34,38 @@ export async function GET() {
   });
 }
 
+export async function PATCH(request: Request) {
+  try {
+    const body = await request.json();
+    const { id, orderId, status } = body;
+    const targetId = id || orderId;
+
+    if (!targetId || !status) {
+      return NextResponse.json(
+        { success: false, error: "Thiếu mã đơn hàng hoặc trạng thái mới." },
+        { status: 400 }
+      );
+    }
+
+    const orderIndex = globalOrders.findIndex((o) => o.id === targetId);
+    if (orderIndex !== -1) {
+      globalOrders[orderIndex].status = status;
+    }
+
+    return NextResponse.json({
+      success: true,
+      id: targetId,
+      status,
+      message: `Đã cập nhật trạng thái đơn ${targetId} sang [${status}]`,
+    });
+  } catch (error: any) {
+    return NextResponse.json(
+      { success: false, error: "Lỗi cập nhật đơn hàng: " + error.message },
+      { status: 500 }
+    );
+  }
+}
+
 export async function POST(request: Request) {
   try {
     const body = await request.json();

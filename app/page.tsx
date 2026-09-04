@@ -2797,8 +2797,29 @@ export default function Home() {
     createdAt: string;
   }>>(DEFAULT_CUSTOMERS);
 
+  // Helper to flexibly match seller and merchant names
+  const isSellerMatch = (sellerName: string = "", merchantName: string = "") => {
+    const s = (sellerName || "").toLowerCase().trim();
+    const m = (merchantName || "").toLowerCase().trim();
+    if (!s || !m) return false;
+    if (s === m || s.includes(m) || m.includes(s)) return true;
+    if ((s.includes("thịt chua") || s.includes("nghị")) && (m.includes("thịt chua") || m.includes("nghị"))) return true;
+    if (s.includes("cá") && m.includes("cá")) return true;
+    if (s.includes("chè") && m.includes("chè")) return true;
+    if (s.includes("bánh tai") && m.includes("bánh tai")) return true;
+    return false;
+  };
+
   // Merchant Whitelist managed by Admin (With Passwords)
   const DEFAULT_MERCHANTS = [
+    {
+      email: "chucoso@gmail.com",
+      merchantName: "Thịt chua Nghị Thịnh",
+      password: "123",
+      phone: "0987 654 321",
+      address: "Thị trấn Thanh Sơn, Phú Thọ",
+      createdAt: "01/01/2026",
+    },
     {
       email: "thitchuanghithinh@gmail.com",
       merchantName: "Thịt chua Nghị Thịnh",
@@ -2832,6 +2853,90 @@ export default function Home() {
       createdAt: "01/01/2026",
     },
   ];
+
+  // Default Demo Orders across all 4 workflow stages
+  const DEFAULT_DEMO_ORDERS = [
+    {
+      id: "DT-035498",
+      createdAt: "17:00:35 04/09/2026",
+      customerName: "Thanh Hoàng",
+      phone: "0123456789",
+      address: "Giao tại khách sạn / điểm hẹn",
+      note: "Giao trước 18h giúp mình nhé",
+      paymentMethod: "Thanh toán khi nhận hàng (COD)",
+      status: "Chờ xác nhận",
+      totalAmount: 50000,
+      items: [
+        {
+          dishName: "Thịt chua Thanh Sơn",
+          quantity: 1,
+          sellerName: "Thịt chua Nghị Thịnh",
+          sellerPhone: "0987 654 321",
+          price: 50000,
+        },
+      ],
+    },
+    {
+      id: "DT-709282",
+      createdAt: "10:55:09 03/09/2026",
+      customerName: "Thanh Hoàng",
+      phone: "031325462",
+      address: "Khu 2, thị trấn Thanh Sơn, Phú Thọ",
+      note: "Đóng gói kỹ kèm lá ổi",
+      paymentMethod: "Chuyển khoản QR ngân hàng",
+      status: "Chờ lấy hàng",
+      totalAmount: 50000,
+      items: [
+        {
+          dishName: "Thịt chua Thanh Sơn",
+          quantity: 1,
+          sellerName: "Thịt chua Nghị Thịnh",
+          sellerPhone: "0987 654 321",
+          price: 50000,
+        },
+      ],
+    },
+    {
+      id: "DT-629950",
+      createdAt: "10:53:49 03/09/2026",
+      customerName: "Hoàng Thanh",
+      phone: "0912 345 678",
+      address: "Khách sạn Mường Thanh Phú Thọ",
+      note: "Gọi trước khi giao 10 phút",
+      paymentMethod: "Thanh toán khi nhận hàng (COD)",
+      status: "Chờ giao hàng",
+      totalAmount: 50000,
+      items: [
+        {
+          dishName: "Thịt chua Thanh Sơn",
+          quantity: 1,
+          sellerName: "Thịt chua Nghị Thịnh",
+          sellerPhone: "0987 654 321",
+          price: 50000,
+        },
+      ],
+    },
+    {
+      id: "DT-518290",
+      createdAt: "09:15:00 03/09/2026",
+      customerName: "Nguyễn Mai Anh",
+      phone: "0988 777 666",
+      address: "Đại lộ Hùng Vương, TP. Việt Trì",
+      note: "Đã nhận đủ và hài lòng",
+      paymentMethod: "Chuyển khoản QR ngân hàng",
+      status: "Hoàn thành",
+      totalAmount: 100000,
+      items: [
+        {
+          dishName: "Thịt chua Thanh Sơn",
+          quantity: 2,
+          sellerName: "Thịt chua Nghị Thịnh",
+          sellerPhone: "0987 654 321",
+          price: 50000,
+        },
+      ],
+    },
+  ];
   const [merchantWhitelist, setMerchantWhitelist] = useState<Array<{
     email: string;
     merchantName: string;
@@ -2857,6 +2962,8 @@ export default function Home() {
   const [ordersDashboardOpen, setOrdersDashboardOpen] = useState(false);
   const [orderList, setOrderList] = useState<any[]>([]);
   const [orderStatusTab, setOrderStatusTab] = useState<string>("all");
+  const [merchantTabFilter, setMerchantTabFilter] = useState<string>("all");
+  const [merchantScope, setMerchantScope] = useState<"all" | "my_store">("all");
   const [sheetWebhookUrl, setSheetWebhookUrl] = useState("");
   const [sheetScriptCopied, setSheetScriptCopied] = useState(false);
 
@@ -2870,9 +2977,9 @@ export default function Home() {
   const filterOrderByStatus = (order: any, tabId: string) => {
     if (tabId === "all") return true;
     if (tabId === "pending") return !order.status || order.status === "Chờ xác nhận" || order.status === "pending";
-    if (tabId === "processing") return order.status === "Đang xử lý" || order.status === "Đã xác nhận" || order.status === "Đang chuẩn bị" || order.status === "Chờ lấy hàng" || order.status === "processing";
-    if (tabId === "shipping") return order.status === "Đang giao hàng" || order.status === "Đang giao" || order.status === "shipping";
-    if (tabId === "completed") return order.status === "Hoàn thành" || order.status === "Đã giao" || order.status === "completed";
+    if (tabId === "processing") return order.status === "Đang xử lý" || order.status === "Đã xác nhận" || order.status === "Đang chuẩn bị" || order.status === "Chờ lấy hàng" || order.status === "Đã chuẩn bị đơn" || order.status === "processing";
+    if (tabId === "shipping") return order.status === "Đang giao hàng" || order.status === "Đang giao" || order.status === "Chờ giao hàng" || order.status === "Đang ship" || order.status === "shipping";
+    if (tabId === "completed") return order.status === "Hoàn thành" || order.status === "Đã giao" || order.status === "Giao thành công" || order.status === "completed";
     if (tabId === "cancelled") return order.status === "Đã hủy" || order.status === "cancelled";
     return true;
   };
@@ -2882,8 +2989,9 @@ export default function Home() {
     if (!orderList || orderList.length === 0) return [];
     if (authUser?.role === "admin") return orderList;
     if (authUser?.role === "merchant") {
+      const mName = authUser.merchantName || "";
       return orderList.filter((o) =>
-        (o.items || []).some((it: any) => it.sellerName === authUser.merchantName)
+        (o.items || []).some((it: any) => isSellerMatch(it.sellerName, mName))
       );
     }
     if (authUser) {
@@ -2925,6 +3033,10 @@ export default function Home() {
         const storedUser = window.localStorage.getItem("datto-auth-user");
         if (storedUser) {
           const u = JSON.parse(storedUser);
+          if (u.email && u.email.toLowerCase() === "chucoso@gmail.com") {
+            u.role = "merchant";
+            u.merchantName = "Thịt chua Nghị Thịnh";
+          }
           setAuthUser(u);
           setCheckoutName(u.name);
           if (u.phone) setCheckoutPhone(u.phone);
@@ -2932,7 +3044,19 @@ export default function Home() {
 
         const storedMerchants = window.localStorage.getItem("datto-merchant-whitelist");
         if (storedMerchants) {
-          setMerchantWhitelist(JSON.parse(storedMerchants));
+          const parsed = JSON.parse(storedMerchants);
+          const merged = [...DEFAULT_MERCHANTS];
+          if (Array.isArray(parsed)) {
+            parsed.forEach((p: any) => {
+              if (!merged.some((m) => m.email.toLowerCase() === (p.email || "").toLowerCase())) {
+                merged.push(p);
+              }
+            });
+          }
+          setMerchantWhitelist(merged);
+        } else {
+          setMerchantWhitelist(DEFAULT_MERCHANTS);
+          window.localStorage.setItem("datto-merchant-whitelist", JSON.stringify(DEFAULT_MERCHANTS));
         }
 
         const storedUsers = window.localStorage.getItem("datto-registered-users");
@@ -2956,7 +3080,23 @@ export default function Home() {
         if (storedCart) setCart(JSON.parse(storedCart));
 
         const storedOrders = window.localStorage.getItem("datto-demo-orders");
-        if (storedOrders) setOrderList(JSON.parse(storedOrders));
+        if (storedOrders) {
+          try {
+            const parsed = JSON.parse(storedOrders);
+            if (Array.isArray(parsed) && parsed.length > 0) {
+              setOrderList(parsed);
+            } else {
+              setOrderList(DEFAULT_DEMO_ORDERS);
+              window.localStorage.setItem("datto-demo-orders", JSON.stringify(DEFAULT_DEMO_ORDERS));
+            }
+          } catch {
+            setOrderList(DEFAULT_DEMO_ORDERS);
+            window.localStorage.setItem("datto-demo-orders", JSON.stringify(DEFAULT_DEMO_ORDERS));
+          }
+        } else {
+          setOrderList(DEFAULT_DEMO_ORDERS);
+          window.localStorage.setItem("datto-demo-orders", JSON.stringify(DEFAULT_DEMO_ORDERS));
+        }
 
         const storedWebhook = window.localStorage.getItem("datto-sheet-webhook");
         if (storedWebhook) setSheetWebhookUrl(storedWebhook);
@@ -4061,16 +4201,79 @@ export default function Home() {
     showToast("Đã đăng xuất tài khoản.");
   };
 
-  const cancelOrder = (orderId: string) => {
+  const updateOrderStatus = async (orderId: string, nextStatus: string) => {
     const nextOrders = orderList.map((o) => {
       if (o.id === orderId) {
-        return { ...o, status: "Đã hủy" };
+        return { ...o, status: nextStatus };
       }
       return o;
     });
     setOrderList(nextOrders);
     window.localStorage.setItem("datto-demo-orders", JSON.stringify(nextOrders));
-    showToast(`Đã hủy đơn hàng #${orderId}`);
+
+    // Also update confirmedOrder if active
+    if (confirmedOrder?.order?.id === orderId) {
+      setConfirmedOrder((prev: any) => (prev ? { ...prev, order: { ...prev.order, status: nextStatus } } : null));
+    }
+
+    // Call server API to keep in sync
+    try {
+      fetch("/api/orders", {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ id: orderId, status: nextStatus }),
+      }).catch(() => undefined);
+    } catch {}
+
+    // Google Sheets webhook sync if configured
+    if (sheetWebhookUrl) {
+      try {
+        const order = nextOrders.find((o) => o.id === orderId);
+        if (order) {
+          fetch(sheetWebhookUrl, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              orderId: order.id,
+              orderTime: order.createdAt,
+              customerName: order.customerName,
+              phone: order.phone,
+              deliveryAddress: order.address,
+              note: order.note || "",
+              itemsDetail: (order.items || []).map((i: any) => `${i.dishName} x${i.quantity}`).join("; "),
+              sellersList: Array.from(new Set((order.items || []).map((i: any) => i.sellerName))).join(", "),
+              totalAmount: order.totalAmount,
+              status: nextStatus,
+            }),
+          }).catch(() => undefined);
+        }
+      } catch {}
+    }
+
+    // Toast notification corresponding to stage
+    if (nextStatus === "Chờ lấy hàng" || nextStatus === "Đang chuẩn bị" || nextStatus === "Đã chuẩn bị đơn") {
+      showToast(`✓ Đã xác nhận đơn #${orderId} & chuyển sang [Đã chuẩn bị đơn / Chờ lấy hàng]!`);
+    } else if (nextStatus === "Chờ giao hàng" || nextStatus === "Đang giao hàng" || nextStatus === "Đang ship") {
+      showToast(`🚚 Đơn hàng #${orderId} đã chuyển sang [Đang ship / Chờ giao hàng]!`);
+    } else if (nextStatus === "Hoàn thành" || nextStatus === "Đã giao" || nextStatus === "Giao thành công") {
+      showToast(`🎉 Đơn hàng #${orderId} đã giao thành công và hoàn thành!`);
+    } else if (nextStatus === "Đã hủy") {
+      showToast(`✕ Đã hủy đơn hàng #${orderId}`);
+    } else {
+      showToast(`✦ Đã cập nhật đơn #${orderId} sang [${nextStatus}]!`);
+    }
+  };
+
+  const cancelOrder = (orderId: string) => {
+    updateOrderStatus(orderId, "Đã hủy");
+  };
+
+  const loadDemoWorkflowOrders = () => {
+    setOrderList(DEFAULT_DEMO_ORDERS);
+    try {
+      window.localStorage.setItem("datto-demo-orders", JSON.stringify(DEFAULT_DEMO_ORDERS));
+    } catch {}
+    showToast("🔄 Đã nạp thành công 4 đơn hàng mẫu quy trình (Đầy đủ 4 trạng thái)!");
   };
 
   const reorderItems = (order: any) => {
@@ -4227,17 +4430,28 @@ export default function Home() {
 
   // Render Shopee-style 5 Status Icon Hub (Mục 3 trong Góp ý)
   const renderShopeeOrderHub = (target: "profile" | "drawer" | "modal" = "profile") => {
-    const pendingCount = userOrderList.filter(o => !o.status || o.status === "Chờ xác nhận" || o.status === "pending").length;
-    const processingCount = userOrderList.filter(o => o.status === "Đang xử lý" || o.status === "Đã xác nhận" || o.status === "Đang chuẩn bị" || o.status === "Chờ lấy hàng" || o.status === "processing").length;
-    const shippingCount = userOrderList.filter(o => o.status === "Đang giao hàng" || o.status === "Đang giao" || o.status === "shipping").length;
-    const completedCount = userOrderList.filter(o => o.status === "Hoàn thành" || o.status === "Đã giao" || o.status === "completed").length;
-    const cancelledCount = userOrderList.filter(o => o.status === "Đã hủy" || o.status === "cancelled").length;
+    const isMerchantUser = authUser?.role === "merchant";
+    const isAdminUser = authUser?.role === "admin";
+    
+    // For merchant, count orders belonging to their facility
+    const relevantOrders = userOrderList;
+
+    const pendingCount = relevantOrders.filter(o => filterOrderByStatus(o, "pending")).length;
+    const processingCount = relevantOrders.filter(o => filterOrderByStatus(o, "processing")).length;
+    const shippingCount = relevantOrders.filter(o => filterOrderByStatus(o, "shipping")).length;
+    const completedCount = relevantOrders.filter(o => filterOrderByStatus(o, "completed")).length;
+    const cancelledCount = relevantOrders.filter(o => filterOrderByStatus(o, "cancelled")).length;
 
     const handleSelectStatus = (statusId: string) => {
-      setOrderStatusTab(statusId);
-      if (target === "profile") {
-        setCartDrawerTab("orders");
-        setCartOpen(true);
+      if (isMerchantUser || isAdminUser) {
+        setMerchantTabFilter(statusId);
+        setOrdersDashboardOpen(true);
+      } else {
+        setOrderStatusTab(statusId);
+        if (target === "profile") {
+          setCartDrawerTab("orders");
+          setCartOpen(true);
+        }
       }
     };
 
@@ -4245,20 +4459,29 @@ export default function Home() {
       <div className="shopee-order-hub">
         <div className="shopee-order-hub-header">
           <h3>
-            <span>🛍️</span>
-            <b>{t.shopeePurchases}</b>
+            <span>{isMerchantUser ? "📦" : "🛍️"}</span>
+            <b>
+              {isMerchantUser
+                ? `Đơn hàng của cơ sở (${authUser.merchantName})`
+                : t.shopeePurchases}
+            </b>
           </h3>
           <button
             type="button"
             onClick={() => {
-              setOrderStatusTab("all");
-              if (target === "profile") {
-                setCartDrawerTab("orders");
-                setCartOpen(true);
+              if (isMerchantUser || isAdminUser) {
+                setMerchantTabFilter("all");
+                setOrdersDashboardOpen(true);
+              } else {
+                setOrderStatusTab("all");
+                if (target === "profile") {
+                  setCartDrawerTab("orders");
+                  setCartOpen(true);
+                }
               }
             }}
           >
-            <span>{t.shopeeViewHistory}</span>
+            <span>{isMerchantUser ? "Mở Bảng Quản Lý Đơn Hàng" : t.shopeeViewHistory}</span>
             <b>❯</b>
           </button>
         </div>
@@ -4267,73 +4490,86 @@ export default function Home() {
           {/* 1. Chờ xác nhận */}
           <button
             type="button"
-            className={`shopee-status-btn ${orderStatusTab === "pending" ? "is-active" : ""}`}
+            className={`shopee-status-btn ${(isMerchantUser ? merchantTabFilter : orderStatusTab) === "pending" ? "is-active" : ""}`}
             onClick={() => handleSelectStatus("pending")}
-            title={t.statusPending}
+            title="Chờ xác nhận"
           >
             <div className="shopee-status-icon-box">
               <span>💳</span>
               {pendingCount > 0 && <span className="shopee-status-badge">{pendingCount}</span>}
             </div>
-            <span className="shopee-status-label">{t.statusPending}</span>
+            <span className="shopee-status-label">Chờ xác nhận</span>
           </button>
 
-          {/* 2. Chờ lấy hàng */}
+          {/* 2. Chờ lấy hàng (Đã chuẩn bị) */}
           <button
             type="button"
-            className={`shopee-status-btn ${orderStatusTab === "processing" ? "is-active" : ""}`}
+            className={`shopee-status-btn ${(isMerchantUser ? merchantTabFilter : orderStatusTab) === "processing" ? "is-active" : ""}`}
             onClick={() => handleSelectStatus("processing")}
-            title={t.statusProcessing}
+            title="Chờ lấy hàng (Đã chuẩn bị đơn)"
           >
             <div className="shopee-status-icon-box">
               <span>📦</span>
               {processingCount > 0 && <span className="shopee-status-badge">{processingCount}</span>}
             </div>
-            <span className="shopee-status-label">{t.statusProcessing}</span>
+            <span className="shopee-status-label">Chờ lấy hàng</span>
           </button>
 
-          {/* 3. Chờ giao hàng */}
+          {/* 3. Chờ giao hàng (Đang ship) */}
           <button
             type="button"
-            className={`shopee-status-btn ${orderStatusTab === "shipping" ? "is-active" : ""}`}
+            className={`shopee-status-btn ${(isMerchantUser ? merchantTabFilter : orderStatusTab) === "shipping" ? "is-active" : ""}`}
             onClick={() => handleSelectStatus("shipping")}
-            title={t.statusShipping}
+            title="Đang ship (Chờ giao hàng)"
           >
             <div className="shopee-status-icon-box">
               <span>🚚</span>
               {shippingCount > 0 && <span className="shopee-status-badge">{shippingCount}</span>}
             </div>
-            <span className="shopee-status-label">{t.statusShipping}</span>
+            <span className="shopee-status-label">Đang ship</span>
           </button>
 
-          {/* 4. Đánh giá / Hoàn thành */}
+          {/* 4. Giao thành công / Hoàn thành */}
           <button
             type="button"
-            className={`shopee-status-btn ${orderStatusTab === "completed" ? "is-active" : ""}`}
+            className={`shopee-status-btn ${(isMerchantUser ? merchantTabFilter : orderStatusTab) === "completed" ? "is-active" : ""}`}
             onClick={() => handleSelectStatus("completed")}
-            title={t.statusCompleted}
+            title="Giao thành công"
           >
             <div className="shopee-status-icon-box">
               <span>⭐</span>
               {completedCount > 0 && <span className="shopee-status-badge">{completedCount}</span>}
             </div>
-            <span className="shopee-status-label">{t.statusCompleted}</span>
+            <span className="shopee-status-label">Giao thành công</span>
           </button>
 
           {/* 5. Đã hủy */}
           <button
             type="button"
-            className={`shopee-status-btn ${orderStatusTab === "cancelled" ? "is-active" : ""}`}
+            className={`shopee-status-btn ${(isMerchantUser ? merchantTabFilter : orderStatusTab) === "cancelled" ? "is-active" : ""}`}
             onClick={() => handleSelectStatus("cancelled")}
-            title={t.statusCancelled}
+            title="Đã hủy"
           >
             <div className="shopee-status-icon-box">
               <span>✕</span>
               {cancelledCount > 0 && <span className="shopee-status-badge">{cancelledCount}</span>}
             </div>
-            <span className="shopee-status-label">{t.statusCancelled}</span>
+            <span className="shopee-status-label">Đã hủy</span>
           </button>
         </div>
+
+        {isMerchantUser && (
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: "10px", padding: "6px 10px", background: "#f8fafc", borderRadius: "6px", fontSize: "11px", color: "#64748b" }}>
+            <span>💡 Bấm vào trạng thái bất kỳ để mở Bảng Xử Lý Đơn Hàng</span>
+            <button
+              type="button"
+              onClick={() => { setOrderStatusTab("all"); setCartDrawerTab("orders"); setCartOpen(true); }}
+              style={{ background: "none", border: "none", color: "#0284c7", cursor: "pointer", fontWeight: 600 }}
+            >
+              Xem đơn mua cá nhân ❯
+            </button>
+          </div>
+        )}
       </div>
     );
   };
@@ -6747,16 +6983,34 @@ export default function Home() {
                     {userOrderList
                       .filter((o) => filterOrderByStatus(o, orderStatusTab))
                       .map((order: any) => {
-                        const isPending = !order.status || order.status === "Chờ xác nhận";
-                        const isCancelled = order.status === "Đã hủy";
-                        const isCompleted = order.status === "Hoàn thành" || order.status === "Đã giao";
+                        const isPending = !order.status || order.status === "Chờ xác nhận" || order.status === "pending";
+                        const isProcessing = order.status === "Chờ lấy hàng" || order.status === "Đang chuẩn bị" || order.status === "Đã chuẩn bị đơn" || order.status === "Đang xử lý" || order.status === "processing";
+                        const isShipping = order.status === "Chờ giao hàng" || order.status === "Đang giao hàng" || order.status === "Đang ship" || order.status === "shipping";
+                        const isCompleted = order.status === "Hoàn thành" || order.status === "Đã giao" || order.status === "Giao thành công" || order.status === "completed";
+                        const isCancelled = order.status === "Đã hủy" || order.status === "cancelled";
 
                         return (
                           <article key={order.id} className="customer-order-card">
                             <div className="customer-order-top">
                               <div>
-                                <span className={`status-badge ${isPending ? "status-badge--pending" : isCancelled ? "status-badge--cancelled" : isCompleted ? "status-badge--completed" : "status-badge--confirmed"}`}>
-                                  {isPending ? "⏳ Chờ xác nhận" : isCancelled ? "✕ Đã hủy" : isCompleted ? "✓ Hoàn thành" : "⚡ Đang xử lý"}
+                                <span
+                                  className={`status-badge ${
+                                    isPending ? "status-badge--pending" :
+                                    isCancelled ? "status-badge--cancelled" :
+                                    isCompleted ? "status-badge--completed" : "status-badge--confirmed"
+                                  }`}
+                                  style={
+                                    isShipping ? { background: "#f5f3ff", color: "#6d28d9", borderColor: "#ddd6fe" } :
+                                    isProcessing ? { background: "#eff6ff", color: "#1d4ed8", borderColor: "#bfdbfe" } :
+                                    undefined
+                                  }
+                                >
+                                  {isPending && "⏳ Chờ xác nhận"}
+                                  {isProcessing && "📦 Chờ lấy hàng (Đang chuẩn bị)"}
+                                  {isShipping && "🚚 Đang ship (Chờ nhận)"}
+                                  {isCompleted && "✓ Giao thành công"}
+                                  {isCancelled && "✕ Đã hủy"}
+                                  {!isPending && !isProcessing && !isShipping && !isCompleted && !isCancelled && order.status}
                                 </span>
                                 <b>{t.orderNumberLabel} #{order.id}</b>
                                 <small>🕒 {order.createdAt} · 💳 {order.paymentMethod || "VietQR"}</small>
@@ -6780,7 +7034,7 @@ export default function Home() {
                                 ))}
                               </div>
 
-                              <div style={{ display: "flex", justifyContent: "flex-end", gap: "8px", marginTop: "12px", paddingTop: "10px", borderTop: "1px dashed var(--line)" }}>
+                              <div style={{ display: "flex", justifyContent: "flex-end", alignItems: "center", gap: "8px", marginTop: "12px", paddingTop: "10px", borderTop: "1px dashed var(--line)" }}>
                                 {isPending && (
                                   <button
                                     type="button"
@@ -6789,6 +7043,17 @@ export default function Home() {
                                     onClick={() => cancelOrder(order.id)}
                                   >
                                     {t.cancelOrderBtn}
+                                  </button>
+                                )}
+                                {isShipping && (
+                                  <button
+                                    type="button"
+                                    className="button button--dark"
+                                    style={{ minHeight: "32px", padding: "0 12px", fontSize: "11.5px", background: "#059669", borderColor: "#059669", color: "#ffffff", fontWeight: 700 }}
+                                    onClick={() => updateOrderStatus(order.id, "Hoàn thành")}
+                                    title="Xác nhận bạn đã nhận được hàng đầy đủ"
+                                  >
+                                    ✓ Đã nhận được hàng
                                   </button>
                                 )}
                                 <button
@@ -7085,14 +7350,31 @@ export default function Home() {
             {/* Dashboard Control Bar */}
             <div className="orders-control-bar">
               <div className="orders-stat-pills">
-                <span className="orders-stat-pill"><b>{orderList.length}</b> Tổng đơn</span>
-                <span className="orders-stat-pill"><b>{orderList.reduce((acc, o) => acc + (o.totalAmount || 0), 0).toLocaleString("vi-VN")}đ</b> Doanh thu</span>
+                <span className="orders-stat-pill">
+                  <b>{authUser?.role === "merchant" ? userOrderList.length : orderList.length}</b> {authUser?.role === "merchant" ? "Đơn của cơ sở" : "Tổng đơn"}
+                </span>
+                <span className="orders-stat-pill">
+                  <b>
+                    {(authUser?.role === "merchant" ? userOrderList : orderList)
+                      .reduce((acc, o) => acc + (o.totalAmount || 0), 0)
+                      .toLocaleString("vi-VN")}đ
+                  </b> Doanh thu
+                </span>
                 <span className="orders-stat-pill" style={{ background: "#ecfdf5", color: "#065f46" }}>
-                  👤 Đang đăng nhập: <b>{authUser?.name}</b>
+                  👤 Đang đăng nhập: <b>{authUser?.name}</b> {authUser?.merchantName ? `(${authUser.merchantName})` : ""}
                 </span>
               </div>
-              <div className="orders-action-buttons">
-                <button type="button" className="button button--dark" onClick={exportOrdersToCSV}>
+              <div className="orders-action-buttons" style={{ display: "flex", gap: "8px", flexWrap: "wrap" }}>
+                <button
+                  type="button"
+                  className="button button--outline"
+                  onClick={loadDemoWorkflowOrders}
+                  title="Nạp lại bộ dữ liệu 4 đơn hàng mẫu để kiểm tra đủ 4 trạng thái xử lý"
+                  style={{ fontSize: "11px", minHeight: "32px", padding: "0 10px", background: "#fff" }}
+                >
+                  🔄 Nạp 4 đơn mẫu quy trình
+                </button>
+                <button type="button" className="button button--dark" onClick={exportOrdersToCSV} style={{ fontSize: "11px", minHeight: "32px" }}>
                   📥 Tải file CSV / Excel ({orderList.length} đơn)
                 </button>
               </div>
@@ -7247,6 +7529,70 @@ function doPost(e) {
               </>
             )}
 
+            {/* Status Filter Tabs & Merchant Scope Switcher */}
+            <div className="orders-filter-container">
+              <div className="orders-filter-tabs">
+                {[
+                  { id: "all", label: "Tất cả", icon: "📋" },
+                  { id: "pending", label: "Chờ xác nhận", icon: "💳" },
+                  { id: "processing", label: "Chờ lấy hàng (Đã chuẩn bị)", icon: "📦" },
+                  { id: "shipping", label: "Đang ship (Chờ giao)", icon: "🚚" },
+                  { id: "completed", label: "Giao thành công", icon: "⭐" },
+                  { id: "cancelled", label: "Đã hủy", icon: "✕" },
+                ].map((tab) => {
+                  const currentMerchantName = authUser?.role === "merchant" && authUser?.merchantName ? authUser.merchantName : "";
+                  const count = orderList.filter((o) => {
+                    if (merchantScope === "my_store" && currentMerchantName) {
+                      const hasMyDish = (o.items || []).some((it: any) =>
+                        isSellerMatch(it.sellerName, currentMerchantName)
+                      );
+                      if (!hasMyDish) return false;
+                    }
+                    return filterOrderByStatus(o, tab.id);
+                  }).length;
+
+                  return (
+                    <button
+                      key={tab.id}
+                      type="button"
+                      className={`orders-filter-tab ${merchantTabFilter === tab.id ? "is-active" : ""}`}
+                      onClick={() => setMerchantTabFilter(tab.id)}
+                    >
+                      <span>{tab.icon}</span>
+                      <span>{tab.label}</span>
+                      <span className="tab-count">{count}</span>
+                    </button>
+                  );
+                })}
+              </div>
+
+              {authUser?.role === "merchant" && (
+                <div className="orders-scope-toggle">
+                  <span>Phạm vi hiển thị:</span>
+                  <select
+                    value={merchantScope}
+                    onChange={(e) => setMerchantScope(e.target.value as "all" | "my_store")}
+                  >
+                    <option value="all">Toàn bộ đơn hệ thống ({orderList.length})</option>
+                    <option value="my_store">
+                      Chỉ đơn của {authUser.merchantName || "cơ sở của tôi"} (
+                      {
+                        (() => {
+                          const mName = authUser.merchantName || "";
+                          return orderList.filter((o) =>
+                            (o.items || []).some((it: any) =>
+                              isSellerMatch(it.sellerName, mName)
+                            )
+                          ).length;
+                        })()
+                      }
+                      )
+                    </option>
+                  </select>
+                </div>
+              )}
+            </div>
+
             {/* Real-time Sheets Table */}
             <div className="orders-table-wrapper">
               {orderList.length === 0 ? (
@@ -7256,50 +7602,165 @@ function doPost(e) {
                   <p>Khi du khách đặt đặc sản OCOP, các đơn hàng sẽ tự động xuất hiện tại bảng này theo thời gian thực.</p>
                 </div>
               ) : (
-                <table className="orders-sheet-table">
-                  <thead>
-                    <tr>
-                      <th>Mã Đơn</th>
-                      <th>Thời Gian Đặt</th>
-                      <th>Khách Hàng</th>
-                      <th>Số Điện Thoại</th>
-                      <th>Địa Chỉ Giao Hàng</th>
-                      <th>Món Đặt & Số Lượng</th>
-                      <th>Cơ Sở / Doanh Nghiệp OCOP</th>
-                      <th>Tổng Tiền</th>
-                      <th>Trạng Thái</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {orderList.map((order: any) => (
-                      <tr key={order.id}>
-                        <td><b>{order.id}</b></td>
-                        <td><small>{order.createdAt}</small></td>
-                        <td><b>{order.customerName}</b></td>
-                        <td><a href={`tel:${order.phone}`}>{order.phone}</a></td>
-                        <td><small>{order.address}</small></td>
-                        <td>
-                          {(order.items || []).map((it: any, i: number) => (
-                            <div key={i}>• {it.dishName} <b>×{it.quantity}</b></div>
-                          ))}
-                        </td>
-                        <td>
-                          {(order.items || []).map((it: any, i: number) => (
-                            <span key={i} className="pill pill--subtle" style={{ marginRight: "4px", marginBottom: "2px", display: "inline-block" }}>
-                              {it.sellerName}
-                            </span>
-                          ))}
-                        </td>
-                        <td><b style={{ color: "var(--red)" }}>{Number(order.totalAmount || 0).toLocaleString("vi-VN")}đ</b></td>
-                        <td>
-                          <span className="order-status-badge">
-                            {order.status || "Chờ xác nhận"}
-                          </span>
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
+                (() => {
+                  const mName = authUser?.role === "merchant" && authUser?.merchantName ? authUser.merchantName : "";
+                  const displayedOrders = orderList.filter((order: any) => {
+                    if (merchantScope === "my_store" && mName) {
+                      const hasMyDish = (order.items || []).some((it: any) =>
+                        isSellerMatch(it.sellerName, mName)
+                      );
+                      if (!hasMyDish) return false;
+                    }
+                    return filterOrderByStatus(order, merchantTabFilter);
+                  });
+
+                  if (displayedOrders.length === 0) {
+                    return (
+                      <div className="orders-empty-state">
+                        <span>🔍</span>
+                        <h3>Không có đơn hàng nào trong mục này</h3>
+                        <p>Hãy chọn tab khác hoặc chuyển sang chế độ &quot;Tất cả đơn hàng&quot; để xem.</p>
+                      </div>
+                    );
+                  }
+
+                  return (
+                    <table className="orders-sheet-table">
+                      <thead>
+                        <tr>
+                          <th>Mã Đơn</th>
+                          <th>Thời Gian Đặt</th>
+                          <th>Khách Hàng</th>
+                          <th>Số Điện Thoại</th>
+                          <th>Địa Chỉ Giao Hàng</th>
+                          <th>Món Đặt & Số Lượng</th>
+                          <th>Cơ Sở / Doanh Nghiệp OCOP</th>
+                          <th>Tổng Tiền</th>
+                          <th>Trạng Thái</th>
+                          <th style={{ minWidth: "190px" }}>Thao Tác Xử Lý Đơn</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {displayedOrders.map((order: any) => {
+                          const status = order.status || "Chờ xác nhận";
+                          const isPending = status === "Chờ xác nhận" || status === "pending";
+                          const isProcessing = status === "Chờ lấy hàng" || status === "Đang chuẩn bị" || status === "Đã chuẩn bị đơn" || status === "Đang xử lý" || status === "processing";
+                          const isShipping = status === "Chờ giao hàng" || status === "Đang giao hàng" || status === "Đang ship" || status === "shipping";
+                          const isCompleted = status === "Hoàn thành" || status === "Đã giao" || status === "Giao thành công" || status === "completed";
+                          const isCancelled = status === "Đã hủy" || status === "cancelled";
+
+                          const badgeClass = isPending
+                            ? "order-status-badge--pending"
+                            : isProcessing
+                            ? "order-status-badge--processing"
+                            : isShipping
+                            ? "order-status-badge--shipping"
+                            : isCompleted
+                            ? "order-status-badge--completed"
+                            : "order-status-badge--cancelled";
+
+                          return (
+                            <tr key={order.id}>
+                              <td><b>{order.id}</b></td>
+                              <td><small>{order.createdAt}</small></td>
+                              <td><b>{order.customerName}</b></td>
+                              <td><a href={`tel:${order.phone}`}>{order.phone}</a></td>
+                              <td><small>{order.address}</small></td>
+                              <td>
+                                {(order.items || []).map((it: any, i: number) => (
+                                  <div key={i}>• {it.dishName} <b>×{it.quantity}</b></div>
+                                ))}
+                              </td>
+                              <td>
+                                {(order.items || []).map((it: any, i: number) => (
+                                  <span key={i} className="pill pill--subtle" style={{ marginRight: "4px", marginBottom: "2px", display: "inline-block" }}>
+                                    {it.sellerName}
+                                  </span>
+                                ))}
+                              </td>
+                              <td><b style={{ color: "var(--red)" }}>{Number(order.totalAmount || 0).toLocaleString("vi-VN")}đ</b></td>
+                              <td>
+                                <span className={`order-status-badge ${badgeClass}`}>
+                                  {isPending && "⏳ Chờ xác nhận"}
+                                  {isProcessing && "📦 Chờ lấy hàng"}
+                                  {isShipping && "🚚 Đang ship"}
+                                  {isCompleted && "✓ Giao thành công"}
+                                  {isCancelled && "✕ Đã hủy"}
+                                  {!isPending && !isProcessing && !isShipping && !isCompleted && !isCancelled && status}
+                                </span>
+                              </td>
+                              <td>
+                                <div className="order-mgmt-cell">
+                                  {/* 1-Click Quick Progression Button as requested by user */}
+                                  {isPending && (
+                                    <button
+                                      type="button"
+                                      className="order-quick-btn order-quick-btn--confirm"
+                                      onClick={() => updateOrderStatus(order.id, "Chờ lấy hàng")}
+                                      title="Xác nhận đơn và chuyển sang trạng thái đã chuẩn bị hàng"
+                                    >
+                                      ✓ Xác nhận & Chuẩn bị đơn
+                                    </button>
+                                  )}
+
+                                  {isProcessing && (
+                                    <button
+                                      type="button"
+                                      className="order-quick-btn order-quick-btn--ship"
+                                      onClick={() => updateOrderStatus(order.id, "Chờ giao hàng")}
+                                      title="Giao đơn cho shipper / bắt đầu giao cho khách"
+                                    >
+                                      🚚 Bắt đầu ship cho khách
+                                    </button>
+                                  )}
+
+                                  {isShipping && (
+                                    <button
+                                      type="button"
+                                      className="order-quick-btn order-quick-btn--complete"
+                                      onClick={() => updateOrderStatus(order.id, "Hoàn thành")}
+                                      title="Khách đã nhận được hàng - Báo giao thành công"
+                                    >
+                                      🎉 Báo giao thành công
+                                    </button>
+                                  )}
+
+                                  {isCompleted && (
+                                    <span style={{ color: "#059669", fontSize: "11px", fontWeight: "700" }}>
+                                      ✓ Đã giao thành công
+                                    </span>
+                                  )}
+
+                                  {/* Status Selector Dropdown */}
+                                  <div className="order-status-select-wrap">
+                                    <select
+                                      className="order-status-select"
+                                      value={
+                                        isPending ? "Chờ xác nhận" :
+                                        isProcessing ? "Chờ lấy hàng" :
+                                        isShipping ? "Chờ giao hàng" :
+                                        isCompleted ? "Hoàn thành" :
+                                        isCancelled ? "Đã hủy" : status
+                                      }
+                                      onChange={(e) => updateOrderStatus(order.id, e.target.value)}
+                                      title="Đổi trạng thái trực tiếp"
+                                    >
+                                      <option value="Chờ xác nhận">⏳ Chờ xác nhận</option>
+                                      <option value="Chờ lấy hàng">📦 Chờ lấy hàng (Đã chuẩn bị đơn)</option>
+                                      <option value="Chờ giao hàng">🚚 Chờ giao hàng (Đang ship)</option>
+                                      <option value="Hoàn thành">✅ Hoàn thành (Giao thành công)</option>
+                                      <option value="Đã hủy">✕ Hủy đơn hàng</option>
+                                    </select>
+                                  </div>
+                                </div>
+                              </td>
+                            </tr>
+                          );
+                        })}
+                      </tbody>
+                    </table>
+                  );
+                })()
               )}
             </div>
           </div>
@@ -7364,16 +7825,34 @@ function doPost(e) {
                 {userOrderList
                   .filter((o) => filterOrderByStatus(o, orderStatusTab))
                   .map((order: any) => {
-                    const isPending = !order.status || order.status === "Chờ xác nhận";
-                    const isCancelled = order.status === "Đã hủy";
-                    const isCompleted = order.status === "Hoàn thành" || order.status === "Đã giao";
+                    const isPending = !order.status || order.status === "Chờ xác nhận" || order.status === "pending";
+                    const isProcessing = order.status === "Chờ lấy hàng" || order.status === "Đang chuẩn bị" || order.status === "Đã chuẩn bị đơn" || order.status === "Đang xử lý" || order.status === "processing";
+                    const isShipping = order.status === "Chờ giao hàng" || order.status === "Đang giao hàng" || order.status === "Đang ship" || order.status === "shipping";
+                    const isCompleted = order.status === "Hoàn thành" || order.status === "Đã giao" || order.status === "Giao thành công" || order.status === "completed";
+                    const isCancelled = order.status === "Đã hủy" || order.status === "cancelled";
 
                     return (
                       <article key={order.id} className="customer-order-card">
                         <div className="customer-order-top">
                           <div>
-                            <span className={`status-badge ${isPending ? "status-badge--pending" : isCancelled ? "status-badge--cancelled" : isCompleted ? "status-badge--completed" : "status-badge--confirmed"}`}>
-                              {isPending ? "⏳ Chờ xác nhận" : isCancelled ? "✕ Đã hủy" : isCompleted ? "✓ Hoàn thành" : "⚡ Đang xử lý"}
+                            <span
+                              className={`status-badge ${
+                                isPending ? "status-badge--pending" :
+                                isCancelled ? "status-badge--cancelled" :
+                                isCompleted ? "status-badge--completed" : "status-badge--confirmed"
+                              }`}
+                              style={
+                                isShipping ? { background: "#f5f3ff", color: "#6d28d9", borderColor: "#ddd6fe" } :
+                                isProcessing ? { background: "#eff6ff", color: "#1d4ed8", borderColor: "#bfdbfe" } :
+                                undefined
+                              }
+                            >
+                              {isPending && "⏳ Chờ xác nhận"}
+                              {isProcessing && "📦 Chờ lấy hàng (Đang chuẩn bị)"}
+                              {isShipping && "🚚 Đang ship (Chờ nhận)"}
+                              {isCompleted && "✓ Giao thành công"}
+                              {isCancelled && "✕ Đã hủy"}
+                              {!isPending && !isProcessing && !isShipping && !isCompleted && !isCancelled && order.status}
                             </span>
                             <b>{t.orderNumberLabel} #{order.id}</b>
                             <small>🕒 {order.createdAt} · 💳 {order.paymentMethod || "VietQR"}</small>
@@ -7397,7 +7876,7 @@ function doPost(e) {
                             ))}
                           </div>
 
-                          <div style={{ display: "flex", justifyContent: "flex-end", gap: "8px", marginTop: "12px", paddingTop: "10px", borderTop: "1px dashed var(--line)" }}>
+                          <div style={{ display: "flex", justifyContent: "flex-end", alignItems: "center", gap: "8px", marginTop: "12px", paddingTop: "10px", borderTop: "1px dashed var(--line)" }}>
                             {isPending && (
                               <button
                                 type="button"
@@ -7406,6 +7885,17 @@ function doPost(e) {
                                 onClick={() => cancelOrder(order.id)}
                               >
                                 {t.cancelOrderBtn}
+                              </button>
+                            )}
+                            {isShipping && (
+                              <button
+                                type="button"
+                                className="button button--dark"
+                                style={{ minHeight: "32px", padding: "0 12px", fontSize: "11.5px", background: "#059669", borderColor: "#059669", color: "#ffffff", fontWeight: 700 }}
+                                onClick={() => updateOrderStatus(order.id, "Hoàn thành")}
+                                title="Xác nhận bạn đã nhận được hàng đầy đủ"
+                              >
+                                ✓ Đã nhận được hàng
                               </button>
                             )}
                             <button
