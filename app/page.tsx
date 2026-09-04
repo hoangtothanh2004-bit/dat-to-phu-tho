@@ -2685,7 +2685,6 @@ export default function Home() {
     if (audioLang === "vi") {
       const aiVoices = [
         { id: "ai-female-north", label: "🌸 Giọng AI Nữ Hà Nội (Chuẩn Studio - Êm ái)" },
-        { id: "ai-male-north", label: "🎙️ Giọng AI Nam Trầm Ấm (Truyền cảm)" },
       ];
       const browserVoices = availableVoices
         .filter((v) => v.lang.toLowerCase().startsWith("vi"))
@@ -4754,18 +4753,10 @@ export default function Home() {
                   </div>
                   <span className="hero__trust-card-label">{t.heroTrustOcop}</span>
                 </div>
-                <div className="hero__trust-card">
-                  <div className="hero__trust-card-top">
-                    <span className="hero__trust-card-icon">🎧</span>
-                    <span className="hero__trust-card-num">5</span>
-                  </div>
-                  <span className="hero__trust-card-label">{t.heroTrustLanguages}</span>
-                </div>
               </div>
             </div>
             <div className="hero__visual">
               <span className="hero__badge-top">✦ {t.heroBadgeHeritage}</span>
-              <span className="hero__badge-audio">🎧 {t.heroBadgeAudio}</span>
               <img src={places[0].image} alt={places[0].name} loading="lazy" onError={handleImageError} />
               <div className="hero__caption">
                 <span>{t.featuredDestCaption}</span>
