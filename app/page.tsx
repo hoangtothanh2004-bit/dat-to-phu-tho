@@ -7332,10 +7332,11 @@ export default function Home() {
           <div className="orders-dashboard-modal" role="dialog" aria-labelledby="orders-dashboard-title">
             <div className="orders-dashboard-header">
               <div>
-                <span className="kicker" style={{ color: "#10b981" }}>
+                <span className="orders-dashboard-kicker">
+                  <span style={{ width: "8px", height: "8px", borderRadius: "50%", background: "#10b981", display: "inline-block" }}></span>
                   {authUser?.role === "admin"
-                    ? "🛡️ QUYỀN HẠN: QUẢN TRỊ VIÊN HỆ THỐNG (ADMIN)"
-                    : `🏪 QUYỀN HẠN: CHỦ CƠ SỞ OCOP - ${authUser?.merchantName || "ĐỐI TÁC"}`}
+                    ? "QUẢN TRỊ VIÊN HỆ THỐNG (ADMIN)"
+                    : `CHỦ CƠ SỞ OCOP — ${authUser?.merchantName || "ĐỐI TÁC"}`}
                 </span>
                 <h2 id="orders-dashboard-title">Bảng Quản Lý Đơn Hàng & Google Sheets</h2>
                 <p>
@@ -7347,35 +7348,58 @@ export default function Home() {
               <button type="button" className="booking-dialog__close" onClick={() => setOrdersDashboardOpen(false)} aria-label="Đóng">×</button>
             </div>
 
-            {/* Dashboard Control Bar */}
+            {/* KPI Metric Cards & Action Buttons */}
             <div className="orders-control-bar">
-              <div className="orders-stat-pills">
-                <span className="orders-stat-pill">
-                  <b>{authUser?.role === "merchant" ? userOrderList.length : orderList.length}</b> {authUser?.role === "merchant" ? "Đơn của cơ sở" : "Tổng đơn"}
-                </span>
-                <span className="orders-stat-pill">
-                  <b>
-                    {(authUser?.role === "merchant" ? userOrderList : orderList)
-                      .reduce((acc, o) => acc + (o.totalAmount || 0), 0)
-                      .toLocaleString("vi-VN")}đ
-                  </b> Doanh thu
-                </span>
-                <span className="orders-stat-pill" style={{ background: "#ecfdf5", color: "#065f46" }}>
-                  👤 Đang đăng nhập: <b>{authUser?.name}</b> {authUser?.merchantName ? `(${authUser.merchantName})` : ""}
-                </span>
+              <div className="orders-stat-cards">
+                <div className="orders-stat-card">
+                  <div className="orders-stat-card-icon" style={{ background: "#eff6ff", color: "#2563eb" }}>📋</div>
+                  <div className="orders-stat-card-info">
+                    <span className="orders-stat-card-label">{authUser?.role === "merchant" ? "Đơn cơ sở" : "Tổng đơn"}</span>
+                    <span className="orders-stat-card-value">
+                      {authUser?.role === "merchant" ? userOrderList.length : orderList.length} <small style={{ fontSize: "12px", color: "#64748b", fontWeight: 500 }}>đơn</small>
+                    </span>
+                  </div>
+                </div>
+
+                <div className="orders-stat-card">
+                  <div className="orders-stat-card-icon" style={{ background: "#ecfdf5", color: "#059669" }}>💰</div>
+                  <div className="orders-stat-card-info">
+                    <span className="orders-stat-card-label">Doanh thu tạm tính</span>
+                    <span className="orders-stat-card-value" style={{ color: "#059669" }}>
+                      {(authUser?.role === "merchant" ? userOrderList : orderList)
+                        .reduce((acc, o) => acc + (o.totalAmount || 0), 0)
+                        .toLocaleString("vi-VN")}đ
+                    </span>
+                  </div>
+                </div>
+
+                <div className="orders-stat-card">
+                  <div className="orders-stat-card-icon" style={{ background: "#fef3c7", color: "#d97706" }}>🏪</div>
+                  <div className="orders-stat-card-info">
+                    <span className="orders-stat-card-label">Cơ sở hoạt động</span>
+                    <span className="orders-stat-card-value" style={{ fontSize: "14px", whiteSpace: "nowrap" }}>
+                      {authUser?.merchantName || authUser?.name || "Thịt chua Nghị Thịnh"}
+                    </span>
+                  </div>
+                </div>
               </div>
-              <div className="orders-action-buttons" style={{ display: "flex", gap: "8px", flexWrap: "wrap" }}>
+
+              <div className="orders-action-buttons">
                 <button
                   type="button"
-                  className="button button--outline"
+                  className="orders-btn-demo"
                   onClick={loadDemoWorkflowOrders}
                   title="Nạp lại bộ dữ liệu 4 đơn hàng mẫu để kiểm tra đủ 4 trạng thái xử lý"
-                  style={{ fontSize: "11px", minHeight: "32px", padding: "0 10px", background: "#fff" }}
                 >
-                  🔄 Nạp 4 đơn mẫu quy trình
+                  <span>🔄</span> Nạp 4 đơn mẫu
                 </button>
-                <button type="button" className="button button--dark" onClick={exportOrdersToCSV} style={{ fontSize: "11px", minHeight: "32px" }}>
-                  📥 Tải file CSV / Excel ({orderList.length} đơn)
+                <button
+                  type="button"
+                  className="orders-btn-export"
+                  onClick={exportOrdersToCSV}
+                  title="Xuất danh sách đơn hàng sang file CSV / Excel"
+                >
+                  <span>📥</span> Xuất Excel / CSV ({orderList.length})
                 </button>
               </div>
             </div>
@@ -7529,14 +7553,14 @@ function doPost(e) {
               </>
             )}
 
-            {/* Status Filter Tabs & Merchant Scope Switcher */}
+            {/* Segmented Filter Tabs & Merchant Scope Switcher */}
             <div className="orders-filter-container">
-              <div className="orders-filter-tabs">
+              <div className="orders-segmented-tabs">
                 {[
                   { id: "all", label: "Tất cả", icon: "📋" },
                   { id: "pending", label: "Chờ xác nhận", icon: "💳" },
-                  { id: "processing", label: "Chờ lấy hàng (Đã chuẩn bị)", icon: "📦" },
-                  { id: "shipping", label: "Đang ship (Chờ giao)", icon: "🚚" },
+                  { id: "processing", label: "Chờ lấy hàng", icon: "📦" },
+                  { id: "shipping", label: "Đang ship", icon: "🚚" },
                   { id: "completed", label: "Giao thành công", icon: "⭐" },
                   { id: "cancelled", label: "Đã hủy", icon: "✕" },
                 ].map((tab) => {
@@ -7555,7 +7579,7 @@ function doPost(e) {
                     <button
                       key={tab.id}
                       type="button"
-                      className={`orders-filter-tab ${merchantTabFilter === tab.id ? "is-active" : ""}`}
+                      className={`orders-segmented-tab ${merchantTabFilter === tab.id ? "is-active" : ""}`}
                       onClick={() => setMerchantTabFilter(tab.id)}
                     >
                       <span>{tab.icon}</span>
@@ -7568,15 +7592,15 @@ function doPost(e) {
 
               {authUser?.role === "merchant" && (
                 <div className="orders-scope-toggle">
-                  <span>Phạm vi hiển thị:</span>
+                  <span>Phạm vi:</span>
                   <select
+                    className="orders-scope-select"
                     value={merchantScope}
                     onChange={(e) => setMerchantScope(e.target.value as "all" | "my_store")}
                   >
-                    <option value="all">Toàn bộ đơn hệ thống ({orderList.length})</option>
+                    <option value="all">Toàn bộ đơn ({orderList.length})</option>
                     <option value="my_store">
-                      Chỉ đơn của {authUser.merchantName || "cơ sở của tôi"} (
-                      {
+                      Chỉ đơn cơ sở ({
                         (() => {
                           const mName = authUser.merchantName || "";
                           return orderList.filter((o) =>
@@ -7585,8 +7609,7 @@ function doPost(e) {
                             )
                           ).length;
                         })()
-                      }
-                      )
+                      })
                     </option>
                   </select>
                 </div>
@@ -7628,16 +7651,16 @@ function doPost(e) {
                     <table className="orders-sheet-table">
                       <thead>
                         <tr>
-                          <th>Mã Đơn</th>
-                          <th>Thời Gian Đặt</th>
-                          <th>Khách Hàng</th>
-                          <th>Số Điện Thoại</th>
-                          <th>Địa Chỉ Giao Hàng</th>
-                          <th>Món Đặt & Số Lượng</th>
-                          <th>Cơ Sở / Doanh Nghiệp OCOP</th>
-                          <th>Tổng Tiền</th>
-                          <th>Trạng Thái</th>
-                          <th style={{ minWidth: "190px" }}>Thao Tác Xử Lý Đơn</th>
+                          <th style={{ width: "110px" }}>Mã Đơn</th>
+                          <th style={{ width: "120px" }}>Thời Gian</th>
+                          <th style={{ width: "140px" }}>Khách Hàng</th>
+                          <th style={{ width: "125px" }}>Số Điện Thoại</th>
+                          <th style={{ minWidth: "160px" }}>Địa Chỉ Giao</th>
+                          <th style={{ minWidth: "170px" }}>Món & Số Lượng</th>
+                          <th style={{ minWidth: "160px" }}>Cơ Sở OCOP</th>
+                          <th style={{ width: "110px" }}>Tổng Tiền</th>
+                          <th style={{ width: "135px" }}>Trạng Thái</th>
+                          <th style={{ width: "190px" }}>Thao Tác Xử Lý Đơn</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -7661,24 +7684,47 @@ function doPost(e) {
 
                           return (
                             <tr key={order.id}>
-                              <td><b>{order.id}</b></td>
-                              <td><small>{order.createdAt}</small></td>
-                              <td><b>{order.customerName}</b></td>
-                              <td><a href={`tel:${order.phone}`}>{order.phone}</a></td>
-                              <td><small>{order.address}</small></td>
+                              <td><span className="order-id-badge">#{order.id}</span></td>
+                              <td>
+                                <div className="order-time-col">
+                                  <span className="order-time-time">{order.createdAt ? order.createdAt.split(" ")[0] : ""}</span>
+                                  <span className="order-time-date">{order.createdAt ? order.createdAt.split(" ")[1] || order.createdAt : ""}</span>
+                                </div>
+                              </td>
+                              <td>
+                                <div className="order-customer-col">
+                                  <b>{order.customerName}</b>
+                                </div>
+                              </td>
+                              <td>
+                                <a href={`tel:${order.phone}`} className="order-phone-link">
+                                  <span>📞</span> {order.phone}
+                                </a>
+                              </td>
+                              <td>
+                                <div className="order-address-box" title={order.address}>
+                                  {order.address}
+                                </div>
+                              </td>
                               <td>
                                 {(order.items || []).map((it: any, i: number) => (
-                                  <div key={i}>• {it.dishName} <b>×{it.quantity}</b></div>
+                                  <div key={i} className="order-dish-item">
+                                    • {it.dishName} <b>×{it.quantity}</b>
+                                  </div>
                                 ))}
                               </td>
                               <td>
                                 {(order.items || []).map((it: any, i: number) => (
-                                  <span key={i} className="pill pill--subtle" style={{ marginRight: "4px", marginBottom: "2px", display: "inline-block" }}>
+                                  <span key={i} className="order-seller-badge" style={{ marginRight: "4px", marginBottom: "3px" }}>
                                     {it.sellerName}
                                   </span>
                                 ))}
                               </td>
-                              <td><b style={{ color: "var(--red)" }}>{Number(order.totalAmount || 0).toLocaleString("vi-VN")}đ</b></td>
+                              <td>
+                                <span className="order-price-col">
+                                  {Number(order.totalAmount || 0).toLocaleString("vi-VN")}đ
+                                </span>
+                              </td>
                               <td>
                                 <span className={`order-status-badge ${badgeClass}`}>
                                   {isPending && "⏳ Chờ xác nhận"}
@@ -7699,7 +7745,7 @@ function doPost(e) {
                                       onClick={() => updateOrderStatus(order.id, "Chờ lấy hàng")}
                                       title="Xác nhận đơn và chuyển sang trạng thái đã chuẩn bị hàng"
                                     >
-                                      ✓ Xác nhận & Chuẩn bị đơn
+                                      ✓ Xác nhận & Chuẩn bị
                                     </button>
                                   )}
 
@@ -7710,7 +7756,7 @@ function doPost(e) {
                                       onClick={() => updateOrderStatus(order.id, "Chờ giao hàng")}
                                       title="Giao đơn cho shipper / bắt đầu giao cho khách"
                                     >
-                                      🚚 Bắt đầu ship cho khách
+                                      🚚 Bắt đầu ship hàng
                                     </button>
                                   )}
 
@@ -7726,7 +7772,7 @@ function doPost(e) {
                                   )}
 
                                   {isCompleted && (
-                                    <span style={{ color: "#059669", fontSize: "11px", fontWeight: "700" }}>
+                                    <span style={{ color: "#059669", fontSize: "12px", fontWeight: "700", display: "inline-flex", alignItems: "center", gap: "4px", padding: "4px 8px", background: "#f0fdf4", borderRadius: "6px" }}>
                                       ✓ Đã giao thành công
                                     </span>
                                   )}
@@ -7746,9 +7792,9 @@ function doPost(e) {
                                       title="Đổi trạng thái trực tiếp"
                                     >
                                       <option value="Chờ xác nhận">⏳ Chờ xác nhận</option>
-                                      <option value="Chờ lấy hàng">📦 Chờ lấy hàng (Đã chuẩn bị đơn)</option>
-                                      <option value="Chờ giao hàng">🚚 Chờ giao hàng (Đang ship)</option>
-                                      <option value="Hoàn thành">✅ Hoàn thành (Giao thành công)</option>
+                                      <option value="Chờ lấy hàng">📦 Chờ lấy hàng (Đã chuẩn bị)</option>
+                                      <option value="Chờ giao hàng">🚚 Đang ship (Chờ giao)</option>
+                                      <option value="Hoàn thành">✅ Giao thành công (Hoàn thành)</option>
                                       <option value="Đã hủy">✕ Hủy đơn hàng</option>
                                     </select>
                                   </div>
