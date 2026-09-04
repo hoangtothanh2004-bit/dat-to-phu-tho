@@ -195,6 +195,26 @@ export const PAYMENT_METHODS = [
 
 export const UI_TEXT = {
   vi: {
+    rewardTicket1Badge: "VOUCHER 30.000Đ",
+    rewardTicket1Btn: "Nhận mã ngay →",
+    rewardTicket2Badge: "ƯU ĐÃI NHÓM 15% – 20%",
+    rewardTicket2Btn: "Lên tour áp dụng →",
+    rewardTicket3Badge: "QUÀ TẶNG OCOP 5 SAO",
+    rewardTicket3Btn: "Khám phá OCOP →",
+    rewardStepsTitle: "3 BƯỚC ĐƠN GIẢN ĐỂ NHẬN THƯỞNG:",
+    rewardStep1: "Chọn điểm đến hoặc tour di sản yêu thích",
+    rewardStep2: "Lưu sổ tay hoặc nghe Thuyết minh AI di sản",
+    rewardStep3: "Nhận Voucher giảm trừ hoặc quà tặng OCOP",
+    heroTrendingLabel: "Gợi ý hot:",
+    heroTagHungTemple: "Đền Hùng",
+    heroTagHotSpring: "Khoáng nóng Thanh Thủy",
+    heroTagLongCoc: "Đồi chè Long Cốc",
+    heroTagTamDao: "Tam Đảo",
+    heroTagOcopFood: "Đặc sản OCOP",
+    heroBadgeHeritage: "Di tích Quốc gia Đặc biệt · Đất Tổ Hùng Vương",
+    heroBadgeAudio: "Thuyết minh AI 5 ngôn ngữ",
+    heroTrustOcop: "Đặc sản OCOP chuẩn tỉnh",
+    heroTrustLanguages: "Ngôn ngữ thuyết minh AI",
     audioResume: "▶ Nghe tiếp",
     modalGoodSeason: "Thời điểm tuyệt đẹp để đi trong tháng",
     modalCautionSeason: "Cần lưu ý thời tiết trong tháng",
@@ -646,6 +666,26 @@ export const UI_TEXT = {
     fromYou: "từ bạn",
   },
   en: {
+    rewardTicket1Badge: "VOUCHER 30,000 VND",
+    rewardTicket1Btn: "Claim voucher →",
+    rewardTicket2Badge: "GROUP DISCOUNT 15% – 20%",
+    rewardTicket2Btn: "Book tour with deal →",
+    rewardTicket3Badge: "5-STAR OCOP GIFT",
+    rewardTicket3Btn: "Explore OCOP gifts →",
+    rewardStepsTitle: "3 EASY STEPS TO GET REWARDS:",
+    rewardStep1: "Select favorite heritage destination or tour",
+    rewardStep2: "Save to notebook or listen to AI Audio Guide",
+    rewardStep3: "Receive instant checkout voucher or OCOP gift",
+    heroTrendingLabel: "Trending:",
+    heroTagHungTemple: "Hung Temple",
+    heroTagHotSpring: "Thanh Thuy Hot Springs",
+    heroTagLongCoc: "Long Coc Tea Hills",
+    heroTagTamDao: "Tam Dao",
+    heroTagOcopFood: "OCOP Specialties",
+    heroBadgeHeritage: "Special National Heritage · Hung Kings Land",
+    heroBadgeAudio: "5-Language AI Audio Guide",
+    heroTrustOcop: "Certified Provincial OCOP",
+    heroTrustLanguages: "AI Audio Languages",
     audioResume: "▶ Resume",
     modalGoodSeason: "Prime time to visit in month",
     modalCautionSeason: "Note weather conditions in month",
@@ -1086,6 +1126,26 @@ export const UI_TEXT = {
     fromYou: "from you",
   },
   zh: {
+    rewardTicket1Badge: "3万越盾优惠券",
+    rewardTicket1Btn: "立即领券 →",
+    rewardTicket2Badge: "团队立减 15% – 20%",
+    rewardTicket2Btn: "预订行程享优惠 →",
+    rewardTicket3Badge: "五星级 OCOP 特产礼品",
+    rewardTicket3Btn: "查看 OCOP 特产 →",
+    rewardStepsTitle: "三步轻松赢取奖励：",
+    rewardStep1: "选择喜爱的名胜景点或文化行程",
+    rewardStep2: "收藏旅行手账或收听 AI 语音讲解",
+    rewardStep3: "获赠订单立减优惠券或 OCOP 礼品",
+    heroTrendingLabel: "热门推荐：",
+    heroTagHungTemple: "雄王庙",
+    heroTagHotSpring: "清水温泉",
+    heroTagLongCoc: "龙谷茶丘",
+    heroTagTamDao: "三岛山",
+    heroTagOcopFood: "OCOP 特产",
+    heroBadgeHeritage: "国家特别历史遗迹 · 雄王祖地",
+    heroBadgeAudio: "5 种语言 AI 语音导览",
+    heroTrustOcop: "省级标准 OCOP 特产",
+    heroTrustLanguages: "AI 导览语种支持",
     audioResume: "▶ 继续播放",
     modalGoodSeason: "当月为绝佳出游时节：",
     modalCautionSeason: "当月出行需注意天气情况：",
@@ -1440,6 +1500,26 @@ export const UI_TEXT = {
     fromYou: "距离您",
   },
   ko: {
+    rewardTicket1Badge: "30,000동 할인 쿠폰",
+    rewardTicket1Btn: "쿠폰 받기 →",
+    rewardTicket2Badge: "단체/가족 15% – 20% 할인",
+    rewardTicket2Btn: "투어 예약하고 적용 →",
+    rewardTicket3Badge: "5성급 OCOP 특산품 증정",
+    rewardTicket3Btn: "OCOP 특산품 보기 →",
+    rewardStepsTitle: "리워드를 받는 간편한 3단계:",
+    rewardStep1: "원하는 명소 또는 문화 투어 선택",
+    rewardStep2: "수첩에 저장하거나 AI 오디오 가이드 청취",
+    rewardStep3: "결제 할인 쿠폰 또는 OCOP 사은품 증정",
+    heroTrendingLabel: "인기 검색:",
+    heroTagHungTemple: "훙왕 신전",
+    heroTagHotSpring: "탄투이 온천",
+    heroTagLongCoc: "롱꼭 차밭",
+    heroTagTamDao: "땀다오",
+    heroTagOcopFood: "OCOP 특산품",
+    heroBadgeHeritage: "국가 특별 사적지 · 훙왕 조상의 땅",
+    heroBadgeAudio: "5개 국어 AI 오디오 가이드",
+    heroTrustOcop: "성 인증 OCOP 특산물",
+    heroTrustLanguages: "AI 오디오 지원 언어",
     audioResume: "▶ 이어듣기",
     modalGoodSeason: "여행하기 가장 좋은 달:",
     modalCautionSeason: "해당 월 날씨에 유의하세요:",
@@ -1794,6 +1874,26 @@ export const UI_TEXT = {
     fromYou: "현재 위치 기준",
   },
   ja: {
+    rewardTicket1Badge: "30,000VND割引クーポン",
+    rewardTicket1Btn: "今すぐ獲得 →",
+    rewardTicket2Badge: "グループ15%〜20%割引",
+    rewardTicket2Btn: "ツアー予約で特典適用 →",
+    rewardTicket3Badge: "5つ星OCOP特産ギフト",
+    rewardTicket3Btn: "OCOP特産品を見る →",
+    rewardStepsTitle: "かんたん3ステップで特典獲得：",
+    rewardStep1: "お気に入りの名所やツアーを選択",
+    rewardStep2: "旅のノートに保存またはAI音声ガイドを聴く",
+    rewardStep3: "即時割引クーポンまたは特産ギフトを獲得",
+    heroTrendingLabel: "注目の検索：",
+    heroTagHungTemple: "フン寺院",
+    heroTagHotSpring: "タントゥイ温泉",
+    heroTagLongCoc: "ロンコック茶畑",
+    heroTagTamDao: "タムダオ",
+    heroTagOcopFood: "OCOP特産品",
+    heroBadgeHeritage: "国家特別遺跡・フン王祖先の地",
+    heroBadgeAudio: "5言語対応 AI音声ガイド",
+    heroTrustOcop: "省認定OCOP特産品",
+    heroTrustLanguages: "AI音声ガイド対応言語",
     audioResume: "▶ 再生再開",
     modalGoodSeason: "今月は絶好の旅行シーズン：",
     modalCautionSeason: "今月の天候にご注意ください：",
@@ -4606,13 +4706,66 @@ export default function Home() {
                   </div>
                 )}
               </div>
-              <div className="hero__trust">
-                <span><b>{places.length}</b> {t.tripPoints}</span>
-                <span><b>3</b> {t.nearAll3Provinces}</span>
-                <span><b>{t.seasonLabel}</b></span>
+              {/* QUICK TRENDING SEARCH CHIPS */}
+              <div className="hero__trending">
+                <span className="hero__trending-label">{t.heroTrendingLabel}</span>
+                {[
+                  { label: t.heroTagHungTemple, term: "Đền Hùng" },
+                  { label: t.heroTagHotSpring, term: "Khoáng nóng Thanh Thủy" },
+                  { label: t.heroTagLongCoc, term: "Long Cốc" },
+                  { label: t.heroTagTamDao, term: "Tam Đảo" },
+                  { label: t.heroTagOcopFood, term: "OCOP" },
+                ].map((chip) => (
+                  <button
+                    key={chip.term}
+                    type="button"
+                    className="hero__trending-chip"
+                    onClick={() => {
+                      setQuery(chip.term);
+                      setSearchFocused(true);
+                      setVisibleCount(8);
+                    }}
+                  >
+                    {chip.label}
+                  </button>
+                ))}
+              </div>
+
+              {/* MODERN TRUST COUNTER GRID */}
+              <div className="hero__trust-grid">
+                <div className="hero__trust-card">
+                  <div className="hero__trust-card-top">
+                    <span className="hero__trust-card-icon">🏛️</span>
+                    <span className="hero__trust-card-num">{places.length}+</span>
+                  </div>
+                  <span className="hero__trust-card-label">{t.tripPoints}</span>
+                </div>
+                <div className="hero__trust-card">
+                  <div className="hero__trust-card-top">
+                    <span className="hero__trust-card-icon">🗺️</span>
+                    <span className="hero__trust-card-num">3</span>
+                  </div>
+                  <span className="hero__trust-card-label">{t.nearAll3Provinces}</span>
+                </div>
+                <div className="hero__trust-card">
+                  <div className="hero__trust-card-top">
+                    <span className="hero__trust-card-icon">🍵</span>
+                    <span className="hero__trust-card-num">100%</span>
+                  </div>
+                  <span className="hero__trust-card-label">{t.heroTrustOcop}</span>
+                </div>
+                <div className="hero__trust-card">
+                  <div className="hero__trust-card-top">
+                    <span className="hero__trust-card-icon">🎧</span>
+                    <span className="hero__trust-card-num">5</span>
+                  </div>
+                  <span className="hero__trust-card-label">{t.heroTrustLanguages}</span>
+                </div>
               </div>
             </div>
             <div className="hero__visual">
+              <span className="hero__badge-top">✦ {t.heroBadgeHeritage}</span>
+              <span className="hero__badge-audio">🎧 {t.heroBadgeAudio}</span>
               <img src={places[0].image} alt={places[0].name} loading="lazy" onError={handleImageError} />
               <div className="hero__caption">
                 <span>{t.featuredDestCaption}</span>
@@ -4623,49 +4776,134 @@ export default function Home() {
             </div>
           </section>
 
-          {/* SPECIAL HERITAGE PROGRAM & REWARDS BANNER (ẢNH 1 ĐÃ CĂN CHỈNH ĐỀU ĐẸP) */}
+          {/* SPECIAL HERITAGE PROGRAM & REWARDS BANNER (VIP REDESIGN - MỤC 8) */}
           <section className="special-heritage-banner">
             <div className="special-heritage-header">
-              <span className="heritage-gold-tag">{t.heritageTag1}</span>
-              <span style={{ fontSize: "12px", color: "#f3d495", fontWeight: "700" }}>{t.heritageTag2}</span>
+              <span className="heritage-gold-tag">✦ {t.heritageTag1}</span>
+              <span className="heritage-subtag">★ {t.heritageTag2}</span>
             </div>
-            <h3 style={{ margin: "4px 0 8px", fontSize: "24px", color: "white", fontFamily: "var(--font-display)" }}>
+            <h3 style={{ margin: "6px 0 10px", fontSize: "26px", color: "white", fontFamily: "var(--font-display)", letterSpacing: "0.01em" }}>
               {t.heritageTitle}
             </h3>
-            <p style={{ margin: 0, fontSize: "13px", color: "#dce3d8", maxWidth: "680px", lineHeight: "1.6" }}>
+            <p style={{ margin: 0, fontSize: "13.5px", color: "#dce3d8", maxWidth: "740px", lineHeight: "1.65" }}>
               {t.heritageDesc}
             </p>
 
-            <div className="special-heritage-grid">
-              <div className="special-heritage-perk">
-                <b>{t.perk1Title}</b>
-                <p>{t.perk1Desc}</p>
+            {/* VIP REWARD TICKET CARDS */}
+            <div className="reward-ticket-grid">
+              {/* Ticket 1: 30K Check-in Voucher */}
+              <div className="reward-ticket">
+                <div>
+                  <div className="reward-ticket__top">
+                    <span className="reward-ticket__badge">{t.rewardTicket1Badge}</span>
+                    <span className="reward-ticket__icon">🎟️</span>
+                  </div>
+                  <div className="reward-ticket__title">{t.perk1Title}</div>
+                  <p className="reward-ticket__desc">{t.perk1Desc}</p>
+                </div>
+                <button
+                  type="button"
+                  className="reward-ticket__cta"
+                  onClick={() => {
+                    setVouchersModalOpen(true);
+                    showToast("✦ Đã mở ví voucher 30.000đ cho Đền Hùng!");
+                  }}
+                >
+                  {t.rewardTicket1Btn}
+                </button>
               </div>
-              <div className="special-heritage-perk">
-                <b>{t.perk2Title}</b>
-                <p>{t.perk2Desc}</p>
+
+              {/* Ticket 2: 15%-20% Tour Group Discount */}
+              <div className="reward-ticket">
+                <div>
+                  <div className="reward-ticket__top">
+                    <span className="reward-ticket__badge">{t.rewardTicket2Badge}</span>
+                    <span className="reward-ticket__icon">🎁</span>
+                  </div>
+                  <div className="reward-ticket__title">{t.perk2Title}</div>
+                  <p className="reward-ticket__desc">{t.perk2Desc}</p>
+                </div>
+                <button
+                  type="button"
+                  className="reward-ticket__cta"
+                  onClick={() => {
+                    setSelectedPlaceIds(["den-hung", "hung-lo", "thanh-thuy"]);
+                    setDays(2);
+                    setTravelers(3);
+                    setActiveTab("trip");
+                    showToast(t.openTripAssistant);
+                  }}
+                >
+                  {t.rewardTicket2Btn}
+                </button>
               </div>
-              <div className="special-heritage-perk">
-                <b>{t.perk3Title}</b>
-                <p>{t.perk3Desc}</p>
+
+              {/* Ticket 3: 5-Star OCOP Specialty Gift */}
+              <div className="reward-ticket">
+                <div>
+                  <div className="reward-ticket__top">
+                    <span className="reward-ticket__badge">{t.rewardTicket3Badge}</span>
+                    <span className="reward-ticket__icon">🏆</span>
+                  </div>
+                  <div className="reward-ticket__title">{t.perk3Title}</div>
+                  <p className="reward-ticket__desc">{t.perk3Desc}</p>
+                </div>
+                <button
+                  type="button"
+                  className="reward-ticket__cta"
+                  onClick={() => {
+                    const el = document.getElementById("gastronomy-section");
+                    if (el) el.scrollIntoView({ behavior: "smooth" });
+                    else showToast("Khám phá đặc sản thịt chua Thanh Sơn và chè Long Cốc bên dưới!");
+                  }}
+                >
+                  {t.rewardTicket3Btn}
+                </button>
               </div>
             </div>
 
+            {/* 3-STEP HOW IT WORKS PROGRESS BAR */}
+            <div className="reward-steps-bar">
+              <div className="reward-steps-label">
+                <span>⚡</span> {t.rewardStepsTitle}
+              </div>
+              <div className="reward-steps-list">
+                <div className="reward-step-item">
+                  <span className="reward-step-num">1</span>
+                  <span className="reward-step-text">{t.rewardStep1}</span>
+                </div>
+                <div className="reward-step-item">
+                  <span className="reward-step-num">2</span>
+                  <span className="reward-step-text">{t.rewardStep2}</span>
+                </div>
+                <div className="reward-step-item">
+                  <span className="reward-step-num">3</span>
+                  <span className="reward-step-text">{t.rewardStep3}</span>
+                </div>
+              </div>
+            </div>
+
+            {/* ACTIONS */}
             <div className="special-heritage-actions">
               <button
                 type="button"
                 className="button button--cream"
                 onClick={() => setVouchersModalOpen(true)}
               >
-                {t.viewAllVouchersBtn} ({DEFAULT_VOUCHERS.length}) →
+                🎟️ {t.viewAllVouchersBtn} ({DEFAULT_VOUCHERS.length}) →
               </button>
               <button
                 type="button"
                 className="button button--outline"
                 style={{ color: "#f3d495", borderColor: "#d7ab5a" }}
-                onClick={() => { setActiveTab("trip"); showToast(t.planTripRewardBtn); }}
+                onClick={() => {
+                  setSelectedPlaceIds(["den-hung", "hung-lo", "thanh-thuy"]);
+                  setDays(2);
+                  setActiveTab("trip");
+                  showToast(t.openTripAssistant);
+                }}
               >
-                {t.planTripRewardBtn}
+                ✦ {t.planTripRewardBtn}
               </button>
             </div>
           </section>
