@@ -2381,56 +2381,12 @@ export default function Home() {
           </button>
         </nav>
         <div className="topbar__actions">
-          {/* Promo Voucher Trigger Button */}
-          <button
-            type="button"
-            className="promo-strip-btn"
-            onClick={() => setVouchersModalOpen(true)}
-            title="Xem mã khuyến mãi & Voucher giảm giá"
-          >
-            <span>🎁</span>
-            <span>{t.vouchers}</span>
-          </button>
-
-          {/* Currency Dropdown Selector */}
-          <div className="i18n-dropdown-container">
-            <button
-              type="button"
-              className="currency-pill-btn"
-              onClick={() => { setCurrencyDropdownOpen(!currencyDropdownOpen); setLangDropdownOpen(false); }}
-              title="Đổi loại tiền tệ thanh toán"
-            >
-              <span>{CURRENCIES[currentCurrency].flag}</span>
-              <b>{currentCurrency} ({CURRENCIES[currentCurrency].symbol})</b>
-              <small>▾</small>
-            </button>
-            {currencyDropdownOpen && (
-              <div className="i18n-dropdown-menu">
-                {(Object.keys(CURRENCIES) as CurrencyCode[]).map((code) => (
-                  <button
-                    key={code}
-                    type="button"
-                    className={`i18n-dropdown-item ${currentCurrency === code ? "is-selected" : ""}`}
-                    onClick={() => {
-                      setCurrentCurrency(code);
-                      setCurrencyDropdownOpen(false);
-                      showToast(`Đã chuyển tiền tệ sang ${CURRENCIES[code].label}`);
-                    }}
-                  >
-                    <span>{CURRENCIES[code].flag} {CURRENCIES[code].label}</span>
-                    {currentCurrency === code && <span>✓</span>}
-                  </button>
-                ))}
-              </div>
-            )}
-          </div>
-
           {/* Language Dropdown Selector */}
           <div className="i18n-dropdown-container">
             <button
               type="button"
               className="lang-pill-btn"
-              onClick={() => { setLangDropdownOpen(!langDropdownOpen); setCurrencyDropdownOpen(false); }}
+              onClick={() => { setLangDropdownOpen(!langDropdownOpen); }}
               title="Thay đổi ngôn ngữ hiển thị"
             >
               <span>{LANGUAGES[currentLang].flag}</span>
@@ -2460,39 +2416,6 @@ export default function Home() {
 
           <button className="weather-pill" onClick={() => showToast(`${weather.label} tại khu vực · Dữ liệu thời tiết trực tuyến`)}>
             <span>☀</span><b>{weather.temp}°</b><small>Việt Trì</small>
-          </button>
-          
-          {/* Header Cart Button */}
-          <button
-            type="button"
-            className="header-cart-btn"
-            onClick={() => { setCartDrawerTab("cart"); setCartOpen(true); }}
-            aria-label={`Giỏ hàng có ${cartQuantity} sản phẩm`}
-            title="Mở giỏ hàng đặc sản"
-          >
-            <span className="cart-icon">🛒</span>
-            <span className="cart-label">{t.cart}</span>
-            {cartQuantity > 0 && <span className="cart-badge">{cartQuantity}</span>}
-          </button>
-
-          {/* Header Orders Tracking Button */}
-          <button
-            type="button"
-            className="header-cart-btn"
-            onClick={() => { setCartDrawerTab("orders"); setCartOpen(true); }}
-            aria-label={`Đơn mua (${userOrderList.length})`}
-            title="Xem và theo dõi đơn mua của bạn"
-            style={{
-              background: userOrderList.length > 0 ? "#eff6ff" : "white",
-              borderColor: userOrderList.length > 0 ? "#93c5fd" : "var(--line)",
-              color: userOrderList.length > 0 ? "#1d4ed8" : "var(--ink)",
-            }}
-          >
-            <span className="cart-icon">📦</span>
-            <span className="cart-label">{t.myOrders}</span>
-            {userOrderList.length > 0 && (
-              <span className="cart-badge" style={{ background: "#2563eb" }}>{userOrderList.length}</span>
-            )}
           </button>
 
           <button
@@ -3760,7 +3683,10 @@ export default function Home() {
               <button onClick={() => { setCategory("Nghỉ dưỡng & chữa lành"); setSelectedRegion("Tất cả"); setActiveTab("explore"); showToast("Chọn một điểm nghỉ dưỡng rồi mở Chỗ nghỉ gần đây"); }}>
                 <i>⌂</i><b>Khách sạn & Homestay</b><small>Phú Thọ · Tam Đảo · Mai Châu · Kim Bôi</small><em>→</em>
               </button>
-              <button onClick={() => { setCartOpen(true); }}>
+              <button onClick={() => { setVouchersModalOpen(true); }}>
+                <i>🎁</i><b>Kho Voucher & Mã Khuyến Mãi</b><small>Ưu đãi đặt đặc sản OCOP và dịch vụ tour</small><em>→</em>
+              </button>
+              <button onClick={() => { setCartOpen(true); setCartDrawerTab("cart"); }}>
                 <i>◇</i><b>Đặc sản làm quà (OCOP)</b><small>Thịt chua, ngọn su su, cơm lam… ({cartQuantity} món trong giỏ)</small><em>→</em>
               </button>
 
@@ -4169,6 +4095,45 @@ export default function Home() {
                           </button>
                         </div>
                       )}
+                    </div>
+
+                    {/* CURRENCY SELECTOR */}
+                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", background: "#f8faf9", border: "1px solid var(--line)", borderRadius: "8px", padding: "8px 12px", margin: "10px 0" }}>
+                      <span style={{ fontSize: "12px", fontWeight: "700", color: "var(--ink)", display: "flex", alignItems: "center", gap: "6px" }}>
+                        💱 Đơn vị tiền tệ:
+                      </span>
+                      <div className="i18n-dropdown-container">
+                        <button
+                          type="button"
+                          className="currency-pill-btn"
+                          style={{ height: "30px", padding: "0 10px", fontSize: "11.5px", background: "white" }}
+                          onClick={() => setCurrencyDropdownOpen(!currencyDropdownOpen)}
+                          title="Đổi loại tiền tệ thanh toán"
+                        >
+                          <span>{CURRENCIES[currentCurrency].flag}</span>
+                          <b>{currentCurrency} ({CURRENCIES[currentCurrency].symbol})</b>
+                          <small>▾</small>
+                        </button>
+                        {currencyDropdownOpen && (
+                          <div className="i18n-dropdown-menu" style={{ right: 0, left: "auto", top: "calc(100% + 4px)", minWidth: "170px" }}>
+                            {(Object.keys(CURRENCIES) as CurrencyCode[]).map((code) => (
+                              <button
+                                key={code}
+                                type="button"
+                                className={`i18n-dropdown-item ${currentCurrency === code ? "is-selected" : ""}`}
+                                onClick={() => {
+                                  setCurrentCurrency(code);
+                                  setCurrencyDropdownOpen(false);
+                                  showToast(`Đã chuyển tiền tệ sang ${CURRENCIES[code].label}`);
+                                }}
+                              >
+                                <span>{CURRENCIES[code].flag} {CURRENCIES[code].label}</span>
+                                {currentCurrency === code && <span>✓</span>}
+                              </button>
+                            ))}
+                          </div>
+                        )}
+                      </div>
                     </div>
 
                     {/* COMMERCE TOTAL WITH CURRENCY CONVERSION */}
@@ -5570,6 +5535,31 @@ function doPost(e) {
           </div>
         </div>
       )}
+
+      {/* FLOATING CART BUBBLE (BÓNG CHAT GIỎ HÀNG GÓC TRÁI - ẢNH 1) */}
+      <button
+        type="button"
+        className="floating-cart-bubble"
+        onClick={() => {
+          setCartDrawerTab("cart");
+          setCartOpen(true);
+        }}
+        aria-label={`Giỏ hàng (${cartQuantity} món)`}
+        title="Mở giỏ hàng đặc sản OCOP"
+      >
+        <div className="floating-cart-bubble__icon-wrapper">
+          <span>🛒</span>
+          {cartQuantity > 0 && (
+            <span className="floating-cart-bubble__badge">{cartQuantity}</span>
+          )}
+        </div>
+        <div className="floating-cart-bubble__text">
+          <span className="floating-cart-bubble__label">Giỏ hàng</span>
+          <span className="floating-cart-bubble__sub">
+            {cartQuantity > 0 ? `${cartQuantity} món · ${formatPrice(cartSubtotal)}` : "Đặc sản OCOP"}
+          </span>
+        </div>
+      </button>
 
       {/* TOAST NOTIFICATION */}
       {toast && <div className="toast" role="status"><span>✓</span>{toast}</div>}
