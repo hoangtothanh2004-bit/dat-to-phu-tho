@@ -208,6 +208,73 @@ export const UI_TEXT = {
     heroTitle1: "Đi đúng mùa.",
     heroTitle2: "Chạm đúng Đất Tổ.",
     heroDesc: "Khám phá trọn vẹn danh lam thắng cảnh, di sản văn hóa và ẩm thực nức tiếng của 3 tỉnh Phú Thọ – Vĩnh Phúc – Hòa Bình.",
+    featuredDestCaption: "ĐIỂM ĐẾN NỔI BẬT",
+    openGuideBtn: "Mở cẩm nang →",
+    stampOriginTitle: "CỘI NGUỒN",
+    stampOriginSub: "DÂN TỘC",
+    heritageTag1: "✦ CHƯƠNG TRÌNH ĐẶC BIỆT 2026",
+    heritageTag2: "✦ DU LỊCH DI SẢN & TÍCH ĐIỂM ĐỔI QUÀ",
+    heritageTitle: "Hành Trình Về Nguồn — Khám Phá Nhận Thưởng OCOP",
+    heritageDesc: "Tham gia hành trình di sản 3 tỉnh Phú Thọ – Vĩnh Phúc – Hòa Bình, check-in các điểm đến biểu tượng để tích lũy điểm thưởng và nhận ngay các voucher quà tặng đặc sản độc quyền.",
+    perk1Title: "🏛️ Check-in Đền Hùng",
+    perk1Desc: "Tặng ngay voucher 30.000đ khi lưu điểm đến và kích hoạt thuyết minh AI di sản.",
+    perk2Title: "🎁 Thưởng Nhóm & Gia Đình",
+    perk2Desc: "Giảm 15% - 20% cho các tour trải nghiệm văn hóa truyền thống khi đi từ 3 người.",
+    perk3Title: "🍜 Tích Điểm OCOP 5 Sao",
+    perk3Desc: "Đổi điểm tích lũy lấy thịt chua Thanh Sơn, chè Long Cốc và đặc sản quà biếu cao cấp.",
+    viewAllVouchersBtn: "Xem tất cả ưu đãi & voucher",
+    planTripRewardBtn: "Lên lịch trình nhận thưởng ✦",
+    section01Num: "01",
+    section01Title: "Khám phá theo địa phương & sở thích",
+    viewAllBtn: "Xem tất cả →",
+    selectProvinceLabel: "CHỌN TỈNH:",
+    provAll: "✨ Tất cả 3 tỉnh",
+    provPhuTho: "🏛️ Phú Thọ",
+    provVinhPhuc: "☁️ Vĩnh Phúc",
+    provHoaBinh: "🌲 Hòa Bình",
+    seasonLabel: "ĐI THEO MÙA",
+    seasonAll: "Tất cả",
+    seasonInSeason: "Đang hợp mùa",
+    seasonSpring: "Mùa xuân",
+    seasonSummer: "Mùa hè",
+    seasonAutumn: "Mùa thu",
+    seasonWinter: "Mùa đông",
+    section02Num: "02",
+    section02TitleDefault: "Danh thắng tiêu biểu",
+    section02TitleNear: "Gần vị trí của bạn",
+    locateBtn: "⌖ Bật định vị",
+    loadMorePlaces: "Xem thêm địa điểm →",
+    noResultsTitle: "Chưa tìm thấy kết quả",
+    noResultsDesc: "Thử tìm “săn mây”, “Đền Hùng”, “Tam Đảo”, “Mai Châu” hoặc chọn danh mục phía trên.",
+    section03Num: "03",
+    section03Kicker: "TRỢ LÝ LỊCH TRÌNH THÔNG MINH",
+    section03Title1: "Hai ngày trọn vẹn,",
+    section03Title2: "hướng dẫn viên lo hết.",
+    section03Desc: "Tự động tối ưu 4 yếu tố: Tham quan · Ăn uống · Lưu trú · Di chuyển & thời gian trên toàn địa bàn 3 tỉnh Phú Thọ, Vĩnh Phúc, Hòa Bình.",
+    planTripSmartBtn: "Lập lịch trình thông minh ngay →",
+    suggestedTourTitle: "LỊCH TRÌNH GỢI Ý",
+    routeSummary1: "⌁ Tuyến liên kết thuận tiện đường sá",
+    routeSummary2: "Chi phí rõ ràng theo từng ngày",
+    foodKicker: "BẢN ĐỒ ẨM THỰC ĐẶC SẢN",
+    foodTitle1: "Mỗi vùng đất,",
+    foodTitle2: "một phong vị riêng.",
+    foodDesc: "Thưởng thức tinh hoa ẩm thực bản địa theo từng cung đường: cá lăng Đất Tổ, thịt chua Thanh Sơn, ngọn su su Tam Đảo, cỗ lá lợn mán Mai Châu.",
+    foodSaveBtn: "♡ Lưu món ăn",
+    foodSavedBtn: "♥ Đã lưu món",
+    foodToggleView: "Xem điểm bán OCOP ▼",
+    foodToggleHide: "Thu gọn ▲",
+    sellerVerified: "✓ Điểm bán uy tín",
+    sellerSuggested: "○ Điểm bán gợi ý",
+    callSeller: "Gọi ngay",
+    openMapSeller: "Mở bản đồ →",
+    addToCartBtn: "＋ Thêm giỏ",
+    shopeeHubTitle: "Đơn mua",
+    shopeeHubHistoryLink: "Xem lịch sử mua hàng",
+    shopeeStatusPending: "Chờ xác nhận",
+    shopeeStatusProcessing: "Chờ lấy hàng",
+    shopeeStatusShipping: "Chờ giao hàng",
+    shopeeStatusCompleted: "Đánh giá",
+    shopeeStatusCancelled: "Đã hủy",
     orderStatusAll: "Tất cả",
     orderStatusPending: "Chờ xác nhận",
     orderStatusProcessing: "Đang xử lý",
@@ -219,6 +286,27 @@ export const UI_TEXT = {
     applyVoucher: "Áp dụng mã",
     discount: "Giảm giá",
     totalPayment: "Tổng thanh toán",
+    floatingCartLabel: "Giỏ hàng",
+    floatingCartSubDefault: "Đặc sản OCOP",
+    passportKicker: "HỘ CHIẾU DU LỊCH 3 TỈNH",
+    passportTitle1: "Sưu tập dấu chân,",
+    passportTitle2: "mở khóa đặc quyền.",
+    passportProgress: "điểm đã check-in · Thêm dấu để nhận quà tặng lưu niệm Đất Tổ",
+    quickBookKicker: "ĐẶT DỊCH VỤ NHANH",
+    quickBookTitle: "Mọi thứ cho chuyến đi của bạn",
+    btnTourDesignTitle: "Thiết kế tour theo yêu cầu",
+    btnTourDesignSub: "Tự động lập tuyến trong 1 phút",
+    btnHotelsTitle: "Khách sạn & Homestay",
+    btnHotelsSub: "Phú Thọ · Tam Đảo · Mai Châu · Kim Bôi",
+    btnVouchersTitle: "Kho Voucher & Mã Khuyến Mãi",
+    btnVouchersSub: "Ưu đãi đặt đặc sản OCOP và dịch vụ tour",
+    btnOcopTitle: "Đặc sản làm quà (OCOP)",
+    btnOcopSub: "Thịt chua, ngọn su su, cơm lam…",
+    partnerKicker: "DÀNH CHO ĐỐI TÁC ĐỊA PHƯƠNG",
+    partnerTitle: "Quảng bá dịch vụ đến du khách.",
+    partnerDesc: "Nhà hàng, homestay, hợp tác xã OCOP và đơn vị lữ hành có thể đăng ký gian hàng xác minh.",
+    btnRegisterPartner: "Đăng ký đối tác →",
+    toastSwitchedLang: "Đã chuyển đổi toàn bộ giao diện sang Tiếng Việt",
   },
   en: {
     brandSubtitle: "PHU THO · VINH PHUC · HOA BINH",
@@ -234,6 +322,73 @@ export const UI_TEXT = {
     heroTitle1: "Travel in season.",
     heroTitle2: "Touch the Ancestral Land.",
     heroDesc: "Discover renowned landscapes, cultural heritage, and local cuisines across Phu Tho, Vinh Phuc, and Hoa Binh.",
+    featuredDestCaption: "FEATURED DESTINATION",
+    openGuideBtn: "Open Travel Guide →",
+    stampOriginTitle: "ANCESTRAL",
+    stampOriginSub: "HERITAGE",
+    heritageTag1: "✦ SPECIAL PROGRAM 2026",
+    heritageTag2: "✦ HERITAGE TOURS & REWARD POINTS",
+    heritageTitle: "Ancestral Journey — Explore & Claim OCOP Gifts",
+    heritageDesc: "Join the 3-province heritage journey across Phu Tho, Vinh Phuc, and Hoa Binh, check in at iconic attractions to earn reward points and exclusive specialty vouchers.",
+    perk1Title: "🏛️ Hung King Temple Check-in",
+    perk1Desc: "Get a 30,000₫ voucher when saving places and activating AI audio guides.",
+    perk2Title: "🎁 Group & Family Rewards",
+    perk2Desc: "Enjoy 15% - 20% off cultural experience tours for groups of 3 or more.",
+    perk3Title: "🍜 5-Star OCOP Reward Points",
+    perk3Desc: "Redeem points for Thanh Son sour pork, Long Coc tea, and premium gift sets.",
+    viewAllVouchersBtn: "View All Deals & Vouchers",
+    planTripRewardBtn: "Plan Rewarded Trip ✦",
+    section01Num: "01",
+    section01Title: "Explore by region & interest",
+    viewAllBtn: "View all →",
+    selectProvinceLabel: "SELECT PROVINCE:",
+    provAll: "✨ All 3 Provinces",
+    provPhuTho: "🏛️ Phu Tho",
+    provVinhPhuc: "☁️ Vinh Phuc",
+    provHoaBinh: "🌲 Hoa Binh",
+    seasonLabel: "SEASONAL TRAVEL",
+    seasonAll: "All",
+    seasonInSeason: "Best this season",
+    seasonSpring: "Spring",
+    seasonSummer: "Summer",
+    seasonAutumn: "Autumn",
+    seasonWinter: "Winter",
+    section02Num: "02",
+    section02TitleDefault: "Iconic Attractions",
+    section02TitleNear: "Near Your Location",
+    locateBtn: "⌖ Enable Location",
+    loadMorePlaces: "View more places →",
+    noResultsTitle: "No results found",
+    noResultsDesc: "Try searching for “cloud hunting”, “Hung Temple”, “Tam Dao”, “Mai Chau” or pick a category above.",
+    section03Num: "03",
+    section03Kicker: "SMART TRIP ASSISTANT",
+    section03Title1: "Two full days,",
+    section03Title2: "local guide handled all.",
+    section03Desc: "Automatically optimizes sightseeing, dining, lodging, transport and timing across Phu Tho, Vinh Phuc, and Hoa Binh.",
+    planTripSmartBtn: "Create Smart Itinerary Now →",
+    suggestedTourTitle: "SUGGESTED TOUR",
+    routeSummary1: "⌁ Convenient connected travel routes",
+    routeSummary2: "Transparent daily budget estimates",
+    foodKicker: "LOCAL SPECIALTIES MAP",
+    foodTitle1: "Every region,",
+    foodTitle2: "a unique flavor.",
+    foodDesc: "Savor authentic regional gastronomy: Lang fish, Thanh Son sour pork, Tam Dao chayote greens, and Mai Chau bamboo rice feast.",
+    foodSaveBtn: "♡ Save Dish",
+    foodSavedBtn: "♥ Saved",
+    foodToggleView: "View OCOP Sellers ▼",
+    foodToggleHide: "Collapse ▲",
+    sellerVerified: "✓ Verified Seller",
+    sellerSuggested: "○ Recommended Spot",
+    callSeller: "Call Now",
+    openMapSeller: "Open Map →",
+    addToCartBtn: "＋ Add to Cart",
+    shopeeHubTitle: "My Orders",
+    shopeeHubHistoryLink: "View order history",
+    shopeeStatusPending: "To Pay / Pending",
+    shopeeStatusProcessing: "To Ship",
+    shopeeStatusShipping: "To Receive",
+    shopeeStatusCompleted: "Completed",
+    shopeeStatusCancelled: "Cancelled",
     orderStatusAll: "All",
     orderStatusPending: "Pending",
     orderStatusProcessing: "Processing",
@@ -245,6 +400,27 @@ export const UI_TEXT = {
     applyVoucher: "Apply Promo Code",
     discount: "Discount",
     totalPayment: "Total Payment",
+    floatingCartLabel: "Cart",
+    floatingCartSubDefault: "OCOP Specialties",
+    passportKicker: "3-PROVINCE TRAVEL PASSPORT",
+    passportTitle1: "Collect Footsteps,",
+    passportTitle2: "Unlock Privileges.",
+    passportProgress: "check-in points earned · Collect more stamps for heritage souvenirs",
+    quickBookKicker: "QUICK BOOKING SERVICES",
+    quickBookTitle: "Everything for your journey",
+    btnTourDesignTitle: "Custom Tour Planner",
+    btnTourDesignSub: "Auto-generate route in 1 minute",
+    btnHotelsTitle: "Hotels & Homestays",
+    btnHotelsSub: "Phu Tho · Tam Dao · Mai Chau · Kim Boi",
+    btnVouchersTitle: "Voucher Store & Deals",
+    btnVouchersSub: "Discounts for OCOP products & tours",
+    btnOcopTitle: "Specialty Souvenirs (OCOP)",
+    btnOcopSub: "Sour pork, chayote greens, tea...",
+    partnerKicker: "FOR LOCAL PARTNERS",
+    partnerTitle: "Promote services to travelers.",
+    partnerDesc: "Restaurants, homestays, OCOP cooperatives, and travel operators can register verified merchant stores.",
+    btnRegisterPartner: "Register as Partner →",
+    toastSwitchedLang: "Switched all interface content to English",
   },
   zh: {
     brandSubtitle: "富寿 · 永福 · 和平",
@@ -260,6 +436,73 @@ export const UI_TEXT = {
     heroTitle1: "当季旅行。",
     heroTitle2: "亲临祖源胜地。",
     heroDesc: "畅游富寿、永福、和平三省名胜古迹、非遗文化与特色美食。",
+    featuredDestCaption: "精选热门胜地",
+    openGuideBtn: "查看旅游指南 →",
+    stampOriginTitle: "华夏祖源",
+    stampOriginSub: "民族胜迹",
+    heritageTag1: "✦ 2026 特别主题计划",
+    heritageTag2: "✦ 遗产巡礼 · 打卡积分兑好礼",
+    heritageTitle: "寻根之旅 —— 畅游打卡赢 OCOP 特产礼券",
+    heritageDesc: "参与富寿、永福、和平三省文化遗产巡礼，打卡标志性名胜积累积分，即享独家地方特产优惠礼券。",
+    perk1Title: "🏛️ 雄王庙打卡礼",
+    perk1Desc: "收藏景点并开启 AI 智能语音讲解，立享 30,000₫ 优惠券。",
+    perk2Title: "🎁 团队与家庭特惠",
+    perk2Desc: "3人及以上同行体验传统文化游，享 15% - 20% 专属折扣。",
+    perk3Title: "🍜 五星 OCOP 积分兑换",
+    perk3Desc: "积分可直接兑换清山酸肉、龙谷茶及高档伴手礼盒。",
+    viewAllVouchersBtn: "查看全部优惠与礼券",
+    planTripRewardBtn: "定制打卡获奖行程 ✦",
+    section01Num: "01",
+    section01Title: "按地区与偏好探索",
+    viewAllBtn: "查看全部 →",
+    selectProvinceLabel: "选择省份:",
+    provAll: "✨ 汇聚三省全部",
+    provPhuTho: "🏛️ 富寿省",
+    provVinhPhuc: "☁️ 永福省",
+    provHoaBinh: "🌲 和平省",
+    seasonLabel: "按季节旅行",
+    seasonAll: "全部",
+    seasonInSeason: "当季最佳",
+    seasonSpring: "春季",
+    seasonSummer: "夏季",
+    seasonAutumn: "秋季",
+    seasonWinter: "冬季",
+    section02Num: "02",
+    section02TitleDefault: "经典代表名胜",
+    section02TitleNear: "您附近的景点",
+    locateBtn: "⌖ 开启定位",
+    loadMorePlaces: "查看更多景点 →",
+    noResultsTitle: "未找到相关结果",
+    noResultsDesc: "尝试搜索“云海”、“雄王庙”、“三岛”、“梅州”或选择上方分类。",
+    section03Num: "03",
+    section03Kicker: "智能行程助手",
+    section03Title1: "充实两日游，",
+    section03Title2: "专属向导全程规划。",
+    section03Desc: "自动优化游览、餐饮、住宿、交通及时间分配，覆盖富寿、永福、和平三省全境。",
+    planTripSmartBtn: "立即生成智能行程 →",
+    suggestedTourTitle: "推荐行程路线",
+    routeSummary1: "⌁ 交通便捷顺畅的串联路线",
+    routeSummary2: "每日预算花费清晰透明",
+    foodKicker: "特色美食风味地图",
+    foodTitle1: "一方水土，",
+    foodTitle2: "一方独特风味。",
+    foodDesc: "沿途品尝地道风味精华：祖地鲇鱼、清山酸肉、三岛佛手瓜苗、梅州黑猪芭蕉叶宴。",
+    foodSaveBtn: "♡ 收藏美食",
+    foodSavedBtn: "♥ 已收藏",
+    foodToggleView: "查看 OCOP 销售网点 ▼",
+    foodToggleHide: "收起 ▲",
+    sellerVerified: "✓ 认证优质商家",
+    sellerSuggested: "○ 推荐商户",
+    callSeller: "立即致电",
+    openMapSeller: "打开地图 →",
+    addToCartBtn: "＋ 加入购物车",
+    shopeeHubTitle: "我的订单",
+    shopeeHubHistoryLink: "查看订单记录",
+    shopeeStatusPending: "待付款/待确认",
+    shopeeStatusProcessing: "待发货/备货中",
+    shopeeStatusShipping: "待收货/配送中",
+    shopeeStatusCompleted: "已评价/完成",
+    shopeeStatusCancelled: "已取消",
     orderStatusAll: "全部",
     orderStatusPending: "待确认",
     orderStatusProcessing: "处理中",
@@ -271,6 +514,27 @@ export const UI_TEXT = {
     applyVoucher: "使用优惠券",
     discount: "优惠抵扣",
     totalPayment: "实付金额",
+    floatingCartLabel: "购物车",
+    floatingCartSubDefault: "OCOP 特产选购",
+    passportKicker: "三省旅游数字护照",
+    passportTitle1: "收集旅行足迹，",
+    passportTitle2: "解锁尊享特权。",
+    passportProgress: "个打卡点已点亮 · 继续打卡赢取祖地文创纪念礼品",
+    quickBookKicker: "快捷预订服务",
+    quickBookTitle: "为您的一站式出行准备",
+    btnTourDesignTitle: "定制专属路线",
+    btnTourDesignSub: "1分钟智能生成完整行程",
+    btnHotelsTitle: "精选酒店与民宿",
+    btnHotelsSub: "富寿 · 三岛 · 梅州 · 金杯温泉",
+    btnVouchersTitle: "领券中心 & 优惠活动",
+    btnVouchersSub: "OCOP 特产下单与门票立减券",
+    btnOcopTitle: "地道伴手礼特产 (OCOP)",
+    btnOcopSub: "清山酸肉、三岛佛手瓜苗、高山好茶…",
+    partnerKicker: "本地合作商户通道",
+    partnerTitle: "向广大游客推广您的服务。",
+    partnerDesc: "餐厅、民宿、OCOP 合作社及旅行社均可申请入驻认证商家展位。",
+    btnRegisterPartner: "申请成为合作伙伴 →",
+    toastSwitchedLang: "已将全部页面内容切换为中文",
   },
   ko: {
     brandSubtitle: "푸토 · 빈푹 · 호아빈",
@@ -286,6 +550,73 @@ export const UI_TEXT = {
     heroTitle1: "제철에 떠나는 여행.",
     heroTitle2: "조상의 땅을 만나다.",
     heroDesc: "푸토, 빈푹, 호아빈 3개 지역의 명소, 문화유산 및 대표 음식을 경험해보세요.",
+    featuredDestCaption: "주요 추천 명소",
+    openGuideBtn: "가이드북 열기 →",
+    stampOriginTitle: "민족의 시원",
+    stampOriginSub: "역사 유산",
+    heritageTag1: "✦ 2026 특별 테마 프로그램",
+    heritageTag2: "✦ 문화유산 투어 & 포인트 교환",
+    heritageTitle: "근원의 여정 — 탐방하고 OCOP 선물 받기",
+    heritageDesc: "푸토, 빈푹, 호아빈 3개 지역 문화유산 투어에 참여하고, 대표 명소 체크인으로 포인트를 모아 특산품 쿠폰을 받아보세요.",
+    perk1Title: "🏛️ 훙왕 신전 체크인",
+    perk1Desc: "장소 저장 및 AI 문화해설 활성화 시 30,000₫ 쿠폰 즉시 증정.",
+    perk2Title: "🎁 단체 및 가족 혜택",
+    perk2Desc: "3인 이상 전통문화 체험 투어 시 15% - 20% 특별 할인.",
+    perk3Title: "🍜 5성 OCOP 포인트 적립",
+    perk3Desc: "적립 포인트로 탄선 발효 돼지고기, 롱콕 녹차 등 프리미엄 선물 세트 교환.",
+    viewAllVouchersBtn: "모든 혜택 및 쿠폰 보기",
+    planTripRewardBtn: "포인트 적립 일정 짜기 ✦",
+    section01Num: "01",
+    section01Title: "지역 및 테마별 탐색",
+    viewAllBtn: "전체 보기 →",
+    selectProvinceLabel: "지역 선택:",
+    provAll: "✨ 3개 지역 전체",
+    provPhuTho: "🏛️ 푸토성",
+    provVinhPhuc: "☁️ 빈푹성",
+    provHoaBinh: "🌲 호아빈성",
+    seasonLabel: "계절별 추천",
+    seasonAll: "전체",
+    seasonInSeason: "지금 가기 좋은 곳",
+    seasonSpring: "봄",
+    seasonSummer: "여름",
+    seasonAutumn: "가을",
+    seasonWinter: "겨울",
+    section02Num: "02",
+    section02TitleDefault: "대표 주요 명소",
+    section02TitleNear: "현재 위치 주변",
+    locateBtn: "⌖ 위치 정보 켜기",
+    loadMorePlaces: "더 많은 명소 보기 →",
+    noResultsTitle: "검색 결과가 없습니다",
+    noResultsDesc: "“운해”, “훙왕 신전”, “땀다오”, “마이쩌우”를 검색하거나 상단 카테고리를 선택해보세요.",
+    section03Num: "03",
+    section03Kicker: "스마트 여행 일정 플래너",
+    section03Title1: "알찬 2일 일정,",
+    section03Title2: "현지 가이드가 모두 케어합니다.",
+    section03Desc: "푸토, 빈푹, 호아빈 3개 지역의 관광, 미식, 숙박, 교통 및 소요 시간을 자동으로 최적화합니다.",
+    planTripSmartBtn: "스마트 일정 바로 생성하기 →",
+    suggestedTourTitle: "추천 일정 코스",
+    routeSummary1: "⌁ 이동이 편리한 최적 연계 도로망",
+    routeSummary2: "일자별 투명하고 명확한 예상 경비",
+    foodKicker: "지역 대표 특산 미식 지도",
+    foodTitle1: "지역마다 펼쳐지는,",
+    foodTitle2: "특별한 미식의 향연.",
+    foodDesc: "각 코스별 정통 향토 요리를 맛보세요: 메기 요리, 탄선 발효 돼지고기, 땀다오 차요테 순, 마이쩌우 바나나잎 흑돼지 잔칫상.",
+    foodSaveBtn: "♡ 요리 저장",
+    foodSavedBtn: "♥ 저장됨",
+    foodToggleView: "OCOP 판매처 보기 ▼",
+    foodToggleHide: "접기 ▲",
+    sellerVerified: "✓ 공식 인증 판매처",
+    sellerSuggested: "○ 추천 매장",
+    callSeller: "바로 전화",
+    openMapSeller: "지도 열기 →",
+    addToCartBtn: "＋ 장바구니 담기",
+    shopeeHubTitle: "내 주문",
+    shopeeHubHistoryLink: "주문 내역 보기",
+    shopeeStatusPending: "결제/확인 대기",
+    shopeeStatusProcessing: "상품 준비중",
+    shopeeStatusShipping: "배송중",
+    shopeeStatusCompleted: "구매평/완료",
+    shopeeStatusCancelled: "취소됨",
     orderStatusAll: "전체",
     orderStatusPending: "확인 대기중",
     orderStatusProcessing: "처리중",
@@ -297,6 +628,27 @@ export const UI_TEXT = {
     applyVoucher: "쿠폰 적용",
     discount: "할인 금액",
     totalPayment: "총 결제금액",
+    floatingCartLabel: "장바구니",
+    floatingCartSubDefault: "OCOP 특산품 쇼핑",
+    passportKicker: "3개 지역 여행 디지털 여권",
+    passportTitle1: "발자국을 모으고,",
+    passportTitle2: "특별한 혜택을 여세요.",
+    passportProgress: "곳 체크인 완료 · 추가 도장을 모아 기념품을 받으세요",
+    quickBookKicker: "빠른 서비스 예약",
+    quickBookTitle: "완벽한 여행을 위한 모든 준비",
+    btnTourDesignTitle: "맞춤형 투어 설계",
+    btnTourDesignSub: "1분 만에 자동 코스 완성",
+    btnHotelsTitle: "호텔 & 홈스테이",
+    btnHotelsSub: "푸토 · 땀다오 · 마이쩌우 · 낌보이 온천",
+    btnVouchersTitle: "쿠폰북 & 프로모션",
+    btnVouchersSub: "OCOP 특산품 및 투어 할인 혜택",
+    btnOcopTitle: "선물용 지역 특산품 (OCOP)",
+    btnOcopSub: "발효 돼지고기, 차요테 순, 녹차…",
+    partnerKicker: "현지 파트너 제휴",
+    partnerTitle: "여행자들에게 귀사의 서비스를 홍보하세요.",
+    partnerDesc: "식당, 숙소, OCOP 협동조합 및 여행사는 공식 인증 파트너 매장을 등록할 수 있습니다.",
+    btnRegisterPartner: "파트너 신청하기 →",
+    toastSwitchedLang: "모든 인터페이스가 한국어로 전환되었습니다",
   },
   ja: {
     brandSubtitle: "フート省 · ビンフック省 · ホアビン省",
@@ -312,6 +664,73 @@ export const UI_TEXT = {
     heroTitle1: "旬の旅。",
     heroTitle2: "祖先の地に触れる。",
     heroDesc: "フート、ビンフック、ホアビン3省の絶景、文化遺産、郷土料理をご堪能ください。",
+    featuredDestCaption: "注目の名所",
+    openGuideBtn: "ガイドブックを開く →",
+    stampOriginTitle: "民族のルーツ",
+    stampOriginSub: "歴史遺産",
+    heritageTag1: "✦ 2026 特別テーマ企画",
+    heritageTag2: "✦ 遺産巡り · チェックイン特典",
+    heritageTitle: "ルーツの旅 —— 観光して OCOP 特産品ギフトを獲得",
+    heritageDesc: "フート、ビンフック、ホアビン3省の遺産ルートに参加し、名所を巡ってポイントを貯め、限定特産品クーポンをゲットしましょう。",
+    perk1Title: "🏛️ フン王神殿チェックイン",
+    perk1Desc: "スポット保存と AI 音声ガイド利用で 30,000₫ クーポンを進呈。",
+    perk2Title: "🎁 グループ＆ファミリー特典",
+    perk2Desc: "3名様以上の伝統文化体験ツアーで 15% - 20% オフ。",
+    perk3Title: "🍜 5つ星 OCOP ポイント交換",
+    perk3Desc: "貯めたポイントでタインソン発酵豚肉やロンコック銘茶などと交換可能。",
+    viewAllVouchersBtn: "すべての特典・クーポンを見る",
+    planTripRewardBtn: "特典付きプランを作成 ✦",
+    section01Num: "01",
+    section01Title: "地域・テーマ別で探す",
+    viewAllBtn: "すべて見る →",
+    selectProvinceLabel: "省を選択:",
+    provAll: "✨ 3省すべて",
+    provPhuTho: "🏛️ フート省",
+    provVinhPhuc: "☁️ ビンフック省",
+    provHoaBinh: "🌲 ホアビン省",
+    seasonLabel: "季節ごとの旅",
+    seasonAll: "すべて",
+    seasonInSeason: "今が旬",
+    seasonSpring: "春",
+    seasonSummer: "夏",
+    seasonAutumn: "秋",
+    seasonWinter: "冬",
+    section02Num: "02",
+    section02TitleDefault: "代表的な名所・旧跡",
+    section02TitleNear: "現在地周辺のスポット",
+    locateBtn: "⌖ 位置情報を有効化",
+    loadMorePlaces: "さらにスポットを見る →",
+    noResultsTitle: "検索結果が見つかりません",
+    noResultsDesc: "「雲海」「フン寺」「タムダオ」「マイチャウ」で検索するか、上記のカテゴリをお選びください。",
+    section03Num: "03",
+    section03Kicker: "スマート旅程アシスタント",
+    section03Title1: "充実の2日間、",
+    section03Title2: "現地ガイドがすべてサポート。",
+    section03Desc: "フート、ビンフック、ホアビン3省の観光、食事、宿泊、移動時間を自動で最適化します。",
+    planTripSmartBtn: "スマート旅程を今すぐ作成 →",
+    suggestedTourTitle: "おすすめモデルコース",
+    routeSummary1: "⌁ 移動に便利な快適ルート網",
+    routeSummary2: "日ごとの明瞭な予算目安",
+    foodKicker: "郷土特産グルメマップ",
+    foodTitle1: "それぞれの土地に、",
+    foodTitle2: "それぞれの豊かな風味。",
+    foodDesc: "ルートごとの本場の味をご堪能ください：ラン魚料理、タインソン発酵豚肉、タムダオハヤトウリの若芽、マイチャウの黒豚バナナの葉包み焼き。",
+    foodSaveBtn: "♡ 料理を保存",
+    foodSavedBtn: "♥ 保存済み",
+    foodToggleView: "OCOP 販売店を見る ▼",
+    foodToggleHide: "閉じる ▲",
+    sellerVerified: "✓ 認証済み優良店",
+    sellerSuggested: "○ おすすめ店舗",
+    callSeller: "電話する",
+    openMapSeller: "地図を開く →",
+    addToCartBtn: "＋ カートに追加",
+    shopeeHubTitle: "ご注文商品",
+    shopeeHubHistoryLink: "注文履歴を見る",
+    shopeeStatusPending: "確認待ち/未払い",
+    shopeeStatusProcessing: "発送準備中",
+    shopeeStatusShipping: "配送中",
+    shopeeStatusCompleted: "受取・レビュー",
+    shopeeStatusCancelled: "キャンセル済み",
     orderStatusAll: "すべて",
     orderStatusPending: "確認待ち",
     orderStatusProcessing: "準備中",
@@ -323,6 +742,27 @@ export const UI_TEXT = {
     applyVoucher: "クーポンを適用",
     discount: "割引",
     totalPayment: "お支払い合計",
+    floatingCartLabel: "カート",
+    floatingCartSubDefault: "OCOP 特産品",
+    passportKicker: "3省周遊デジタルパスポート",
+    passportTitle1: "足跡を集めて、",
+    passportTitle2: "特別な特典を解除。",
+    passportProgress: "箇所のチェックイン完了 · スタンプを集めて記念品をゲット",
+    quickBookKicker: "クイック予約サービス",
+    quickBookTitle: "快適な旅のためのすべての準備",
+    btnTourDesignTitle: "オーダーメイドツアー設計",
+    btnTourDesignSub: "1分で自動ルート生成",
+    btnHotelsTitle: "ホテル＆ホームステイ",
+    btnHotelsSub: "フート · タムダオ · マイチャウ · キムボイ温泉",
+    btnVouchersTitle: "クーポン一覧・特典",
+    btnVouchersSub: "OCOP 特産品＆ツアー割引",
+    btnOcopTitle: "お土産特産品 (OCOP)",
+    btnOcopSub: "発酵豚肉、ハヤトウリの芽、銘茶…",
+    partnerKicker: "現地パートナー様向け",
+    partnerTitle: "旅行者にサービスをアピール。",
+    partnerDesc: "飲食店、宿泊施設、OCOP 協同組合、旅行会社様は公式認証店舗をご登録いただけます。",
+    btnRegisterPartner: "パートナー登録 →",
+    toastSwitchedLang: "すべてのインターフェースを日本語に切り替えました",
   },
 };
 
@@ -2315,14 +2755,14 @@ export default function Home() {
         <img src={dish.image} alt={`Ảnh minh họa ${dish.name}`} loading="lazy" onError={handleImageError} />
         <div>
           <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: "8px" }}>
-            <span style={{ fontSize: "11px", fontWeight: "700", color: "var(--accent)" }}>ĐẶC SẢN NỔI TIẾNG · {dish.region}</span>
+            <span style={{ fontSize: "11px", fontWeight: "700", color: "var(--accent)" }}>{t.foodKicker} · {dish.region}</span>
             <button
               type="button"
               className="text-link"
               style={{ fontSize: "12px" }}
               onClick={() => toggleSaveDish(dish.id)}
             >
-              {savedDishes.includes(dish.id) ? "♥ Đã lưu món" : "♡ Lưu món ăn"}
+              {savedDishes.includes(dish.id) ? t.foodSavedBtn : t.foodSaveBtn}
             </button>
           </div>
           <h3>{dish.name}</h3>
@@ -2333,7 +2773,7 @@ export default function Home() {
         {dish.sellers.map((seller) => (
           <section className="seller-card" key={seller.id}>
             <div className="seller-card__top">
-              <span>{seller.verified ? "✓ Điểm bán uy tín" : "○ Điểm bán gợi ý"}</span>
+              <span>{seller.verified ? t.sellerVerified : t.sellerSuggested}</span>
               <b>★ {seller.rating}{seller.reviewCount ? ` (${seller.reviewCount})` : " · mới"}</b>
             </div>
             <h4>{seller.name}</h4>
@@ -2342,12 +2782,12 @@ export default function Home() {
             <p><strong>Điện thoại:</strong> {seller.phone || "Liên hệ tại quán"}</p>
             <p><strong>Ghi chú nhận món:</strong> {seller.pickupNote}</p>
             <div className="seller-card__buy">
-              <span><b>{formatMoney(seller.price)}</b><small>/{seller.unit}</small></span>
-              <button type="button" onClick={() => addToCart(dish, seller)}>＋ Thêm giỏ</button>
+              <span><b>{formatMoney(seller.price, currentCurrency)}</b><small>/{seller.unit}</small></span>
+              <button type="button" onClick={() => addToCart(dish, seller)}>{t.addToCartBtn}</button>
             </div>
             <div className="seller-card__links">
-              {seller.phone && <a href={`tel:${seller.phone}`}>Gọi ngay</a>}
-              <a target="_blank" rel="noreferrer" href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(seller.address)}`}>Mở bản đồ →</a>
+              {seller.phone && <a href={`tel:${seller.phone}`}>{t.callSeller}</a>}
+              <a target="_blank" rel="noreferrer" href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(seller.address)}`}>{t.openMapSeller}</a>
             </div>
           </section>
         ))}
@@ -2478,58 +2918,57 @@ export default function Home() {
             <div className="hero__visual">
               <img src={places[0].image} alt="Cổng Khu di tích lịch sử Đền Hùng" loading="lazy" onError={handleImageError} />
               <div className="hero__caption">
-                <span>ĐIỂM ĐẾN NỔI BẬT</span>
+                <span>{t.featuredDestCaption}</span>
                 <strong>Khu di tích lịch sử Đền Hùng</strong>
-                <button onClick={() => openPlace(places[0])}>Mở cẩm nang →</button>
+                <button onClick={() => openPlace(places[0])}>{t.openGuideBtn}</button>
               </div>
-              <div className="hero__stamp"><b>01</b><span>CỘI NGUỒN<br />DÂN TỘC</span></div>
+              <div className="hero__stamp"><b>01</b><span>{t.stampOriginTitle}<br />{t.stampOriginSub}</span></div>
             </div>
           </section>
 
-          {/* SPECIAL HERITAGE PROGRAM & REWARDS BANNER */}
+          {/* SPECIAL HERITAGE PROGRAM & REWARDS BANNER (ẢNH 1 ĐÃ CĂN CHỈNH ĐỀU ĐẸP) */}
           <section className="special-heritage-banner">
             <div className="special-heritage-header">
-              <span className="heritage-gold-tag">✦ CHƯƠNG TRÌNH ĐẶC BIỆT 2026</span>
-              <span style={{ fontSize: "12px", color: "#f3d495", fontWeight: "700" }}>✦ DU LỊCH DI SẢN & TÍCH ĐIỂM ĐỔI QUÀ</span>
+              <span className="heritage-gold-tag">{t.heritageTag1}</span>
+              <span style={{ fontSize: "12px", color: "#f3d495", fontWeight: "700" }}>{t.heritageTag2}</span>
             </div>
             <h3 style={{ margin: "4px 0 8px", fontSize: "24px", color: "white", fontFamily: "var(--font-display)" }}>
-              Hành Trình Về Nguồn — Khám Phá Nhận Thưởng OCOP
+              {t.heritageTitle}
             </h3>
             <p style={{ margin: 0, fontSize: "13px", color: "#dce3d8", maxWidth: "680px", lineHeight: "1.6" }}>
-              Tham gia hành trình di sản 3 tỉnh Phú Thọ – Vĩnh Phúc – Hòa Bình, check-in các điểm đến biểu tượng để tích lũy điểm thưởng và nhận ngay các voucher quà tặng đặc sản độc quyền.
+              {t.heritageDesc}
             </p>
 
             <div className="special-heritage-grid">
               <div className="special-heritage-perk">
-                <b>🏛️ Check-in Đền Hùng</b>
-                <p>Tặng ngay voucher 30.000đ khi lưu điểm đến và kích hoạt thuyết minh AI di sản.</p>
+                <b>{t.perk1Title}</b>
+                <p>{t.perk1Desc}</p>
               </div>
               <div className="special-heritage-perk">
-                <b>🎁 Thưởng Nhóm & Gia Đình</b>
-                <p>Giảm 15% - 20% cho các tour trải nghiệm văn hóa truyền thống khi đi từ 3 người.</p>
+                <b>{t.perk2Title}</b>
+                <p>{t.perk2Desc}</p>
               </div>
               <div className="special-heritage-perk">
-                <b>🍜 Tích Điểm OCOP 5 Sao</b>
-                <p>Đổi điểm tích lũy lấy thịt chua Thanh Sơn, chè Long Cốc và đặc sản quà biếu cao cấp.</p>
+                <b>{t.perk3Title}</b>
+                <p>{t.perk3Desc}</p>
               </div>
             </div>
 
-            <div style={{ marginTop: "18px", display: "flex", gap: "10px", alignItems: "center" }}>
+            <div className="special-heritage-actions">
               <button
                 type="button"
                 className="button button--cream"
-                style={{ minHeight: "38px", padding: "0 16px", borderRadius: "8px" }}
                 onClick={() => setVouchersModalOpen(true)}
               >
-                Xem tất cả ưu đãi & voucher ({DEFAULT_VOUCHERS.length}) →
+                {t.viewAllVouchersBtn} ({DEFAULT_VOUCHERS.length}) →
               </button>
               <button
                 type="button"
                 className="button button--outline"
-                style={{ minHeight: "38px", padding: "0 14px", color: "#f3d495", borderColor: "#d7ab5a", borderRadius: "8px" }}
+                style={{ color: "#f3d495", borderColor: "#d7ab5a" }}
                 onClick={() => { setActiveTab("trip"); showToast("Bắt đầu tạo lịch trình di sản để nhận điểm thưởng!"); }}
               >
-                Lên lịch trình nhận thưởng ✦
+                {t.planTripRewardBtn}
               </button>
             </div>
           </section>
@@ -2537,18 +2976,18 @@ export default function Home() {
           {/* REGION & CATEGORY SELECTION */}
           <section className="content-section category-section">
             <div className="section-heading section-heading--inline">
-              <div><span className="section-number">01</span><h2>Khám phá theo địa phương & sở thích</h2></div>
-              <button className="text-link" onClick={() => { setCategory("Tất cả"); setSelectedRegion("Tất cả"); setSeasonFilter("Tất cả"); setQuery(""); }}>Xem tất cả →</button>
+              <div><span className="section-number">{t.section01Num}</span><h2>{t.section01Title}</h2></div>
+              <button className="text-link" onClick={() => { setCategory("Tất cả"); setSelectedRegion("Tất cả"); setSeasonFilter("Tất cả"); setQuery(""); }}>{t.viewAllBtn}</button>
             </div>
             
             {/* PROVINCE SELECTOR: PHÚ THỌ - VĨNH PHÚC - HÒA BÌNH */}
             <div className="region-filter-bar" role="group" aria-label="Lọc theo Tỉnh">
-              <span className="region-filter-label">CHỌN TỈNH:</span>
+              <span className="region-filter-label">{t.selectProvinceLabel}</span>
               {[
-                { id: "Tất cả", label: "✨ Tất cả 3 tỉnh" },
-                { id: "Phú Thọ", label: "🏛️ Phú Thọ" },
-                { id: "Vĩnh Phúc", label: "☁️ Vĩnh Phúc" },
-                { id: "Hòa Bình", label: "🌲 Hòa Bình" },
+                { id: "Tất cả", label: t.provAll },
+                { id: "Phú Thọ", label: t.provPhuTho },
+                { id: "Vĩnh Phúc", label: t.provVinhPhuc },
+                { id: "Hòa Bình", label: t.provHoaBinh },
               ].map((reg) => (
                 <button
                   key={reg.id}
@@ -2568,8 +3007,26 @@ export default function Home() {
               ))}
             </div>
             <div className="season-filter" role="group" aria-label="Lọc địa điểm theo mùa">
-              <span>ĐI THEO MÙA</span>
-              {seasonFilters.map((item) => <button key={item} className={seasonFilter === item ? "is-active" : ""} onClick={() => { setSeasonFilter(item); setVisibleCount(8); }}>{item === "Đang hợp mùa" ? `Hợp tháng ${currentMonth}` : item}</button>)}
+              <span>{t.seasonLabel}</span>
+              {seasonFilters.map((item) => (
+                <button
+                  key={item}
+                  className={seasonFilter === item ? "is-active" : ""}
+                  onClick={() => { setSeasonFilter(item); setVisibleCount(8); }}
+                >
+                  {item === "Đang hợp mùa"
+                    ? `${t.seasonInSeason} (${currentMonth})`
+                    : item === "Mùa xuân"
+                    ? t.seasonSpring
+                    : item === "Mùa hè"
+                    ? t.seasonSummer
+                    : item === "Mùa thu"
+                    ? t.seasonAutumn
+                    : item === "Mùa đông"
+                    ? t.seasonWinter
+                    : t.seasonAll}
+                </button>
+              ))}
             </div>
           </section>
 
@@ -2577,36 +3034,36 @@ export default function Home() {
           <section className="content-section places-section">
             <div className="section-heading section-heading--inline">
               <div>
-                <span className="section-number">02</span>
-                <h2>{query && matchingFoodDishes.length ? `Điểm bán cho “${query}”` : query ? `Kết quả cho “${query}”` : position ? "Gần vị trí của bạn" : "Danh thắng tiêu biểu"}</h2>
-                <p>{isServerSearching ? "Đang tìm kiếm…" : matchingFoodDishes.length ? `${matchingFoodDishes.length} món đặc sản · ${matchingFoodDishes.reduce((total, dish) => total + dish.sellers.length, 0)} điểm bán` : `${locationMessage} · ${filteredPlaces.length} gợi ý phù hợp`}</p>
+                <span className="section-number">{t.section02Num}</span>
+                <h2>{query && matchingFoodDishes.length ? `Điểm bán cho “${query}”` : query ? `Kết quả cho “${query}”` : position ? t.section02TitleNear : t.section02TitleDefault}</h2>
+                <p>{isServerSearching ? "..." : matchingFoodDishes.length ? `${matchingFoodDishes.length} món đặc sản` : `${locationMessage} · ${filteredPlaces.length} gợi ý`}</p>
               </div>
-              {!position && <button className="location-link" onClick={locate}>⌖ Bật định vị</button>}
+              {!position && <button className="location-link" onClick={locate}>{t.locateBtn}</button>}
             </div>
             {matchingFoodDishes.length > 0 && <div className="commerce-search-results">{matchingFoodDishes.map((dish) => renderFoodMarket(dish, "search"))}</div>}
             {filteredPlaces.length ? (
               <>
                 <div className="place-grid">{filteredPlaces.slice(0, visibleCount).map((place) => renderPlaceCard(place))}</div>
                 {filteredPlaces.length > visibleCount && (
-                  <button className="load-more" onClick={() => setVisibleCount((count) => count + 4)}>Xem thêm {Math.min(4, filteredPlaces.length - visibleCount)} địa điểm →</button>
+                  <button className="load-more" onClick={() => setVisibleCount((count) => count + 4)}>{t.loadMorePlaces}</button>
                 )}
               </>
             ) : matchingFoodDishes.length === 0 ? (
-              <div className="empty-state"><b>Chưa tìm thấy kết quả</b><span>Thử tìm “săn mây”, “Đền Hùng”, “Tam Đảo”, “Mai Châu” hoặc chọn danh mục phía trên.</span></div>
+              <div className="empty-state"><b>{t.noResultsTitle}</b><span>{t.noResultsDesc}</span></div>
             ) : null}
           </section>
 
           {/* ITINERARY TEASER */}
           <section className="content-section itinerary-teaser">
             <div className="itinerary-teaser__copy">
-              <span className="section-number section-number--light">03</span>
-              <span className="kicker kicker--light">TRỢ LÝ LỊCH TRÌNH THÔNG MINH</span>
-              <h2>Hai ngày trọn vẹn,<br /><em>hướng dẫn viên lo hết.</em></h2>
-              <p>Tự động tối ưu 4 yếu tố: Tham quan · Ăn uống · Lưu trú · Di chuyển & thời gian trên toàn địa bàn 3 tỉnh Phú Thọ, Vĩnh Phúc, Hòa Bình.</p>
-              <button className="button button--cream" onClick={() => setActiveTab("trip")}>Lập lịch trình thông minh ngay →</button>
+              <span className="section-number section-number--light">{t.section03Num}</span>
+              <span className="kicker kicker--light">{t.section03Kicker}</span>
+              <h2>{t.section03Title1}<br /><em>{t.section03Title2}</em></h2>
+              <p>{t.section03Desc}</p>
+              <button className="button button--cream" onClick={() => setActiveTab("trip")}>{t.planTripSmartBtn}</button>
             </div>
             <div className="mini-itinerary">
-              <div className="mini-itinerary__top"><span>LỊCH TRÌNH GỢI Ý</span><b>2N1Đ</b></div>
+              <div className="mini-itinerary__top"><span>{t.suggestedTourTitle}</span><b>2N1Đ</b></div>
               {[places[0], places[7] || places[1], places[2], places[12] || places[3]].map((place, index) => (
                 <div className="mini-stop" key={place.id}>
                   <span className="mini-stop__time">{place.bestStart}</span>
@@ -2615,16 +3072,16 @@ export default function Home() {
                   <span><b>{place.shortName}</b><small>{place.region} · {place.category}</small></span>
                 </div>
               ))}
-              <div className="route-summary"><span>⌁ Tuyến liên kết thuận tiện đường sá</span><span>Chi phí rõ ràng theo từng ngày</span></div>
+              <div className="route-summary"><span>{t.routeSummary1}</span><span>{t.routeSummary2}</span></div>
             </div>
           </section>
 
           {/* LOCAL GASTRONOMY (BẢN ĐỒ VỊ GIÁC) */}
           <section className="content-section local-guide" id="food-browser-section">
             <div className="local-guide__intro">
-              <span className="kicker">BẢN ĐỒ ẨM THỰC ĐẶC SẢN</span>
-              <h2>Mỗi vùng đất,<br />một phong vị riêng.</h2>
-              <p>Thưởng thức tinh hoa ẩm thực bản địa theo từng cung đường: cá lăng Đất Tổ, thịt chua Thanh Sơn, ngọn su su Tam Đảo, cỗ lá lợn mán Mai Châu.</p>
+              <span className="kicker">{t.foodKicker}</span>
+              <h2>{t.foodTitle1}<br />{t.foodTitle2}</h2>
+              <p>{t.foodDesc}</p>
             </div>
             <div className="food-browser">
               <div className="food-region-tabs" role="tablist" aria-label="Chọn tỉnh ẩm thực">
@@ -2653,7 +3110,7 @@ export default function Home() {
                           <p className="food-row__desc">{food.description}</p>
                           <div className="food-row__footer">
                             <span className="food-row__season">🗓️ {food.season}</span>
-                            <span className="food-row__toggle">{activeFoodId === food.id ? "Thu gọn ▲" : "Xem điểm bán OCOP ▼"}</span>
+                            <span className="food-row__toggle">{activeFoodId === food.id ? t.foodToggleHide : t.foodToggleView}</span>
                           </div>
                         </div>
                       </button>
@@ -3664,30 +4121,30 @@ export default function Home() {
 
           <div className="profile-grid">
             <article className="passport-card">
-              <span className="kicker kicker--light">HỘ CHIẾU DU LỊCH 3 TỈNH</span>
-              <h2>Sưu tập dấu chân,<br />mở khóa đặc quyền.</h2>
+              <span className="kicker kicker--light">{t.passportKicker}</span>
+              <h2>{t.passportTitle1}<br />{t.passportTitle2}</h2>
               <div className="stamp-row">
                 <span className="stamp is-earned">ĐH<small>Đền Hùng</small></span>
                 <span className="stamp is-earned">TĐ<small>Tam Đảo</small></span>
                 <span className="stamp">MC<small>Mai Châu</small></span>
                 <span className="stamp">TT<small>Thanh Thủy</small></span>
               </div>
-              <p><b>2 / 4</b> điểm đã check-in · Thêm 2 dấu để nhận quà tặng lưu niệm Đất Tổ</p>
+              <p><b>2 / 4</b> {t.passportProgress}</p>
             </article>
             <article className="booking-card">
-              <span>ĐẶT DỊCH VỤ NHANH</span>
-              <h2>Mọi thứ cho chuyến đi của bạn</h2>
+              <span>{t.quickBookKicker}</span>
+              <h2>{t.quickBookTitle}</h2>
               <button onClick={() => { setActiveTab("trip"); showToast("Đã mở trợ lý lập lịch trình tour"); }}>
-                <i>▣</i><b>Thiết kế tour theo yêu cầu</b><small>Tự động lập tuyến trong 1 phút</small><em>→</em>
+                <i>▣</i><b>{t.btnTourDesignTitle}</b><small>{t.btnTourDesignSub}</small><em>→</em>
               </button>
               <button onClick={() => { setCategory("Nghỉ dưỡng & chữa lành"); setSelectedRegion("Tất cả"); setActiveTab("explore"); showToast("Chọn một điểm nghỉ dưỡng rồi mở Chỗ nghỉ gần đây"); }}>
-                <i>⌂</i><b>Khách sạn & Homestay</b><small>Phú Thọ · Tam Đảo · Mai Châu · Kim Bôi</small><em>→</em>
+                <i>⌂</i><b>{t.btnHotelsTitle}</b><small>{t.btnHotelsSub}</small><em>→</em>
               </button>
               <button onClick={() => { setVouchersModalOpen(true); }}>
-                <i>🎁</i><b>Kho Voucher & Mã Khuyến Mãi</b><small>Ưu đãi đặt đặc sản OCOP và dịch vụ tour</small><em>→</em>
+                <i>🎁</i><b>{t.btnVouchersTitle}</b><small>{t.btnVouchersSub}</small><em>→</em>
               </button>
               <button onClick={() => { setCartOpen(true); setCartDrawerTab("cart"); }}>
-                <i>◇</i><b>Đặc sản làm quà (OCOP)</b><small>Thịt chua, ngọn su su, cơm lam… ({cartQuantity} món trong giỏ)</small><em>→</em>
+                <i>◇</i><b>{t.btnOcopTitle}</b><small>{t.btnOcopSub} ({cartQuantity} món)</small><em>→</em>
               </button>
 
               {/* ROLE-BASED ORDER MANAGEMENT VISIBILITY */}
@@ -3714,7 +4171,7 @@ export default function Home() {
                   style={{ background: "#eff6ff", border: "1.5px solid #93c5fd" }}
                 >
                   <i>📦</i>
-                  <b style={{ color: "#1d4ed8" }}>Đơn mua của tôi ({userOrderList.length} đơn)</b>
+                  <b style={{ color: "#1d4ed8" }}>{t.myOrders} ({userOrderList.length} đơn)</b>
                   <small>
                     {userOrderList.length > 0
                       ? `${userOrderList.length} đơn hàng đã đặt · Bấm để xem và theo dõi tiến độ giao hàng`
@@ -3725,10 +4182,10 @@ export default function Home() {
               )}
             </article>
             <article className="partner-card">
-              <span>DÀNH CHO ĐỐI TÁC ĐỊA PHƯƠNG</span>
-              <h2>Quảng bá dịch vụ đến du khách.</h2>
-              <p>Nhà hàng, homestay, hợp tác xã OCOP và đơn vị lữ hành có thể đăng ký gian hàng xác minh.</p>
-              <button className="button button--outline" onClick={() => showToast("Cảm ơn bạn! Thông tin đăng ký đối tác đã được ghi nhận.")}>Đăng ký đối tác →</button>
+              <span>{t.partnerKicker}</span>
+              <h2>{t.partnerTitle}</h2>
+              <p>{t.partnerDesc}</p>
+              <button className="button button--outline" onClick={() => showToast("Cảm ơn bạn! Thông tin đăng ký đối tác đã được ghi nhận.")}>{t.btnRegisterPartner}</button>
             </article>
           </div>
         </section>
@@ -5544,8 +6001,8 @@ function doPost(e) {
           setCartDrawerTab("cart");
           setCartOpen(true);
         }}
-        aria-label={`Giỏ hàng (${cartQuantity} món)`}
-        title="Mở giỏ hàng đặc sản OCOP"
+        aria-label={`${t.floatingCartLabel} (${cartQuantity})`}
+        title={t.floatingCartLabel}
       >
         <div className="floating-cart-bubble__icon-wrapper">
           <span>🛒</span>
@@ -5554,9 +6011,9 @@ function doPost(e) {
           )}
         </div>
         <div className="floating-cart-bubble__text">
-          <span className="floating-cart-bubble__label">Giỏ hàng</span>
+          <span className="floating-cart-bubble__label">{t.floatingCartLabel}</span>
           <span className="floating-cart-bubble__sub">
-            {cartQuantity > 0 ? `${cartQuantity} món · ${formatPrice(cartSubtotal)}` : "Đặc sản OCOP"}
+            {cartQuantity > 0 ? `${cartQuantity} · ${formatPrice(cartSubtotal)}` : t.floatingCartSubDefault}
           </span>
         </div>
       </button>
