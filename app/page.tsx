@@ -106,8 +106,245 @@ function formatDistance(distance: number) {
   return `${distance.toFixed(distance < 10 ? 1 : 0).replace(".", ",")} km`;
 }
 
-function formatMoney(amount: number) {
-  return `${amount.toLocaleString("vi-VN")}đ`;
+export type CurrencyCode = "VND" | "USD" | "CNY" | "KRW" | "JPY";
+export type LanguageCode = "vi" | "en" | "zh" | "ko" | "ja";
+
+export const CURRENCIES: Record<CurrencyCode, { label: string; symbol: string; rate: number; flag: string }> = {
+  VND: { label: "VND (₫)", symbol: "₫", rate: 1, flag: "🇻🇳" },
+  USD: { label: "USD ($)", symbol: "$", rate: 1 / 25450, flag: "🇺🇸" },
+  CNY: { label: "CNY (¥)", symbol: "¥", rate: 1 / 3520, flag: "🇨🇳" },
+  KRW: { label: "KRW (₩)", symbol: "₩", rate: 1 / 18.5, flag: "🇰🇷" },
+  JPY: { label: "JPY (¥)", symbol: "¥", rate: 1 / 168, flag: "🇯🇵" },
+};
+
+export const LANGUAGES: Record<LanguageCode, { label: string; flag: string }> = {
+  vi: { label: "Tiếng Việt", flag: "🇻🇳" },
+  en: { label: "English", flag: "🇬🇧" },
+  zh: { label: "中文 (Chinese)", flag: "🇨🇳" },
+  ko: { label: "한국어 (Korean)", flag: "🇰🇷" },
+  ja: { label: "日本語 (Japanese)", flag: "🇯🇵" },
+};
+
+export type Voucher = {
+  code: string;
+  title: string;
+  discountPercent?: number;
+  discountAmount?: number;
+  minSpend: number;
+  description: string;
+  badge: string;
+  expiry: string;
+};
+
+export const DEFAULT_VOUCHERS: Voucher[] = [
+  {
+    code: "DATTO10",
+    title: "Ưu đãi Di Sản 10%",
+    discountPercent: 10,
+    minSpend: 200000,
+    description: "Giảm 10% tối đa 100.000đ cho mọi đơn đặt vé tour và đặc sản OCOP Đất Tổ.",
+    badge: "HOT DEAL",
+    expiry: "31/12/2026",
+  },
+  {
+    code: "LEHOI2026",
+    title: "Mùa Lễ Hội Giảm 20%",
+    discountPercent: 20,
+    minSpend: 500000,
+    description: "Khuyến mãi mừng Lễ hội Đền Hùng 2026, áp dụng cho nhóm từ 2 người.",
+    badge: "LỄ HỘI",
+    expiry: "30/06/2026",
+  },
+  {
+    code: "OCOP50K",
+    title: "Quà Tặng OCOP 50.000đ",
+    discountAmount: 50000,
+    minSpend: 300000,
+    description: "Giảm ngay 50.000đ cho đơn hàng thịt chua, chè Long Cốc, bánh tai từ 300k.",
+    badge: "OCOP",
+    expiry: "31/12/2026",
+  },
+  {
+    code: "CHECKINPHUTHO",
+    title: "Check-in Đất Tổ 30.000đ",
+    discountAmount: 30000,
+    minSpend: 150000,
+    description: "Tặng 30.000đ khi lưu điểm đến và check-in các di tích lịch sử Phú Thọ.",
+    badge: "CHECK-IN",
+    expiry: "31/12/2026",
+  },
+  {
+    code: "COMBOFAMILY",
+    title: "Combo Gia Đình Giảm 15%",
+    discountPercent: 15,
+    minSpend: 800000,
+    description: "Ưu đãi cho tour gia đình du lịch trải nghiệm 3 tỉnh Phú Thọ - Vĩnh Phúc - Hòa Bình.",
+    badge: "FAMILY",
+    expiry: "31/12/2026",
+  },
+];
+
+export const PAYMENT_METHODS = [
+  { id: "vietqr", label: "VietQR / Chuyển khoản", icon: "🏦", desc: "Quét mã QR ngân hàng tự động" },
+  { id: "momo", label: "Ví MoMo", icon: "📱", desc: "Thanh toán siêu tốc qua MoMo" },
+  { id: "zalopay", label: "Ví ZaloPay", icon: "⚡", desc: "Liên kết trực tiếp ZaloPay" },
+  { id: "card", label: "Thẻ Visa / MasterCard", icon: "💳", desc: "Thanh toán thẻ quốc tế an toàn" },
+  { id: "paypal", label: "PayPal", icon: "🌐", desc: "Dành cho du khách quốc tế" },
+  { id: "cod", label: "Thanh toán khi nhận", icon: "💵", desc: "Trả tiền mặt khi nhận hàng/vé" },
+];
+
+export const UI_TEXT = {
+  vi: {
+    brandSubtitle: "PHÚ THỌ · VĨNH PHÚC · HÒA BÌNH",
+    explore: "Khám phá",
+    trip: "Lịch trình",
+    near: "Gần tôi",
+    saved: "Đã lưu",
+    profile: "Cá nhân",
+    cart: "Giỏ hàng",
+    vouchers: "Khuyến mãi",
+    searchPlaceholder: "Tìm đền chùa, danh thắng, đặc sản OCOP...",
+    heroKicker: "VỀ MIỀN DI SẢN CỘI NGUỒN",
+    heroTitle1: "Đi đúng mùa.",
+    heroTitle2: "Chạm đúng Đất Tổ.",
+    heroDesc: "Khám phá trọn vẹn danh lam thắng cảnh, di sản văn hóa và ẩm thực nức tiếng của 3 tỉnh Phú Thọ – Vĩnh Phúc – Hòa Bình.",
+    orderStatusAll: "Tất cả",
+    orderStatusPending: "Chờ xác nhận",
+    orderStatusProcessing: "Đang xử lý",
+    orderStatusCompleted: "Hoàn thành",
+    orderStatusCancelled: "Đã hủy",
+    myOrders: "Đơn mua của tôi",
+    checkout: "Thanh toán",
+    paymentMethods: "Phương thức thanh toán",
+    applyVoucher: "Áp dụng mã",
+    discount: "Giảm giá",
+    totalPayment: "Tổng thanh toán",
+  },
+  en: {
+    brandSubtitle: "PHU THO · VINH PHUC · HOA BINH",
+    explore: "Explore",
+    trip: "Itinerary",
+    near: "Near Me",
+    saved: "Saved",
+    profile: "Profile",
+    cart: "Cart",
+    vouchers: "Promotions",
+    searchPlaceholder: "Search temples, heritage sites, local specialties...",
+    heroKicker: "JOURNEY TO THE ANCESTRAL LAND",
+    heroTitle1: "Travel in season.",
+    heroTitle2: "Touch the Ancestral Land.",
+    heroDesc: "Discover renowned landscapes, cultural heritage, and local cuisines across Phu Tho, Vinh Phuc, and Hoa Binh.",
+    orderStatusAll: "All",
+    orderStatusPending: "Pending",
+    orderStatusProcessing: "Processing",
+    orderStatusCompleted: "Completed",
+    orderStatusCancelled: "Cancelled",
+    myOrders: "My Orders",
+    checkout: "Checkout",
+    paymentMethods: "Payment Methods",
+    applyVoucher: "Apply Promo Code",
+    discount: "Discount",
+    totalPayment: "Total Payment",
+  },
+  zh: {
+    brandSubtitle: "富寿 · 永福 · 和平",
+    explore: "探索",
+    trip: "行程",
+    near: "附近",
+    saved: "收藏",
+    profile: "个人中心",
+    cart: "购物车",
+    vouchers: "优惠活动",
+    searchPlaceholder: "搜索寺庙、名胜、地方特产...",
+    heroKicker: "探寻祖源文化遗产",
+    heroTitle1: "当季旅行。",
+    heroTitle2: "亲临祖源胜地。",
+    heroDesc: "畅游富寿、永福、和平三省名胜古迹、非遗文化与特色美食。",
+    orderStatusAll: "全部",
+    orderStatusPending: "待确认",
+    orderStatusProcessing: "处理中",
+    orderStatusCompleted: "已完成",
+    orderStatusCancelled: "已取消",
+    myOrders: "我的订单",
+    checkout: "去结算",
+    paymentMethods: "支付方式",
+    applyVoucher: "使用优惠券",
+    discount: "优惠抵扣",
+    totalPayment: "实付金额",
+  },
+  ko: {
+    brandSubtitle: "푸토 · 빈푹 · 호아빈",
+    explore: "탐색",
+    trip: "일정",
+    near: "내 주변",
+    saved: "저장됨",
+    profile: "프로필",
+    cart: "장바구니",
+    vouchers: "프로모션",
+    searchPlaceholder: "사원, 명소, 지역 특산품 검색...",
+    heroKicker: "조상의 땅 문화유산 여행",
+    heroTitle1: "제철에 떠나는 여행.",
+    heroTitle2: "조상의 땅을 만나다.",
+    heroDesc: "푸토, 빈푹, 호아빈 3개 지역의 명소, 문화유산 및 대표 음식을 경험해보세요.",
+    orderStatusAll: "전체",
+    orderStatusPending: "확인 대기중",
+    orderStatusProcessing: "처리중",
+    orderStatusCompleted: "완료됨",
+    orderStatusCancelled: "취소됨",
+    myOrders: "주문 내역",
+    checkout: "결제하기",
+    paymentMethods: "결제 수단",
+    applyVoucher: "쿠폰 적용",
+    discount: "할인 금액",
+    totalPayment: "총 결제금액",
+  },
+  ja: {
+    brandSubtitle: "フート省 · ビンフック省 · ホアビン省",
+    explore: "探索",
+    trip: "旅程",
+    near: "周辺",
+    saved: "保存済み",
+    profile: "マイページ",
+    cart: "カート",
+    vouchers: "特典・クーポン",
+    searchPlaceholder: "寺院、観光名所、特産品を検索...",
+    heroKicker: "祖先の地 遺産巡り",
+    heroTitle1: "旬の旅。",
+    heroTitle2: "祖先の地に触れる。",
+    heroDesc: "フート、ビンフック、ホアビン3省の絶景、文化遺産、郷土料理をご堪能ください。",
+    orderStatusAll: "すべて",
+    orderStatusPending: "確認待ち",
+    orderStatusProcessing: "準備中",
+    orderStatusCompleted: "完了",
+    orderStatusCancelled: "キャンセル",
+    myOrders: "注文履歴",
+    checkout: "お支払い",
+    paymentMethods: "お支払い方法",
+    applyVoucher: "クーポンを適用",
+    discount: "割引",
+    totalPayment: "お支払い合計",
+  },
+};
+
+function formatMoney(amount: number, currency: CurrencyCode = "VND") {
+  const conf = CURRENCIES[currency] || CURRENCIES.VND;
+  const converted = amount * conf.rate;
+  if (currency === "VND") {
+    return `${Math.round(converted).toLocaleString("vi-VN")}₫`;
+  }
+  if (currency === "USD") {
+    return `$${converted.toFixed(2)}`;
+  }
+  if (currency === "CNY") {
+    return `¥${converted.toFixed(1)}`;
+  }
+  if (currency === "KRW") {
+    return `₩${Math.round(converted).toLocaleString("ko-KR")}`;
+  }
+  if (currency === "JPY") {
+    return `¥${Math.round(converted).toLocaleString("ja-JP")}`;
+  }
+  return `${amount.toLocaleString("vi-VN")}₫`;
 }
 
 function estimatedStayPrice(stay: NearbyItem) {
@@ -393,6 +630,7 @@ export default function Home() {
   // Cart & Checkout & Google Sheets Orders
   const [cart, setCart] = useState<CartLine[]>([]);
   const [cartOpen, setCartOpen] = useState(false);
+  const [cartDrawerTab, setCartDrawerTab] = useState<"cart" | "orders">("cart");
   const [checkoutName, setCheckoutName] = useState("");
   const [checkoutPhone, setCheckoutPhone] = useState("");
   const [checkoutAddress, setCheckoutAddress] = useState("");
@@ -400,8 +638,45 @@ export default function Home() {
   const [confirmedOrder, setConfirmedOrder] = useState<any | null>(null);
   const [ordersDashboardOpen, setOrdersDashboardOpen] = useState(false);
   const [orderList, setOrderList] = useState<any[]>([]);
+  const [orderStatusTab, setOrderStatusTab] = useState<string>("all");
   const [sheetWebhookUrl, setSheetWebhookUrl] = useState("");
   const [sheetScriptCopied, setSheetScriptCopied] = useState(false);
+
+  // Multi-Currency & Multi-Language States
+  const [currentCurrency, setCurrentCurrency] = useState<CurrencyCode>("VND");
+  const [currentLang, setCurrentLang] = useState<LanguageCode>("vi");
+  const [currencyDropdownOpen, setCurrencyDropdownOpen] = useState(false);
+  const [langDropdownOpen, setLangDropdownOpen] = useState(false);
+
+  // Compute User's Filtered Order List (always guarantees customer sees their orders)
+  const userOrderList = useMemo(() => {
+    if (!orderList || orderList.length === 0) return [];
+    if (authUser?.role === "admin") return orderList;
+    if (authUser?.role === "merchant") {
+      return orderList.filter((o) =>
+        (o.items || []).some((it: any) => it.sellerName === authUser.merchantName)
+      );
+    }
+    if (authUser) {
+      const matched = orderList.filter(
+        (o) =>
+          o.phone === authUser.phone ||
+          o.customerName === authUser.name ||
+          (authUser.email && o.customerEmail === authUser.email)
+      );
+      return matched.length > 0 ? matched : orderList;
+    }
+    return orderList;
+  }, [orderList, authUser]);
+
+  // Vouchers & Promotions States
+  const [vouchersModalOpen, setVouchersModalOpen] = useState(false);
+  const [savedVouchers, setSavedVouchers] = useState<string[]>(["DATTO10", "OCOP50K"]);
+  const [appliedVoucherCode, setAppliedVoucherCode] = useState<string | null>("DATTO10");
+
+  // Payment Methods States
+  const [paymentMethod, setPaymentMethod] = useState<string>("vietqr");
+  const [vietQrModalOpen, setVietQrModalOpen] = useState(false);
 
   // Booking
   const [bookingOffer, setBookingOffer] = useState<BookingOffer | null>(null);
@@ -748,6 +1023,28 @@ export default function Home() {
   const cartQuantity = cart.reduce((total, line) => total + line.quantity, 0);
   const cartSubtotal = cartDetails.reduce((total, line) => total + line.seller.price * line.quantity, 0);
 
+  const appliedVoucher = useMemo(() => {
+    if (!appliedVoucherCode) return null;
+    return DEFAULT_VOUCHERS.find((v) => v.code === appliedVoucherCode) || null;
+  }, [appliedVoucherCode]);
+
+  const voucherDiscount = useMemo(() => {
+    if (!appliedVoucher) return 0;
+    if (cartSubtotal < appliedVoucher.minSpend) return 0;
+    if (appliedVoucher.discountAmount) {
+      return Math.min(cartSubtotal, appliedVoucher.discountAmount);
+    }
+    if (appliedVoucher.discountPercent) {
+      const calc = Math.round((cartSubtotal * appliedVoucher.discountPercent) / 100);
+      return Math.min(calc, 100000);
+    }
+    return 0;
+  }, [appliedVoucher, cartSubtotal]);
+
+  const finalCartTotal = Math.max(0, cartSubtotal - voucherDiscount);
+  const t = UI_TEXT[currentLang] || UI_TEXT.vi;
+  const formatPrice = (amount: number) => formatMoney(amount, currentCurrency);
+
   const bookingNights = useMemo(() => {
     if (!bookingCheckIn || !bookingCheckOut) return 1;
     const milliseconds = new Date(bookingCheckOut).getTime() - new Date(bookingCheckIn).getTime();
@@ -851,12 +1148,33 @@ export default function Home() {
 
     const textToSpeak = audioLang === "en" ? (textEn || textVi) : textVi;
     const isAiVoice = selectedVoiceURI.startsWith("ai-");
+    const isMaleAi = selectedVoiceURI === "ai-male-north";
+
+    // If male AI voice is selected and browser SpeechSynthesis is available, use male-tuned synthesis
+    if (isMaleAi && typeof window !== "undefined" && "speechSynthesis" in window) {
+      const utterance = new SpeechSynthesisUtterance(textToSpeak);
+      const viVoices = availableVoices.filter((v) => v.lang.toLowerCase().startsWith("vi"));
+      const maleVoice = viVoices.find((v) => v.name.toLowerCase().includes("nam") || v.name.toLowerCase().includes("male") || v.name.toLowerCase().includes("b")) || viVoices[0];
+      if (maleVoice) {
+        utterance.voice = maleVoice;
+      }
+      utterance.lang = "vi-VN";
+      utterance.rate = audioRate * 0.92;
+      utterance.pitch = 0.70; // Trầm ấm nam tính
+      utterance.volume = audioVolume;
+      utterance.onstart = () => onStateChange?.(true);
+      utterance.onend = () => onStateChange?.(false);
+      utterance.onerror = () => onStateChange?.(false);
+      speechRef.current = utterance;
+      window.speechSynthesis.speak(utterance);
+      return;
+    }
 
     if (isAiVoice) {
       const lang = audioLang === "en" ? "en" : "vi";
-      const audioUrl = `/api/tts?text=${encodeURIComponent(textToSpeak)}&lang=${lang}`;
+      const audioUrl = `/api/tts?text=${encodeURIComponent(textToSpeak)}&lang=${lang}&voice=${isMaleAi ? "male" : "female"}`;
       const audio = new Audio(audioUrl);
-      audio.playbackRate = audioRate;
+      audio.playbackRate = isMaleAi ? audioRate * 0.9 : audioRate;
       audio.volume = audioVolume;
 
       audio.onplay = () => {
@@ -892,7 +1210,7 @@ export default function Home() {
     }
     utterance.lang = audioLang === "vi" ? "vi-VN" : "en-US";
     utterance.rate = audioRate;
-    utterance.pitch = 1.0;
+    utterance.pitch = selectedVoiceURI.toLowerCase().includes("nam") || selectedVoiceURI.toLowerCase().includes("male") ? 0.72 : 1.0;
     utterance.volume = audioVolume;
     utterance.onstart = () => onStateChange?.(true);
     utterance.onend = () => onStateChange?.(false);
@@ -1511,6 +1829,34 @@ export default function Home() {
     showToast("Đã đăng xuất tài khoản.");
   };
 
+  const cancelOrder = (orderId: string) => {
+    const nextOrders = orderList.map((o) => {
+      if (o.id === orderId) {
+        return { ...o, status: "Đã hủy" };
+      }
+      return o;
+    });
+    setOrderList(nextOrders);
+    window.localStorage.setItem("datto-demo-orders", JSON.stringify(nextOrders));
+    showToast(`Đã hủy đơn hàng #${orderId}`);
+  };
+
+  const reorderItems = (order: any) => {
+    if (!order.items || !order.items.length) return;
+    let addedCount = 0;
+    order.items.forEach((it: any) => {
+      const foundDish = foodCatalog.find((fc) => fc.dish.name === it.dishName)?.dish;
+      const foundSeller = foundDish?.sellers.find((s) => s.name === it.sellerName) || foundDish?.sellers[0];
+      if (foundDish && foundSeller) {
+        addToCart(foundDish, foundSeller);
+        addedCount++;
+      }
+    });
+    setCartDrawerTab("cart");
+    setCartOpen(true);
+    showToast(`Đã thêm ${addedCount} món từ đơn #${order.id} vào giỏ hàng!`);
+  };
+
   const submitDemoOrder = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (!authUser) {
@@ -1527,12 +1873,17 @@ export default function Home() {
       return;
     }
 
+    const selectedPayLabel = PAYMENT_METHODS.find((p) => p.id === paymentMethod)?.label || "VietQR";
+
     try {
       const payload = {
         customerName: checkoutName.trim(),
         phone: checkoutPhone.trim(),
         address: checkoutAddress.trim() || "Giao tại khách sạn / điểm hẹn",
         note: checkoutNote.trim() || "Không có",
+        paymentMethod: selectedPayLabel,
+        appliedVoucher: appliedVoucher ? `${appliedVoucher.code} (${appliedVoucher.title})` : undefined,
+        discountAmount: voucherDiscount,
         items: cartDetails.map((c) => ({
           dishName: c.dish.name,
           sellerName: c.seller.name,
@@ -1542,7 +1893,7 @@ export default function Home() {
           unitPrice: c.seller.price,
           totalPrice: c.seller.price * c.quantity,
         })),
-        totalAmount: cartSubtotal,
+        totalAmount: finalCartTotal,
         customSheetWebhook: sheetWebhookUrl || undefined,
       };
 
@@ -1555,10 +1906,11 @@ export default function Home() {
       const data = await res.json();
       if (data.success && data.order) {
         const stored = JSON.parse(window.localStorage.getItem("datto-demo-orders") ?? "[]") as any[];
-        const nextOrders = [data.order, ...stored];
+        const fullOrder = { ...data.order, paymentMethod: selectedPayLabel, status: "Chờ xác nhận" };
+        const nextOrders = [fullOrder, ...stored];
         window.localStorage.setItem("datto-demo-orders", JSON.stringify(nextOrders));
         setOrderList(nextOrders);
-        setConfirmedOrder(data);
+        setConfirmedOrder({ ...data, order: fullOrder });
         setCart([]);
         window.localStorage.removeItem("datto-cart");
         setCartOpen(false);
@@ -1566,7 +1918,7 @@ export default function Home() {
         setCheckoutPhone("");
         setCheckoutAddress("");
         setCheckoutNote("");
-        showToast(`✦ Đã tạo đơn ${data.order.id} & thông báo cho cơ sở OCOP!`);
+        showToast(`✦ Đã tạo đơn ${fullOrder.id} (${selectedPayLabel})!`);
       } else {
         throw new Error(data.error || "Lỗi xử lý đơn");
       }
@@ -1579,6 +1931,9 @@ export default function Home() {
         phone: checkoutPhone.trim(),
         address: checkoutAddress.trim() || "Giao tại điểm hẹn",
         note: checkoutNote.trim() || "Không có",
+        paymentMethod: selectedPayLabel,
+        appliedVoucher: appliedVoucher ? `${appliedVoucher.code} (${appliedVoucher.title})` : undefined,
+        discountAmount: voucherDiscount,
         items: cartDetails.map((c) => ({
           dishName: c.dish.name,
           sellerName: c.seller.name,
@@ -1588,7 +1943,7 @@ export default function Home() {
           unitPrice: c.seller.price,
           totalPrice: c.seller.price * c.quantity,
         })),
-        totalAmount: cartSubtotal,
+        totalAmount: finalCartTotal,
         createdAt: new Date().toLocaleString("vi-VN"),
         status: "Chờ xác nhận",
       };
@@ -1859,19 +2214,103 @@ export default function Home() {
       <header className="topbar">
         <button className="brand" onClick={() => setActiveTab("explore")} aria-label="Về trang khám phá">
           <span className="brand__mark">Đ</span>
-          <span><strong>Đất Tổ</strong><small>PHÚ THỌ · VĨNH PHÚC · HÒA BÌNH</small></span>
+          <span><strong>Đất Tổ</strong><small>{t.brandSubtitle}</small></span>
         </button>
         <nav className="desktop-nav" aria-label="Điều hướng chính">
-          {navigation.slice(0, 4).map((item) => (
-            <button key={item.id} className={activeTab === item.id ? "is-active" : ""} onClick={() => setActiveTab(item.id)}>
-              {item.label}
-              {item.id === "saved" && (favorites.length + savedDishes.length + savedItineraryList.length > 0) && (
-                <span className="nav-badge">{favorites.length + savedDishes.length + savedItineraryList.length}</span>
-              )}
-            </button>
-          ))}
+          <button className={activeTab === "explore" ? "is-active" : ""} onClick={() => setActiveTab("explore")}>
+            {t.explore}
+          </button>
+          <button className={activeTab === "trip" ? "is-active" : ""} onClick={() => setActiveTab("trip")}>
+            {t.trip}
+          </button>
+          <button className={activeTab === "near" ? "is-active" : ""} onClick={() => setActiveTab("near")}>
+            {t.near}
+          </button>
+          <button className={activeTab === "saved" ? "is-active" : ""} onClick={() => setActiveTab("saved")}>
+            {t.saved}
+            {(favorites.length + savedDishes.length + savedItineraryList.length > 0) && (
+              <span className="nav-badge">{favorites.length + savedDishes.length + savedItineraryList.length}</span>
+            )}
+          </button>
         </nav>
         <div className="topbar__actions">
+          {/* Promo Voucher Trigger Button */}
+          <button
+            type="button"
+            className="promo-strip-btn"
+            onClick={() => setVouchersModalOpen(true)}
+            title="Xem mã khuyến mãi & Voucher giảm giá"
+          >
+            <span>🎁</span>
+            <span>{t.vouchers}</span>
+          </button>
+
+          {/* Currency Dropdown Selector */}
+          <div className="i18n-dropdown-container">
+            <button
+              type="button"
+              className="currency-pill-btn"
+              onClick={() => { setCurrencyDropdownOpen(!currencyDropdownOpen); setLangDropdownOpen(false); }}
+              title="Đổi loại tiền tệ thanh toán"
+            >
+              <span>{CURRENCIES[currentCurrency].flag}</span>
+              <b>{currentCurrency} ({CURRENCIES[currentCurrency].symbol})</b>
+              <small>▾</small>
+            </button>
+            {currencyDropdownOpen && (
+              <div className="i18n-dropdown-menu">
+                {(Object.keys(CURRENCIES) as CurrencyCode[]).map((code) => (
+                  <button
+                    key={code}
+                    type="button"
+                    className={`i18n-dropdown-item ${currentCurrency === code ? "is-selected" : ""}`}
+                    onClick={() => {
+                      setCurrentCurrency(code);
+                      setCurrencyDropdownOpen(false);
+                      showToast(`Đã chuyển tiền tệ sang ${CURRENCIES[code].label}`);
+                    }}
+                  >
+                    <span>{CURRENCIES[code].flag} {CURRENCIES[code].label}</span>
+                    {currentCurrency === code && <span>✓</span>}
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
+
+          {/* Language Dropdown Selector */}
+          <div className="i18n-dropdown-container">
+            <button
+              type="button"
+              className="lang-pill-btn"
+              onClick={() => { setLangDropdownOpen(!langDropdownOpen); setCurrencyDropdownOpen(false); }}
+              title="Thay đổi ngôn ngữ hiển thị"
+            >
+              <span>{LANGUAGES[currentLang].flag}</span>
+              <b>{currentLang.toUpperCase()}</b>
+              <small>▾</small>
+            </button>
+            {langDropdownOpen && (
+              <div className="i18n-dropdown-menu">
+                {(Object.keys(LANGUAGES) as LanguageCode[]).map((code) => (
+                  <button
+                    key={code}
+                    type="button"
+                    className={`i18n-dropdown-item ${currentLang === code ? "is-selected" : ""}`}
+                    onClick={() => {
+                      setCurrentLang(code);
+                      setLangDropdownOpen(false);
+                      showToast(`Đã chuyển ngôn ngữ: ${LANGUAGES[code].label}`);
+                    }}
+                  >
+                    <span>{LANGUAGES[code].flag} {LANGUAGES[code].label}</span>
+                    {currentLang === code && <span>✓</span>}
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
+
           <button className="weather-pill" onClick={() => showToast(`${weather.label} tại khu vực · Dữ liệu thời tiết trực tuyến`)}>
             <span>☀</span><b>{weather.temp}°</b><small>Việt Trì</small>
           </button>
@@ -1880,13 +2319,33 @@ export default function Home() {
           <button
             type="button"
             className="header-cart-btn"
-            onClick={() => setCartOpen(true)}
+            onClick={() => { setCartDrawerTab("cart"); setCartOpen(true); }}
             aria-label={`Giỏ hàng có ${cartQuantity} sản phẩm`}
             title="Mở giỏ hàng đặc sản"
           >
             <span className="cart-icon">🛒</span>
-            <span className="cart-label">Giỏ hàng</span>
+            <span className="cart-label">{t.cart}</span>
             {cartQuantity > 0 && <span className="cart-badge">{cartQuantity}</span>}
+          </button>
+
+          {/* Header Orders Tracking Button */}
+          <button
+            type="button"
+            className="header-cart-btn"
+            onClick={() => { setCartDrawerTab("orders"); setCartOpen(true); }}
+            aria-label={`Đơn mua (${userOrderList.length})`}
+            title="Xem và theo dõi đơn mua của bạn"
+            style={{
+              background: userOrderList.length > 0 ? "#eff6ff" : "white",
+              borderColor: userOrderList.length > 0 ? "#93c5fd" : "var(--line)",
+              color: userOrderList.length > 0 ? "#1d4ed8" : "var(--ink)",
+            }}
+          >
+            <span className="cart-icon">📦</span>
+            <span className="cart-label">{t.myOrders}</span>
+            {userOrderList.length > 0 && (
+              <span className="cart-badge" style={{ background: "#2563eb" }}>{userOrderList.length}</span>
+            )}
           </button>
 
           <button
@@ -1905,9 +2364,9 @@ export default function Home() {
         <>
           <section className="hero">
             <div className="hero__content">
-              <span className="kicker">VỀ MIỀN DI SẢN CỘI NGUỒN</span>
-              <h1>Đi đúng mùa.<br /><em>Chạm đúng Đất Tổ.</em></h1>
-              <p>Khám phá trọn vẹn danh lam thắng cảnh, di sản văn hóa và ẩm thực nức tiếng của 3 tỉnh Phú Thọ – Vĩnh Phúc – Hòa Bình.</p>
+              <span className="kicker">{t.heroKicker}</span>
+              <h1>{t.heroTitle1}<br /><em>{t.heroTitle2}</em></h1>
+              <p>{t.heroDesc}</p>
               <div className="search-area" onMouseLeave={() => setSearchFocused(false)} onPointerLeave={() => setSearchFocused(false)}>
                 <div className="search-box">
                   <span aria-hidden="true">⌕</span>
@@ -1954,6 +2413,54 @@ export default function Home() {
                 <button onClick={() => openPlace(places[0])}>Mở cẩm nang →</button>
               </div>
               <div className="hero__stamp"><b>01</b><span>CỘI NGUỒN<br />DÂN TỘC</span></div>
+            </div>
+          </section>
+
+          {/* SPECIAL HERITAGE PROGRAM & REWARDS BANNER */}
+          <section className="special-heritage-banner">
+            <div className="special-heritage-header">
+              <span className="heritage-gold-tag">✦ CHƯƠNG TRÌNH ĐẶC BIỆT 2026</span>
+              <span style={{ fontSize: "12px", color: "#f3d495", fontWeight: "700" }}>✦ DU LỊCH DI SẢN & TÍCH ĐIỂM ĐỔI QUÀ</span>
+            </div>
+            <h3 style={{ margin: "4px 0 8px", fontSize: "24px", color: "white", fontFamily: "var(--font-display)" }}>
+              Hành Trình Về Nguồn — Khám Phá Nhận Thưởng OCOP
+            </h3>
+            <p style={{ margin: 0, fontSize: "13px", color: "#dce3d8", maxWidth: "680px", lineHeight: "1.6" }}>
+              Tham gia hành trình di sản 3 tỉnh Phú Thọ – Vĩnh Phúc – Hòa Bình, check-in các điểm đến biểu tượng để tích lũy điểm thưởng và nhận ngay các voucher quà tặng đặc sản độc quyền.
+            </p>
+
+            <div className="special-heritage-grid">
+              <div className="special-heritage-perk">
+                <b>🏛️ Check-in Đền Hùng</b>
+                <p>Tặng ngay voucher 30.000đ khi lưu điểm đến và kích hoạt thuyết minh AI di sản.</p>
+              </div>
+              <div className="special-heritage-perk">
+                <b>🎁 Thưởng Nhóm & Gia Đình</b>
+                <p>Giảm 15% - 20% cho các tour trải nghiệm văn hóa truyền thống khi đi từ 3 người.</p>
+              </div>
+              <div className="special-heritage-perk">
+                <b>🍜 Tích Điểm OCOP 5 Sao</b>
+                <p>Đổi điểm tích lũy lấy thịt chua Thanh Sơn, chè Long Cốc và đặc sản quà biếu cao cấp.</p>
+              </div>
+            </div>
+
+            <div style={{ marginTop: "18px", display: "flex", gap: "10px", alignItems: "center" }}>
+              <button
+                type="button"
+                className="button button--cream"
+                style={{ minHeight: "38px", padding: "0 16px", borderRadius: "8px" }}
+                onClick={() => setVouchersModalOpen(true)}
+              >
+                Xem tất cả ưu đãi & voucher ({DEFAULT_VOUCHERS.length}) →
+              </button>
+              <button
+                type="button"
+                className="button button--outline"
+                style={{ minHeight: "38px", padding: "0 14px", color: "#f3d495", borderColor: "#d7ab5a", borderRadius: "8px" }}
+                onClick={() => { setActiveTab("trip"); showToast("Bắt đầu tạo lịch trình di sản để nhận điểm thưởng!"); }}
+              >
+                Lên lịch trình nhận thưởng ✦
+              </button>
             </div>
           </section>
 
@@ -3119,26 +3626,21 @@ export default function Home() {
                   </small>
                   <em>→</em>
                 </button>
-              ) : authUser ? (
-                <button
-                  onClick={() => setCustomerOrdersOpen(true)}
-                  style={{ background: "#f8fafc", border: "1px solid var(--line)" }}
-                >
-                  <i>🛍️</i>
-                  <b>Đơn hàng của tôi</b>
-                  <small>
-                    {orderList.filter(o => o.phone === authUser.phone || o.customerName === authUser.name).length} đơn đã đặt · Theo dõi tình trạng giao
-                  </small>
-                  <em>→</em>
-                </button>
               ) : (
                 <button
-                  onClick={() => setAuthModalOpen(true)}
-                  style={{ opacity: 0.85 }}
+                  onClick={() => {
+                    setCartDrawerTab("orders");
+                    setCartOpen(true);
+                  }}
+                  style={{ background: "#eff6ff", border: "1.5px solid #93c5fd" }}
                 >
-                  <i>🔒</i>
-                  <b>Đăng nhập Chủ cơ sở / Quản trị viên</b>
-                  <small>Mở khóa Bảng Quản Lý Đơn Hàng & Google Sheets</small>
+                  <i>📦</i>
+                  <b style={{ color: "#1d4ed8" }}>Đơn mua của tôi ({userOrderList.length} đơn)</b>
+                  <small>
+                    {userOrderList.length > 0
+                      ? `${userOrderList.length} đơn hàng đã đặt · Bấm để xem và theo dõi tiến độ giao hàng`
+                      : "Chưa có đơn hàng nào · Khám phá đặc sản OCOP và đặt món ngay"}
+                  </small>
                   <em>→</em>
                 </button>
               )}
@@ -3393,166 +3895,431 @@ export default function Home() {
         </div>
       )}
 
-      {/* COMMERCE / CART DRAWER */}
+      {/* COMMERCE / CART & MY ORDERS DRAWER */}
       {cartOpen && (
         <div className="commerce-overlay" role="presentation" onMouseDown={(event) => { if (event.target === event.currentTarget) setCartOpen(false); }}>
-          <form className="commerce-drawer" onSubmit={submitDemoOrder}>
+          <div className="commerce-drawer" role="dialog" aria-labelledby="commerce-drawer-title">
             <div className="commerce-drawer__heading">
               <div>
-                <span>GIỎ HÀNG ĐẶC SẢN</span>
-                <h2>Đặt món & Quà tặng OCOP</h2>
+                <span>{t.cart.toUpperCase()} & ĐƠN HÀNG OCOP</span>
+                <h2 id="commerce-drawer-title">Đặc Sản & Mua Sắm</h2>
               </div>
               <button type="button" onClick={() => setCartOpen(false)} aria-label="Đóng giỏ hàng">×</button>
             </div>
 
-            {cartDetails.length === 0 ? (
-              <div className="cart-empty-state">
-                <span>🛒</span>
-                <h3>Giỏ hàng đang trống</h3>
-                <p>Khám phá bản đồ ẩm thực và thêm các món đặc sản vào giỏ.</p>
-                <button type="button" className="button button--dark" onClick={goToFoodSection}>Xem đặc sản ngay →</button>
-              </div>
-            ) : (
-              <>
-                <div className="cart-lines">
-                  {cartDetails.map((line) => (
-                    <article key={`${line.dishId}-${line.sellerId}`}>
-                      <img src={line.dish.image} alt="" onError={handleImageError} />
-                      <div>
-                        <b>{line.dish.name}</b>
-                        <small>{line.seller.name}</small>
-                        <span>{formatMoney(line.seller.price)}/{line.seller.unit}</span>
-                      </div>
-                      <div className="quantity-picker">
-                        <button type="button" onClick={() => changeCartQuantity(line.dishId, line.sellerId, -1)}>−</button>
-                        <b>{line.quantity}</b>
-                        <button type="button" onClick={() => changeCartQuantity(line.dishId, line.sellerId, 1)}>＋</button>
-                      </div>
-                    </article>
-                  ))}
-                </div>
+            {/* Top 2 Tabs: Giỏ hàng vs Đơn mua */}
+            <div className="auth-tab-switch" style={{ margin: "14px 0 18px" }}>
+              <button
+                type="button"
+                className={`auth-tab-btn ${cartDrawerTab === "cart" ? "is-active" : ""}`}
+                onClick={() => setCartDrawerTab("cart")}
+              >
+                🛒 {t.cart} ({cartQuantity})
+              </button>
+              <button
+                type="button"
+                className={`auth-tab-btn ${cartDrawerTab === "orders" ? "is-active" : ""}`}
+                onClick={() => setCartDrawerTab("orders")}
+              >
+                📦 {t.myOrders} ({userOrderList.length})
+              </button>
+            </div>
 
-                <div className="commerce-total">
-                  <span>Tổng tiền thanh toán</span>
-                  <b>{formatMoney(cartSubtotal)}</b>
-                </div>
-
-                {/* AUTH GATE OR USER STATUS IN CART */}
-                {!authUser ? (
-                  <div className="cart-auth-gate">
-                    <div className="cart-auth-gate__header">
-                      <span className="cart-auth-gate__icon">🔒</span>
-                      <div>
-                        <b>Yêu cầu đăng nhập để đặt hàng</b>
-                        <p>Đăng nhập bằng Gmail hoặc Facebook để lưu đơn và nhận thông báo từ cơ sở OCOP.</p>
-                      </div>
-                    </div>
-
-                    <div className="auth-social-buttons">
-                      <button
-                        type="button"
-                        className="auth-btn auth-btn--google"
-                        onClick={() => setGoogleOAuthModalOpen(true)}
-                      >
-                        <svg width="18" height="18" viewBox="0 0 24 24"><path fill="#EA4335" d="M12 5c1.6 0 3 .6 4.1 1.7l3.1-3.1C17.3 1.8 14.8 1 12 1 7.5 1 3.7 3.6 1.9 7.3l3.7 2.9C6.5 7.4 9 5 12 5z"/><path fill="#4285F4" d="M23.5 12.3c0-.8-.1-1.7-.2-2.3H12v4.6h6.5c-.3 1.5-1.1 2.8-2.4 3.7l3.7 2.9c2.2-2 3.7-5 3.7-8.9z"/><path fill="#FBBC05" d="M5.6 14.8c-.2-.7-.4-1.5-.4-2.8s.2-2.1.4-2.8L1.9 6.3C.7 8.7 0 10.8 0 12s.7 3.3 1.9 5.7l3.7-2.9z"/><path fill="#34A853" d="M12 23c3.2 0 6-1.1 8-3l-3.7-2.9c-1.1.7-2.5 1.2-4.3 1.2-3 0-5.5-2.4-6.4-5.2L1.9 16C3.7 19.7 7.5 23 12 23z"/></svg>
-                        Đăng nhập bằng Gmail (Google)
-                      </button>
-                      <button
-                        type="button"
-                        className="auth-btn auth-btn--facebook"
-                        onClick={handleFacebookLogin}
-                      >
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="#1877F2"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
-                        Đăng nhập bằng Facebook
-                      </button>
-                    </div>
-
-                    <button
-                      type="button"
-                      className="text-link"
-                      style={{ fontSize: "12px", marginTop: "4px" }}
-                      onClick={() => {
-                        setAuthModalTab("admin");
-                        setAuthModalOpen(true);
-                      }}
-                    >
-                      🛡️ Đăng nhập Quản Trị Viên (Admin) →
+            {/* TAB 1: CART ITEMS & CHECKOUT */}
+            {cartDrawerTab === "cart" && (
+              <form onSubmit={submitDemoOrder}>
+                {cartDetails.length === 0 ? (
+                  <div className="cart-empty-state">
+                    <span>🛒</span>
+                    <h3>Giỏ hàng đang trống</h3>
+                    <p>Khám phá bản đồ ẩm thực và thêm các món đặc sản vào giỏ.</p>
+                    <button type="button" className="button button--dark" onClick={() => { setCartOpen(false); goToFoodSection(); }}>
+                      Xem đặc sản ngay →
                     </button>
                   </div>
                 ) : (
-                  <div className="cart-user-badge">
-                    <div>
-                      <span>👤 Tài khoản đặt hàng:</span>
-                      <b>{authUser.name} ({authUser.email})</b>
-                      <span className="pill pill--subtle" style={{ marginTop: "2px", display: "inline-block" }}>
-                        {authUser.role === "admin" ? "🛡️ Quản trị viên" : authUser.role === "merchant" ? `🏪 Chủ cơ sở: ${authUser.merchantName}` : "👤 Du khách"}
-                      </span>
+                  <>
+                    <div className="cart-lines">
+                      {cartDetails.map((line) => (
+                        <article key={`${line.dishId}-${line.sellerId}`}>
+                          <img src={line.dish.image} alt="" onError={handleImageError} />
+                          <div>
+                            <b>{line.dish.name}</b>
+                            <small>{line.seller.name}</small>
+                            <span>{formatPrice(line.seller.price)}/{line.seller.unit}</span>
+                          </div>
+                          <div className="quantity-picker">
+                            <button type="button" onClick={() => changeCartQuantity(line.dishId, line.sellerId, -1)}>−</button>
+                            <b>{line.quantity}</b>
+                            <button type="button" onClick={() => changeCartQuantity(line.dishId, line.sellerId, 1)}>＋</button>
+                          </div>
+                        </article>
+                      ))}
                     </div>
-                    <button type="button" className="text-link" onClick={() => setAuthModalOpen(true)}>Đổi</button>
-                  </div>
+
+                    {/* VOUCHER / PROMOTION BLOCK */}
+                    <div style={{ background: "#fff8f6", border: "1.5px dashed #e39d91", borderRadius: "10px", padding: "12px 14px", margin: "14px 0" }}>
+                      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "8px" }}>
+                        <span style={{ fontSize: "12px", fontWeight: "800", color: "var(--red)", display: "flex", alignItems: "center", gap: "5px" }}>
+                          🎁 Mã khuyến mãi & Ưu đãi
+                        </span>
+                        <button
+                          type="button"
+                          className="text-link"
+                          style={{ fontSize: "11px", color: "var(--red)" }}
+                          onClick={() => setVouchersModalOpen(true)}
+                        >
+                          Chọn mã khác →
+                        </button>
+                      </div>
+
+                      {appliedVoucher ? (
+                        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", background: "white", padding: "8px 10px", borderRadius: "6px", border: "1px solid #f0b5ab" }}>
+                          <div>
+                            <span className="voucher-code-badge">{appliedVoucher.code}</span>
+                            <small style={{ marginLeft: "8px", color: "var(--ink)", fontWeight: "700" }}>{appliedVoucher.title}</small>
+                          </div>
+                          <button
+                            type="button"
+                            style={{ border: 0, background: "transparent", color: "var(--muted)", cursor: "pointer", fontSize: "12px" }}
+                            onClick={() => setAppliedVoucherCode(null)}
+                            title="Bỏ mã"
+                          >
+                            ✕
+                          </button>
+                        </div>
+                      ) : (
+                        <div style={{ display: "flex", gap: "6px" }}>
+                          <input
+                            type="text"
+                            placeholder="Nhập mã: DATTO10, LEHOI2026..."
+                            id="voucher-input-cart"
+                            style={{ flex: 1, height: "36px", padding: "0 10px", border: "1px solid var(--line)", borderRadius: "6px", fontSize: "12px", textTransform: "uppercase" }}
+                          />
+                          <button
+                            type="button"
+                            className="button button--dark"
+                            style={{ minHeight: "36px", padding: "0 12px", fontSize: "11px" }}
+                            onClick={() => {
+                              const el = document.getElementById("voucher-input-cart") as HTMLInputElement;
+                              const code = el?.value?.trim().toUpperCase();
+                              const v = DEFAULT_VOUCHERS.find(item => item.code === code);
+                              if (v) {
+                                setAppliedVoucherCode(v.code);
+                                showToast(`Đã áp dụng mã ${v.code} (${v.title})!`);
+                              } else {
+                                showToast("Mã giảm giá không hợp lệ hoặc đã hết hạn");
+                              }
+                            }}
+                          >
+                            Áp dụng
+                          </button>
+                        </div>
+                      )}
+                    </div>
+
+                    {/* COMMERCE TOTAL WITH CURRENCY CONVERSION */}
+                    <div className="commerce-total">
+                      <span>Tạm tính ({cartQuantity} món)</span>
+                      <b>{formatPrice(cartSubtotal)}</b>
+                      {voucherDiscount > 0 && (
+                        <>
+                          <span style={{ color: "var(--red)" }}>Ưu đãi giảm giá ({appliedVoucher?.code})</span>
+                          <b style={{ color: "var(--red)" }}>−{formatPrice(voucherDiscount)}</b>
+                        </>
+                      )}
+                      <span style={{ fontWeight: "900", fontSize: "14px", marginTop: "4px" }}>{t.totalPayment} ({currentCurrency})</span>
+                      <b style={{ color: "var(--red)", fontSize: "20px", marginTop: "4px" }}>{formatPrice(finalCartTotal)}</b>
+                    </div>
+
+                    {/* PAYMENT METHODS SELECTOR */}
+                    <div style={{ margin: "16px 0 10px" }}>
+                      <label style={{ display: "block", fontSize: "12px", fontWeight: "900", textTransform: "uppercase", letterSpacing: "0.08em", color: "var(--ink)", marginBottom: "8px" }}>
+                        💳 {t.paymentMethods}
+                      </label>
+                      <div className="payment-methods-grid">
+                        {PAYMENT_METHODS.map((method) => (
+                          <div
+                            key={method.id}
+                            className={`payment-method-card ${paymentMethod === method.id ? "is-selected" : ""}`}
+                            onClick={() => setPaymentMethod(method.id)}
+                          >
+                            <span className="payment-method-icon">{method.icon}</span>
+                            <div className="payment-method-text">
+                              <b>{method.label}</b>
+                              <small>{method.desc}</small>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+
+                      {/* VietQR Quick Scan Box */}
+                      {paymentMethod === "vietqr" && (
+                        <div className="vietqr-box">
+                          <span className="heritage-gold-tag" style={{ marginBottom: "8px", display: "inline-block" }}>
+                            VIETQR CHUYỂN KHOẢN TỰ ĐỘNG
+                          </span>
+                          <p style={{ margin: "4px 0 10px", fontSize: "11.5px", color: "var(--muted)" }}>
+                            Quét mã bằng app ngân hàng bất kỳ để thanh toán an toàn
+                          </p>
+                          <div className="vietqr-mock-qr">
+                            <img
+                              src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=2026-DATTO-TRAVEL-PAYMENT"
+                              alt="Mã VietQR"
+                              style={{ width: "135px", height: "135px", objectFit: "contain" }}
+                            />
+                          </div>
+                          <div className="vietqr-bank-details">
+                            <div>🏦 <b>Ngân hàng:</b> MB Bank / Vietcombank</div>
+                            <div>🔢 <b>Số tài khoản:</b> 09123456789 (Đất Tổ Travel)</div>
+                            <div>💰 <b>Số tiền:</b> {formatPrice(finalCartTotal)}</div>
+                            <div>📝 <b>Nội dung:</b> DT-{checkoutPhone.slice(-4) || "OCOP"}</div>
+                          </div>
+                        </div>
+                      )}
+                    </div>
+
+                    {/* AUTH GATE OR USER STATUS IN CART */}
+                    {!authUser ? (
+                      <div className="cart-auth-gate">
+                        <div className="cart-auth-gate__header">
+                          <span className="cart-auth-gate__icon">🔒</span>
+                          <div>
+                            <b>Yêu cầu đăng nhập để đặt hàng</b>
+                            <p>Đăng nhập bằng Gmail hoặc Facebook để lưu đơn và nhận thông báo từ cơ sở OCOP.</p>
+                          </div>
+                        </div>
+
+                        <div className="auth-social-buttons">
+                          <button
+                            type="button"
+                            className="auth-btn auth-btn--google"
+                            onClick={() => setGoogleOAuthModalOpen(true)}
+                          >
+                            <svg width="18" height="18" viewBox="0 0 24 24"><path fill="#EA4335" d="M12 5c1.6 0 3 .6 4.1 1.7l3.1-3.1C17.3 1.8 14.8 1 12 1 7.5 1 3.7 3.6 1.9 7.3l3.7 2.9C6.5 7.4 9 5 12 5z"/><path fill="#4285F4" d="M23.5 12.3c0-.8-.1-1.7-.2-2.3H12v4.6h6.5c-.3 1.5-1.1 2.8-2.4 3.7l3.7 2.9c2.2-2 3.7-5 3.7-8.9z"/><path fill="#FBBC05" d="M5.6 14.8c-.2-.7-.4-1.5-.4-2.8s.2-2.1.4-2.8L1.9 6.3C.7 8.7 0 10.8 0 12s.7 3.3 1.9 5.7l3.7-2.9z"/><path fill="#34A853" d="M12 23c3.2 0 6-1.1 8-3l-3.7-2.9c-1.1.7-2.5 1.2-4.3 1.2-3 0-5.5-2.4-6.4-5.2L1.9 16C3.7 19.7 7.5 23 12 23z"/></svg>
+                            Đăng nhập bằng Gmail (Google)
+                          </button>
+                          <button
+                            type="button"
+                            className="auth-btn auth-btn--facebook"
+                            onClick={handleFacebookLogin}
+                          >
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="#1877F2"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+                            Đăng nhập bằng Facebook
+                          </button>
+                        </div>
+
+                        <button
+                          type="button"
+                          className="text-link"
+                          style={{ fontSize: "12px", marginTop: "4px" }}
+                          onClick={() => {
+                            setAuthModalTab("admin");
+                            setAuthModalOpen(true);
+                          }}
+                        >
+                          🛡️ Đăng nhập Quản Trị Viên (Admin) →
+                        </button>
+                      </div>
+                    ) : (
+                      <div className="cart-user-badge">
+                        <div>
+                          <span>👤 Tài khoản đặt hàng:</span>
+                          <b>{authUser.name} ({authUser.email})</b>
+                          <span className="pill pill--subtle" style={{ marginTop: "2px", display: "inline-block" }}>
+                            {authUser.role === "admin" ? "🛡️ Quản trị viên" : authUser.role === "merchant" ? `🏪 Chủ cơ sở: ${authUser.merchantName}` : "👤 Du khách"}
+                          </span>
+                        </div>
+                        <button type="button" className="text-link" onClick={() => setAuthModalOpen(true)}>Đổi</button>
+                      </div>
+                    )}
+
+                    <div className="commerce-form-fields" style={{ opacity: authUser ? 1 : 0.6, pointerEvents: authUser ? "auto" : "none" }}>
+                      <label className="commerce-field">
+                        Họ và tên người mua <small style={{ color: "red" }}>*</small>
+                        <input
+                          type="text"
+                          required
+                          value={checkoutName}
+                          onChange={(event) => setCheckoutName(event.target.value)}
+                          placeholder="Ví dụ: Nguyễn Văn An"
+                        />
+                      </label>
+
+                      <label className="commerce-field">
+                        Số điện thoại liên hệ <small style={{ color: "red" }}>*</small>
+                        <input
+                          type="tel"
+                          inputMode="tel"
+                          required
+                          value={checkoutPhone}
+                          onChange={(event) => setCheckoutPhone(event.target.value)}
+                          placeholder="Ví dụ: 0912 345 678"
+                        />
+                      </label>
+
+                      <label className="commerce-field">
+                        Địa chỉ giao hàng / Tên khách sạn
+                        <input
+                          type="text"
+                          value={checkoutAddress}
+                          onChange={(event) => setCheckoutAddress(event.target.value)}
+                          placeholder="Ví dụ: Khách sạn Mường Thanh Phú Thọ, Phòng 502"
+                        />
+                      </label>
+
+                      <label className="commerce-field">
+                        Ghi chú thêm (Thời gian giao, yêu cầu đóng hộp...)
+                        <input
+                          type="text"
+                          value={checkoutNote}
+                          onChange={(event) => setCheckoutNote(event.target.value)}
+                          placeholder="Ghi chú thêm cho người bán"
+                        />
+                      </label>
+                    </div>
+
+                    {authUser ? (
+                      <button className="button button--dark button--full" type="submit">
+                        Xác nhận đặt hàng ({formatPrice(finalCartTotal)}) →
+                      </button>
+                    ) : (
+                      <button
+                        className="button button--dark button--full"
+                        type="button"
+                        onClick={() => setAuthModalOpen(true)}
+                      >
+                        🔒 Đăng nhập để hoàn tất đặt hàng →
+                      </button>
+                    )}
+                  </>
                 )}
+              </form>
+            )}
 
-                <div className="commerce-form-fields" style={{ opacity: authUser ? 1 : 0.6, pointerEvents: authUser ? "auto" : "none" }}>
-                  <label className="commerce-field">
-                    Họ và tên người mua <small style={{ color: "red" }}>*</small>
-                    <input
-                      type="text"
-                      required
-                      value={checkoutName}
-                      onChange={(event) => setCheckoutName(event.target.value)}
-                      placeholder="Ví dụ: Nguyễn Văn An"
-                    />
-                  </label>
+            {/* TAB 2: MY ORDERS WITH SHOPEE-STYLE STATUS TABS */}
+            {cartDrawerTab === "orders" && (
+              <div>
+                {/* Shopee-style Status Tabs */}
+                <div className="order-status-tabs">
+                  {[
+                    { id: "all", label: t.orderStatusAll },
+                    { id: "pending", label: t.orderStatusPending },
+                    { id: "processing", label: t.orderStatusProcessing },
+                    { id: "completed", label: t.orderStatusCompleted },
+                    { id: "cancelled", label: t.orderStatusCancelled },
+                  ].map((tab) => {
+                    const count = userOrderList.filter((o) => {
+                      if (tab.id === "all") return true;
+                      if (tab.id === "pending") return !o.status || o.status === "Chờ xác nhận";
+                      if (tab.id === "processing") return o.status === "Đang xử lý" || o.status === "Đã xác nhận" || o.status === "Đang chuẩn bị";
+                      if (tab.id === "completed") return o.status === "Hoàn thành" || o.status === "Đã giao";
+                      if (tab.id === "cancelled") return o.status === "Đã hủy";
+                      return true;
+                    }).length;
 
-                  <label className="commerce-field">
-                    Số điện thoại liên hệ <small style={{ color: "red" }}>*</small>
-                    <input
-                      type="tel"
-                      inputMode="tel"
-                      required
-                      value={checkoutPhone}
-                      onChange={(event) => setCheckoutPhone(event.target.value)}
-                      placeholder="Ví dụ: 0912 345 678"
-                    />
-                  </label>
-
-                  <label className="commerce-field">
-                    Địa chỉ giao hàng / Tên khách sạn
-                    <input
-                      type="text"
-                      value={checkoutAddress}
-                      onChange={(event) => setCheckoutAddress(event.target.value)}
-                      placeholder="Ví dụ: Khách sạn Mường Thanh Phú Thọ, Phòng 502"
-                    />
-                  </label>
-
-                  <label className="commerce-field">
-                    Ghi chú thêm (Thời gian giao, yêu cầu đóng hộp...)
-                    <input
-                      type="text"
-                      value={checkoutNote}
-                      onChange={(event) => setCheckoutNote(event.target.value)}
-                      placeholder="Ghi chú thêm cho người bán"
-                    />
-                  </label>
+                    return (
+                      <button
+                        key={tab.id}
+                        type="button"
+                        className={`order-status-tab ${orderStatusTab === tab.id ? "is-active" : ""}`}
+                        onClick={() => setOrderStatusTab(tab.id)}
+                      >
+                        <span>{tab.label}</span>
+                        <span className="order-status-tab-count">{count}</span>
+                      </button>
+                    );
+                  })}
                 </div>
 
-                {authUser ? (
-                  <button className="button button--dark button--full" type="submit">
-                    Xác nhận đặt hàng ({formatMoney(cartSubtotal)}) →
-                  </button>
+                {/* Filtered Order Cards */}
+                {userOrderList.filter((o) => {
+                  if (orderStatusTab === "all") return true;
+                  if (orderStatusTab === "pending") return !o.status || o.status === "Chờ xác nhận";
+                  if (orderStatusTab === "processing") return o.status === "Đang xử lý" || o.status === "Đã xác nhận" || o.status === "Đang chuẩn bị";
+                  if (orderStatusTab === "completed") return o.status === "Hoàn thành" || o.status === "Đã giao";
+                  if (orderStatusTab === "cancelled") return o.status === "Đã hủy";
+                  return true;
+                }).length === 0 ? (
+                  <div className="orders-empty-state" style={{ padding: "30px 10px" }}>
+                    <span style={{ fontSize: "36px" }}>📦</span>
+                    <h3 style={{ fontSize: "16px" }}>Không có đơn hàng nào trong mục này</h3>
+                    <p style={{ fontSize: "12px" }}>Chọn danh mục khác hoặc đặt thêm các món đặc sản OCOP Đất Tổ.</p>
+                  </div>
                 ) : (
-                  <button
-                    className="button button--dark button--full"
-                    type="button"
-                    onClick={() => setAuthModalOpen(true)}
-                  >
-                    🔒 Đăng nhập để hoàn tất đặt hàng →
-                  </button>
+                  <div className="customer-order-cards">
+                    {userOrderList
+                      .filter((o) => {
+                        if (orderStatusTab === "all") return true;
+                        if (orderStatusTab === "pending") return !o.status || o.status === "Chờ xác nhận";
+                        if (orderStatusTab === "processing") return o.status === "Đang xử lý" || o.status === "Đã xác nhận" || o.status === "Đang chuẩn bị";
+                        if (orderStatusTab === "completed") return o.status === "Hoàn thành" || o.status === "Đã giao";
+                        if (orderStatusTab === "cancelled") return o.status === "Đã hủy";
+                        return true;
+                      })
+                      .map((order: any) => {
+                        const isPending = !order.status || order.status === "Chờ xác nhận";
+                        const isCancelled = order.status === "Đã hủy";
+                        const isCompleted = order.status === "Hoàn thành" || order.status === "Đã giao";
+
+                        return (
+                          <article key={order.id} className="customer-order-card">
+                            <div className="customer-order-top">
+                              <div>
+                                <span className={`status-badge ${isPending ? "status-badge--pending" : isCancelled ? "status-badge--cancelled" : isCompleted ? "status-badge--completed" : "status-badge--confirmed"}`}>
+                                  {isPending ? "⏳ Chờ xác nhận" : isCancelled ? "✕ Đã hủy" : isCompleted ? "✓ Hoàn thành" : "⚡ Đang xử lý"}
+                                </span>
+                                <b>Đơn hàng #{order.id}</b>
+                                <small>🕒 {order.createdAt} · 💳 {order.paymentMethod || "VietQR"}</small>
+                              </div>
+                              <b style={{ color: "var(--red)", fontSize: "16px" }}>
+                                {formatPrice(Number(order.totalAmount || 0))}
+                              </b>
+                            </div>
+
+                            <div className="customer-order-body">
+                              <p><b>Địa chỉ:</b> {order.address}</p>
+                              {order.appliedVoucher && (
+                                <p style={{ color: "var(--red)", fontSize: "11.5px" }}>🎁 <b>Ưu đãi:</b> {order.appliedVoucher}</p>
+                              )}
+                              <div className="customer-order-items">
+                                {(order.items || []).map((it: any, i: number) => (
+                                  <div key={i} className="customer-order-item-row">
+                                    <span>• {it.dishName} (×{it.quantity})</span>
+                                    <span className="pill pill--subtle">{it.sellerName}</span>
+                                  </div>
+                                ))}
+                              </div>
+
+                              <div style={{ display: "flex", justifyContent: "flex-end", gap: "8px", marginTop: "12px", paddingTop: "10px", borderTop: "1px dashed var(--line)" }}>
+                                {isPending && (
+                                  <button
+                                    type="button"
+                                    className="button button--outline"
+                                    style={{ minHeight: "32px", padding: "0 10px", fontSize: "11px", color: "var(--red)", borderColor: "#f0b5ab" }}
+                                    onClick={() => cancelOrder(order.id)}
+                                  >
+                                    Hủy đơn hàng
+                                  </button>
+                                )}
+                                <button
+                                  type="button"
+                                  className="button button--dark"
+                                  style={{ minHeight: "32px", padding: "0 12px", fontSize: "11px" }}
+                                  onClick={() => reorderItems(order)}
+                                >
+                                  Đặt lại món này ↻
+                                </button>
+                              </div>
+                            </div>
+                          </article>
+                        );
+                      })}
+                  </div>
                 )}
-              </>
+              </div>
             )}
-          </form>
+          </div>
         </div>
       )}
 
@@ -3767,28 +4534,30 @@ export default function Home() {
             </div>
 
             {/* Modal Actions */}
-            <div className="order-success-actions">
+            <div className="order-success-actions" style={{ display: "flex", flexDirection: "column", gap: "10px", width: "100%", marginTop: "16px" }}>
               {authUser?.role === "admin" || authUser?.role === "merchant" ? (
                 <button
                   type="button"
-                  className="button button--dark"
+                  className="button button--dark button--lg"
                   onClick={() => {
                     setConfirmedOrder(null);
                     setOrdersDashboardOpen(true);
                   }}
                 >
-                  📊 Xem Bảng Quản Lý Đơn Hàng (Sheets View)
+                  📊 Mở Bảng Quản Lý Đơn Hàng (Sheets View) →
                 </button>
               ) : (
                 <button
                   type="button"
-                  className="button button--dark"
+                  className="button button--dark button--lg"
+                  style={{ background: "var(--red)", color: "white", padding: "14px 20px", fontSize: "14px", fontWeight: "700" }}
                   onClick={() => {
                     setConfirmedOrder(null);
-                    setCustomerOrdersOpen(true);
+                    setCartDrawerTab("orders");
+                    setCartOpen(true);
                   }}
                 >
-                  🛍️ Xem Đơn Hàng Của Tôi
+                  📦 Xem & Theo Dõi Tiến Độ Đơn Hàng Của Bạn →
                 </button>
               )}
               <button
@@ -3796,7 +4565,7 @@ export default function Home() {
                 className="button button--ghost"
                 onClick={() => setConfirmedOrder(null)}
               >
-                Tiếp tục khám phá
+                Tiếp tục khám phá điểm đến
               </button>
             </div>
           </div>
@@ -4051,20 +4820,59 @@ function doPost(e) {
       {/* CUSTOMER PERSONAL ORDERS MODAL */}
       {customerOrdersOpen && (
         <div className="commerce-overlay" role="presentation" onMouseDown={(e) => { if (e.target === e.currentTarget) setCustomerOrdersOpen(false); }}>
-          <div className="orders-dashboard-modal" style={{ maxWidth: "720px" }} role="dialog" aria-labelledby="customer-orders-title">
+          <div className="orders-dashboard-modal" style={{ maxWidth: "760px" }} role="dialog" aria-labelledby="customer-orders-title">
             <div className="orders-dashboard-header">
               <div>
                 <span className="kicker" style={{ color: "var(--red)" }}>LỊCH SỬ MUA SẮM CÁ NHÂN</span>
-                <h2 id="customer-orders-title">Đơn hàng của bạn</h2>
+                <h2 id="customer-orders-title">{t.myOrders}</h2>
                 <p>Theo dõi các món đặc sản OCOP bạn đã đặt và tiến độ giao nhận.</p>
               </div>
               <button type="button" className="booking-dialog__close" onClick={() => setCustomerOrdersOpen(false)} aria-label="Đóng">×</button>
             </div>
 
-            {orderList.filter(o => o.phone === authUser?.phone || o.customerName === authUser?.name).length === 0 ? (
+            {/* Shopee-style Status Tabs */}
+            <div className="order-status-tabs">
+              {[
+                { id: "all", label: t.orderStatusAll },
+                { id: "pending", label: t.orderStatusPending },
+                { id: "processing", label: t.orderStatusProcessing },
+                { id: "completed", label: t.orderStatusCompleted },
+                { id: "cancelled", label: t.orderStatusCancelled },
+              ].map((tab) => {
+                const count = userOrderList.filter((o) => {
+                  if (tab.id === "all") return true;
+                  if (tab.id === "pending") return !o.status || o.status === "Chờ xác nhận";
+                  if (tab.id === "processing") return o.status === "Đang xử lý" || o.status === "Đã xác nhận" || o.status === "Đang chuẩn bị";
+                  if (tab.id === "completed") return o.status === "Hoàn thành" || o.status === "Đã giao";
+                  if (tab.id === "cancelled") return o.status === "Đã hủy";
+                  return true;
+                }).length;
+
+                return (
+                  <button
+                    key={tab.id}
+                    type="button"
+                    className={`order-status-tab ${orderStatusTab === tab.id ? "is-active" : ""}`}
+                    onClick={() => setOrderStatusTab(tab.id)}
+                  >
+                    <span>{tab.label}</span>
+                    <span className="order-status-tab-count">{count}</span>
+                  </button>
+                );
+              })}
+            </div>
+
+            {userOrderList.filter((o) => {
+              if (orderStatusTab === "all") return true;
+              if (orderStatusTab === "pending") return !o.status || o.status === "Chờ xác nhận";
+              if (orderStatusTab === "processing") return o.status === "Đang xử lý" || o.status === "Đã xác nhận" || o.status === "Đang chuẩn bị";
+              if (orderStatusTab === "completed") return o.status === "Hoàn thành" || o.status === "Đã giao";
+              if (orderStatusTab === "cancelled") return o.status === "Đã hủy";
+              return true;
+            }).length === 0 ? (
               <div className="orders-empty-state">
                 <span>🛍️</span>
-                <h3>Bạn chưa đặt món đặc sản nào</h3>
+                <h3>Chưa có đơn hàng nào trong mục này</h3>
                 <p>Khám phá bản đồ đặc sản OCOP và đặt món để thưởng thức hương vị Đất Tổ.</p>
                 <button
                   type="button"
@@ -4079,34 +4887,147 @@ function doPost(e) {
               </div>
             ) : (
               <div className="customer-order-cards">
-                {orderList
-                  .filter(o => o.phone === authUser?.phone || o.customerName === authUser?.name)
-                  .map((order: any) => (
-                    <article key={order.id} className="customer-order-card">
-                      <div className="customer-order-top">
-                        <div>
-                          <span className="order-status-badge">✓ {order.status || "Đang xử lý"}</span>
-                          <b>Đơn hàng #{order.id}</b>
-                          <small>🕒 {order.createdAt}</small>
-                        </div>
-                        <b style={{ color: "var(--red)", fontSize: "16px" }}>{Number(order.totalAmount || 0).toLocaleString("vi-VN")}đ</b>
-                      </div>
+                {userOrderList
+                  .filter((o) => {
+                    if (orderStatusTab === "all") return true;
+                    if (orderStatusTab === "pending") return !o.status || o.status === "Chờ xác nhận";
+                    if (orderStatusTab === "processing") return o.status === "Đang xử lý" || o.status === "Đã xác nhận" || o.status === "Đang chuẩn bị";
+                    if (orderStatusTab === "completed") return o.status === "Hoàn thành" || o.status === "Đã giao";
+                    if (orderStatusTab === "cancelled") return o.status === "Đã hủy";
+                    return true;
+                  })
+                  .map((order: any) => {
+                    const isPending = !order.status || order.status === "Chờ xác nhận";
+                    const isCancelled = order.status === "Đã hủy";
+                    const isCompleted = order.status === "Hoàn thành" || order.status === "Đã giao";
 
-                      <div className="customer-order-body">
-                        <p><b>Địa chỉ giao:</b> {order.address}</p>
-                        <div className="customer-order-items">
-                          {(order.items || []).map((it: any, i: number) => (
-                            <div key={i} className="customer-order-item-row">
-                              <span>• {it.dishName} (×{it.quantity})</span>
-                              <span className="pill pill--subtle">{it.sellerName}</span>
-                            </div>
-                          ))}
+                    return (
+                      <article key={order.id} className="customer-order-card">
+                        <div className="customer-order-top">
+                          <div>
+                            <span className={`status-badge ${isPending ? "status-badge--pending" : isCancelled ? "status-badge--cancelled" : isCompleted ? "status-badge--completed" : "status-badge--confirmed"}`}>
+                              {isPending ? "⏳ Chờ xác nhận" : isCancelled ? "✕ Đã hủy" : isCompleted ? "✓ Hoàn thành" : "⚡ Đang xử lý"}
+                            </span>
+                            <b>Đơn hàng #{order.id}</b>
+                            <small>🕒 {order.createdAt} · 💳 {order.paymentMethod || "VietQR"}</small>
+                          </div>
+                          <b style={{ color: "var(--red)", fontSize: "16px" }}>
+                            {formatPrice(Number(order.totalAmount || 0))}
+                          </b>
                         </div>
-                      </div>
-                    </article>
-                  ))}
+
+                        <div className="customer-order-body">
+                          <p><b>Địa chỉ giao:</b> {order.address}</p>
+                          {order.appliedVoucher && (
+                            <p style={{ color: "var(--red)", fontSize: "11.5px" }}>🎁 <b>Ưu đãi:</b> {order.appliedVoucher}</p>
+                          )}
+                          <div className="customer-order-items">
+                            {(order.items || []).map((it: any, i: number) => (
+                              <div key={i} className="customer-order-item-row">
+                                <span>• {it.dishName} (×{it.quantity})</span>
+                                <span className="pill pill--subtle">{it.sellerName}</span>
+                              </div>
+                            ))}
+                          </div>
+
+                          <div style={{ display: "flex", justifyContent: "flex-end", gap: "8px", marginTop: "12px", paddingTop: "10px", borderTop: "1px dashed var(--line)" }}>
+                            {isPending && (
+                              <button
+                                type="button"
+                                className="button button--outline"
+                                style={{ minHeight: "32px", padding: "0 10px", fontSize: "11px", color: "var(--red)", borderColor: "#f0b5ab" }}
+                                onClick={() => cancelOrder(order.id)}
+                              >
+                                Hủy đơn hàng
+                              </button>
+                            )}
+                            <button
+                              type="button"
+                              className="button button--dark"
+                              style={{ minHeight: "32px", padding: "0 12px", fontSize: "11px" }}
+                              onClick={() => reorderItems(order)}
+                            >
+                              Đặt lại món này ↻
+                            </button>
+                          </div>
+                        </div>
+                      </article>
+                    );
+                  })}
               </div>
             )}
+          </div>
+        </div>
+      )}
+
+      {/* VOUCHERS & PROMOTIONS MODAL */}
+      {vouchersModalOpen && (
+        <div className="commerce-overlay" role="presentation" onMouseDown={(e) => { if (e.target === e.currentTarget) setVouchersModalOpen(false); }}>
+          <div className="orders-dashboard-modal" style={{ maxWidth: "680px" }} role="dialog" aria-labelledby="vouchers-title">
+            <div className="orders-dashboard-header">
+              <div>
+                <span className="heritage-gold-tag">ƯU ĐÃI & KHUYẾN MÃI</span>
+                <h2 id="vouchers-title" style={{ margin: "8px 0 4px" }}>Mã Giảm Giá & Voucher Đất Tổ</h2>
+                <p>Lưu mã và áp dụng trực tiếp khi đặt vé tour hoặc mua sắm đặc sản OCOP.</p>
+              </div>
+              <button type="button" className="booking-dialog__close" onClick={() => setVouchersModalOpen(false)} aria-label="Đóng">×</button>
+            </div>
+
+            <div className="voucher-grid">
+              {DEFAULT_VOUCHERS.map((voucher) => {
+                const isSaved = savedVouchers.includes(voucher.code);
+                const isApplied = appliedVoucherCode === voucher.code;
+
+                return (
+                  <div key={voucher.code} className="voucher-card">
+                    <div className="voucher-card-left">
+                      <b>{voucher.discountPercent ? `${voucher.discountPercent}%` : `${Math.round((voucher.discountAmount || 0) / 1000)}K`}</b>
+                      <small>GIẢM</small>
+                    </div>
+                    <div className="voucher-card-right">
+                      <div>
+                        <h4>{voucher.title}</h4>
+                        <p>{voucher.description}</p>
+                      </div>
+                      <div className="voucher-card-actions">
+                        <span className="voucher-code-badge">{voucher.code}</span>
+                        <div style={{ display: "flex", gap: "6px" }}>
+                          <button
+                            type="button"
+                            className={`voucher-apply-btn ${isSaved ? "is-saved" : ""}`}
+                            onClick={() => {
+                              if (isSaved) {
+                                setSavedVouchers(savedVouchers.filter((c) => c !== voucher.code));
+                                showToast(`Đã bỏ lưu mã ${voucher.code}`);
+                              } else {
+                                setSavedVouchers([...savedVouchers, voucher.code]);
+                                showToast(`✦ Đã lưu mã ${voucher.code} vào ví voucher!`);
+                              }
+                            }}
+                          >
+                            {isSaved ? "✓ Đã lưu" : "Lưu mã"}
+                          </button>
+                          <button
+                            type="button"
+                            className="voucher-apply-btn"
+                            style={{ background: isApplied ? "#24483d" : "var(--red)" }}
+                            onClick={() => {
+                              setAppliedVoucherCode(voucher.code);
+                              setCartDrawerTab("cart");
+                              setVouchersModalOpen(false);
+                              setCartOpen(true);
+                              showToast(`✦ Đã áp dụng mã ${voucher.code} (${voucher.title})!`);
+                            }}
+                          >
+                            {isApplied ? "Đang dùng" : "Dùng ngay"}
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
           </div>
         </div>
       )}

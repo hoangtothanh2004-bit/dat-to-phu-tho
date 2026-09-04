@@ -48,7 +48,12 @@ export async function GET(request: NextRequest) {
   }
 
   try {
-    const ttsLang = lang.startsWith("en") ? "en" : "vi";
+    let ttsLang = "vi";
+    if (lang.startsWith("en")) ttsLang = "en";
+    else if (lang.startsWith("zh")) ttsLang = "zh-CN";
+    else if (lang.startsWith("ko")) ttsLang = "ko";
+    else if (lang.startsWith("ja")) ttsLang = "ja";
+
     const chunks = splitTextIntoChunks(text, 180);
 
     const audioBuffers: Buffer[] = [];
