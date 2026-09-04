@@ -307,6 +307,286 @@ export const UI_TEXT = {
     partnerDesc: "Nhà hàng, homestay, hợp tác xã OCOP và đơn vị lữ hành có thể đăng ký gian hàng xác minh.",
     btnRegisterPartner: "Đăng ký đối tác →",
     toastSwitchedLang: "Đã chuyển đổi toàn bộ giao diện sang Tiếng Việt",
+    // Navigation & Header
+    weatherToast: "tại khu vực · Dữ liệu thời tiết trực tuyến",
+    roleAdmin: "Quản trị viên",
+    roleMerchant: "Chủ cơ sở OCOP",
+    roleCustomer: "Du khách",
+    loginAccount: "Đăng nhập tài khoản",
+    searchInputPlaceholder: "Tìm Đền Hùng, Tam Đảo, Mai Châu, thịt chua, khoáng nóng…",
+    searchAriaLabel: "Tìm kiếm điểm đến, món ăn hoặc chỗ nghỉ",
+    searchSuggestionsMatched: "Gợi ý phù hợp với từ khóa",
+    searchSuggestionsPopular: "Gợi ý điểm đến & món ngon nổi bật",
+    useCurrentLocation: "Dùng vị trí hiện tại",
+    // Trip Planner
+    tripPageTitle1: "Lập lịch trình thông minh",
+    tripPageTitle2: "cùng hướng dẫn viên bản địa.",
+    tripPageDesc: "Tự động thiết kế hành trình tối ưu theo 4 yếu tố cốt lõi: 🏛️ Lộ trình tham quan · 🍲 Món ngon đặc sản · 🛏️ Khách sạn nghỉ dưỡng · 🚗 Phương tiện & thời gian di chuyển trên toàn địa bàn Phú Thọ, Vĩnh Phúc, Hòa Bình.",
+    tripControllerTitle: "BỘ ĐIỀU KHIỂN LỊCH TRÌNH",
+    tripCustomize: "Tùy biến chuyến đi của bạn",
+    tripStep1: "1. Chọn Tỉnh / Vùng du lịch",
+    tripCombine3: "✨ Ghép 3 Tỉnh",
+    tripStep2: "2. Chọn Huyện / Thị xã muốn tới",
+    tripAllDistricts: "Toàn bộ các huyện (Lập tuyến tự do)",
+    tripDirectionGuide: "🧭 HƯỚNG DẪN ĐƯỜNG ĐI:",
+    tripRecommendedRoute: "Tuyến đường khuyên dùng:",
+    tripSignatureFoods: "Món ngon tiêu biểu:",
+    tripStep3: "3. Chọn các điểm đến vào tour",
+    tripSelected: "Đã chọn",
+    tripPoints: "điểm",
+    tripSuggestedCombos: "Gợi ý tuyến ghép phổ biến:",
+    tripAddAll: "+ Thêm tất cả",
+    tripReset: "↺ Đặt lại",
+    tripStep4: "4. Số ngày đi",
+    tripDays: "ngày",
+    tripNights: "đêm",
+    tripDayTrip: "(trong ngày)",
+    tripStep5: "5. Số lượng khách",
+    tripGuests: "khách",
+    tripPerson: "người",
+    tripCouple: "Cặp đôi",
+    tripFamily: "Gia đình",
+    tripGroup: "Đoàn đông",
+    tripStep6: "6. Tiêu chuẩn ngân sách",
+    tripBudgetEcon: "🏷️ Tiết kiệm (~500.000đ / người / ngày)",
+    tripBudgetStd: "⭐ Tiêu chuẩn (~1.000.000đ / người / ngày)",
+    tripBudgetPrem: "👑 Cao cấp / Nghỉ dưỡng (~2.000.000đ+ / người / ngày)",
+    tripStep7: "7. Phương tiện di chuyển",
+    tripCar: "Ô tô riêng",
+    tripMotorbike: "Xe máy",
+    tripLimousine: "Limousine / Xe khách",
+    tripTaxi: "Taxi / xe hợp đồng",
+    tripStep8: "8. Phong cách chuyến đi",
+    tripStyleCulture: "Văn hóa & cội nguồn",
+    tripStyleSpa: "Nghỉ dưỡng khoáng nóng & Onsen",
+    tripStyleAdventure: "Phượt & săn mây sinh thái",
+    tripStyleFamily: "Gia đình có trẻ nhỏ/người cao tuổi",
+    tripStyleFood: "Ẩm thực bản địa",
+    tripGenerateBtn: "✦ Tạo Lịch Trình Chi Tiết",
+    tripGenerateNote: "Tự động tính quãng đường, chi phí dự toán, thực đơn và thuyết minh",
+    tripStatDistance: "CỰ LY LỘ TRÌNH",
+    tripStatDriveTime: "THỜI GIAN LÁI XE",
+    tripStatTransport: "PHƯƠNG TIỆN",
+    tripStatCost: "DỰ TOÁN / KHÁCH",
+    tripDayLabel: "NGÀY",
+    tripDayRoute: "Lộ trình ngày:",
+    tripGuideTips: "💡 Lời khuyên Hướng dẫn viên:",
+    tripSafetyTips: "🛡️ Lưu ý an toàn & di chuyển:",
+    tripViewGoogleMaps: "🗺️ Xem trên Google Maps",
+    tripPrintPdf: "▤ In / Xuất PDF",
+    tripShare: "↗ Chia sẻ lịch trình",
+    tripSaveNotebook: "♡ Lưu vào Sổ tay",
+    tripTransportLabel: "Phương tiện:",
+    tripSuggestedToursTitle: "LỊCH TRÌNH MẪU GỢI Ý",
+    tripSuggestedToursDesc: "Lựa chọn sẵn bởi chuyên gia địa phương — nhấn để áp dụng ngay.",
+    // Near Me
+    nearKicker: "TIỆN ÍCH VÀ DỊCH VỤ DU LỊCH",
+    nearTitle1: "Tiện ích quanh bạn",
+    nearTitle2: "trên cả 3 tỉnh.",
+    nearLocationNotEnabled: "Chưa bật định vị",
+    nearAllowLocation: "Cho phép vị trí để tính khoảng cách thực",
+    nearUpdateGPS: "Cập nhật GPS",
+    nearEnableGPS: "Bật định vị GPS",
+    nearAreaLabel: "KHU VỰC:",
+    nearAll3Provinces: "Toàn bộ 3 tỉnh",
+    nearServiceGasStation: "Trạm xăng",
+    nearServiceParking: "Bãi đỗ xe",
+    nearServiceMedical: "Y tế",
+    nearServiceATM: "ATM",
+    nearServiceEV: "Trạm sạc EV",
+    nearServiceRescue: "Cứu hộ",
+    nearServiceDestination: "Điểm đến",
+    nearServiceFood: "Ăn uống",
+    nearServiceStay: "Lưu trú",
+    // Saved Tab
+    savedPlacesTab: "Địa điểm",
+    savedFoodsTab: "Món ăn",
+    savedItineraryTab: "Lịch trình",
+    savedPlacesEmpty: "Chưa lưu địa điểm nào",
+    savedPlacesEmptyDesc: "Nhấn biểu tượng ♡ trên thẻ địa điểm để lưu lại các nơi bạn yêu thích.",
+    savedFoodsEmpty: "Chưa lưu món ăn nào",
+    savedFoodsEmptyDesc: "Bấm ♡ Lưu món ăn ở mục khám phá để thêm vào danh sách.",
+    savedItineraryEmpty: "Chưa có lịch trình nào được lưu",
+    savedItineraryEmptyDesc: "Vào mục \"Lịch trình\", tạo một tour phù hợp rồi bấm \"Lưu vào Sổ tay\".",
+    savedCreateTrip: "Tạo lịch trình ngay →",
+    savedOpenDetail: "Mở xem chi tiết →",
+    savedOpenGoogleMaps: "Mở Google Maps ↗",
+    savedDeleteItinerary: "Xóa",
+    savedDeletedToast: "Đã xóa lịch trình khỏi sổ tay",
+    savedOpenedToast: "Đã mở chi tiết lịch trình!",
+    savedPerGuest: "/khách",
+    // Profile
+    profileSystemAdmin: "🛡️ QUẢN TRỊ VIÊN HỆ THỐNG",
+    profileMerchantOwner: "🏪 CHỦ CƠ SỞ OCOP:",
+    profilePartner: "ĐỐI TÁC",
+    profileCustomer: "👤 DU KHÁCH ĐẤT TỔ",
+    profileNotLoggedIn: "CHƯA ĐĂNG NHẬP",
+    profileGuest: "Khách vãng lai",
+    profileLoginVia: "Đăng nhập qua",
+    profileLoginPrompt: "Đăng nhập bằng Gmail hoặc Facebook để đặt đặc sản OCOP và quản lý đơn hàng.",
+    profileSwitchAccount: "Đổi tài khoản",
+    profileLogout: "Đăng xuất",
+    profileLoginNow: "🔑 Đăng nhập ngay",
+    profileOrderMgmt: "Bảng Quản Lý Đơn Hàng (Google Sheets)",
+    profileAdminOrderDesc: "Quyền Admin: Quản lý đơn · Điều phối & Xuất Sheets",
+    profileMerchantOrderDesc: "Chủ cơ sở: Quản lý đơn & giao hàng",
+    profileOrdersCount: "đơn",
+    profileOrdersPlaced: "đơn hàng đã đặt · Bấm để xem và theo dõi tiến độ giao hàng",
+    profileNoOrders: "Chưa có đơn hàng nào · Khám phá đặc sản OCOP và đặt món ngay",
+    profileItems: "món",
+    // Footer
+    footerDesc: "Cẩm nang du lịch và trợ lý hành trình số thông minh · Tinh hoa Đất Tổ hội tụ.",
+    footerLink: "Du lịch Đất Tổ ↗",
+    // Auth
+    authLoginTab: "Đăng nhập",
+    authRegisterTab: "Đăng ký Tài khoản",
+    authAdminTab: "Admin",
+    authEmail: "Địa chỉ Email",
+    authPassword: "Mật khẩu",
+    authShowPassword: "Hiện",
+    authHidePassword: "Ẩn",
+    authForgotPassword: "Quên mật khẩu?",
+    authLoginBtn: "Đăng nhập",
+    authOrLoginWith: "hoặc đăng nhập nhanh bằng",
+    authRegisterName: "Họ và tên",
+    authRegisterPhone: "Số điện thoại",
+    authRegisterConfirmPass: "Nhập lại mật khẩu",
+    authRegisterBtn: "Đăng ký tài khoản",
+    authAdminUser: "Tên đăng nhập Admin",
+    authAdminPass: "Mật khẩu Admin",
+    authAdminLoginBtn: "Đăng nhập Admin",
+    authClose: "Đóng",
+    // Directory
+    directoryKicker: "DANH MỤC TRA CỨU ĐIỂM ĐẾN",
+    directoryTitle: "Danh bạ 100 Điểm Du lịch – Ăn uống – Lưu trú",
+    directoryDesc: "Tra cứu nhanh thông tin điểm tham quan, quán ăn và cơ sở lưu trú theo từng địa bàn.",
+    directoryCollapse: "Thu gọn bảng danh bạ ▲",
+    directoryExpand: "Mở toàn bộ danh bạ",
+    directorySearchPlaceholder: "Tìm theo tên điểm, món ăn, khách sạn...",
+    directoryAllDistricts: "Tất cả huyện/thị",
+    directoryDistrictPrefix: "Huyện/Thị:",
+    directoryColNo: "STT",
+    directoryColName: "Tên điểm đến",
+    directoryColType: "Loại hình",
+    directoryColArea: "Địa bàn",
+    directoryColFood: "Ẩm thực & Quán ăn gần điểm",
+    directoryColStay: "Lưu trú / Khách sạn gần điểm",
+    directoryColDist: "Cự ly",
+    // Modal
+    modalClose: "Đóng",
+    modalReviews: "đánh giá tham khảo",
+    modalPhoto: "Ảnh:",
+    // Misc
+    loginRequiredToast: "Vui lòng đăng nhập bằng Gmail hoặc Facebook để đặt hàng!",
+    needAtLeast1Place: "Cần giữ ít nhất 1 điểm đến trong lịch trình!",
+    registerPartnerToast: "Cảm ơn bạn! Thông tin đăng ký đối tác đã được ghi nhận.",
+    openTripAssistant: "Đã mở trợ lý lập lịch trình tour",
+    selectResortToast: "Chọn một điểm nghỉ dưỡng rồi mở Chỗ nghỉ gần đây",
+    toastLangChanged: "Đã chuyển ngôn ngữ:",
+    clearOrdersConfirm: "Bạn có chắc chắn muốn xóa toàn bộ lịch sử đơn hàng của tài khoản này không?",
+    // Audio
+    audioPause: "⏸ Tạm dừng",
+    audioListen: "▶ Nghe Thuyết Minh Lịch Trình",
+    audioStop: "Dừng",
+    audioVoiceLabel: "🗣️ Giọng đọc:",
+    audioVolumeLabel: "🔊 Âm lượng:",
+    audioSpeedLabel: "Tốc độ:",
+    // Common & Actions
+    bottomNavAria: "Điều hướng trên điện thoại",
+    getDirectionsBtn: "Chỉ đường →",
+    detailsBtn: "Chi tiết →",
+    callNowBtn: "Gọi ngay",
+    serviceListTitle: "Danh sách tiện ích",
+    serviceListSub: "Sắp xếp theo cự ly gần bạn nhất",
+    sosTitle: "Hotline Hỗ Trợ & Cứu Hộ Khẩn Cấp 24/7",
+    sosSub: "Luôn sẵn sàng hỗ trợ quý khách trên mọi cung đường.",
+    sosNationalRescue: "Cứu nạn quốc gia",
+    sosPolice: "Công an",
+    sosAmbulance: "Cấp cứu Y tế",
+    sosTrafficRescue: "Cứu hộ giao thông",
+    festivalKicker: "LỊCH LỄ HỘI VĂN HÓA",
+    festivalTitle1: "Đi đúng ngày,",
+    festivalTitle2: "chạm đúng lễ hội.",
+    festivalDesc: "Lịch hội truyền thống được giữ nguyên theo ngày âm lịch để du khách dễ dàng sắp xếp chuyến đi.",
+    bookingRequired: "CẦN ĐẶT TRƯỚC",
+    openPlaceBtn: "Mở điểm đến →",
+    // Shopee Hub & Commerce
+    shopeePurchases: "Đơn mua",
+    shopeeViewHistory: "Xem lịch sử mua hàng",
+    statusPending: "Chờ xác nhận",
+    statusProcessing: "Chờ lấy hàng",
+    statusShipping: "Chờ giao hàng",
+    statusCompleted: "Đánh giá",
+    statusCancelled: "Đã hủy",
+    cartEmptyTitle: "Giỏ hàng đang trống",
+    cartEmptyDesc: "Khám phá bản đồ ẩm thực và thêm các món đặc sản vào giỏ.",
+    viewSpecialtiesBtn: "Xem đặc sản ngay →",
+    voucherPromotionsTitle: "Mã khuyến mãi & Ưu đãi",
+    chooseOtherVoucherBtn: "Chọn mã khác →",
+    removeVoucherTitle: "Bỏ mã",
+    voucherInputPlaceholder: "Nhập mã: DATTO10, LEHOI2026...",
+    applyVoucherBtn: "Áp dụng",
+    currencyLabel: "Đơn vị tiền tệ:",
+    subtotalLabel: "Tạm tính",
+    discountVoucherLabel: "Ưu đãi giảm giá",
+    authRequiredOrderTitle: "Yêu cầu đăng nhập để đặt hàng",
+    authRequiredOrderDesc: "Đăng nhập bằng Gmail hoặc Facebook để lưu đơn và nhận thông báo từ cơ sở OCOP.",
+    loginGoogle: "Đăng nhập bằng Gmail (Google)",
+    loginFacebook: "Đăng nhập bằng Facebook",
+    loginAdminLink: "🛡️ Đăng nhập Quản Trị Viên (Admin) →",
+    orderAccountLabel: "Tài khoản đặt hàng:",
+    changeAccountBtn: "Đổi",
+    fullNameLabel: "Họ và tên người mua",
+    phoneNumberLabel: "Số điện thoại liên hệ",
+    shippingAddressLabel: "Địa chỉ giao hàng / Tên khách sạn",
+    orderNoteLabel: "Ghi chú thêm (Thời gian giao, yêu cầu đóng hộp...)",
+    orderNotePlaceholder: "Ghi chú thêm cho người bán",
+    confirmOrderBtn: "Xác nhận đặt hàng",
+    loginToCompleteOrder: "🔒 Đăng nhập để hoàn tất đặt hàng →",
+    noOrdersInStatus: "Không có đơn hàng nào trong mục này",
+    noOrdersInStatusDesc: "Chọn danh mục khác hoặc đặt thêm các món đặc sản OCOP Đất Tổ.",
+    clearOrderHistoryBtn: "🗑️ Xóa sạch lịch sử đơn",
+    orderNumberLabel: "Đơn hàng",
+    cancelOrderBtn: "Hủy đơn hàng",
+    reorderBtn: "Đặt lại món này ↻",
+    // Booking & Success
+    bookingStayRequest: "YÊU CẦU ĐẶT PHÒNG LƯU TRÚ",
+    priceFromLabel: "Giá tham khảo từ",
+    bookingRepName: "Họ và tên người đại diện",
+    checkInDate: "Ngày nhận phòng",
+    checkOutDate: "Ngày trả phòng",
+    specialRequest: "Ghi chú riêng",
+    estimatedTotalStay: "Dự toán tổng tiền",
+    sendBookingRequestBtn: "Gửi yêu cầu đặt phòng →",
+    orderSuccessKicker: "ĐẶT HÀNG THÀNH CÔNG",
+    trackYourOrderBtn: "Xem & Theo Dõi Tiến Độ Đơn Hàng Của Bạn →",
+    continueExploreBtn: "Tiếp tục khám phá điểm đến",
+    // Place detail, food market & slot details
+    modalBestTime: "KHUNG GIỜ ĐẸP",
+    modalDuration: "THỜI LƯỢNG",
+    modalFromVietTri: "TỪ VIỆT TRÌ",
+    modalEstimatedCost: "CHI PHÍ THAM KHẢO",
+    modalHighlightsTitle: "ĐIỂM NỔI BẬT KHÔNG NÊN BỎ LỠ",
+    modalNoticeTitle: "Lưu ý trước khi đi",
+    modalTransportTipsTitle: "GỢI Ý PHƯƠNG TIỆN & CUNG ĐƯỜNG",
+    modalVehicleLabel: "🚗 Phương tiện phù hợp:",
+    modalRouteLabel: "🛣️ Cung đường:",
+    modalCautionLabel: "⚠️ Lưu ý an toàn:",
+    modalOpenDirections: "⌁ Mở chỉ đường",
+    slotWhereSightsee: "🏛️ ĐI THAM QUAN Ở ĐÂU",
+    slotDestination: "Điểm đến:",
+    slotHighlights: "Điểm nhấn:",
+    slotWhereDine: "🍲 ĂN Ở ĐÂU & MÓN GÌ",
+    slotSpecialtyMenu: "Thực đơn đặc sản:",
+    slotFreeDine: "Tự do thưởng thức ẩm thực đặc sản địa phương trên cung đường.",
+    slotWhereStay: "🛏️ NGỦ NGHỈ Ở ĐÂU",
+    slotAmenities: "Dịch vụ & Tiện nghi:",
+    slotGuideAdvice: "Lời dặn hướng dẫn viên:",
+    addressLabel: "Địa chỉ:",
+    servingHoursLabel: "Giờ phục vụ:",
+    contactAtShop: "Liên hệ tại quán",
+    pickupNoteLabel: "Ghi chú nhận món:",
+    applyTourHint: "Bấm vào tour để áp dụng ngay",
   },
   en: {
     brandSubtitle: "PHU THO · VINH PHUC · HOA BINH",
@@ -421,6 +701,275 @@ export const UI_TEXT = {
     partnerDesc: "Restaurants, homestays, OCOP cooperatives, and travel operators can register verified merchant stores.",
     btnRegisterPartner: "Register as Partner →",
     toastSwitchedLang: "Switched all interface content to English",
+    weatherToast: "in the area · Live weather data",
+    roleAdmin: "Administrator",
+    roleMerchant: "OCOP Merchant",
+    roleCustomer: "Tourist",
+    loginAccount: "Sign in to your account",
+    searchInputPlaceholder: "Search Hung Temple, Tam Dao, Mai Chau, local specialties…",
+    searchAriaLabel: "Search destinations, dishes, or accommodation",
+    searchSuggestionsMatched: "Suggestions matching your search",
+    searchSuggestionsPopular: "Popular destinations & culinary highlights",
+    useCurrentLocation: "Use current location",
+    tripPageTitle1: "Build Smart Itinerary",
+    tripPageTitle2: "with local expert guides.",
+    tripPageDesc: "Automatically optimizes 4 core factors: 🏛️ Sightseeing · 🍲 Local cuisine · 🛏️ Hotels & resorts · 🚗 Transport & travel time across Phu Tho, Vinh Phuc, and Hoa Binh.",
+    tripControllerTitle: "TRIP CONTROLLER",
+    tripCustomize: "Customize your journey",
+    tripStep1: "1. Select Province / Region",
+    tripCombine3: "✨ Combine 3 Provinces",
+    tripStep2: "2. Select District / Town",
+    tripAllDistricts: "All districts (Free routing)",
+    tripDirectionGuide: "🧭 TRAVEL DIRECTIONS:",
+    tripRecommendedRoute: "Recommended route:",
+    tripSignatureFoods: "Signature local dishes:",
+    tripStep3: "3. Select attractions for tour",
+    tripSelected: "Selected",
+    tripPoints: "places",
+    tripSuggestedCombos: "Popular route combos:",
+    tripAddAll: "+ Add all",
+    tripReset: "↺ Reset",
+    tripStep4: "4. Number of days",
+    tripDays: "days",
+    tripNights: "nights",
+    tripDayTrip: "(day trip)",
+    tripStep5: "5. Number of travelers",
+    tripGuests: "guests",
+    tripPerson: "person",
+    tripCouple: "Couple",
+    tripFamily: "Family",
+    tripGroup: "Large group",
+    tripStep6: "6. Budget level",
+    tripBudgetEcon: "🏷️ Budget (~$20 / person / day)",
+    tripBudgetStd: "⭐ Standard (~$40 / person / day)",
+    tripBudgetPrem: "👑 Premium / Resort (~$80+ / person / day)",
+    tripStep7: "7. Transportation",
+    tripCar: "Private car",
+    tripMotorbike: "Motorcycle",
+    tripLimousine: "Limousine / Coach",
+    tripTaxi: "Taxi / Hired car",
+    tripStep8: "8. Travel style",
+    tripStyleCulture: "Culture & heritage",
+    tripStyleSpa: "Hot springs & Onsen",
+    tripStyleAdventure: "Adventure & cloud hunting",
+    tripStyleFamily: "Family-friendly",
+    tripStyleFood: "Local gastronomy",
+    tripGenerateBtn: "✦ Generate Detailed Itinerary",
+    tripGenerateNote: "Auto-calculates distance, budget estimates, menus, and audio guide",
+    tripStatDistance: "ROUTE DISTANCE",
+    tripStatDriveTime: "DRIVING TIME",
+    tripStatTransport: "TRANSPORT",
+    tripStatCost: "EST. COST / GUEST",
+    tripDayLabel: "DAY",
+    tripDayRoute: "Day route:",
+    tripGuideTips: "💡 Guide's advice:",
+    tripSafetyTips: "🛡️ Safety & travel notes:",
+    tripViewGoogleMaps: "🗺️ View on Google Maps",
+    tripPrintPdf: "▤ Print / Export PDF",
+    tripShare: "↗ Share itinerary",
+    tripSaveNotebook: "♡ Save to Notebook",
+    tripTransportLabel: "Transport:",
+    tripSuggestedToursTitle: "SUGGESTED TOUR TEMPLATES",
+    tripSuggestedToursDesc: "Curated by local experts — tap to apply instantly.",
+    nearKicker: "TRAVEL UTILITIES & SERVICES",
+    nearTitle1: "Nearby amenities",
+    nearTitle2: "across all 3 provinces.",
+    nearLocationNotEnabled: "Location not enabled",
+    nearAllowLocation: "Allow location access for real distance",
+    nearUpdateGPS: "Update GPS",
+    nearEnableGPS: "Enable GPS",
+    nearAreaLabel: "AREA:",
+    nearAll3Provinces: "All 3 provinces",
+    nearServiceGasStation: "Gas station",
+    nearServiceParking: "Parking",
+    nearServiceMedical: "Medical",
+    nearServiceATM: "ATM",
+    nearServiceEV: "EV charging",
+    nearServiceRescue: "Rescue",
+    nearServiceDestination: "Destination",
+    nearServiceFood: "Dining",
+    nearServiceStay: "Accommodation",
+    savedPlacesTab: "Places",
+    savedFoodsTab: "Foods",
+    savedItineraryTab: "Itineraries",
+    savedPlacesEmpty: "No saved places yet",
+    savedPlacesEmptyDesc: "Tap the ♡ icon on place cards to save your favorites.",
+    savedFoodsEmpty: "No saved dishes yet",
+    savedFoodsEmptyDesc: "Tap ♡ Save Dish in the Explore tab to add to your list.",
+    savedItineraryEmpty: "No saved itineraries yet",
+    savedItineraryEmptyDesc: "Go to \"Itinerary\" tab, create a tour, then tap \"Save to Notebook\".",
+    savedCreateTrip: "Create itinerary now →",
+    savedOpenDetail: "View details →",
+    savedOpenGoogleMaps: "Open Google Maps ↗",
+    savedDeleteItinerary: "Delete",
+    savedDeletedToast: "Itinerary removed from notebook",
+    savedOpenedToast: "Opened itinerary details!",
+    savedPerGuest: "/guest",
+    profileSystemAdmin: "🛡️ SYSTEM ADMINISTRATOR",
+    profileMerchantOwner: "🏪 OCOP MERCHANT:",
+    profilePartner: "PARTNER",
+    profileCustomer: "👤 ANCESTRAL LAND TOURIST",
+    profileNotLoggedIn: "NOT SIGNED IN",
+    profileGuest: "Guest",
+    profileLoginVia: "Signed in via",
+    profileLoginPrompt: "Sign in with Gmail or Facebook to order OCOP specialties and manage orders.",
+    profileSwitchAccount: "Switch account",
+    profileLogout: "Sign out",
+    profileLoginNow: "🔑 Sign in now",
+    profileOrderMgmt: "Order Management (Google Sheets)",
+    profileAdminOrderDesc: "Admin access: Manage orders · Dispatch & Export Sheets",
+    profileMerchantOrderDesc: "Merchant: Manage orders & deliveries",
+    profileOrdersCount: "orders",
+    profileOrdersPlaced: "orders placed · Tap to track delivery status",
+    profileNoOrders: "No orders yet · Explore OCOP specialties and order now",
+    profileItems: "items",
+    footerDesc: "Smart travel guide & digital itinerary assistant · Essence of Ancestral Land.",
+    footerLink: "Dat To Travel ↗",
+    authLoginTab: "Sign In",
+    authRegisterTab: "Create Account",
+    authAdminTab: "Admin",
+    authEmail: "Email Address",
+    authPassword: "Password",
+    authShowPassword: "Show",
+    authHidePassword: "Hide",
+    authForgotPassword: "Forgot password?",
+    authLoginBtn: "Sign In",
+    authOrLoginWith: "or sign in quickly with",
+    authRegisterName: "Full Name",
+    authRegisterPhone: "Phone Number",
+    authRegisterConfirmPass: "Confirm Password",
+    authRegisterBtn: "Create Account",
+    authAdminUser: "Admin Username",
+    authAdminPass: "Admin Password",
+    authAdminLoginBtn: "Admin Sign In",
+    authClose: "Close",
+    directoryKicker: "DESTINATION DIRECTORY",
+    directoryTitle: "100 Tourism, Dining & Accommodation Directory",
+    directoryDesc: "Quick lookup for attractions, restaurants, and accommodations by area.",
+    directoryCollapse: "Collapse directory ▲",
+    directoryExpand: "Open full directory",
+    directorySearchPlaceholder: "Search by name, dish, hotel...",
+    directoryAllDistricts: "All districts",
+    directoryDistrictPrefix: "District:",
+    directoryColNo: "No.",
+    directoryColName: "Destination",
+    directoryColType: "Type",
+    directoryColArea: "Area",
+    directoryColFood: "Nearby Dining",
+    directoryColStay: "Nearby Hotels",
+    directoryColDist: "Distance",
+    modalClose: "Close",
+    modalReviews: "reviews",
+    modalPhoto: "Photo:",
+    loginRequiredToast: "Please sign in with Gmail or Facebook to place an order!",
+    needAtLeast1Place: "Must keep at least 1 destination in the itinerary!",
+    registerPartnerToast: "Thank you! Your partner registration has been recorded.",
+    openTripAssistant: "Opened trip planning assistant",
+    selectResortToast: "Select a resort then open nearby accommodation",
+    toastLangChanged: "Language switched to:",
+    clearOrdersConfirm: "Are you sure you want to clear all order history for this account?",
+    audioPause: "⏸ Pause",
+    audioListen: "▶ Listen to Audio Guide",
+    audioStop: "Stop",
+    audioVoiceLabel: "🗣️ Voice:",
+    audioVolumeLabel: "🔊 Volume:",
+    audioSpeedLabel: "Speed:",
+    // Common & Actions
+    bottomNavAria: "Mobile navigation",
+    getDirectionsBtn: "Directions →",
+    detailsBtn: "Details →",
+    callNowBtn: "Call now",
+    serviceListTitle: "Amenities List",
+    serviceListSub: "Sorted by closest distance to you",
+    sosTitle: "24/7 Emergency Support & Rescue Hotline",
+    sosSub: "Always ready to assist you on every route.",
+    sosNationalRescue: "National Rescue",
+    sosPolice: "Police",
+    sosAmbulance: "Medical Ambulance",
+    sosTrafficRescue: "Traffic Rescue",
+    festivalKicker: "CULTURAL FESTIVAL CALENDAR",
+    festivalTitle1: "Travel on the right day,",
+    festivalTitle2: "experience the right festival.",
+    festivalDesc: "Traditional festival dates are preserved according to the lunar calendar for easy trip planning.",
+    bookingRequired: "BOOKING REQUIRED",
+    openPlaceBtn: "Open destination →",
+    // Shopee Hub & Commerce
+    shopeePurchases: "Purchases",
+    shopeeViewHistory: "View purchase history",
+    statusPending: "Pending",
+    statusProcessing: "Preparing",
+    statusShipping: "Shipping",
+    statusCompleted: "Completed",
+    statusCancelled: "Cancelled",
+    cartEmptyTitle: "Your cart is empty",
+    cartEmptyDesc: "Explore the culinary map and add local specialties to your cart.",
+    viewSpecialtiesBtn: "Explore specialties now →",
+    voucherPromotionsTitle: "Vouchers & Promotions",
+    chooseOtherVoucherBtn: "Choose another voucher →",
+    removeVoucherTitle: "Remove voucher",
+    voucherInputPlaceholder: "Enter code: DATTO10, LEHOI2026...",
+    applyVoucherBtn: "Apply",
+    currencyLabel: "Currency:",
+    subtotalLabel: "Subtotal",
+    discountVoucherLabel: "Discount Voucher",
+    authRequiredOrderTitle: "Sign in required to order",
+    authRequiredOrderDesc: "Sign in with Gmail or Facebook to save orders and receive updates from OCOP merchants.",
+    loginGoogle: "Sign in with Gmail (Google)",
+    loginFacebook: "Sign in with Facebook",
+    loginAdminLink: "🛡️ Administrator Login (Admin) →",
+    orderAccountLabel: "Order Account:",
+    changeAccountBtn: "Change",
+    fullNameLabel: "Full name",
+    phoneNumberLabel: "Phone number",
+    shippingAddressLabel: "Delivery address / Hotel name",
+    orderNoteLabel: "Additional note (Delivery time, packaging...)",
+    orderNotePlaceholder: "Note for seller",
+    confirmOrderBtn: "Confirm Order",
+    loginToCompleteOrder: "🔒 Sign in to complete order →",
+    noOrdersInStatus: "No orders in this category",
+    noOrdersInStatusDesc: "Select another category or order more local OCOP specialties.",
+    clearOrderHistoryBtn: "🗑️ Clear order history",
+    orderNumberLabel: "Order",
+    cancelOrderBtn: "Cancel order",
+    reorderBtn: "Reorder this ↻",
+    // Booking & Success
+    bookingStayRequest: "ACCOMMODATION BOOKING REQUEST",
+    priceFromLabel: "Starting price from",
+    bookingRepName: "Guest full name",
+    checkInDate: "Check-in date",
+    checkOutDate: "Check-out date",
+    specialRequest: "Special requests",
+    estimatedTotalStay: "Estimated total",
+    sendBookingRequestBtn: "Send booking request →",
+    orderSuccessKicker: "ORDER PLACED SUCCESSFULLY",
+    trackYourOrderBtn: "View & Track Your Order Progress →",
+    continueExploreBtn: "Continue exploring destinations",
+    // Place detail, food market & slot details
+    modalBestTime: "BEST TIME TO VISIT",
+    modalDuration: "DURATION",
+    modalFromVietTri: "FROM VIET TRI",
+    modalEstimatedCost: "ESTIMATED EXPENSE",
+    modalHighlightsTitle: "MUST-SEE HIGHLIGHTS",
+    modalNoticeTitle: "Travel Advisory & Notes",
+    modalTransportTipsTitle: "TRANSPORT & ROUTE SUGGESTIONS",
+    modalVehicleLabel: "🚗 Recommended transport:",
+    modalRouteLabel: "🛣️ Route advice:",
+    modalCautionLabel: "⚠️ Safety tips:",
+    modalOpenDirections: "⌁ Get Directions",
+    slotWhereSightsee: "🏛️ WHERE TO VISIT",
+    slotDestination: "Destination:",
+    slotHighlights: "Highlights:",
+    slotWhereDine: "🍲 DINING & SPECIALTIES",
+    slotSpecialtyMenu: "Specialty menu:",
+    slotFreeDine: "Feel free to explore and enjoy local specialties along your route.",
+    slotWhereStay: "🛏️ ACCOMMODATION & RESORTS",
+    slotAmenities: "Services & Amenities:",
+    slotGuideAdvice: "Guide's advice:",
+    addressLabel: "Address:",
+    servingHoursLabel: "Opening hours:",
+    contactAtShop: "Contact at store",
+    pickupNoteLabel: "Pickup note:",
+    applyTourHint: "Tap a tour to apply instantly",
   },
   zh: {
     brandSubtitle: "富寿 · 永福 · 和平",
@@ -535,6 +1084,189 @@ export const UI_TEXT = {
     partnerDesc: "餐厅、民宿、OCOP 合作社及旅行社均可申请入驻认证商家展位。",
     btnRegisterPartner: "申请成为合作伙伴 →",
     toastSwitchedLang: "已将全部页面内容切换为中文",
+    weatherToast: "所在区域 · 实时天气数据",
+    roleAdmin: "管理员", roleMerchant: "OCOP 商户", roleCustomer: "游客",
+    loginAccount: "登录账户",
+    searchInputPlaceholder: "搜索雄王庙、三岛、梅州、特产…",
+    searchAriaLabel: "搜索景点、美食或住宿",
+    searchSuggestionsMatched: "符合搜索词的建议",
+    searchSuggestionsPopular: "热门目的地与特色美食推荐",
+    useCurrentLocation: "使用当前位置",
+    tripPageTitle1: "智能行程规划", tripPageTitle2: "当地专家全程指导。",
+    tripPageDesc: "自动优化4大核心：🏛️观光·🍲美食·🛏️住宿·🚗交通，覆盖富寿、永福、和平三省。",
+    tripControllerTitle: "行程控制面板", tripCustomize: "自定义您的旅程",
+    tripStep1: "1. 选择省份/区域", tripCombine3: "✨ 三省联游",
+    tripStep2: "2. 选择县/区", tripAllDistricts: "全部县区（自由规划）",
+    tripDirectionGuide: "🧭 出行指南：", tripRecommendedRoute: "推荐路线：",
+    tripSignatureFoods: "特色美食：",
+    tripStep3: "3. 选择景点加入行程", tripSelected: "已选", tripPoints: "处",
+    tripSuggestedCombos: "热门组合路线：", tripAddAll: "+ 全部添加", tripReset: "↺ 重置",
+    tripStep4: "4. 出行天数", tripDays: "天", tripNights: "晚", tripDayTrip: "（当日往返）",
+    tripStep5: "5. 出行人数", tripGuests: "位旅客", tripPerson: "人",
+    tripCouple: "情侣", tripFamily: "家庭", tripGroup: "大型团队",
+    tripStep6: "6. 预算标准",
+    tripBudgetEcon: "🏷️ 经济型（~¥140/人/天）", tripBudgetStd: "⭐ 标准型（~¥280/人/天）",
+    tripBudgetPrem: "👑 高端/度假（~¥570+/人/天）",
+    tripStep7: "7. 出行方式", tripCar: "自驾", tripMotorbike: "摩托车",
+    tripLimousine: "大巴/商务车", tripTaxi: "出租车/包车",
+    tripStep8: "8. 旅行风格", tripStyleCulture: "文化寻根", tripStyleSpa: "温泉康养",
+    tripStyleAdventure: "探险观云", tripStyleFamily: "亲子/适老", tripStyleFood: "美食探店",
+    tripGenerateBtn: "✦ 生成详细行程", tripGenerateNote: "自动计算路程、预算、菜单和语音导览",
+    tripStatDistance: "路线总里程", tripStatDriveTime: "驾车时间",
+    tripStatTransport: "交通方式", tripStatCost: "人均预算",
+    tripDayLabel: "第", tripDayRoute: "当日路线：",
+    tripGuideTips: "💡 导游建议：", tripSafetyTips: "🛡️ 安全提示：",
+    tripViewGoogleMaps: "🗺️ 在地图查看", tripPrintPdf: "▤ 打印/导出PDF",
+    tripShare: "↗ 分享行程", tripSaveNotebook: "♡ 收藏到手册",
+    tripTransportLabel: "交通方式：",
+    tripSuggestedToursTitle: "推荐行程模板", tripSuggestedToursDesc: "当地专家精选——点击即用。",
+    nearKicker: "旅游配套设施", nearTitle1: "周边便民设施", nearTitle2: "覆盖三省全境。",
+    nearLocationNotEnabled: "未开启定位", nearAllowLocation: "开启定位以计算实际距离",
+    nearUpdateGPS: "更新GPS", nearEnableGPS: "开启GPS",
+    nearAreaLabel: "区域：", nearAll3Provinces: "三省全部",
+    nearServiceGasStation: "加油站", nearServiceParking: "停车场", nearServiceMedical: "医疗",
+    nearServiceATM: "ATM", nearServiceEV: "充电站", nearServiceRescue: "救援",
+    nearServiceDestination: "景点", nearServiceFood: "餐饮", nearServiceStay: "住宿",
+    savedPlacesTab: "景点", savedFoodsTab: "美食", savedItineraryTab: "行程",
+    savedPlacesEmpty: "尚未收藏任何景点", savedPlacesEmptyDesc: "点击景点卡片上的♡图标即可收藏。",
+    savedFoodsEmpty: "尚未收藏任何美食", savedFoodsEmptyDesc: "在探索页面点击♡收藏美食即可添加。",
+    savedItineraryEmpty: "尚未保存任何行程", savedItineraryEmptyDesc: "前往\"行程\"页面创建旅游路线后点击\"收藏到手册\"。",
+    savedCreateTrip: "立即创建行程 →", savedOpenDetail: "查看详情 →",
+    savedOpenGoogleMaps: "打开地图 ↗", savedDeleteItinerary: "删除",
+    savedDeletedToast: "行程已从手册中删除", savedOpenedToast: "已打开行程详情！", savedPerGuest: "/人",
+    profileSystemAdmin: "🛡️ 系统管理员", profileMerchantOwner: "🏪 OCOP商户：",
+    profilePartner: "合作伙伴", profileCustomer: "👤 祖源之旅游客",
+    profileNotLoggedIn: "未登录", profileGuest: "游客",
+    profileLoginVia: "登录方式", profileLoginPrompt: "通过Gmail或Facebook登录以订购OCOP特产并管理订单。",
+    profileSwitchAccount: "切换账户", profileLogout: "退出登录",
+    profileLoginNow: "🔑 立即登录",
+    profileOrderMgmt: "订单管理（Google Sheets）",
+    profileAdminOrderDesc: "管理员：管理订单·调度·导出", profileMerchantOrderDesc: "商户：管理订单与配送",
+    profileOrdersCount: "单", profileOrdersPlaced: "个订单已下·点击查看配送进度",
+    profileNoOrders: "暂无订单·浏览OCOP特产立即下单", profileItems: "件",
+    footerDesc: "智慧旅游指南与数字行程助手·祖源精华汇聚。", footerLink: "祖源之旅 ↗",
+    authLoginTab: "登录", authRegisterTab: "注册账户", authAdminTab: "管理员",
+    authEmail: "邮箱地址", authPassword: "密码",
+    authShowPassword: "显示", authHidePassword: "隐藏",
+    authForgotPassword: "忘记密码？", authLoginBtn: "登录",
+    authOrLoginWith: "或快速登录", authRegisterName: "姓名",
+    authRegisterPhone: "手机号", authRegisterConfirmPass: "确认密码",
+    authRegisterBtn: "注册账户", authAdminUser: "管理员用户名",
+    authAdminPass: "管理员密码", authAdminLoginBtn: "管理员登录", authClose: "关闭",
+    directoryKicker: "景点查询目录", directoryTitle: "100处旅游·餐饮·住宿指南",
+    directoryDesc: "按区域快速查询景点、餐厅和住宿。",
+    directoryCollapse: "收起目录 ▲", directoryExpand: "展开全部目录",
+    directorySearchPlaceholder: "按名称、美食、酒店搜索...",
+    directoryAllDistricts: "全部县区", directoryDistrictPrefix: "县/区：",
+    directoryColNo: "序号", directoryColName: "景点名称", directoryColType: "类型",
+    directoryColArea: "所在区域", directoryColFood: "周边餐饮", directoryColStay: "周边住宿",
+    directoryColDist: "距离",
+    modalClose: "关闭", modalReviews: "条评价", modalPhoto: "图片：",
+    loginRequiredToast: "请先通过Gmail或Facebook登录后下单！",
+    needAtLeast1Place: "行程中至少保留1个景点！",
+    registerPartnerToast: "感谢您！合作伙伴申请已记录。",
+    openTripAssistant: "已打开行程规划助手", selectResortToast: "选择度假村后查看周边住宿",
+    toastLangChanged: "语言已切换为：",
+    clearOrdersConfirm: "确定要清除该账户的全部订单记录吗？",
+    audioPause: "⏸ 暂停", audioListen: "▶ 收听语音导览",
+    audioStop: "停止", audioVoiceLabel: "🗣️ 语音：",
+    audioVolumeLabel: "🔊 音量：", audioSpeedLabel: "语速：",
+    // Common & Actions
+    bottomNavAria: "移动端导航",
+    getDirectionsBtn: "导航路线 →",
+    detailsBtn: "详情 →",
+    callNowBtn: "立即呼叫",
+    serviceListTitle: "便民设施列表",
+    serviceListSub: "按离您的距离排序",
+    sosTitle: "24/7 紧急救援与求助热线",
+    sosSub: "随时为您在旅途中提供全力协助。",
+    sosNationalRescue: "国家救援",
+    sosPolice: "公安报警",
+    sosAmbulance: "医疗急救",
+    sosTrafficRescue: "交通救援",
+    festivalKicker: "文化节庆日历",
+    festivalTitle1: "适逢佳日，",
+    festivalTitle2: "邂逅盛典。",
+    festivalDesc: "传统节日保留农历日期，方便游客规划行程。",
+    bookingRequired: "需提前预约",
+    openPlaceBtn: "查看目的地 →",
+    // Shopee Hub & Commerce
+    shopeePurchases: "购买订单",
+    shopeeViewHistory: "查看购买历史",
+    statusPending: "待确认",
+    statusProcessing: "备货中",
+    statusShipping: "配送中",
+    statusCompleted: "已完成",
+    statusCancelled: "已取消",
+    cartEmptyTitle: "购物车为空",
+    cartEmptyDesc: "浏览美食地图，添加当地特产至购物车。",
+    viewSpecialtiesBtn: "立即选购特产 →",
+    voucherPromotionsTitle: "优惠券与促销",
+    chooseOtherVoucherBtn: "选择其他优惠券 →",
+    removeVoucherTitle: "取消优惠券",
+    voucherInputPlaceholder: "输入代码：DATTO10, LEHOI2026...",
+    applyVoucherBtn: "使用",
+    currencyLabel: "货币单位：",
+    subtotalLabel: "小计",
+    discountVoucherLabel: "优惠折扣",
+    authRequiredOrderTitle: "下单需先登录",
+    authRequiredOrderDesc: "使用 Gmail 或 Facebook 登录以保存订单并接收商家通知。",
+    loginGoogle: "使用 Gmail (Google) 登录",
+    loginFacebook: "使用 Facebook 登录",
+    loginAdminLink: "🛡️ 管理员登录 (Admin) →",
+    orderAccountLabel: "下单账户：",
+    changeAccountBtn: "更改",
+    fullNameLabel: "收件人姓名",
+    phoneNumberLabel: "联系电话",
+    shippingAddressLabel: "配送地址 / 酒店名称",
+    orderNoteLabel: "补充备注（配送时间、包装要求等）",
+    orderNotePlaceholder: "给卖家的留言",
+    confirmOrderBtn: "确认下单",
+    loginToCompleteOrder: "🔒 登录以完成下单 →",
+    noOrdersInStatus: "该分类下暂无订单",
+    noOrdersInStatusDesc: "选择其他分类或选购更多祖地 OCOP 特产。",
+    clearOrderHistoryBtn: "🗑️ 清空订单记录",
+    orderNumberLabel: "订单",
+    cancelOrderBtn: "取消订单",
+    reorderBtn: "再次购买 ↻",
+    // Booking & Success
+    bookingStayRequest: "住宿预订申请",
+    priceFromLabel: "参考起价",
+    bookingRepName: "入住代表姓名",
+    checkInDate: "入住日期",
+    checkOutDate: "退房日期",
+    specialRequest: "特殊要求",
+    estimatedTotalStay: "预计总额",
+    sendBookingRequestBtn: "发送预订申请 →",
+    orderSuccessKicker: "下单成功",
+    trackYourOrderBtn: "查看并跟踪订单进度 →",
+    continueExploreBtn: "继续探索目的地",
+    // Place detail, food market & slot details
+    modalBestTime: "最佳游览时间",
+    modalDuration: "建议游玩时长",
+    modalFromVietTri: "距离越池中心",
+    modalEstimatedCost: "参考费用",
+    modalHighlightsTitle: "不可错过的核心亮点",
+    modalNoticeTitle: "出行行前贴士",
+    modalTransportTipsTitle: "交通出行与路线建议",
+    modalVehicleLabel: "🚗 推荐交通工具：",
+    modalRouteLabel: "🛣️ 建议路线：",
+    modalCautionLabel: "⚠️ 安全提示：",
+    modalOpenDirections: "⌁ 打开导航路线",
+    slotWhereSightsee: "🏛️ 观光游览景点",
+    slotDestination: "目的地：",
+    slotHighlights: "核心亮点：",
+    slotWhereDine: "🍲 特色美食与餐馆",
+    slotSpecialtyMenu: "特色菜单：",
+    slotFreeDine: "沿途自由探索并品尝当地特色风味。",
+    slotWhereStay: "🛏️ 住宿与度假酒店",
+    slotAmenities: "服务与配套设施：",
+    slotGuideAdvice: "导游贴心提醒：",
+    addressLabel: "地址：",
+    servingHoursLabel: "营业时间：",
+    contactAtShop: "店内咨询",
+    pickupNoteLabel: "取货/用餐备注：",
+    applyTourHint: "点击路线即可一键应用",
   },
   ko: {
     brandSubtitle: "푸토 · 빈푹 · 호아빈",
@@ -649,6 +1381,189 @@ export const UI_TEXT = {
     partnerDesc: "식당, 숙소, OCOP 협동조합 및 여행사는 공식 인증 파트너 매장을 등록할 수 있습니다.",
     btnRegisterPartner: "파트너 신청하기 →",
     toastSwitchedLang: "모든 인터페이스가 한국어로 전환되었습니다",
+    weatherToast: "지역 · 실시간 날씨 정보",
+    roleAdmin: "관리자", roleMerchant: "OCOP 판매자", roleCustomer: "여행자",
+    loginAccount: "계정에 로그인",
+    searchInputPlaceholder: "훙왕 신전, 땀다오, 마이쩌우, 특산품 검색…",
+    searchAriaLabel: "명소, 음식 또는 숙소 검색",
+    searchSuggestionsMatched: "검색어와 일치하는 추천",
+    searchSuggestionsPopular: "인기 여행지 및 대표 먹거리 추천",
+    useCurrentLocation: "현재 위치 사용",
+    tripPageTitle1: "스마트 일정 만들기", tripPageTitle2: "현지 가이드가 함께합니다.",
+    tripPageDesc: "🏛️관광·🍲맛집·🛏️숙소·🚗교통 4대 요소를 자동 최적화, 푸토·빈푹·호아빈 3개 지역 전역.",
+    tripControllerTitle: "일정 컨트롤러", tripCustomize: "나만의 여행 커스터마이즈",
+    tripStep1: "1. 지역/도 선택", tripCombine3: "✨ 3개 지역 합치기",
+    tripStep2: "2. 군/구 선택", tripAllDistricts: "전체 군구 (자유 루트)",
+    tripDirectionGuide: "🧭 이동 안내:", tripRecommendedRoute: "추천 경로:",
+    tripSignatureFoods: "대표 맛집:",
+    tripStep3: "3. 투어에 포함할 명소 선택", tripSelected: "선택됨", tripPoints: "곳",
+    tripSuggestedCombos: "인기 조합 루트:", tripAddAll: "+ 전체 추가", tripReset: "↺ 초기화",
+    tripStep4: "4. 여행 일수", tripDays: "일", tripNights: "박", tripDayTrip: "(당일치기)",
+    tripStep5: "5. 인원 수", tripGuests: "명", tripPerson: "명",
+    tripCouple: "커플", tripFamily: "가족", tripGroup: "대규모 단체",
+    tripStep6: "6. 예산 수준",
+    tripBudgetEcon: "🏷️ 알뜰형 (~₩27,000/인/일)", tripBudgetStd: "⭐ 표준형 (~₩54,000/인/일)",
+    tripBudgetPrem: "👑 프리미엄 (~₩108,000+/인/일)",
+    tripStep7: "7. 이동 수단", tripCar: "자가용", tripMotorbike: "오토바이",
+    tripLimousine: "리무진/관광버스", tripTaxi: "택시/전세차",
+    tripStep8: "8. 여행 스타일", tripStyleCulture: "문화 & 역사", tripStyleSpa: "온천 & 힐링",
+    tripStyleAdventure: "모험 & 운해", tripStyleFamily: "가족 친화적", tripStyleFood: "미식 탐방",
+    tripGenerateBtn: "✦ 상세 일정 생성하기", tripGenerateNote: "거리·예산·맛집·오디오 가이드 자동 계산",
+    tripStatDistance: "총 이동 거리", tripStatDriveTime: "운전 시간",
+    tripStatTransport: "교통수단", tripStatCost: "1인 예상 비용",
+    tripDayLabel: "일차", tripDayRoute: "당일 루트:",
+    tripGuideTips: "💡 가이드 조언:", tripSafetyTips: "🛡️ 안전 & 이동 유의사항:",
+    tripViewGoogleMaps: "🗺️ 지도에서 보기", tripPrintPdf: "▤ 인쇄 / PDF 내보내기",
+    tripShare: "↗ 일정 공유", tripSaveNotebook: "♡ 수첩에 저장",
+    tripTransportLabel: "교통수단:",
+    tripSuggestedToursTitle: "추천 투어 템플릿", tripSuggestedToursDesc: "현지 전문가가 엄선 — 탭하면 즉시 적용.",
+    nearKicker: "여행 편의시설 & 서비스", nearTitle1: "주변 편의시설", nearTitle2: "3개 지역 전역.",
+    nearLocationNotEnabled: "위치 미활성화", nearAllowLocation: "실제 거리 계산을 위해 위치 허용",
+    nearUpdateGPS: "GPS 갱신", nearEnableGPS: "GPS 활성화",
+    nearAreaLabel: "지역:", nearAll3Provinces: "3개 지역 전체",
+    nearServiceGasStation: "주유소", nearServiceParking: "주차장", nearServiceMedical: "의료",
+    nearServiceATM: "ATM", nearServiceEV: "전기차 충전", nearServiceRescue: "긴급구조",
+    nearServiceDestination: "명소", nearServiceFood: "맛집", nearServiceStay: "숙소",
+    savedPlacesTab: "명소", savedFoodsTab: "음식", savedItineraryTab: "일정",
+    savedPlacesEmpty: "저장된 명소 없음", savedPlacesEmptyDesc: "명소 카드의 ♡ 아이콘을 탭해 즐겨찾기에 저장하세요.",
+    savedFoodsEmpty: "저장된 음식 없음", savedFoodsEmptyDesc: "탐색 탭에서 ♡ 음식 저장을 탭해 목록에 추가하세요.",
+    savedItineraryEmpty: "저장된 일정 없음", savedItineraryEmptyDesc: "\"일정\" 탭에서 투어를 만든 후 \"수첩에 저장\"을 탭하세요.",
+    savedCreateTrip: "일정 만들기 →", savedOpenDetail: "상세 보기 →",
+    savedOpenGoogleMaps: "Google 지도 열기 ↗", savedDeleteItinerary: "삭제",
+    savedDeletedToast: "수첩에서 일정이 삭제되었습니다", savedOpenedToast: "일정 상세를 열었습니다!", savedPerGuest: "/인",
+    profileSystemAdmin: "🛡️ 시스템 관리자", profileMerchantOwner: "🏪 OCOP 판매자:",
+    profilePartner: "파트너", profileCustomer: "👤 조상의 땅 여행자",
+    profileNotLoggedIn: "로그인 안 됨", profileGuest: "게스트",
+    profileLoginVia: "로그인 방법", profileLoginPrompt: "Gmail 또는 Facebook으로 로그인하여 OCOP 특산품을 주문하고 주문을 관리하세요.",
+    profileSwitchAccount: "계정 전환", profileLogout: "로그아웃",
+    profileLoginNow: "🔑 지금 로그인",
+    profileOrderMgmt: "주문 관리 (Google Sheets)",
+    profileAdminOrderDesc: "관리자: 주문 관리·배정·시트 내보내기", profileMerchantOrderDesc: "판매자: 주문 & 배송 관리",
+    profileOrdersCount: "건", profileOrdersPlaced: "건 주문 · 배송 상태 추적하기",
+    profileNoOrders: "주문 없음 · OCOP 특산품 탐색 후 지금 주문하세요", profileItems: "개",
+    footerDesc: "스마트 여행 가이드 & 디지털 일정 어시스턴트 · 조상의 땅 정수.", footerLink: "닷또 트래블 ↗",
+    authLoginTab: "로그인", authRegisterTab: "계정 만들기", authAdminTab: "관리자",
+    authEmail: "이메일 주소", authPassword: "비밀번호",
+    authShowPassword: "표시", authHidePassword: "숨기기",
+    authForgotPassword: "비밀번호 찾기", authLoginBtn: "로그인",
+    authOrLoginWith: "또는 빠르게 로그인", authRegisterName: "이름",
+    authRegisterPhone: "전화번호", authRegisterConfirmPass: "비밀번호 확인",
+    authRegisterBtn: "계정 만들기", authAdminUser: "관리자 아이디",
+    authAdminPass: "관리자 비밀번호", authAdminLoginBtn: "관리자 로그인", authClose: "닫기",
+    directoryKicker: "관광지 검색 디렉토리", directoryTitle: "100곳 관광·맛집·숙소 안내서",
+    directoryDesc: "지역별 관광지, 맛집, 숙소를 빠르게 검색하세요.",
+    directoryCollapse: "디렉토리 접기 ▲", directoryExpand: "전체 디렉토리 열기",
+    directorySearchPlaceholder: "이름, 음식, 호텔로 검색...",
+    directoryAllDistricts: "전체 군/구", directoryDistrictPrefix: "군/구:",
+    directoryColNo: "번호", directoryColName: "명소명", directoryColType: "유형",
+    directoryColArea: "지역", directoryColFood: "주변 맛집", directoryColStay: "주변 숙소",
+    directoryColDist: "거리",
+    modalClose: "닫기", modalReviews: "개 리뷰", modalPhoto: "사진:",
+    loginRequiredToast: "주문하려면 Gmail 또는 Facebook으로 로그인하세요!",
+    needAtLeast1Place: "일정에 최소 1곳의 명소를 유지해야 합니다!",
+    registerPartnerToast: "감사합니다! 파트너 신청이 접수되었습니다.",
+    openTripAssistant: "일정 계획 어시스턴트 열림", selectResortToast: "리조트 선택 후 주변 숙소 보기",
+    toastLangChanged: "언어가 전환되었습니다:",
+    clearOrdersConfirm: "이 계정의 모든 주문 내역을 삭제하시겠습니까?",
+    audioPause: "⏸ 일시정지", audioListen: "▶ 오디오 가이드 듣기",
+    audioStop: "정지", audioVoiceLabel: "🗣️ 음성:",
+    audioVolumeLabel: "🔊 볼륨:", audioSpeedLabel: "속도:",
+    // Common & Actions
+    bottomNavAria: "모바일 내비게이션",
+    getDirectionsBtn: "길찾기 →",
+    detailsBtn: "상세보기 →",
+    callNowBtn: "전화걸기",
+    serviceListTitle: "편의시설 목록",
+    serviceListSub: "가장 가까운 거리순 정렬",
+    sosTitle: "24/7 긴급 지원 및 구조 핫라인",
+    sosSub: "모든 여행 경로에서 항상 도와드립니다.",
+    sosNationalRescue: "국가 구조대",
+    sosPolice: "경찰",
+    sosAmbulance: "응급 의료",
+    sosTrafficRescue: "교통사고 구조",
+    festivalKicker: "문화 축제 일정",
+    festivalTitle1: "날짜에 맞춰 떠나고,",
+    festivalTitle2: "축제를 만끽하세요.",
+    festivalDesc: "여행 일정 계획을 돕기 위해 전통 축제 일정이 음력으로 표기됩니다.",
+    bookingRequired: "사전 예약 필수",
+    openPlaceBtn: "여행지 열기 →",
+    // Shopee Hub & Commerce
+    shopeePurchases: "주문 내역",
+    shopeeViewHistory: "구매 내역 보기",
+    statusPending: "확인 대기",
+    statusProcessing: "준비 중",
+    statusShipping: "배송 중",
+    statusCompleted: "완료됨",
+    statusCancelled: "취소됨",
+    cartEmptyTitle: "장바구니가 비어 있습니다",
+    cartEmptyDesc: "미식 지도를 둘러보고 특산품을 장바구니에 담아보세요.",
+    viewSpecialtiesBtn: "특산물 둘러보기 →",
+    voucherPromotionsTitle: "할인 쿠폰 & 프로모션",
+    chooseOtherVoucherBtn: "다른 쿠폰 선택 →",
+    removeVoucherTitle: "쿠폰 삭제",
+    voucherInputPlaceholder: "코드 입력: DATTO10, LEHOI2026...",
+    applyVoucherBtn: "적용",
+    currencyLabel: "통화 단위:",
+    subtotalLabel: "소계",
+    discountVoucherLabel: "할인 혜택",
+    authRequiredOrderTitle: "주문하려면 로그인이 필요합니다",
+    authRequiredOrderDesc: "주문 저장 및 판매자 알림 수신을 위해 Gmail 또는 Facebook으로 로그인하세요.",
+    loginGoogle: "Gmail (Google)로 로그인",
+    loginFacebook: "Facebook으로 로그인",
+    loginAdminLink: "🛡️ 관리자 로그인 (Admin) →",
+    orderAccountLabel: "주문 계정:",
+    changeAccountBtn: "변경",
+    fullNameLabel: "주문자 성함",
+    phoneNumberLabel: "연락처",
+    shippingAddressLabel: "배송지 주소 / 호텔 이름",
+    orderNoteLabel: "추가 요청사항 (배송 시간, 포장 등)",
+    orderNotePlaceholder: "판매자에게 전달할 메모",
+    confirmOrderBtn: "주문 확인",
+    loginToCompleteOrder: "🔒 로그인하고 주문 완료하기 →",
+    noOrdersInStatus: "이 상태의 주문이 없습니다",
+    noOrdersInStatusDesc: "다른 탭을 선택하거나 OCOP 특산품을 주문해 보세요.",
+    clearOrderHistoryBtn: "🗑️ 주문 기록 전체 삭제",
+    orderNumberLabel: "주문번호",
+    cancelOrderBtn: "주문 취소",
+    reorderBtn: "다시 주문하기 ↻",
+    // Booking & Success
+    bookingStayRequest: "숙박 예약 요청",
+    priceFromLabel: "시작 가격",
+    bookingRepName: "대표자 성함",
+    checkInDate: "체크인 날짜",
+    checkOutDate: "체크아웃 날짜",
+    specialRequest: "특별 요청",
+    estimatedTotalStay: "예상 총액",
+    sendBookingRequestBtn: "예약 요청 보내기 →",
+    orderSuccessKicker: "주문이 완료되었습니다",
+    trackYourOrderBtn: "주문 진행 상황 확인 및 추적 →",
+    continueExploreBtn: "여행지 계속 탐색하기",
+    // Place detail, food market & slot details
+    modalBestTime: "추천 방문 시간대",
+    modalDuration: "권장 소요 시간",
+    modalFromVietTri: "비엣찌 중심지 기준",
+    modalEstimatedCost: "참고 비용",
+    modalHighlightsTitle: "놓치지 말아야 할 대표 포인트",
+    modalNoticeTitle: "여행 전 유의사항",
+    modalTransportTipsTitle: "추천 교통수단 & 이동 코스",
+    modalVehicleLabel: "🚗 적합한 교통수단:",
+    modalRouteLabel: "🛣️ 추천 경로:",
+    modalCautionLabel: "⚠️ 안전 유의사항:",
+    modalOpenDirections: "⌁ 경로 안내 보기",
+    slotWhereSightsee: "🏛️ 추천 관광 명소",
+    slotDestination: "목적지:",
+    slotHighlights: "대표 포인트:",
+    slotWhereDine: "🍲 추천 맛집 & 특색 요리",
+    slotSpecialtyMenu: "특선 메뉴:",
+    slotFreeDine: "이동 경로에서 현지 특색 음식을 자유롭게 즐겨보세요.",
+    slotWhereStay: "🛏️ 추천 숙소 & 호텔",
+    slotAmenities: "서비스 & 편의시설:",
+    slotGuideAdvice: "가이드 안내 팁:",
+    addressLabel: "주소:",
+    servingHoursLabel: "영업 시간:",
+    contactAtShop: "매장 문의",
+    pickupNoteLabel: "수령 참고 사항:",
+    applyTourHint: "투어를 탭하여 바로 적용하기",
   },
   ja: {
     brandSubtitle: "フート省 · ビンフック省 · ホアビン省",
@@ -763,6 +1678,189 @@ export const UI_TEXT = {
     partnerDesc: "飲食店、宿泊施設、OCOP 協同組合、旅行会社様は公式認証店舗をご登録いただけます。",
     btnRegisterPartner: "パートナー登録 →",
     toastSwitchedLang: "すべてのインターフェースを日本語に切り替えました",
+    weatherToast: "地域 · リアルタイム天気情報",
+    roleAdmin: "管理者", roleMerchant: "OCOP 出店者", roleCustomer: "旅行者",
+    loginAccount: "アカウントにログイン",
+    searchInputPlaceholder: "フン王寺、タムダオ、マイチャウ、特産品を検索…",
+    searchAriaLabel: "観光地、料理、宿泊施設を検索",
+    searchSuggestionsMatched: "検索キーワードに一致する候補",
+    searchSuggestionsPopular: "人気の目的地・名物グルメ候補",
+    useCurrentLocation: "現在地を使用",
+    tripPageTitle1: "スマート旅程を作成", tripPageTitle2: "現地ガイドがサポート。",
+    tripPageDesc: "🏛️観光·🍲グルメ·🛏️宿泊·🚗移動の4要素を自動最適化、フート・ビンフック・ホアビン3省全域。",
+    tripControllerTitle: "旅程コントローラー", tripCustomize: "旅をカスタマイズ",
+    tripStep1: "1. 省/地域を選択", tripCombine3: "✨ 3省を組み合わせ",
+    tripStep2: "2. 郡/市を選択", tripAllDistricts: "全郡区（自由ルート）",
+    tripDirectionGuide: "🧭 アクセス案内：", tripRecommendedRoute: "おすすめルート：",
+    tripSignatureFoods: "名物料理：",
+    tripStep3: "3. ツアーに含める観光地を選択", tripSelected: "選択済み", tripPoints: "箇所",
+    tripSuggestedCombos: "人気コンビネーション：", tripAddAll: "+ すべて追加", tripReset: "↺ リセット",
+    tripStep4: "4. 日数", tripDays: "日", tripNights: "泊", tripDayTrip: "（日帰り）",
+    tripStep5: "5. 人数", tripGuests: "名", tripPerson: "名",
+    tripCouple: "カップル", tripFamily: "ファミリー", tripGroup: "大人数グループ",
+    tripStep6: "6. 予算レベル",
+    tripBudgetEcon: "🏷️ エコノミー（~¥3,000/人/日）", tripBudgetStd: "⭐ スタンダード（~¥6,000/人/日）",
+    tripBudgetPrem: "👑 プレミアム（~¥12,000+/人/日）",
+    tripStep7: "7. 移動手段", tripCar: "自家用車", tripMotorbike: "バイク",
+    tripLimousine: "リムジン/観光バス", tripTaxi: "タクシー/チャーター車",
+    tripStep8: "8. 旅のスタイル", tripStyleCulture: "文化＆歴史", tripStyleSpa: "温泉＆ヒーリング",
+    tripStyleAdventure: "冒険＆雲海", tripStyleFamily: "ファミリー向け", tripStyleFood: "グルメ巡り",
+    tripGenerateBtn: "✦ 詳細旅程を生成", tripGenerateNote: "距離・予算・グルメ・音声ガイドを自動計算",
+    tripStatDistance: "総走行距離", tripStatDriveTime: "運転時間",
+    tripStatTransport: "交通手段", tripStatCost: "1人あたり予算",
+    tripDayLabel: "日目", tripDayRoute: "本日のルート：",
+    tripGuideTips: "💡 ガイドからのアドバイス：", tripSafetyTips: "🛡️ 安全＆移動の注意点：",
+    tripViewGoogleMaps: "🗺️ 地図で見る", tripPrintPdf: "▤ 印刷 / PDF出力",
+    tripShare: "↗ 旅程を共有", tripSaveNotebook: "♡ 手帳に保存",
+    tripTransportLabel: "交通手段：",
+    tripSuggestedToursTitle: "おすすめモデルコース", tripSuggestedToursDesc: "現地の専門家が厳選 — タップで即適用。",
+    nearKicker: "旅行便利施設＆サービス", nearTitle1: "周辺の便利施設", nearTitle2: "3省全域。",
+    nearLocationNotEnabled: "位置情報未有効化", nearAllowLocation: "実際の距離計算のため位置情報を許可",
+    nearUpdateGPS: "GPS更新", nearEnableGPS: "GPSを有効化",
+    nearAreaLabel: "エリア：", nearAll3Provinces: "3省全て",
+    nearServiceGasStation: "ガソリンスタンド", nearServiceParking: "駐車場", nearServiceMedical: "医療",
+    nearServiceATM: "ATM", nearServiceEV: "EV充電", nearServiceRescue: "緊急レスキュー",
+    nearServiceDestination: "観光地", nearServiceFood: "飲食店", nearServiceStay: "宿泊",
+    savedPlacesTab: "スポット", savedFoodsTab: "グルメ", savedItineraryTab: "旅程",
+    savedPlacesEmpty: "保存済みスポットなし", savedPlacesEmptyDesc: "スポットカードの♡アイコンをタップしてお気に入りに追加。",
+    savedFoodsEmpty: "保存済みグルメなし", savedFoodsEmptyDesc: "探索タブで♡料理を保存をタップしてリストに追加。",
+    savedItineraryEmpty: "保存済み旅程なし", savedItineraryEmptyDesc: "「旅程」タブでツアーを作成し「手帳に保存」をタップ。",
+    savedCreateTrip: "旅程を作成 →", savedOpenDetail: "詳細を見る →",
+    savedOpenGoogleMaps: "Google マップで開く ↗", savedDeleteItinerary: "削除",
+    savedDeletedToast: "手帳から旅程を削除しました", savedOpenedToast: "旅程の詳細を開きました！", savedPerGuest: "/人",
+    profileSystemAdmin: "🛡️ システム管理者", profileMerchantOwner: "🏪 OCOP出店者：",
+    profilePartner: "パートナー", profileCustomer: "👤 祖先の地の旅行者",
+    profileNotLoggedIn: "未ログイン", profileGuest: "ゲスト",
+    profileLoginVia: "ログイン方法", profileLoginPrompt: "GmailまたはFacebookでログインしてOCOP特産品を注文・管理。",
+    profileSwitchAccount: "アカウント切替", profileLogout: "ログアウト",
+    profileLoginNow: "🔑 今すぐログイン",
+    profileOrderMgmt: "注文管理 (Google Sheets)",
+    profileAdminOrderDesc: "管理者：注文管理・配車・エクスポート", profileMerchantOrderDesc: "出店者：注文＆配送管理",
+    profileOrdersCount: "件", profileOrdersPlaced: "件の注文 · 配送状況を確認",
+    profileNoOrders: "注文なし · OCOP特産品を探して今すぐ注文", profileItems: "品",
+    footerDesc: "スマートな旅行ガイド＆デジタル旅程アシスタント · 祖先の地の精華。", footerLink: "ダットトー トラベル ↗",
+    authLoginTab: "ログイン", authRegisterTab: "アカウント作成", authAdminTab: "管理者",
+    authEmail: "メールアドレス", authPassword: "パスワード",
+    authShowPassword: "表示", authHidePassword: "非表示",
+    authForgotPassword: "パスワードをお忘れですか？", authLoginBtn: "ログイン",
+    authOrLoginWith: "または素早くログイン", authRegisterName: "氏名",
+    authRegisterPhone: "電話番号", authRegisterConfirmPass: "パスワード確認",
+    authRegisterBtn: "アカウント作成", authAdminUser: "管理者ユーザー名",
+    authAdminPass: "管理者パスワード", authAdminLoginBtn: "管理者ログイン", authClose: "閉じる",
+    directoryKicker: "スポット検索ディレクトリ", directoryTitle: "100箇所 観光・グルメ・宿泊ガイド",
+    directoryDesc: "エリア別に観光地、レストラン、宿泊施設を素早く検索。",
+    directoryCollapse: "ディレクトリを閉じる ▲", directoryExpand: "全ディレクトリを開く",
+    directorySearchPlaceholder: "名前、料理、ホテルで検索...",
+    directoryAllDistricts: "全郡/区", directoryDistrictPrefix: "郡/区：",
+    directoryColNo: "番号", directoryColName: "スポット名", directoryColType: "タイプ",
+    directoryColArea: "エリア", directoryColFood: "周辺グルメ", directoryColStay: "周辺宿泊",
+    directoryColDist: "距離",
+    modalClose: "閉じる", modalReviews: "件のレビュー", modalPhoto: "写真：",
+    loginRequiredToast: "ご注文にはGmailまたはFacebookでのログインが必要です！",
+    needAtLeast1Place: "旅程には最低1箇所の観光地が必要です！",
+    registerPartnerToast: "ありがとうございます！パートナー申請を受け付けました。",
+    openTripAssistant: "旅程プランナーを開きました", selectResortToast: "リゾートを選択して周辺宿泊を表示",
+    toastLangChanged: "言語を切り替えました：",
+    clearOrdersConfirm: "このアカウントの全注文履歴を削除しますか？",
+    audioPause: "⏸ 一時停止", audioListen: "▶ 音声ガイドを聴く",
+    audioStop: "停止", audioVoiceLabel: "🗣️ 音声：",
+    audioVolumeLabel: "🔊 音量：", audioSpeedLabel: "速度：",
+    // Common & Actions
+    bottomNavAria: "モバイルナビゲーション",
+    getDirectionsBtn: "ルート案内 →",
+    detailsBtn: "詳細を見る →",
+    callNowBtn: "電話をかける",
+    serviceListTitle: "施設一覧",
+    serviceListSub: "現在地から近い順に表示",
+    sosTitle: "24時間緊急サポート＆救援ホットライン",
+    sosSub: "旅のすべてのルートでいつでもサポートいたします。",
+    sosNationalRescue: "国家救助",
+    sosPolice: "警察",
+    sosAmbulance: "救急医療",
+    sosTrafficRescue: "ロードサービス",
+    festivalKicker: "文化祭カレンダー",
+    festivalTitle1: "日程を合わせて、",
+    festivalTitle2: "お祭りを体感。",
+    festivalDesc: "旅行の計画を立てやすいよう、伝統的な祭りの日程は旧暦で表記されています。",
+    bookingRequired: "事前予約が必要",
+    openPlaceBtn: "目的地を開く →",
+    // Shopee Hub & Commerce
+    shopeePurchases: "購入履歴",
+    shopeeViewHistory: "注文履歴を見る",
+    statusPending: "確認待ち",
+    statusProcessing: "準備中",
+    statusShipping: "配送中",
+    statusCompleted: "完了",
+    statusCancelled: "キャンセル",
+    cartEmptyTitle: "カートは空です",
+    cartEmptyDesc: "グルメマップを見て特産品をカートに追加しましょう。",
+    viewSpecialtiesBtn: "特産品を見る →",
+    voucherPromotionsTitle: "クーポン＆お得情報",
+    chooseOtherVoucherBtn: "他のクーポンを選ぶ →",
+    removeVoucherTitle: "クーポン解除",
+    voucherInputPlaceholder: "コード入力: DATTO10, LEHOI2026...",
+    applyVoucherBtn: "適用",
+    currencyLabel: "通貨単位:",
+    subtotalLabel: "小計",
+    discountVoucherLabel: "割引特典",
+    authRequiredOrderTitle: "注文にはログインが必要です",
+    authRequiredOrderDesc: "注文の保存や店舗からの通知を受け取るため、GmailまたはFacebookでログインしてください。",
+    loginGoogle: "Gmail (Google) でログイン",
+    loginFacebook: "Facebook でログイン",
+    loginAdminLink: "🛡️ 管理者ログイン (Admin) →",
+    orderAccountLabel: "注文アカウント:",
+    changeAccountBtn: "変更",
+    fullNameLabel: "お名前",
+    phoneNumberLabel: "電話番号",
+    shippingAddressLabel: "お届け先住所 / ホテル名",
+    orderNoteLabel: "備考（配送希望時間、梱包など）",
+    orderNotePlaceholder: "店舗へのメッセージ",
+    confirmOrderBtn: "注文を確定する",
+    loginToCompleteOrder: "🔒 ログインして注文を完了する →",
+    noOrdersInStatus: "この項目の注文はありません",
+    noOrdersInStatusDesc: "他のタブを選択するか、特産品を注文してください。",
+    clearOrderHistoryBtn: "🗑️ 注文履歴をクリア",
+    orderNumberLabel: "注文番号",
+    cancelOrderBtn: "注文をキャンセル",
+    reorderBtn: "再注文する ↻",
+    // Booking & Success
+    bookingStayRequest: "宿泊予約リクエスト",
+    priceFromLabel: "参考料金",
+    bookingRepName: "代表者氏名",
+    checkInDate: "チェックイン日",
+    checkOutDate: "チェックアウト日",
+    specialRequest: "特別なご要望",
+    estimatedTotalStay: "概算合計金額",
+    sendBookingRequestBtn: "予約リクエストを送信 →",
+    orderSuccessKicker: "ご注文が完了しました",
+    trackYourOrderBtn: "注文状況を確認・追跡する →",
+    continueExploreBtn: "引き続き観光地を探す",
+    // Place detail, food market & slot details
+    modalBestTime: "おすすめの時間帯",
+    modalDuration: "所要時間の目安",
+    modalFromVietTri: "ヴィエットチー中心部から",
+    modalEstimatedCost: "参考予算・費用",
+    modalHighlightsTitle: "見逃せないハイライト",
+    modalNoticeTitle: "お出かけ前の注意事項",
+    modalTransportTipsTitle: "交通手段・ルートのご案内",
+    modalVehicleLabel: "🚗 推奨の移動手段：",
+    modalRouteLabel: "🛣️ おすすめルート：",
+    modalCautionLabel: "⚠️ 安全上の注意：",
+    modalOpenDirections: "⌁ ルート案内を開く",
+    slotWhereSightsee: "🏛️ 観光スポット",
+    slotDestination: "目的地：",
+    slotHighlights: "ハイライト：",
+    slotWhereDine: "🍲 郷土料理・おすすめ飲食店",
+    slotSpecialtyMenu: "名物メニュー：",
+    slotFreeDine: "道中で地域の郷土料理や名物を自由にお楽しみください。",
+    slotWhereStay: "🛏️ おすすめ宿泊施設",
+    slotAmenities: "サービス＆アメニティ：",
+    slotGuideAdvice: "ガイドからのアドバイス：",
+    addressLabel: "住所：",
+    servingHoursLabel: "営業時間：",
+    contactAtShop: "店舗にてお問い合わせ",
+    pickupNoteLabel: "受け取り時の注意事項：",
+    applyTourHint: "ツアーをタップして今すぐ適用",
   },
 };
 
@@ -2466,7 +3564,7 @@ export default function Home() {
         <div className="shopee-order-hub-header">
           <h3>
             <span>🛍️</span>
-            <b>Đơn mua</b>
+            <b>{t.shopeePurchases}</b>
           </h3>
           <button
             type="button"
@@ -2478,7 +3576,7 @@ export default function Home() {
               }
             }}
           >
-            <span>Xem lịch sử mua hàng</span>
+            <span>{t.shopeeViewHistory}</span>
             <b>❯</b>
           </button>
         </div>
@@ -2489,13 +3587,13 @@ export default function Home() {
             type="button"
             className={`shopee-status-btn ${orderStatusTab === "pending" ? "is-active" : ""}`}
             onClick={() => handleSelectStatus("pending")}
-            title="Đơn hàng chờ xác nhận"
+            title={t.statusPending}
           >
             <div className="shopee-status-icon-box">
               <span>💳</span>
               {pendingCount > 0 && <span className="shopee-status-badge">{pendingCount}</span>}
             </div>
-            <span className="shopee-status-label">Chờ xác nhận</span>
+            <span className="shopee-status-label">{t.statusPending}</span>
           </button>
 
           {/* 2. Chờ lấy hàng */}
@@ -2503,13 +3601,13 @@ export default function Home() {
             type="button"
             className={`shopee-status-btn ${orderStatusTab === "processing" ? "is-active" : ""}`}
             onClick={() => handleSelectStatus("processing")}
-            title="Đơn hàng đang chuẩn bị / chờ lấy hàng"
+            title={t.statusProcessing}
           >
             <div className="shopee-status-icon-box">
               <span>📦</span>
               {processingCount > 0 && <span className="shopee-status-badge">{processingCount}</span>}
             </div>
-            <span className="shopee-status-label">Chờ lấy hàng</span>
+            <span className="shopee-status-label">{t.statusProcessing}</span>
           </button>
 
           {/* 3. Chờ giao hàng */}
@@ -2517,13 +3615,13 @@ export default function Home() {
             type="button"
             className={`shopee-status-btn ${orderStatusTab === "shipping" ? "is-active" : ""}`}
             onClick={() => handleSelectStatus("shipping")}
-            title="Đơn hàng đang vận chuyển giao tới bạn"
+            title={t.statusShipping}
           >
             <div className="shopee-status-icon-box">
               <span>🚚</span>
               {shippingCount > 0 && <span className="shopee-status-badge">{shippingCount}</span>}
             </div>
-            <span className="shopee-status-label">Chờ giao hàng</span>
+            <span className="shopee-status-label">{t.statusShipping}</span>
           </button>
 
           {/* 4. Đánh giá / Hoàn thành */}
@@ -2531,13 +3629,13 @@ export default function Home() {
             type="button"
             className={`shopee-status-btn ${orderStatusTab === "completed" ? "is-active" : ""}`}
             onClick={() => handleSelectStatus("completed")}
-            title="Đơn hàng đã hoàn thành / đánh giá"
+            title={t.statusCompleted}
           >
             <div className="shopee-status-icon-box">
               <span>⭐</span>
               {completedCount > 0 && <span className="shopee-status-badge">{completedCount}</span>}
             </div>
-            <span className="shopee-status-label">Đánh giá</span>
+            <span className="shopee-status-label">{t.statusCompleted}</span>
           </button>
 
           {/* 5. Đã hủy */}
@@ -2545,13 +3643,13 @@ export default function Home() {
             type="button"
             className={`shopee-status-btn ${orderStatusTab === "cancelled" ? "is-active" : ""}`}
             onClick={() => handleSelectStatus("cancelled")}
-            title="Đơn hàng đã hủy"
+            title={t.statusCancelled}
           >
             <div className="shopee-status-icon-box">
               <span>✕</span>
               {cancelledCount > 0 && <span className="shopee-status-badge">{cancelledCount}</span>}
             </div>
-            <span className="shopee-status-label">Đã hủy</span>
+            <span className="shopee-status-label">{t.statusCancelled}</span>
           </button>
         </div>
       </div>
@@ -2737,11 +3835,11 @@ export default function Home() {
                 rel="noreferrer"
                 href={`https://www.google.com/maps/dir/?api=1&destination=${place.lat},${place.lng}`}
                 onClick={(e) => e.stopPropagation()}
-                aria-label={`Chỉ đường tới ${place.name}`}
+                aria-label={`${t.getDirectionsBtn}: ${place.name}`}
               >
-                ⌁ Chỉ đường
+                {t.getDirectionsBtn}
               </a>
-              <span className="place-card__detail-link">Chi tiết →</span>
+              <span className="place-card__detail-link">{t.detailsBtn}</span>
             </div>
           </div>
         )}
@@ -2777,10 +3875,10 @@ export default function Home() {
               <b>★ {seller.rating}{seller.reviewCount ? ` (${seller.reviewCount})` : " · mới"}</b>
             </div>
             <h4>{seller.name}</h4>
-            <p><strong>Địa chỉ:</strong> {seller.address}</p>
-            <p><strong>Giờ phục vụ:</strong> {seller.hours}</p>
-            <p><strong>Điện thoại:</strong> {seller.phone || "Liên hệ tại quán"}</p>
-            <p><strong>Ghi chú nhận món:</strong> {seller.pickupNote}</p>
+            <p><strong>{t.addressLabel}</strong> {seller.address}</p>
+            <p><strong>{t.servingHoursLabel}</strong> {seller.hours}</p>
+            <p><strong>{t.phoneNumberLabel}:</strong> {seller.phone || t.contactAtShop}</p>
+            <p><strong>{t.pickupNoteLabel}</strong> {seller.pickupNote}</p>
             <div className="seller-card__buy">
               <span><b>{formatMoney(seller.price, currentCurrency)}</b><small>/{seller.unit}</small></span>
               <button type="button" onClick={() => addToCart(dish, seller)}>{t.addToCartBtn}</button>
@@ -2799,11 +3897,11 @@ export default function Home() {
     <main className="app-shell">
       {/* TOPBAR */}
       <header className="topbar">
-        <button className="brand" onClick={() => setActiveTab("explore")} aria-label="Về trang khám phá">
+        <button className="brand" onClick={() => setActiveTab("explore")} aria-label={t.explore}>
           <span className="brand__mark">Đ</span>
           <span><strong>Đất Tổ</strong><small>{t.brandSubtitle}</small></span>
         </button>
-        <nav className="desktop-nav" aria-label="Điều hướng chính">
+        <nav className="desktop-nav" aria-label={t.bottomNavAria}>
           <button className={activeTab === "explore" ? "is-active" : ""} onClick={() => setActiveTab("explore")}>
             {t.explore}
           </button>
@@ -2827,7 +3925,7 @@ export default function Home() {
               type="button"
               className="lang-pill-btn"
               onClick={() => { setLangDropdownOpen(!langDropdownOpen); }}
-              title="Thay đổi ngôn ngữ hiển thị"
+              title={t.toastLangChanged}
             >
               <span>{LANGUAGES[currentLang].flag}</span>
               <b>{currentLang.toUpperCase()}</b>
@@ -2843,7 +3941,7 @@ export default function Home() {
                     onClick={() => {
                       setCurrentLang(code);
                       setLangDropdownOpen(false);
-                      showToast(`Đã chuyển ngôn ngữ: ${LANGUAGES[code].label}`);
+                      showToast(`${t.toastLangChanged} ${LANGUAGES[code].label}`);
                     }}
                   >
                     <span>{LANGUAGES[code].flag} {LANGUAGES[code].label}</span>
@@ -2854,15 +3952,15 @@ export default function Home() {
             )}
           </div>
 
-          <button className="weather-pill" onClick={() => showToast(`${weather.label} tại khu vực · Dữ liệu thời tiết trực tuyến`)}>
+          <button className="weather-pill" onClick={() => showToast(`${weather.label} ${t.weatherToast}`)}>
             <span>☀</span><b>{weather.temp}°</b><small>Việt Trì</small>
           </button>
 
           <button
             className="avatar"
             onClick={() => setActiveTab("profile")}
-            aria-label="Trang cá nhân"
-            title={authUser ? `${authUser.name} (${authUser.role === "admin" ? "Quản trị viên" : authUser.role === "merchant" ? "Chủ cơ sở OCOP" : "Du khách"})` : "Đăng nhập tài khoản"}
+            aria-label={t.profile}
+            title={authUser ? `${authUser.name} (${authUser.role === "admin" ? t.roleAdmin : authUser.role === "merchant" ? t.roleMerchant : t.roleCustomer})` : t.loginAccount}
           >
             {authUser ? (authUser.avatar || authUser.name.slice(0, 2).toUpperCase()) : "👤"}
           </button>
@@ -2892,15 +3990,15 @@ export default function Home() {
                         else selectFoodSuggestion(suggestion.dish);
                       }
                     }}
-                    placeholder="Tìm Đền Hùng, Tam Đảo, Mai Châu, thịt chua, khoáng nóng…"
-                    aria-label="Tìm kiếm điểm đến, món ăn hoặc chỗ nghỉ"
+                    placeholder={t.searchInputPlaceholder}
+                    aria-label={t.searchAriaLabel}
                     aria-controls="search-suggestions"
                   />
-                  <button onClick={() => { setSearchFocused(false); locate(); }} title="Dùng vị trí hiện tại" aria-label="Dùng vị trí hiện tại">⌖</button>
+                  <button onClick={() => { setSearchFocused(false); locate(); }} title={t.useCurrentLocation} aria-label={t.useCurrentLocation}>⌖</button>
                 </div>
                 {searchFocused && searchSuggestions.length > 0 && (
                   <div className="search-suggestions" id="search-suggestions" role="listbox">
-                    <span className="search-suggestions__label">{query ? "Gợi ý phù hợp" : "Được tìm nhiều"}</span>
+                    <span className="search-suggestions__label">{query ? t.searchSuggestionsMatched || "..." : t.searchSuggestionsPopular || "..."}</span>
                     {searchSuggestions.map((item) => (
                       <button key={item.id} role="option" aria-selected="false" onMouseDown={(event) => event.preventDefault()} onClick={() => item.kind === "place" ? selectSearchSuggestion(item.place, item.label) : selectFoodSuggestion(item.dish)}>
                         <span>{item.icon}</span><p><b>{item.label}</b><small>{item.meta}</small></p><i>↗</i>
@@ -2910,16 +4008,16 @@ export default function Home() {
                 )}
               </div>
               <div className="hero__trust">
-                <span><b>{places.length}</b> địa danh chọn lọc</span>
-                <span><b>3</b> tỉnh trọng điểm</span>
-                <span><b>Mùa</b> du lịch lý tưởng</span>
+                <span><b>{places.length}</b> {t.tripPoints}</span>
+                <span><b>3</b> {t.nearAll3Provinces}</span>
+                <span><b>{t.seasonLabel}</b></span>
               </div>
             </div>
             <div className="hero__visual">
-              <img src={places[0].image} alt="Cổng Khu di tích lịch sử Đền Hùng" loading="lazy" onError={handleImageError} />
+              <img src={places[0].image} alt={places[0].name} loading="lazy" onError={handleImageError} />
               <div className="hero__caption">
                 <span>{t.featuredDestCaption}</span>
-                <strong>Khu di tích lịch sử Đền Hùng</strong>
+                <strong>{places[0].name}</strong>
                 <button onClick={() => openPlace(places[0])}>{t.openGuideBtn}</button>
               </div>
               <div className="hero__stamp"><b>01</b><span>{t.stampOriginTitle}<br />{t.stampOriginSub}</span></div>
@@ -2966,7 +4064,7 @@ export default function Home() {
                 type="button"
                 className="button button--outline"
                 style={{ color: "#f3d495", borderColor: "#d7ab5a" }}
-                onClick={() => { setActiveTab("trip"); showToast("Bắt đầu tạo lịch trình di sản để nhận điểm thưởng!"); }}
+                onClick={() => { setActiveTab("trip"); showToast(t.planTripRewardBtn); }}
               >
                 {t.planTripRewardBtn}
               </button>
@@ -2981,7 +4079,7 @@ export default function Home() {
             </div>
             
             {/* PROVINCE SELECTOR: PHÚ THỌ - VĨNH PHÚC - HÒA BÌNH */}
-            <div className="region-filter-bar" role="group" aria-label="Lọc theo Tỉnh">
+            <div className="region-filter-bar" role="group" aria-label={t.nearAreaLabel}>
               <span className="region-filter-label">{t.selectProvinceLabel}</span>
               {[
                 { id: "Tất cả", label: t.provAll },
@@ -2999,14 +4097,14 @@ export default function Home() {
               ))}
             </div>
 
-            <div className="category-row" role="group" aria-label="Lọc theo danh mục">
+            <div className="category-row" role="group" aria-label={t.section01Title}>
               {categories.map((item) => (
                 <button key={item.label} onClick={() => { setCategory(item.label); setSearchFocused(false); setVisibleCount(8); }} className={category === item.label ? "is-active" : ""}>
                   <span>{item.icon}</span>{item.label}
                 </button>
               ))}
             </div>
-            <div className="season-filter" role="group" aria-label="Lọc địa điểm theo mùa">
+            <div className="season-filter" role="group" aria-label={t.seasonLabel}>
               <span>{t.seasonLabel}</span>
               {seasonFilters.map((item) => (
                 <button
@@ -3035,8 +4133,8 @@ export default function Home() {
             <div className="section-heading section-heading--inline">
               <div>
                 <span className="section-number">{t.section02Num}</span>
-                <h2>{query && matchingFoodDishes.length ? `Điểm bán cho “${query}”` : query ? `Kết quả cho “${query}”` : position ? t.section02TitleNear : t.section02TitleDefault}</h2>
-                <p>{isServerSearching ? "..." : matchingFoodDishes.length ? `${matchingFoodDishes.length} món đặc sản` : `${locationMessage} · ${filteredPlaces.length} gợi ý`}</p>
+                <h2>{query && matchingFoodDishes.length ? `${t.nearServiceFood}: “${query}”` : query ? `“${query}”` : position ? t.section02TitleNear : t.section02TitleDefault}</h2>
+                <p>{isServerSearching ? "..." : matchingFoodDishes.length ? `${matchingFoodDishes.length} ${t.profileItems}` : `${locationMessage} · ${filteredPlaces.length} ${t.tripPoints}`}</p>
               </div>
               {!position && <button className="location-link" onClick={locate}>{t.locateBtn}</button>}
             </div>
@@ -3128,24 +4226,24 @@ export default function Home() {
       {activeTab === "trip" && (
         <section className="inner-page trip-page">
           <div className="inner-page__intro">
-            <h1>Lập lịch trình thông minh<br /><em>cùng hướng dẫn viên bản địa.</em></h1>
-            <p>Tự động thiết kế hành trình tối ưu theo 4 yếu tố cốt lõi: <b>🏛️ Lộ trình tham quan · 🍲 Món ngon đặc sản · 🛏️ Khách sạn nghỉ dưỡng · 🚗 Phương tiện & thời gian di chuyển</b> trên toàn địa bàn Phú Thọ, Vĩnh Phúc, Hòa Bình.</p>
+            <h1>{t.tripPageTitle1}<br /><em>{t.tripPageTitle2}</em></h1>
+            <p>{t.tripPageDesc}</p>
           </div>
 
           <div className="builder-layout">
             <aside className="builder-card">
-              <span className="builder-card__step">BỘ ĐIỀU KHIỂN LỊCH TRÌNH</span>
-              <h2>Tùy biến chuyến đi của bạn</h2>
+              <span className="builder-card__step">{t.tripControllerTitle}</span>
+              <h2>{t.tripCustomize}</h2>
 
               {/* 1. CHỌN TỈNH */}
               <div className="builder-group">
-                <label>1. Chọn Tỉnh / Vùng du lịch</label>
+                <label>{t.tripStep1}</label>
                 <div className="region-pill-group">
                   {[
-                    { id: "Tất cả", label: "✨ Ghép 3 Tỉnh" },
-                    { id: "Phú Thọ", label: "🏛️ Phú Thọ" },
-                    { id: "Vĩnh Phúc", label: "☁️ Vĩnh Phúc" },
-                    { id: "Hòa Bình", label: "🌲 Hòa Bình" },
+                    { id: "Tất cả", label: t.tripCombine3 },
+                    { id: "Phú Thọ", label: "🏛️ " + t.provPhuTho },
+                    { id: "Vĩnh Phúc", label: "☁️ " + t.provVinhPhuc },
+                    { id: "Hòa Bình", label: "🌲 " + t.provHoaBinh },
                   ].map((r) => (
                     <button
                       key={r.id}
@@ -3164,13 +4262,13 @@ export default function Home() {
 
               {/* 2. CHỌN HUYỆN & HƯỚNG DẪN ĐƯỜNG */}
               <div className="builder-group">
-                <label>2. Chọn Huyện / Thị xã muốn tới</label>
+                <label>{t.tripStep2}</label>
                 <select
                   value={tripDistrict}
                   onChange={(event) => setTripDistrict(event.target.value)}
                   className="district-select"
                 >
-                  <option value="Tất cả">Toàn bộ các huyện (Lập tuyến tự do)</option>
+                  <option value="Tất cả">{t.tripAllDistricts}</option>
                   {availableDistricts.filter((d) => d !== "Tất cả").map((d) => (
                     <option key={d} value={d}>{d}</option>
                   ))}
@@ -3179,7 +4277,7 @@ export default function Home() {
                 {activeDistrictGuide && (
                   <div className="district-travel-tip">
                     <div className="district-travel-tip__head">
-                      <span>🧭 HƯỚNG DẪN ĐƯỜNG ĐI: <b>{activeDistrictGuide.district}</b></span>
+                      <span>{t.tripDirectionGuide} <b>{activeDistrictGuide.district}</b></span>
                       <small>{activeDistrictGuide.region}</small>
                     </div>
                     <div className="district-travel-tip__metrics">
@@ -3188,10 +4286,10 @@ export default function Home() {
                       <span>🚗 <b>{activeDistrictGuide.recommendedTransport}</b></span>
                     </div>
                     <p className="district-travel-tip__route">
-                      <strong>Tuyến đường khuyên dùng:</strong> {activeDistrictGuide.bestRoutes}
+                      <strong>{t.tripRecommendedRoute}</strong> {activeDistrictGuide.bestRoutes}
                     </p>
                     <p className="district-travel-tip__foods">
-                      <strong>Món ngon tiêu biểu:</strong> {activeDistrictGuide.signatureFoods.join(" · ")}
+                      <strong>{t.tripSignatureFoods}</strong> {activeDistrictGuide.signatureFoods.join(" · ")}
                     </p>
                   </div>
                 )}
@@ -3200,12 +4298,12 @@ export default function Home() {
               {/* 3. GHÉP CÁC ĐIỂM THAM QUAN */}
               <div className="builder-group">
                 <div className="group-header">
-                  <label>3. Chọn các điểm đến vào tour</label>
-                  <span className="count-tag">Đã chọn <b>{selectedPlaceIds.length}</b> điểm</span>
+                  <label>{t.tripStep3}</label>
+                  <span className="count-tag">{t.tripSelected} <b>{selectedPlaceIds.length}</b> {t.tripPoints}</span>
                 </div>
 
                 <div className="quick-combo-bar">
-                  <small>Gợi ý tuyến ghép phổ biến:</small>
+                  <small>{t.tripSuggestedCombos}</small>
                   <div className="quick-combo-chips">
                     <button
                       type="button"
@@ -3269,7 +4367,7 @@ export default function Home() {
                 {availablePlacesForSelection.length > 0 && (
                   <div className="place-check-actions">
                     <button type="button" onClick={selectAllFilteredPlaces} className="link-btn">
-                      + Thêm tất cả ({availablePlacesForSelection.length} điểm)
+                      {t.tripAddAll} ({availablePlacesForSelection.length} {t.tripPoints})
                     </button>
                     {selectedPlaceIds.length > 1 && (
                       <button
@@ -3277,7 +4375,7 @@ export default function Home() {
                         onClick={() => setSelectedPlaceIds([availablePlacesForSelection[0]?.id || "den-hung"])}
                         className="link-btn link-btn--danger"
                       >
-                        ↺ Đặt lại
+                        {t.tripReset}
                       </button>
                     )}
                   </div>
@@ -3287,8 +4385,8 @@ export default function Home() {
               {/* 4. SỐ NGÀY ĐI - INTERACTIVE STEPPER (+ / -) */}
               <div className="builder-group">
                 <div className="group-header">
-                  <label>4. Số ngày đi</label>
-                  <span className="stepper-badge">{days} ngày {days > 1 ? `${days - 1} đêm` : "(trong ngày)"}</span>
+                  <label>{t.tripStep4}</label>
+                  <span className="stepper-badge">{days} {t.tripDays} {days > 1 ? `${days - 1} ${t.tripNights}` : t.tripDayTrip}</span>
                 </div>
                 <div className="stepper-control">
                   <button
@@ -3296,17 +4394,17 @@ export default function Home() {
                     className="stepper-btn"
                     onClick={() => setDays(Math.max(1, days - 1))}
                     disabled={days <= 1}
-                    aria-label="Giảm 1 ngày"
+                    aria-label="-"
                   >
                     −
                   </button>
-                  <span className="stepper-value"><b>{days}</b> <small>ngày</small></span>
+                  <span className="stepper-value"><b>{days}</b> <small>{t.tripDays}</small></span>
                   <button
                     type="button"
                     className="stepper-btn"
                     onClick={() => setDays(Math.min(7, days + 1))}
                     disabled={days >= 7}
-                    aria-label="Tăng 1 ngày"
+                    aria-label="+"
                   >
                     ＋
                   </button>
@@ -3319,7 +4417,7 @@ export default function Home() {
                       className={`quick-step-chip ${days === d ? "is-active" : ""}`}
                       onClick={() => setDays(d)}
                     >
-                      {d === 1 ? "1 ngày" : `${d}N${d - 1}Đ`}
+                      {d === 1 ? `1 ${t.tripDays}` : `${d}N${d - 1}Đ`}
                     </button>
                   ))}
                 </div>
@@ -3328,8 +4426,8 @@ export default function Home() {
               {/* 5. SỐ LƯỢNG KHÁCH - INTERACTIVE STEPPER (+ / -) */}
               <div className="builder-group">
                 <div className="group-header">
-                  <label>5. Số lượng khách</label>
-                  <span className="stepper-badge">{travelers} người</span>
+                  <label>{t.tripStep5}</label>
+                  <span className="stepper-badge">{travelers} {t.tripPerson}</span>
                 </div>
                 <div className="stepper-control">
                   <button
@@ -3337,27 +4435,27 @@ export default function Home() {
                     className="stepper-btn"
                     onClick={() => setTravelers(Math.max(1, travelers - 1))}
                     disabled={travelers <= 1}
-                    aria-label="Giảm 1 khách"
+                    aria-label="-"
                   >
                     −
                   </button>
-                  <span className="stepper-value"><b>{travelers}</b> <small>khách</small></span>
+                  <span className="stepper-value"><b>{travelers}</b> <small>{t.tripGuests}</small></span>
                   <button
                     type="button"
                     className="stepper-btn"
                     onClick={() => setTravelers(Math.min(30, travelers + 1))}
                     disabled={travelers >= 30}
-                    aria-label="Tăng 1 khách"
+                    aria-label="+"
                   >
                     ＋
                   </button>
                 </div>
                 <div className="quick-stepper-chips">
                   {[
-                    { count: 1, label: "1 người" },
-                    { count: 2, label: "2 người (Cặp đôi)" },
-                    { count: 4, label: "4 người (Gia đình)" },
-                    { count: 8, label: "8+ (Đoàn đông)" },
+                    { count: 1, label: `1 ${t.tripPerson}` },
+                    { count: 2, label: `2 ${t.tripPerson} (${t.tripCouple})` },
+                    { count: 4, label: `4 ${t.tripPerson} (${t.tripFamily})` },
+                    { count: 8, label: `8+ (${t.tripGroup})` },
                   ].map((item) => (
                     <button
                       type="button"
@@ -3373,41 +4471,41 @@ export default function Home() {
 
               {/* 6. TIÊU CHUẨN NGÂN SÁCH CÓ CON SỐ CỤ THỂ */}
               <div className="builder-group">
-                <label>6. Tiêu chuẩn ngân sách</label>
+                <label>{t.tripStep6}</label>
                 <select value={budget} onChange={(event) => setBudget(event.target.value)}>
-                  <option value="Tiết kiệm (~500.000đ/ngày)">🏷️ Tiết kiệm (~500.000đ / người / ngày)</option>
-                  <option value="Tiêu chuẩn (~1.000.000đ/ngày)">⭐ Tiêu chuẩn (~1.000.000đ / người / ngày)</option>
-                  <option value="Cao cấp / Nghỉ dưỡng (~2.000.000đ/ngày)">👑 Cao cấp / Nghỉ dưỡng (~2.000.000đ+ / người / ngày)</option>
+                  <option value="Tiết kiệm (~500.000đ/ngày)">{t.tripBudgetEcon}</option>
+                  <option value="Tiêu chuẩn (~1.000.000đ/ngày)">{t.tripBudgetStd}</option>
+                  <option value="Cao cấp / Nghỉ dưỡng (~2.000.000đ/ngày)">{t.tripBudgetPrem}</option>
                 </select>
               </div>
 
               {/* 7. PHƯƠNG TIỆN */}
               <div className="builder-group">
-                <label>7. Phương tiện di chuyển</label>
+                <label>{t.tripStep7}</label>
                 <select value={transport} onChange={(event) => setTransport(event.target.value)}>
-                  <option>Ô tô riêng</option>
-                  <option>Xe máy</option>
-                  <option>Limousine / Xe khách</option>
-                  <option>Taxi / xe hợp đồng</option>
+                  <option value="Ô tô riêng">{t.tripCar}</option>
+                  <option value="Xe máy">{t.tripMotorbike}</option>
+                  <option value="Limousine / Xe khách">{t.tripLimousine}</option>
+                  <option value="Taxi / xe hợp đồng">{t.tripTaxi}</option>
                 </select>
               </div>
 
               {/* 8. PHONG CÁCH */}
               <div className="builder-group">
-                <label>8. Phong cách chuyến đi</label>
+                <label>{t.tripStep8}</label>
                 <select value={interest} onChange={(event) => setInterest(event.target.value)}>
-                  <option>Văn hóa & cội nguồn</option>
-                  <option>Nghỉ dưỡng khoáng nóng & Onsen</option>
-                  <option>Phượt & săn mây sinh thái</option>
-                  <option>Gia đình có trẻ nhỏ/người cao tuổi</option>
-                  <option>Ẩm thực bản địa</option>
+                  <option value="Văn hóa & cội nguồn">{t.tripStyleCulture}</option>
+                  <option value="Nghỉ dưỡng khoáng nóng & Onsen">{t.tripStyleSpa}</option>
+                  <option value="Phượt & săn mây sinh thái">{t.tripStyleAdventure}</option>
+                  <option value="Gia đình có trẻ nhỏ/người cao tuổi">{t.tripStyleFamily}</option>
+                  <option value="Ẩm thực bản địa">{t.tripStyleFood}</option>
                 </select>
               </div>
 
               <button className="button button--dark button--full" onClick={handleGenerateItinerary}>
-                ✦ Tạo Lịch Trình Chi Tiết ({selectedPlaceIds.length} Điểm · {days} Ngày)
+                ✦ {t.tripGenerateBtn} ({selectedPlaceIds.length} {t.tripPoints} · {days} {t.tripDays})
               </button>
-              <small className="builder-note">Tự động tính quãng đường, chi phí dự toán, thực đơn và thuyết minh</small>
+              <small className="builder-note">{t.tripGenerateNote}</small>
             </aside>
 
             {/* PLAN RESULT PANEL */}
@@ -3417,7 +4515,7 @@ export default function Home() {
                   <div>
                     <div className="guide-header-card__meta">
                       <span>{generatedItinerary.region}</span>
-                      <span>{generatedItinerary.durationDays} NGÀY</span>
+                      <span>{generatedItinerary.durationDays} {t.tripDayLabel}</span>
                       <span>{generatedItinerary.style}</span>
                     </div>
                     <h2>{generatedItinerary.title}</h2>
@@ -3427,19 +4525,19 @@ export default function Home() {
 
                 <div className="guide-stat-grid">
                   <div className="guide-stat-item">
-                    <small>CỰ LY LỘ TRÌNH</small>
+                    <small>{t.tripStatDistance}</small>
                     <b>~{generatedItinerary.totalDistanceKm} km</b>
                   </div>
                   <div className="guide-stat-item">
-                    <small>THỜI GIAN LÁI XE</small>
+                    <small>{t.tripStatDriveTime}</small>
                     <b>{generatedItinerary.totalDriveTime}</b>
                   </div>
                   <div className="guide-stat-item">
-                    <small>PHƯƠNG TIỆN</small>
+                    <small>{t.tripStatTransport}</small>
                     <b>{generatedItinerary.transport}</b>
                   </div>
                   <div className="guide-stat-item">
-                    <small>DỰ TOÁN / KHÁCH</small>
+                    <small>{t.tripStatCost}</small>
                     <b>{formatMoney(generatedItinerary.estimatedCostPerPerson)}</b>
                   </div>
                 </div>
@@ -3532,7 +4630,7 @@ export default function Home() {
                     </div>
 
                     <div className="audio-rate-control">
-                      <span>{audioLang === "vi" ? "Tốc độ:" : "Speed:"}</span>
+                      <span>{t.audioSpeedLabel}</span>
                       <div className="audio-rate-pills">
                         {[0.75, 1.0, 1.25, 1.5, 1.75, 2.0, 2.25, 2.5].map((r) => (
                           <button
@@ -3556,23 +4654,23 @@ export default function Home() {
                 {/* ACTION BAR */}
                 <div className="guide-action-bar">
                   <a className="guide-action-btn" href={generatedItinerary.googleMapsUrl} target="_blank" rel="noreferrer">
-                    🗺️ Xem trên Google Maps
+                    {t.tripViewGoogleMaps}
                   </a>
                   <button className="guide-action-btn" onClick={() => window.print()}>
-                    ▤ In / Xuất PDF
+                    {t.tripPrintPdf}
                   </button>
                   <button className="guide-action-btn" onClick={sharePlan}>
-                    ↗ Chia sẻ lịch trình
+                    {t.tripShare}
                   </button>
                   <button className="guide-action-btn" onClick={savePlan}>
-                    ♡ Lưu vào Sổ tay
+                    {t.tripSaveNotebook}
                   </button>
                 </div>
 
                 <div className="guide-tips-box">
-                  <b>💡 Lời khuyên Hướng dẫn viên:</b> {generatedItinerary.routeAdvice}
+                  <b>{t.tripGuideTips}</b> {generatedItinerary.routeAdvice}
                   <br />
-                  <b>🛡️ Lưu ý an toàn & di chuyển:</b> {generatedItinerary.cautionAdvice}
+                  <b>{t.tripSafetyTips}</b> {generatedItinerary.cautionAdvice}
                 </div>
               </div>
 
@@ -3581,10 +4679,10 @@ export default function Home() {
                 <div className="timeline-day" key={dayPlan.dayNumber}>
                   <div className="timeline-day__header">
                     <div className="timeline-day__header-title">
-                      <span className="timeline-day-pill">NGÀY {dayPlan.dayNumber}</span>
+                      <span className="timeline-day-pill">{t.tripDayLabel} {dayPlan.dayNumber}</span>
                       <h3>{dayPlan.dayTitle}</h3>
                     </div>
-                    <span className="timeline-day__distance">Lộ trình ngày: ~{dayPlan.dayDistanceKm} km ({dayPlan.dateLabel})</span>
+                    <span className="timeline-day__distance">{t.tripDayRoute} ~{dayPlan.dayDistanceKm} km ({dayPlan.dateLabel})</span>
                   </div>
 
                   <div className="timeline-slots">
@@ -3608,60 +4706,60 @@ export default function Home() {
                           <div className="slot-main">
                             <div className="slot-main__title">
                               <h4>{slot.title}</h4>
-                              <span className="slot-cost">{formatMoney(slot.estimatedCostPerPerson)}/người</span>
+                              <span className="slot-cost">{formatMoney(slot.estimatedCostPerPerson)}/{t.tripPerson}</span>
                             </div>
 
                             {/* TRANSPORT TIP */}
                             <div className="slot-transport-strip">
                               <span>🚗</span>
                               <div>
-                                <b>Phương tiện & Di chuyển:</b> {slot.transportAdvice}
+                                <b>{t.tripTransportLabel}</b> {slot.transportAdvice}
                               </div>
                             </div>
 
                             {/* 4-ELEMENT DETAIL GRID */}
                             <div className="slot-detail-grid">
                               <div className="slot-detail-box">
-                                <small>🏛️ ĐI THAM QUAN Ở ĐÂU</small>
+                                <small>{t.slotWhereSightsee}</small>
                                 <p>
                                   <b>{slot.activity}</b>
                                   {slot.place && (
                                     <>
                                       <br />
-                                      <span>Điểm đến: <b>{slot.place.name}</b> ({slot.place.location})</span>
+                                      <span>{t.slotDestination} <b>{slot.place.name}</b> ({slot.place.location})</span>
                                       <br />
-                                      <span>Điểm nhấn: {slot.place.highlights.slice(0, 3).join(" · ")}</span>
+                                      <span>{t.slotHighlights} {slot.place.highlights.slice(0, 3).join(" · ")}</span>
                                     </>
                                   )}
                                 </p>
                               </div>
 
                               <div className="slot-detail-box">
-                                <small>🍲 ĂN Ở ĐÂU & MÓN GÌ</small>
+                                <small>{t.slotWhereDine}</small>
                                 <p>
                                   {slot.restaurant ? (
                                     <>
                                       <b>{slot.restaurant.name}</b> ({slot.restaurant.type})
                                       <br />
-                                      <span>Thực đơn đặc sản: {slot.restaurant.note}</span>
+                                      <span>{t.slotSpecialtyMenu} {slot.restaurant.note}</span>
                                       <br />
                                       <small style={{ color: "var(--muted)" }}>{slot.restaurant.address} · {slot.restaurant.hours}</small>
                                     </>
                                   ) : (
-                                    <span>Tự do thưởng thức ẩm thực đặc sản địa phương trên cung đường.</span>
+                                    <span>{t.slotFreeDine}</span>
                                   )}
                                 </p>
                               </div>
 
                               {slot.stay && (
                                 <div className="slot-detail-box">
-                                  <small>🛏️ NGỦ NGHỈ Ở ĐÂU</small>
+                                  <small>{t.slotWhereStay}</small>
                                   <p>
                                     <b>{slot.stay.name}</b> ({slot.stay.type})
                                     <br />
-                                    <span>Dịch vụ & Tiện nghi: {slot.stay.note}</span>
+                                    <span>{t.slotAmenities} {slot.stay.note}</span>
                                     <br />
-                                    <small style={{ color: "var(--muted)" }}>Địa chỉ: {slot.stay.address}</small>
+                                    <small style={{ color: "var(--muted)" }}>{t.addressLabel} {slot.stay.address}</small>
                                   </p>
                                 </div>
                               )}
@@ -3669,7 +4767,7 @@ export default function Home() {
 
                             {slot.highlightNote && (
                               <p style={{ margin: "4px 0 0", fontSize: "12px", color: "var(--muted)", fontStyle: "italic" }}>
-                                💬 Lời dặn hướng dẫn viên: {slot.highlightNote}
+                                💬 {t.slotGuideAdvice} {slot.highlightNote}
                               </p>
                             )}
                           </div>
@@ -3684,10 +4782,10 @@ export default function Home() {
               <div className="tour-template-section">
                 <div className="tour-template-section__heading">
                   <div>
-                    <span className="kicker">TOUR MẪU TIÊU BIỂU</span>
-                    <h2 style={{ fontSize: "20px", margin: "4px 0" }}>Chọn nhanh tour thiết kế sẵn 3 tỉnh</h2>
+                    <span className="kicker">{t.tripSuggestedToursTitle}</span>
+                    <h2 style={{ fontSize: "20px", margin: "4px 0" }}>{t.tripSuggestedToursDesc}</h2>
                   </div>
-                  <span style={{ fontSize: "12px", color: "var(--muted)" }}>Bấm vào tour để áp dụng ngay</span>
+                  <span style={{ fontSize: "12px", color: "var(--muted)" }}>{t.applyTourHint}</span>
                 </div>
 
                 <div className="tour-template-grid">
@@ -3704,7 +4802,7 @@ export default function Home() {
                       <h3>{tmpl.title}</h3>
                       <p>{tmpl.summary}</p>
                       <div className="tour-template-card__footer">
-                        <span>Phương tiện: {tmpl.recommendedTransport}</span>
+                        <span>{t.tripTransportLabel} {tmpl.recommendedTransport}</span>
                         <b>{tmpl.estimatedBudgetPerPerson}</b>
                       </div>
                     </button>
@@ -3716,15 +4814,15 @@ export default function Home() {
               <div className="directory-section">
                 <div className="directory-header">
                   <div>
-                    <span className="kicker">DANH MỤC TRA CỨU ĐIỂM ĐẾN</span>
-                    <h3>Danh bạ 100 Điểm Du lịch – Ăn uống – Lưu trú</h3>
-                    <p>Tra cứu nhanh thông tin điểm tham quan, quán ăn và cơ sở lưu trú theo từng địa bàn.</p>
+                    <span className="kicker">{t.directoryKicker}</span>
+                    <h3>{t.directoryTitle}</h3>
+                    <p>{t.directoryDesc}</p>
                   </div>
                   <button
                     className="button button--ghost"
                     onClick={() => setShow100Directory((prev) => !prev)}
                   >
-                    {show100Directory ? "Thu gọn bảng danh bạ ▲" : `Mở toàn bộ danh bạ (${phuTho100Directory.length} điểm) ▼`}
+                    {show100Directory ? t.directoryCollapse : `${t.directoryExpand} (${phuTho100Directory.length} ${t.tripPoints}) ▼`}
                   </button>
                 </div>
 
@@ -3734,7 +4832,7 @@ export default function Home() {
                       <input
                         type="text"
                         className="directory-search-input"
-                        placeholder="Tìm theo tên điểm, món ăn, khách sạn..."
+                        placeholder={t.directorySearchPlaceholder}
                         value={directorySearch}
                         onChange={(e) => setDirectorySearch(e.target.value)}
                       />
@@ -3744,7 +4842,7 @@ export default function Home() {
                         onChange={(e) => setDirectoryDistrict(e.target.value)}
                       >
                         {directoryDistricts.map((d) => (
-                          <option key={d} value={d}>{d === "Tất cả" ? "Tất cả huyện/thị" : `Huyện/Thị: ${d}`}</option>
+                          <option key={d} value={d}>{d === "Tất cả" ? t.directoryAllDistricts : `${t.directoryDistrictPrefix} ${d}`}</option>
                         ))}
                       </select>
                     </div>
@@ -3753,13 +4851,13 @@ export default function Home() {
                       <table className="directory-table">
                         <thead>
                           <tr>
-                            <th>STT</th>
-                            <th>Tên điểm đến</th>
-                            <th>Loại hình</th>
-                            <th>Địa bàn</th>
-                            <th>Ẩm thực & Quán ăn gần điểm</th>
-                            <th>Lưu trú / Khách sạn gần điểm</th>
-                            <th>Cự ly</th>
+                            <th>{t.directoryColNo}</th>
+                            <th>{t.directoryColName}</th>
+                            <th>{t.directoryColType}</th>
+                            <th>{t.directoryColArea}</th>
+                            <th>{t.directoryColFood}</th>
+                            <th>{t.directoryColStay}</th>
+                            <th>{t.directoryColDist}</th>
                           </tr>
                         </thead>
                         <tbody>
@@ -3790,38 +4888,49 @@ export default function Home() {
         <section className="inner-page near-page">
           <div className="near-header">
             <div>
-              <span className="kicker">TIỆN ÍCH VÀ DỊCH VỤ DU LỊCH</span>
-              <h1>Tiện ích quanh bạn<br /><em>trên cả 3 tỉnh.</em></h1>
+              <span className="kicker">{t.nearKicker}</span>
+              <h1>{t.nearTitle1}<br /><em>{t.nearTitle2}</em></h1>
             </div>
             <div className="near-location-card">
               <span className="pulse-dot" />
               <p>
                 <b>{locationMessage}</b>
-                <small>{position ? `${position.lat.toFixed(4)}, ${position.lng.toFixed(4)}` : "Cho phép vị trí để tính khoảng cách thực"}</small>
+                <small>{position ? `${position.lat.toFixed(4)}, ${position.lng.toFixed(4)}` : t.nearAllowLocation}</small>
               </p>
-              <button onClick={locate}>{position ? "Cập nhật GPS" : "Bật định vị GPS"}</button>
+              <button onClick={locate}>{position ? t.nearUpdateGPS : t.nearEnableGPS}</button>
             </div>
           </div>
 
           {/* SERVICE CATEGORY TABS & PROVINCE FILTER */}
           <div className="service-filters-wrapper">
             <div className="service-province-tabs">
-              <span>KHU VỰC:</span>
+              <span>{t.nearAreaLabel}</span>
               {["Tất cả", "Phú Thọ", "Vĩnh Phúc", "Hòa Bình"].map((prov) => (
                 <button
                   key={prov}
                   className={`province-tab ${serviceProvinceFilter === prov ? "is-active" : ""}`}
                   onClick={() => setServiceProvinceFilter(prov)}
                 >
-                  {prov === "Tất cả" ? "Toàn bộ 3 tỉnh" : prov}
+                  {prov === "Tất cả" ? t.nearAll3Provinces : prov === "Phú Thọ" ? t.provPhuTho : prov === "Vĩnh Phúc" ? t.provVinhPhuc : t.provHoaBinh}
                 </button>
               ))}
             </div>
 
             <div className="service-tabs">
-              {["Tất cả", "Trạm xăng", "Bãi đỗ xe", "Y tế", "ATM", "Trạm sạc EV", "Cứu hộ", "Điểm đến", "Ăn uống", "Lưu trú"].map((item) => (
-                <button key={item} className={serviceFilter === item ? "is-active" : ""} onClick={() => setServiceFilter(item)}>
-                  {item}
+              {[
+                { id: "Tất cả", label: t.provAll },
+                { id: "Trạm xăng", label: t.nearServiceGasStation },
+                { id: "Bãi đỗ xe", label: t.nearServiceParking },
+                { id: "Y tế", label: t.nearServiceMedical },
+                { id: "ATM", label: t.nearServiceATM },
+                { id: "Trạm sạc EV", label: t.nearServiceEV },
+                { id: "Cứu hộ", label: t.nearServiceRescue },
+                { id: "Điểm đến", label: t.nearServiceDestination },
+                { id: "Ăn uống", label: t.nearServiceFood },
+                { id: "Lưu trú", label: t.nearServiceStay },
+              ].map((item) => (
+                <button key={item.id} className={serviceFilter === item.id ? "is-active" : ""} onClick={() => setServiceFilter(item.id)}>
+                  {item.label}
                 </button>
               ))}
             </div>
@@ -3857,7 +4966,7 @@ export default function Home() {
                 <circle cx="440" cy="260" r="14" fill="rgba(155, 189, 201, 0.5)" />
                 <text x="445" y="250" fill="#3b6271" fontSize="10.5" fontWeight="800">Ngã Ba Bạch Hạc</text>
               </svg>
-              <div className="map-pins" aria-label="Các ghim trên bản đồ">
+              <div className="map-pins" aria-label={t.bottomNavAria}>
                 {filteredNearItems.slice(0, 30).map((item) => (
                   <button
                     key={item.id}
@@ -3870,7 +4979,7 @@ export default function Home() {
                     <span>{item.icon}</span>
                   </button>
                 ))}
-                {position && <span className="user-map-pin" style={mapPosition(position.lat, position.lng)} title="Vị trí của bạn">Bạn</span>}
+                {position && <span className="user-map-pin" style={mapPosition(position.lat, position.lng)} title={t.profileGuest}>Bạn</span>}
               </div>
               {selectedNearItem && (
                 <div className="map-selection">
@@ -3880,16 +4989,16 @@ export default function Home() {
                     <b>{selectedNearItem.name}</b>
                     <em>{position ? `${formatDistance(haversine(position.lat, position.lng, selectedNearItem.lat, selectedNearItem.lng))} từ bạn` : selectedNearItem.address ?? selectedNearItem.note}</em>
                   </p>
-                  <a target="_blank" rel="noreferrer" href={`https://www.google.com/maps/dir/?api=1&destination=${selectedNearItem.lat},${selectedNearItem.lng}`}>Chỉ đường →</a>
+                  <a target="_blank" rel="noreferrer" href={`https://www.google.com/maps/dir/?api=1&destination=${selectedNearItem.lat},${selectedNearItem.lng}`}>{t.getDirectionsBtn}</a>
                 </div>
               )}
-              <span className="map-credit">Bản đồ số Vùng Đất Tổ</span>
+              <span className="map-credit">{t.brandSubtitle}</span>
             </div>
 
             <div className="service-list">
               <div className="service-list-header">
-                <b>Danh sách tiện ích ({filteredNearItems.length})</b>
-                <small>Sắp xếp theo cự ly gần bạn nhất</small>
+                <b>{t.serviceListTitle} ({filteredNearItems.length})</b>
+                <small>{t.serviceListSub}</small>
               </div>
               {filteredNearItems.slice(0, 15).map((item) => {
                 const distance = position ? formatDistance(haversine(position.lat, position.lng, item.lat, item.lng)) : "—";
@@ -3903,8 +5012,8 @@ export default function Home() {
                     </button>
                     <div className="service-meta">
                       <b>{distance}</b>
-                      {item.phone && <a href={`tel:${item.phone}`}>Gọi ngay</a>}
-                      <a target="_blank" rel="noreferrer" href={`https://www.google.com/maps/dir/?api=1&destination=${item.lat},${item.lng}`}>Chỉ đường →</a>
+                      {item.phone && <a href={`tel:${item.phone}`}>{t.callNowBtn}</a>}
+                      <a target="_blank" rel="noreferrer" href={`https://www.google.com/maps/dir/?api=1&destination=${item.lat},${item.lng}`}>{t.getDirectionsBtn}</a>
                     </div>
                   </article>
                 );
@@ -3913,20 +5022,20 @@ export default function Home() {
           </div>
 
           <div className="sos-strip">
-            <div><span>SOS</span><p><b>Hotline Hỗ Trợ & Cứu Hộ Khẩn Cấp 24/7</b><small>Luôn sẵn sàng hỗ trợ quý khách trên mọi cung đường.</small></p></div>
+            <div><span>SOS</span><p><b>{t.sosTitle}</b><small>{t.sosSub}</small></p></div>
             <div className="sos-actions">
-              <a href="tel:112"><b>112</b><small>Cứu nạn quốc gia</small></a>
-              <a href="tel:113"><b>113</b><small>Công an</small></a>
-              <a href="tel:115"><b>115</b><small>Cấp cứu Y tế</small></a>
-              <a href="tel:0983116116"><b>0983 116 116</b><small>Cứu hộ giao thông</small></a>
+              <a href="tel:112"><b>112</b><small>{t.sosNationalRescue}</small></a>
+              <a href="tel:113"><b>113</b><small>{t.sosPolice}</small></a>
+              <a href="tel:115"><b>115</b><small>{t.sosAmbulance}</small></a>
+              <a href="tel:0983116116"><b>0983 116 116</b><small>{t.sosTrafficRescue}</small></a>
             </div>
           </div>
 
           <section className="event-calendar">
             <div className="event-calendar__intro">
-              <span className="kicker">LỊCH LỄ HỘI VĂN HÓA</span>
-              <h2>Đi đúng ngày,<br /><em>chạm đúng lễ hội.</em></h2>
-              <p>Lịch hội truyền thống được giữ nguyên theo ngày âm lịch để du khách dễ dàng sắp xếp chuyến đi.</p>
+              <span className="kicker">{t.festivalKicker}</span>
+              <h2>{t.festivalTitle1}<br /><em>{t.festivalTitle2}</em></h2>
+              <p>{t.festivalDesc}</p>
             </div>
             <div className="event-list">
               {culturalEvents.map((event) => {
@@ -3941,8 +5050,8 @@ export default function Home() {
                     </div>
                     <aside>
                       <b>{event.schedule}</b>
-                      {event.bookingRequired && <em>CẦN ĐẶT TRƯỚC</em>}
-                      {eventPlace && <button onClick={() => openPlace(eventPlace)}>Mở điểm đến →</button>}
+                      {event.bookingRequired && <em>{t.bookingRequired}</em>}
+                      {eventPlace && <button onClick={() => openPlace(eventPlace)}>{t.openPlaceBtn}</button>}
                     </aside>
                   </article>
                 );
@@ -3967,19 +5076,19 @@ export default function Home() {
               className={savedSubTab === "places" ? "is-active" : ""}
               onClick={() => setSavedSubTab("places")}
             >
-              🏛️ Điểm đến đã lưu ({favorites.length})
+              🏛️ {t.savedPlacesTab} ({favorites.length})
             </button>
             <button
               className={savedSubTab === "foods" ? "is-active" : ""}
               onClick={() => setSavedSubTab("foods")}
             >
-              🍲 Món ngon yêu thích ({savedDishes.length})
+              🍲 {t.savedFoodsTab} ({savedDishes.length})
             </button>
             <button
               className={savedSubTab === "itinerary" ? "is-active" : ""}
               onClick={() => setSavedSubTab("itinerary")}
             >
-              📅 Lịch trình đã lưu ({savedItineraryList.length})
+              📅 {t.savedItineraryTab} ({savedItineraryList.length})
             </button>
           </div>
 
@@ -3992,9 +5101,9 @@ export default function Home() {
             ) : (
               <div className="saved-empty">
                 <span>♡</span>
-                <h2>Chưa có điểm đến nào trong sổ tay</h2>
-                <p>Chạm biểu tượng trái tim (♡) ở bất kỳ danh thắng nào để lưu vào đây.</p>
-                <button className="button button--dark" onClick={() => setActiveTab("explore")}>Khám phá ngay →</button>
+                <h2>{t.savedPlacesEmpty}</h2>
+                <p>{t.savedPlacesEmptyDesc}</p>
+                <button className="button button--dark" onClick={() => setActiveTab("explore")}>{t.explore} →</button>
               </div>
             )
           )}
@@ -4010,9 +5119,9 @@ export default function Home() {
             ) : (
               <div className="saved-empty">
                 <span>♨</span>
-                <h2>Chưa có món ăn đặc sản nào trong sổ tay</h2>
-                <p>Mở mục ẩm thực và bấm "Lưu món ăn" để gom lại các món bạn muốn thưởng thức.</p>
-                <button className="button button--dark" onClick={() => setActiveTab("explore")}>Khám phá món ngon →</button>
+                <h2>{t.savedFoodsEmpty}</h2>
+                <p>{t.savedFoodsEmptyDesc}</p>
+                <button className="button button--dark" onClick={() => setActiveTab("explore")}>{t.nearServiceFood} →</button>
               </div>
             )
           )}
@@ -4025,7 +5134,7 @@ export default function Home() {
                   <article className="saved-itinerary-card" key={it.id}>
                     <div className="saved-itinerary-card__header">
                       <div>
-                        <span className="tour-template-badge">{it.region} · {it.durationDays} NGÀY</span>
+                        <span className="tour-template-badge">{it.region} · {it.durationDays} {t.tripDayLabel}</span>
                         <h3>{it.title}</h3>
                         <p>{it.subtitle}</p>
                       </div>
@@ -4036,17 +5145,17 @@ export default function Home() {
                           const next = savedItineraryList.filter(item => item.id !== it.id);
                           setSavedItineraryList(next);
                           window.localStorage.setItem("datto-saved-itineraries", JSON.stringify(next));
-                          showToast("Đã xóa lịch trình khỏi sổ tay");
+                          showToast(t.savedDeletedToast);
                         }}
                       >
-                        Xóa
+                        {t.savedDeleteItinerary}
                       </button>
                     </div>
                     <div className="saved-itinerary-card__stats">
                       <span>📏 ~{it.totalDistanceKm} km</span>
                       <span>⏱ {it.totalDriveTime}</span>
                       <span>🚗 {it.transport}</span>
-                      <span>💰 {formatMoney(it.estimatedCostPerPerson)}/khách</span>
+                      <span>💰 {formatMoney(it.estimatedCostPerPerson)}{t.savedPerGuest}</span>
                     </div>
                     <div className="saved-itinerary-card__actions">
                       <button
@@ -4054,13 +5163,13 @@ export default function Home() {
                         onClick={() => {
                           setGeneratedItinerary(it);
                           setActiveTab("trip");
-                          showToast("Đã mở chi tiết lịch trình!");
+                          showToast(t.savedOpenedToast);
                         }}
                       >
-                        Mở xem chi tiết →
+                        {t.savedOpenDetail}
                       </button>
                       <a className="button button--outline" href={it.googleMapsUrl} target="_blank" rel="noreferrer">
-                        Mở Google Maps ↗
+                        {t.savedOpenGoogleMaps}
                       </a>
                     </div>
                   </article>
@@ -4069,9 +5178,9 @@ export default function Home() {
             ) : (
               <div className="saved-empty">
                 <span>📅</span>
-                <h2>Chưa có lịch trình nào được lưu</h2>
-                <p>Vào mục "Lịch trình", tạo một tour phù hợp rồi bấm "Lưu vào Sổ tay".</p>
-                <button className="button button--dark" onClick={() => setActiveTab("trip")}>Tạo lịch trình ngay →</button>
+                <h2>{t.savedItineraryEmpty}</h2>
+                <p>{t.savedItineraryEmptyDesc}</p>
+                <button className="button button--dark" onClick={() => setActiveTab("trip")}>{t.savedCreateTrip}</button>
               </div>
             )
           )}
@@ -4089,27 +5198,27 @@ export default function Home() {
               <span>
                 {authUser
                   ? authUser.role === "admin"
-                    ? "🛡️ QUẢN TRỊ VIÊN HỆ THỐNG"
+                    ? t.profileSystemAdmin
                     : authUser.role === "merchant"
-                    ? `🏪 CHỦ CƠ SỞ OCOP: ${authUser.merchantName || "ĐỐI TÁC"}`
-                    : "👤 DU KHÁCH ĐẤT TỔ"
-                  : "CHƯA ĐĂNG NHẬP"}
+                    ? `${t.profileMerchantOwner} ${authUser.merchantName || t.profilePartner}`
+                    : t.profileCustomer
+                  : t.profileNotLoggedIn}
               </span>
-              <h1>{authUser ? authUser.name : "Khách vãng lai"}</h1>
+              <h1>{authUser ? authUser.name : t.profileGuest}</h1>
               <p>
                 {authUser
-                  ? `${authUser.email} · Đăng nhập qua ${authUser.provider === "google" ? "Gmail (Google)" : authUser.provider === "facebook" ? "Facebook" : "Email"}`
-                  : "Đăng nhập bằng Gmail hoặc Facebook để đặt đặc sản OCOP và quản lý đơn hàng."}
+                  ? `${authUser.email} · ${t.profileLoginVia} ${authUser.provider === "google" ? "Gmail (Google)" : authUser.provider === "facebook" ? "Facebook" : "Email"}`
+                  : t.profileLoginPrompt}
               </p>
             </div>
             {authUser ? (
               <div style={{ display: "flex", gap: "8px" }}>
-                <button type="button" onClick={() => setAuthModalOpen(true)}>Đổi tài khoản</button>
-                <button type="button" onClick={handleLogout} style={{ color: "var(--red)" }}>Đăng xuất</button>
+                <button type="button" onClick={() => setAuthModalOpen(true)}>{t.profileSwitchAccount}</button>
+                <button type="button" onClick={handleLogout} style={{ color: "var(--red)" }}>{t.profileLogout}</button>
               </div>
             ) : (
               <button type="button" onClick={() => setAuthModalOpen(true)} style={{ background: "var(--red)", color: "white" }}>
-                🔑 Đăng nhập ngay
+                {t.profileLoginNow}
               </button>
             )}
           </div>
@@ -4134,17 +5243,17 @@ export default function Home() {
             <article className="booking-card">
               <span>{t.quickBookKicker}</span>
               <h2>{t.quickBookTitle}</h2>
-              <button onClick={() => { setActiveTab("trip"); showToast("Đã mở trợ lý lập lịch trình tour"); }}>
+              <button onClick={() => { setActiveTab("trip"); showToast(t.openTripAssistant); }}>
                 <i>▣</i><b>{t.btnTourDesignTitle}</b><small>{t.btnTourDesignSub}</small><em>→</em>
               </button>
-              <button onClick={() => { setCategory("Nghỉ dưỡng & chữa lành"); setSelectedRegion("Tất cả"); setActiveTab("explore"); showToast("Chọn một điểm nghỉ dưỡng rồi mở Chỗ nghỉ gần đây"); }}>
+              <button onClick={() => { setCategory("Nghỉ dưỡng & chữa lành"); setSelectedRegion("Tất cả"); setActiveTab("explore"); showToast(t.selectResortToast); }}>
                 <i>⌂</i><b>{t.btnHotelsTitle}</b><small>{t.btnHotelsSub}</small><em>→</em>
               </button>
               <button onClick={() => { setVouchersModalOpen(true); }}>
                 <i>🎁</i><b>{t.btnVouchersTitle}</b><small>{t.btnVouchersSub}</small><em>→</em>
               </button>
               <button onClick={() => { setCartOpen(true); setCartDrawerTab("cart"); }}>
-                <i>◇</i><b>{t.btnOcopTitle}</b><small>{t.btnOcopSub} ({cartQuantity} món)</small><em>→</em>
+                <i>◇</i><b>{t.btnOcopTitle}</b><small>{t.btnOcopSub} ({cartQuantity} {t.profileItems})</small><em>→</em>
               </button>
 
               {/* ROLE-BASED ORDER MANAGEMENT VISIBILITY */}
@@ -4154,11 +5263,11 @@ export default function Home() {
                   style={{ background: "#f0fdf4", border: "1.5px solid #86efac" }}
                 >
                   <i>📊</i>
-                  <b>Bảng Quản Lý Đơn Hàng (Google Sheets)</b>
+                  <b>{t.profileOrderMgmt}</b>
                   <small>
                     {authUser.role === "admin"
-                      ? `Quyền Admin: Quản lý ${orderList.length} đơn · Điều phối & Xuất Sheets`
-                      : `Chủ cơ sở (${authUser.merchantName}): Quản lý đơn & giao hàng`}
+                      ? `${t.profileAdminOrderDesc} (${orderList.length} ${t.profileOrdersCount})`
+                      : t.profileMerchantOrderDesc}
                   </small>
                   <em>→</em>
                 </button>
@@ -4171,11 +5280,11 @@ export default function Home() {
                   style={{ background: "#eff6ff", border: "1.5px solid #93c5fd" }}
                 >
                   <i>📦</i>
-                  <b style={{ color: "#1d4ed8" }}>{t.myOrders} ({userOrderList.length} đơn)</b>
+                  <b style={{ color: "#1d4ed8" }}>{t.myOrders} ({userOrderList.length} {t.profileOrdersCount})</b>
                   <small>
                     {userOrderList.length > 0
-                      ? `${userOrderList.length} đơn hàng đã đặt · Bấm để xem và theo dõi tiến độ giao hàng`
-                      : "Chưa có đơn hàng nào · Khám phá đặc sản OCOP và đặt món ngay"}
+                      ? `${userOrderList.length} ${t.profileOrdersPlaced}`
+                      : t.profileNoOrders}
                   </small>
                   <em>→</em>
                 </button>
@@ -4185,7 +5294,7 @@ export default function Home() {
               <span>{t.partnerKicker}</span>
               <h2>{t.partnerTitle}</h2>
               <p>{t.partnerDesc}</p>
-              <button className="button button--outline" onClick={() => showToast("Cảm ơn bạn! Thông tin đăng ký đối tác đã được ghi nhận.")}>{t.btnRegisterPartner}</button>
+              <button className="button button--outline" onClick={() => showToast(t.registerPartnerToast)}>{t.btnRegisterPartner}</button>
             </article>
           </div>
         </section>
@@ -4195,10 +5304,10 @@ export default function Home() {
       <footer className="site-footer">
         <div className="brand brand--footer">
           <span className="brand__mark">Đ</span>
-          <span><strong>Đất Tổ</strong><small>PHÚ THỌ · VĨNH PHÚC · HÒA BÌNH</small></span>
+          <span><strong>Đất Tổ</strong><small>{t.brandSubtitle}</small></span>
         </div>
-        <p>Cẩm nang du lịch và trợ lý hành trình số thông minh · Tinh hoa Đất Tổ hội tụ.</p>
-        <span>Du lịch Đất Tổ ↗</span>
+        <p>{t.footerDesc}</p>
+        <span>{t.footerLink}</span>
       </footer>
 
       {/* MOBILE BOTTOM NAVIGATION */}
@@ -4217,14 +5326,14 @@ export default function Home() {
       {selected && (
         <div className="modal-backdrop" role="presentation" onMouseDown={(event) => { if (event.target === event.currentTarget) setSelected(null); }}>
           <section className="place-modal" role="dialog" aria-modal="true" aria-labelledby="place-modal-title">
-            <button className="modal-close" onClick={() => setSelected(null)} aria-label="Đóng">×</button>
+            <button className="modal-close" onClick={() => setSelected(null)} aria-label={t.authClose || "Đóng"}>×</button>
             <div className="modal-hero">
               <img src={selected.image} alt={selected.name} onError={handleImageError} />
               <span className="modal-hero__shade" />
               <div>
                 <span>{selected.category} · {selected.region} · {selected.location}</span>
                 <h2 id="place-modal-title">{selected.name}</h2>
-                <p><b>★ {selected.rating}</b> ({selected.reviews.toLocaleString("vi-VN")} đánh giá tham khảo) · Ảnh: {selected.imageCredit}</p>
+                <p><b>★ {selected.rating}</b> ({selected.reviews.toLocaleString(currentLang === "vi" ? "vi-VN" : "en-US")} {t.modalReviews}) · {t.modalPhoto} {selected.imageCredit}</p>
               </div>
               <button className={`heart-button modal-heart ${favorites.includes(selected.id) ? "is-saved" : ""}`} onClick={() => toggleFavorite(selected.id)}>
                 {favorites.includes(selected.id) ? "♥" : "♡"}
@@ -4237,25 +5346,25 @@ export default function Home() {
                   <p><b>{isInSeason(selected, currentMonth) ? `Thời điểm tuyệt đẹp để đi trong tháng ${currentMonth}` : `Tháng ${currentMonth} cần lưu ý thời tiết`}</b><small>{selected.season}</small></p>
                 </div>
                 <div className="fact-row fact-row--rich">
-                  <span><small>KHUNG GIỜ ĐẸP</small><b>{selected.bestTime}</b></span>
-                  <span><small>THỜI LƯỢNG</small><b>{selected.duration}</b></span>
-                  <span><small>TỪ VIỆT TRÌ</small><b>{selected.distanceFromVietTri} km · {selected.travelFromVietTri}</b></span>
-                  <span><small>CHI PHÍ THAM KHẢO</small><b>{selected.price}</b></span>
+                  <span><small>{t.modalBestTime}</small><b>{selected.bestTime}</b></span>
+                  <span><small>{t.modalDuration}</small><b>{selected.duration}</b></span>
+                  <span><small>{t.modalFromVietTri}</small><b>{selected.distanceFromVietTri} km · {selected.travelFromVietTri}</b></span>
+                  <span><small>{t.modalEstimatedCost}</small><b>{selected.price}</b></span>
                 </div>
                 <p className="modal-description">{selected.description}</p>
                 <div className="highlight-section">
-                  <span>ĐIỂM NỔI BẬT KHÔNG NÊN BỎ LỠ</span>
+                  <span>{t.modalHighlightsTitle}</span>
                   <div>{selected.highlights.map((highlight) => <p key={highlight}><i>✦</i>{highlight}</p>)}</div>
                 </div>
-                {selected.warning && <div className="travel-warning"><b>Lưu ý trước khi đi</b><p>{selected.warning}</p></div>}
+                {selected.warning && <div className="travel-warning"><b>{t.modalNoticeTitle}</b><p>{selected.warning}</p></div>}
                 
                 {selected.transportTips && (
                   <div style={{ background: "var(--surface)", border: "1px solid var(--line)", borderRadius: "var(--radius-sm)", padding: "14px 18px", margin: "16px 0" }}>
-                    <span style={{ fontSize: "10px", fontWeight: "800", color: "var(--muted)", letterSpacing: "0.06em", textTransform: "uppercase" }}>GỢI Ý PHƯƠNG TIỆN & CUNG ĐƯỜNG</span>
+                    <span style={{ fontSize: "10px", fontWeight: "800", color: "var(--muted)", letterSpacing: "0.06em", textTransform: "uppercase" }}>{t.modalTransportTipsTitle}</span>
                     <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))", gap: "10px", marginTop: "8px" }}>
-                      <div style={{ fontSize: "12px", lineHeight: "1.4" }}><b>🚗 Phương tiện phù hợp:</b> {selected.transportTips.recommendedVehicle}</div>
-                      <div style={{ fontSize: "12px", lineHeight: "1.4" }}><b>🛣️ Cung đường:</b> {selected.transportTips.routeAdvice}</div>
-                      <div style={{ fontSize: "12px", lineHeight: "1.4" }}><b>⚠️ Lưu ý an toàn:</b> {selected.transportTips.caution}</div>
+                      <div style={{ fontSize: "12px", lineHeight: "1.4" }}><b>{t.modalVehicleLabel}</b> {selected.transportTips.recommendedVehicle}</div>
+                      <div style={{ fontSize: "12px", lineHeight: "1.4" }}><b>{t.modalRouteLabel}</b> {selected.transportTips.routeAdvice}</div>
+                      <div style={{ fontSize: "12px", lineHeight: "1.4" }}><b>{t.modalCautionLabel}</b> {selected.transportTips.caution}</div>
                     </div>
                   </div>
                 )}
@@ -4264,18 +5373,18 @@ export default function Home() {
                 <div className="modal-audio-box">
                   <div className="modal-actions">
                     <a className="button button--dark" target="_blank" rel="noreferrer" href={`https://www.google.com/maps/dir/?api=1&destination=${selected.lat},${selected.lng}`}>
-                      ⌁ Mở chỉ đường
+                      {t.modalOpenDirections}
                     </a>
                     <button className="button button--outline" onClick={() => togglePlaceAudio(selected)}>
                       {speechPlaceId === selected.id && audioState === "playing"
-                        ? (audioLang === "vi" ? "⏸ Tạm dừng" : "⏸ Pause")
+                        ? `⏸ ${t.audioPause}`
                         : speechPlaceId === selected.id && audioState === "paused"
                         ? (audioLang === "vi" ? "▶ Nghe tiếp" : "▶ Resume")
-                        : (audioLang === "vi" ? "▶ Nghe thuyết minh danh thắng" : "▶ Listen to Audio Guide")}
+                        : t.audioListen}
                     </button>
                     {speechPlaceId === selected.id && audioState !== "idle" && (
                       <button className="audio-stop" onClick={stopAllAudio}>
-                        ■ {audioLang === "vi" ? "Dừng" : "Stop"}
+                        ■ {t.audioStop}
                       </button>
                     )}
 
@@ -4308,7 +5417,7 @@ export default function Home() {
 
                   <div className="audio-settings-strip" style={{ marginTop: "10px", padding: "8px 12px", background: "var(--surface)", borderRadius: "var(--radius-sm)" }}>
                     <div className="audio-voice-control">
-                      <label htmlFor="modal-voice-select">🗣️ {audioLang === "vi" ? "Giọng:" : "Voice:"}</label>
+                      <label htmlFor="modal-voice-select">{t.audioVoiceLabel}</label>
                       <select
                         id="modal-voice-select"
                         className="audio-voice-select"
@@ -4327,7 +5436,7 @@ export default function Home() {
                     </div>
 
                     <div className="audio-volume-control">
-                      <span>🔊 {audioLang === "vi" ? "Âm lượng:" : "Volume:"}</span>
+                      <span>🔊 {t.audioVolumeLabel}</span>
                       <input
                         type="range"
                         min="0.1"
@@ -4345,7 +5454,7 @@ export default function Home() {
                     </div>
 
                     <div className="audio-rate-control">
-                      <span>{audioLang === "vi" ? "Tốc độ:" : "Speed:"}</span>
+                      <span>{t.audioSpeedLabel}</span>
                       <div className="audio-rate-pills">
                         {[0.75, 1.0, 1.25, 1.5, 1.75, 2.0, 2.25, 2.5].map((r) => (
                           <button
@@ -4467,10 +5576,10 @@ export default function Home() {
                 {cartDetails.length === 0 ? (
                   <div className="cart-empty-state">
                     <span>🛒</span>
-                    <h3>Giỏ hàng đang trống</h3>
-                    <p>Khám phá bản đồ ẩm thực và thêm các món đặc sản vào giỏ.</p>
+                    <h3>{t.cartEmptyTitle}</h3>
+                    <p>{t.cartEmptyDesc}</p>
                     <button type="button" className="button button--dark" onClick={() => { setCartOpen(false); goToFoodSection(); }}>
-                      Xem đặc sản ngay →
+                      {t.viewSpecialtiesBtn}
                     </button>
                   </div>
                 ) : (
@@ -4497,7 +5606,7 @@ export default function Home() {
                     <div style={{ background: "#fff8f6", border: "1.5px dashed #e39d91", borderRadius: "10px", padding: "12px 14px", margin: "14px 0" }}>
                       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "8px" }}>
                         <span style={{ fontSize: "12px", fontWeight: "800", color: "var(--red)", display: "flex", alignItems: "center", gap: "5px" }}>
-                          🎁 Mã khuyến mãi & Ưu đãi
+                          🎁 {t.voucherPromotionsTitle}
                         </span>
                         <button
                           type="button"
@@ -4505,7 +5614,7 @@ export default function Home() {
                           style={{ fontSize: "11px", color: "var(--red)" }}
                           onClick={() => setVouchersModalOpen(true)}
                         >
-                          Chọn mã khác →
+                          {t.chooseOtherVoucherBtn}
                         </button>
                       </div>
 
@@ -4519,7 +5628,7 @@ export default function Home() {
                             type="button"
                             style={{ border: 0, background: "transparent", color: "var(--muted)", cursor: "pointer", fontSize: "12px" }}
                             onClick={() => setAppliedVoucherCode(null)}
-                            title="Bỏ mã"
+                            title={t.removeVoucherTitle}
                           >
                             ✕
                           </button>
@@ -4528,7 +5637,7 @@ export default function Home() {
                         <div style={{ display: "flex", gap: "6px" }}>
                           <input
                             type="text"
-                            placeholder="Nhập mã: DATTO10, LEHOI2026..."
+                            placeholder={t.voucherInputPlaceholder}
                             id="voucher-input-cart"
                             style={{ flex: 1, height: "36px", padding: "0 10px", border: "1px solid var(--line)", borderRadius: "6px", fontSize: "12px", textTransform: "uppercase" }}
                           />
@@ -4548,7 +5657,7 @@ export default function Home() {
                               }
                             }}
                           >
-                            Áp dụng
+                            {t.applyVoucherBtn}
                           </button>
                         </div>
                       )}
@@ -4557,7 +5666,7 @@ export default function Home() {
                     {/* CURRENCY SELECTOR */}
                     <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", background: "#f8faf9", border: "1px solid var(--line)", borderRadius: "8px", padding: "8px 12px", margin: "10px 0" }}>
                       <span style={{ fontSize: "12px", fontWeight: "700", color: "var(--ink)", display: "flex", alignItems: "center", gap: "6px" }}>
-                        💱 Đơn vị tiền tệ:
+                        💱 {t.currencyLabel}
                       </span>
                       <div className="i18n-dropdown-container">
                         <button
@@ -4595,11 +5704,11 @@ export default function Home() {
 
                     {/* COMMERCE TOTAL WITH CURRENCY CONVERSION */}
                     <div className="commerce-total">
-                      <span>Tạm tính ({cartQuantity} món)</span>
+                      <span>{t.subtotalLabel} ({cartQuantity} {t.profileItems})</span>
                       <b>{formatPrice(cartSubtotal)}</b>
                       {voucherDiscount > 0 && (
                         <>
-                          <span style={{ color: "var(--red)" }}>Ưu đãi giảm giá ({appliedVoucher?.code})</span>
+                          <span style={{ color: "var(--red)" }}>{t.discountVoucherLabel} ({appliedVoucher?.code})</span>
                           <b style={{ color: "var(--red)" }}>−{formatPrice(voucherDiscount)}</b>
                         </>
                       )}
@@ -4660,8 +5769,8 @@ export default function Home() {
                         <div className="cart-auth-gate__header">
                           <span className="cart-auth-gate__icon">🔒</span>
                           <div>
-                            <b>Yêu cầu đăng nhập để đặt hàng</b>
-                            <p>Đăng nhập bằng Gmail hoặc Facebook để lưu đơn và nhận thông báo từ cơ sở OCOP.</p>
+                            <b>{t.authRequiredOrderTitle}</b>
+                            <p>{t.authRequiredOrderDesc}</p>
                           </div>
                         </div>
 
@@ -4672,7 +5781,7 @@ export default function Home() {
                             onClick={() => setGoogleOAuthModalOpen(true)}
                           >
                             <svg width="18" height="18" viewBox="0 0 24 24"><path fill="#EA4335" d="M12 5c1.6 0 3 .6 4.1 1.7l3.1-3.1C17.3 1.8 14.8 1 12 1 7.5 1 3.7 3.6 1.9 7.3l3.7 2.9C6.5 7.4 9 5 12 5z"/><path fill="#4285F4" d="M23.5 12.3c0-.8-.1-1.7-.2-2.3H12v4.6h6.5c-.3 1.5-1.1 2.8-2.4 3.7l3.7 2.9c2.2-2 3.7-5 3.7-8.9z"/><path fill="#FBBC05" d="M5.6 14.8c-.2-.7-.4-1.5-.4-2.8s.2-2.1.4-2.8L1.9 6.3C.7 8.7 0 10.8 0 12s.7 3.3 1.9 5.7l3.7-2.9z"/><path fill="#34A853" d="M12 23c3.2 0 6-1.1 8-3l-3.7-2.9c-1.1.7-2.5 1.2-4.3 1.2-3 0-5.5-2.4-6.4-5.2L1.9 16C3.7 19.7 7.5 23 12 23z"/></svg>
-                            Đăng nhập bằng Gmail (Google)
+                            {t.loginGoogle}
                           </button>
                           <button
                             type="button"
@@ -4680,7 +5789,7 @@ export default function Home() {
                             onClick={handleFacebookLogin}
                           >
                             <svg width="18" height="18" viewBox="0 0 24 24" fill="#1877F2"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
-                            Đăng nhập bằng Facebook
+                            {t.loginFacebook}
                           </button>
                         </div>
 
@@ -4693,25 +5802,25 @@ export default function Home() {
                             setAuthModalOpen(true);
                           }}
                         >
-                          🛡️ Đăng nhập Quản Trị Viên (Admin) →
+                          {t.loginAdminLink}
                         </button>
                       </div>
                     ) : (
                       <div className="cart-user-badge">
                         <div>
-                          <span>👤 Tài khoản đặt hàng:</span>
+                          <span>👤 {t.orderAccountLabel}</span>
                           <b>{authUser.name} ({authUser.email})</b>
                           <span className="pill pill--subtle" style={{ marginTop: "2px", display: "inline-block" }}>
                             {authUser.role === "admin" ? "🛡️ Quản trị viên" : authUser.role === "merchant" ? `🏪 Chủ cơ sở: ${authUser.merchantName}` : "👤 Du khách"}
                           </span>
                         </div>
-                        <button type="button" className="text-link" onClick={() => setAuthModalOpen(true)}>Đổi</button>
+                        <button type="button" className="text-link" onClick={() => setAuthModalOpen(true)}>{t.changeAccountBtn}</button>
                       </div>
                     )}
 
                     <div className="commerce-form-fields" style={{ opacity: authUser ? 1 : 0.6, pointerEvents: authUser ? "auto" : "none" }}>
                       <label className="commerce-field">
-                        Họ và tên người mua <small style={{ color: "red" }}>*</small>
+                        {t.fullNameLabel} <small style={{ color: "red" }}>*</small>
                         <input
                           type="text"
                           required
@@ -4722,7 +5831,7 @@ export default function Home() {
                       </label>
 
                       <label className="commerce-field">
-                        Số điện thoại liên hệ <small style={{ color: "red" }}>*</small>
+                        {t.phoneNumberLabel} <small style={{ color: "red" }}>*</small>
                         <input
                           type="tel"
                           inputMode="tel"
@@ -4734,7 +5843,7 @@ export default function Home() {
                       </label>
 
                       <label className="commerce-field">
-                        Địa chỉ giao hàng / Tên khách sạn
+                        {t.shippingAddressLabel}
                         <input
                           type="text"
                           value={checkoutAddress}
@@ -4744,19 +5853,19 @@ export default function Home() {
                       </label>
 
                       <label className="commerce-field">
-                        Ghi chú thêm (Thời gian giao, yêu cầu đóng hộp...)
+                        {t.orderNoteLabel}
                         <input
                           type="text"
                           value={checkoutNote}
                           onChange={(event) => setCheckoutNote(event.target.value)}
-                          placeholder="Ghi chú thêm cho người bán"
+                          placeholder={t.orderNotePlaceholder}
                         />
                       </label>
                     </div>
 
                     {authUser ? (
                       <button className="button button--dark button--full" type="submit">
-                        Xác nhận đặt hàng ({formatPrice(finalCartTotal)}) →
+                        {t.confirmOrderBtn} ({formatPrice(finalCartTotal)}) →
                       </button>
                     ) : (
                       <button
@@ -4764,7 +5873,7 @@ export default function Home() {
                         type="button"
                         onClick={() => setAuthModalOpen(true)}
                       >
-                        🔒 Đăng nhập để hoàn tất đặt hàng →
+                        {t.loginToCompleteOrder}
                       </button>
                     )}
                   </>
@@ -4784,8 +5893,8 @@ export default function Home() {
                 {userOrderList.filter((o) => filterOrderByStatus(o, orderStatusTab)).length === 0 ? (
                   <div className="orders-empty-state" style={{ padding: "30px 10px" }}>
                     <span style={{ fontSize: "36px" }}>📦</span>
-                    <h3 style={{ fontSize: "16px" }}>Không có đơn hàng nào trong mục này</h3>
-                    <p style={{ fontSize: "12px" }}>Chọn danh mục khác hoặc đặt thêm các món đặc sản OCOP Đất Tổ.</p>
+                    <h3 style={{ fontSize: "16px" }}>{t.noOrdersInStatus}</h3>
+                    <p style={{ fontSize: "12px" }}>{t.noOrdersInStatusDesc}</p>
                   </div>
                 ) : (
                   <div className="customer-order-cards">
@@ -4803,7 +5912,7 @@ export default function Home() {
                             textDecoration: "underline",
                           }}
                         >
-                          🗑️ Xóa sạch lịch sử đơn
+                          🗑️ {t.clearOrderHistoryBtn}
                         </button>
                       </div>
                     )}
@@ -4821,7 +5930,7 @@ export default function Home() {
                                 <span className={`status-badge ${isPending ? "status-badge--pending" : isCancelled ? "status-badge--cancelled" : isCompleted ? "status-badge--completed" : "status-badge--confirmed"}`}>
                                   {isPending ? "⏳ Chờ xác nhận" : isCancelled ? "✕ Đã hủy" : isCompleted ? "✓ Hoàn thành" : "⚡ Đang xử lý"}
                                 </span>
-                                <b>Đơn hàng #{order.id}</b>
+                                <b>{t.orderNumberLabel} #{order.id}</b>
                                 <small>🕒 {order.createdAt} · 💳 {order.paymentMethod || "VietQR"}</small>
                               </div>
                               <b style={{ color: "var(--red)", fontSize: "16px" }}>
@@ -4851,7 +5960,7 @@ export default function Home() {
                                     style={{ minHeight: "32px", padding: "0 10px", fontSize: "11px", color: "var(--red)", borderColor: "#f0b5ab" }}
                                     onClick={() => cancelOrder(order.id)}
                                   >
-                                    Hủy đơn hàng
+                                    {t.cancelOrderBtn}
                                   </button>
                                 )}
                                 <button
@@ -4860,7 +5969,7 @@ export default function Home() {
                                   style={{ minHeight: "32px", padding: "0 12px", fontSize: "11px" }}
                                   onClick={() => reorderItems(order)}
                                 >
-                                  Đặt lại món này ↻
+                                  {t.reorderBtn}
                                 </button>
                               </div>
                             </div>
@@ -4879,19 +5988,19 @@ export default function Home() {
       {bookingOffer && (
         <div className="commerce-overlay booking-overlay" role="presentation" onMouseDown={(event) => { if (event.target === event.currentTarget) setBookingOffer(null); }}>
           <form className="booking-dialog" onSubmit={submitBookingRequest}>
-            <button className="booking-dialog__close" type="button" onClick={() => setBookingOffer(null)} aria-label="Đóng form đặt phòng">×</button>
-            <span>YÊU CẦU ĐẶT PHÒNG LƯU TRÚ</span>
+            <button className="booking-dialog__close" type="button" onClick={() => setBookingOffer(null)} aria-label={t.authClose || "Đóng"}>×</button>
+            <span>{t.bookingStayRequest}</span>
             <h2>{bookingOffer.stay.name}</h2>
             <p>{bookingOffer.stay.address}</p>
             
             <div className="booking-price">
-              <span>Giá tham khảo từ</span>
+              <span>{t.priceFromLabel}</span>
               <b>{formatMoney(estimatedStayPrice(bookingOffer.stay))}<small>/đêm</small></b>
             </div>
 
             <div className="booking-fields">
               <label>
-                Họ và tên người đại diện <small style={{ color: "red" }}>*</small>
+                {t.bookingRepName} <small style={{ color: "red" }}>*</small>
                 <input
                   type="text"
                   required
@@ -4902,7 +6011,7 @@ export default function Home() {
               </label>
 
               <label>
-                Số điện thoại liên hệ <small style={{ color: "red" }}>*</small>
+                {t.phoneNumberLabel} <small style={{ color: "red" }}>*</small>
                 <input
                   type="tel"
                   inputMode="tel"
@@ -4914,7 +6023,7 @@ export default function Home() {
               </label>
 
               <label>
-                Ngày nhận phòng <small style={{ color: "red" }}>*</small>
+                {t.checkInDate} <small style={{ color: "red" }}>*</small>
                 <input
                   type="date"
                   required
@@ -4924,7 +6033,7 @@ export default function Home() {
               </label>
 
               <label>
-                Ngày trả phòng <small style={{ color: "red" }}>*</small>
+                {t.checkOutDate} <small style={{ color: "red" }}>*</small>
                 <input
                   type="date"
                   required
@@ -4942,7 +6051,7 @@ export default function Home() {
               </label>
 
               <label>
-                Ghi chú riêng
+                {t.specialRequest}
                 <input
                   type="text"
                   value={bookingNote}
@@ -4954,11 +6063,11 @@ export default function Home() {
 
             <div className="booking-summary">
               <span>{bookingNights} đêm · {bookingGuests} khách</span>
-              <b>Dự toán tổng tiền: {formatMoney(estimatedStayPrice(bookingOffer.stay) * bookingNights)}</b>
+              <b>{t.estimatedTotalStay}: {formatMoney(estimatedStayPrice(bookingOffer.stay) * bookingNights)}</b>
             </div>
 
             <button className="button button--dark button--full" type="submit">
-              Gửi yêu cầu đặt phòng →
+              {t.sendBookingRequestBtn}
             </button>
           </form>
         </div>
@@ -4971,10 +6080,10 @@ export default function Home() {
             <div className="order-success-header">
               <span className="order-success-icon">🎉</span>
               <div>
-                <span className="kicker" style={{ color: "#10b981" }}>ĐẶT HÀNG THÀNH CÔNG</span>
-                <h2 id="order-success-title">Đơn hàng #{confirmedOrder.order.id}</h2>
+                <span className="kicker" style={{ color: "#10b981" }}>{t.orderSuccessKicker}</span>
+                <h2 id="order-success-title">{t.orderNumberLabel} #{confirmedOrder.order.id}</h2>
               </div>
-              <button type="button" className="booking-dialog__close" onClick={() => setConfirmedOrder(null)} aria-label="Đóng">×</button>
+              <button type="button" className="booking-dialog__close" onClick={() => setConfirmedOrder(null)} aria-label={t.authClose || "Đóng"}>×</button>
             </div>
 
             {/* Status Badge: Friendly for Customer, Sheets Sync for Admin/Merchant */}
@@ -5109,7 +6218,7 @@ export default function Home() {
                     setCartOpen(true);
                   }}
                 >
-                  📦 Xem & Theo Dõi Tiến Độ Đơn Hàng Của Bạn →
+                  📦 {t.trackYourOrderBtn}
                 </button>
               )}
               <button
@@ -5117,7 +6226,7 @@ export default function Home() {
                 className="button button--ghost"
                 onClick={() => setConfirmedOrder(null)}
               >
-                Tiếp tục khám phá điểm đến
+                {t.continueExploreBtn}
               </button>
             </div>
           </div>
@@ -5401,7 +6510,7 @@ function doPost(e) {
                     textDecoration: "underline",
                   }}
                 >
-                  🗑️ Xóa sạch lịch sử đơn
+                  🗑️ {t.clearOrderHistoryBtn}
                 </button>
               </div>
             )}
@@ -5409,8 +6518,8 @@ function doPost(e) {
             {userOrderList.filter((o) => filterOrderByStatus(o, orderStatusTab)).length === 0 ? (
               <div className="orders-empty-state">
                 <span>🛍️</span>
-                <h3>Chưa có đơn hàng nào trong mục này</h3>
-                <p>Khám phá bản đồ đặc sản OCOP và đặt món để thưởng thức hương vị Đất Tổ.</p>
+                <h3>{t.noOrdersInStatus}</h3>
+                <p>{t.noOrdersInStatusDesc}</p>
                 <button
                   type="button"
                   className="button button--dark"
@@ -5438,7 +6547,7 @@ function doPost(e) {
                             <span className={`status-badge ${isPending ? "status-badge--pending" : isCancelled ? "status-badge--cancelled" : isCompleted ? "status-badge--completed" : "status-badge--confirmed"}`}>
                               {isPending ? "⏳ Chờ xác nhận" : isCancelled ? "✕ Đã hủy" : isCompleted ? "✓ Hoàn thành" : "⚡ Đang xử lý"}
                             </span>
-                            <b>Đơn hàng #{order.id}</b>
+                            <b>{t.orderNumberLabel} #{order.id}</b>
                             <small>🕒 {order.createdAt} · 💳 {order.paymentMethod || "VietQR"}</small>
                           </div>
                           <b style={{ color: "var(--red)", fontSize: "16px" }}>
@@ -5468,7 +6577,7 @@ function doPost(e) {
                                 style={{ minHeight: "32px", padding: "0 10px", fontSize: "11px", color: "var(--red)", borderColor: "#f0b5ab" }}
                                 onClick={() => cancelOrder(order.id)}
                               >
-                                Hủy đơn hàng
+                                {t.cancelOrderBtn}
                               </button>
                             )}
                             <button
@@ -5477,7 +6586,7 @@ function doPost(e) {
                               style={{ minHeight: "32px", padding: "0 12px", fontSize: "11px" }}
                               onClick={() => reorderItems(order)}
                             >
-                              Đặt lại món này ↻
+                              {t.reorderBtn}
                             </button>
                           </div>
                         </div>
@@ -5572,10 +6681,10 @@ function doPost(e) {
                 <span><strong>Đất Tổ Travel</strong><small>HỆ THỐNG TÀI KHOẢN BẢO MẬT</small></span>
               </div>
               <h2 id="auth-dialog-title">
-                {authModalTab === "login" ? "Đăng Nhập Tài Khoản" : authModalTab === "register" ? "Đăng Ký Tài Khoản Mới" : "Đăng Nhập Quản Trị Viên"}
+                {authModalTab === "login" ? t.authLoginTab : authModalTab === "register" ? t.authRegisterTab : t.authAdminTab}
               </h2>
               <p>Mỗi tài khoản đều được bảo vệ bằng mật khẩu riêng để đảm bảo an toàn thông tin cá nhân.</p>
-              <button type="button" className="booking-dialog__close" onClick={() => setAuthModalOpen(false)} aria-label="Đóng">×</button>
+              <button type="button" className="booking-dialog__close" onClick={() => setAuthModalOpen(false)} aria-label={t.authClose || "Đóng"}>×</button>
             </div>
 
             {/* 3 Tabs: Login / Register / Admin */}
@@ -5585,21 +6694,21 @@ function doPost(e) {
                 className={`auth-tab-btn ${authModalTab === "login" ? "is-active" : ""}`}
                 onClick={() => { setAuthModalTab("login"); setLoginError(""); }}
               >
-                🔑 Đăng Nhập
+                🔑 {t.authLoginTab}
               </button>
               <button
                 type="button"
                 className={`auth-tab-btn ${authModalTab === "register" ? "is-active" : ""}`}
                 onClick={() => { setAuthModalTab("register"); setRegisterError(""); }}
               >
-                📝 Đăng Ký Mới
+                📝 {t.authRegisterTab}
               </button>
               <button
                 type="button"
                 className={`auth-tab-btn ${authModalTab === "admin" ? "is-active" : ""}`}
                 onClick={() => { setAuthModalTab("admin"); setAdminLoginError(""); }}
               >
-                🛡️ Quản Trị (Admin)
+                🛡️ {t.authAdminTab}
               </button>
             </div>
 
@@ -5616,7 +6725,7 @@ function doPost(e) {
                   }}
                 >
                   <svg width="20" height="20" viewBox="0 0 24 24"><path fill="#EA4335" d="M12 5c1.6 0 3 .6 4.1 1.7l3.1-3.1C17.3 1.8 14.8 1 12 1 7.5 1 3.7 3.6 1.9 7.3l3.7 2.9C6.5 7.4 9 5 12 5z"/><path fill="#4285F4" d="M23.5 12.3c0-.8-.1-1.7-.2-2.3H12v4.6h6.5c-.3 1.5-1.1 2.8-2.4 3.7l3.7 2.9c2.2-2 3.7-5 3.7-8.9z"/><path fill="#FBBC05" d="M5.6 14.8c-.2-.7-.4-1.5-.4-2.8s.2-2.1.4-2.8L1.9 6.3C.7 8.7 0 10.8 0 12s.7 3.3 1.9 5.7l3.7-2.9z"/><path fill="#34A853" d="M12 23c3.2 0 6-1.1 8-3l-3.7-2.9c-1.1.7-2.5 1.2-4.3 1.2-3 0-5.5-2.4-6.4-5.2L1.9 16C3.7 19.7 7.5 23 12 23z"/></svg>
-                  <span>Đăng nhập với <b>Google (Gmail)</b></span>
+                  <span>{t.loginGoogle}</span>
                 </button>
 
                 <div className="google-form-divider">
@@ -5627,7 +6736,7 @@ function doPost(e) {
                   {loginError && <div className="admin-login-error">⚠️ {loginError}</div>}
 
                   <label className="commerce-field">
-                    Địa chỉ Email / Gmail <small style={{ color: "red" }}>*</small>
+                    {t.authEmail} <small style={{ color: "red" }}>*</small>
                     <input
                       type="email"
                       required
@@ -5638,7 +6747,7 @@ function doPost(e) {
                   </label>
 
                   <label className="commerce-field">
-                    Mật khẩu bảo vệ <small style={{ color: "red" }}>*</small>
+                    {t.authPassword} <small style={{ color: "red" }}>*</small>
                     <div style={{ position: "relative" }}>
                       <input
                         type={showLoginPassword ? "text" : "password"}
@@ -5659,14 +6768,14 @@ function doPost(e) {
                   </label>
 
                   <button type="submit" className="button button--dark button--full" style={{ height: "46px" }}>
-                    Đăng Nhập Ngay →
+                    {t.authLoginBtn} →
                   </button>
                 </form>
 
                 <div style={{ textAlign: "center", fontSize: "13px" }}>
                   Chưa có tài khoản?{" "}
                   <button type="button" className="text-link" onClick={() => setAuthModalTab("register")}>
-                    <b>Đăng ký tài khoản mới ngay</b>
+                    <b>{t.authRegisterTab} ngay</b>
                   </button>
                 </div>
               </div>
@@ -5678,7 +6787,7 @@ function doPost(e) {
                 {registerError && <div className="admin-login-error">⚠️ {registerError}</div>}
 
                 <label className="commerce-field">
-                  Họ và tên của bạn <small style={{ color: "red" }}>*</small>
+                  {t.authRegisterName} <small style={{ color: "red" }}>*</small>
                   <input
                     type="text"
                     required
@@ -5689,7 +6798,7 @@ function doPost(e) {
                 </label>
 
                 <label className="commerce-field">
-                  Địa chỉ Email / Gmail <small style={{ color: "red" }}>*</small>
+                  {t.authEmail} <small style={{ color: "red" }}>*</small>
                   <input
                     type="email"
                     required
@@ -5700,7 +6809,7 @@ function doPost(e) {
                 </label>
 
                 <label className="commerce-field">
-                  Số điện thoại
+                  {t.authRegisterPhone}
                   <input
                     type="tel"
                     value={registerPhone}
@@ -5711,7 +6820,7 @@ function doPost(e) {
 
                 <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "10px" }}>
                   <label className="commerce-field">
-                    Tạo mật khẩu <small style={{ color: "red" }}>*</small>
+                    {t.authPassword} <small style={{ color: "red" }}>*</small>
                     <input
                       type={showRegisterPassword ? "text" : "password"}
                       required
@@ -5722,7 +6831,7 @@ function doPost(e) {
                   </label>
 
                   <label className="commerce-field">
-                    Nhập lại mật khẩu <small style={{ color: "red" }}>*</small>
+                    {t.authRegisterConfirmPass} <small style={{ color: "red" }}>*</small>
                     <input
                       type={showRegisterPassword ? "text" : "password"}
                       required
@@ -5740,18 +6849,18 @@ function doPost(e) {
                     style={{ fontSize: "12px" }}
                     onClick={() => setShowRegisterPassword(!showRegisterPassword)}
                   >
-                    {showRegisterPassword ? "🙈 Ẩn mật khẩu" : "👁️ Hiện mật khẩu"}
+                    {showRegisterPassword ? "🙈 " + t.authHidePassword : "👁️ " + t.authShowPassword}
                   </button>
                 </div>
 
                 <button type="submit" className="button button--dark button--full" style={{ height: "46px" }}>
-                  Tạo Tài Khoản & Đăng Nhập →
+                  {t.authRegisterBtn} →
                 </button>
 
                 <div style={{ textAlign: "center", fontSize: "13px" }}>
                   Đã có tài khoản?{" "}
                   <button type="button" className="text-link" onClick={() => setAuthModalTab("login")}>
-                    <b>Đăng nhập ngay</b>
+                    <b>{t.authLoginTab} ngay</b>
                   </button>
                 </div>
               </form>
@@ -5771,7 +6880,7 @@ function doPost(e) {
                 )}
 
                 <label className="commerce-field">
-                  Tên đăng nhập Quản Trị Viên <small style={{ color: "red" }}>*</small>
+                  {t.authAdminUser} <small style={{ color: "red" }}>*</small>
                   <input
                     type="text"
                     required
@@ -5783,7 +6892,7 @@ function doPost(e) {
                 </label>
 
                 <label className="commerce-field">
-                  Mật khẩu Quản Trị Viên <small style={{ color: "red" }}>*</small>
+                  {t.authPassword} <small style={{ color: "red" }}>*</small>
                   <div style={{ position: "relative" }}>
                     <input
                       type={showAdminPassword ? "text" : "password"}
@@ -5805,7 +6914,7 @@ function doPost(e) {
                 </label>
 
                 <button type="submit" className="button button--dark button--full" style={{ height: "46px", marginTop: "4px" }}>
-                  Đăng nhập Quản Trị Viên (Admin) →
+                  {t.authAdminLoginBtn} →
                 </button>
               </form>
             )}
