@@ -193,6 +193,7 @@ export type PlannerOptions = {
   budget: string;
   style: string;
   travelers: number;
+  lang?: string;
 };
 
 function haversineDistance(lat1: number, lon1: number, lat2: number, lon2: number) {
@@ -217,6 +218,7 @@ export function buildItinerary(options: PlannerOptions): GeneratedItinerary {
     budget = "Tiêu chuẩn",
     style = "Văn hóa & cội nguồn",
     travelers = 2,
+    lang = "vi",
   } = options;
 
   // 1. Xác định danh sách các điểm được người dùng ưu tiên ghép
@@ -310,12 +312,51 @@ export function buildItinerary(options: PlannerOptions): GeneratedItinerary {
       ? undefined
       : afternoonPlace.stays[0] || morningPlace.stays[0] || places[0].stays[0];
 
+    const slot1Title = (() => {
+      if (lang === "en") return `Depart & Discover ${morningPlace.shortName}`;
+      if (lang === "zh") return `出发前往并探索 ${morningPlace.shortName}`;
+      if (lang === "ko") return `출발 및 ${morningPlace.shortName} 탐방`;
+      if (lang === "ja") return `出発・${morningPlace.shortName} 見学`;
+      return `Khởi hành & Khám phá ${morningPlace.shortName}`;
+    })();
+
+    const slot2Title = (() => {
+      if (lang === "en") return `Savor local specialties at ${lunchRestaurant.name}`;
+      if (lang === "zh") return `在 ${lunchRestaurant.name} 品鉴特色美食`;
+      if (lang === "ko") return `${lunchRestaurant.name}에서 현지 미식 즐기기`;
+      if (lang === "ja") return `${lunchRestaurant.name} で郷土料理を堪能`;
+      return `Thưởng thức ẩm thực tại ${lunchRestaurant.name}`;
+    })();
+
+    const slot3Title = (() => {
+      if (lang === "en") return `Experience & Check-in at ${afternoonPlace.shortName}`;
+      if (lang === "zh") return `体验与打卡 ${afternoonPlace.shortName}`;
+      if (lang === "ko") return `${afternoonPlace.shortName} 체험 및 포토존`;
+      if (lang === "ja") return `${afternoonPlace.shortName} を体験・散策`;
+      return `Trải nghiệm & Check-in ${afternoonPlace.shortName}`;
+    })();
+
+    const slot4Title = (() => {
+      if (isLastDay) {
+        if (lang === "en") return `Specialty dinner at ${dinnerRestaurant.name} & Tour conclusion`;
+        if (lang === "zh") return `在 ${dinnerRestaurant.name} 享用特色晚餐并结束旅程`;
+        if (lang === "ko") return `${dinnerRestaurant.name} 특선 석식 및 여정 마무리`;
+        if (lang === "ja") return `${dinnerRestaurant.name} でディナー＆ツアー終了`;
+        return `Bữa tối đặc sản tại ${dinnerRestaurant.name} & Kết thúc tour`;
+      }
+      if (lang === "en") return `Specialty dinner & stay at ${nightStay?.name || afternoonPlace.shortName}`;
+      if (lang === "zh") return `特色晚餐与夜宿于 ${nightStay?.name || afternoonPlace.shortName}`;
+      if (lang === "ko") return `특선 석식 및 ${nightStay?.name || afternoonPlace.shortName} 숙박`;
+      if (lang === "ja") return `名物ディナー＆ ${nightStay?.name || afternoonPlace.shortName} で宿泊`;
+      return `Ăn tối đặc sản & Nghỉ đêm tại ${nightStay?.name || afternoonPlace.shortName}`;
+    })();
+
     const slots: ItinerarySlot[] = [
       // BUỔI SÁNG
       {
         period: "Sáng",
         timeSlot: "07:30 – 11:30",
-        title: `Khởi hành & Khám phá ${morningPlace.shortName}`,
+        title: slot1Title,
         type: "visit",
         place: morningPlace,
         activity: `Tham quan các điểm nhấn tiêu biểu: ${morningPlace.highlights.slice(0, 2).join(", ")}. Chụp ảnh lưu niệm và tìm hiểu văn hóa lịch sử.`,
@@ -328,7 +369,7 @@ export function buildItinerary(options: PlannerOptions): GeneratedItinerary {
       {
         period: "Trưa",
         timeSlot: "11:30 – 13:30",
-        title: `Thưởng thức ẩm thực tại ${lunchRestaurant.name}`,
+        title: slot2Title,
         type: "meal",
         restaurant: lunchRestaurant,
         activity: `Ăn trưa và nghỉ ngơi giữa ngày. Thực đơn gợi ý: ${lunchRestaurant.note}.`,
@@ -341,7 +382,7 @@ export function buildItinerary(options: PlannerOptions): GeneratedItinerary {
       {
         period: "Chiều",
         timeSlot: "13:30 – 17:30",
-        title: `Trải nghiệm & Check-in ${afternoonPlace.shortName}`,
+        title: slot3Title,
         type: "visit",
         place: afternoonPlace,
         activity: `Tham quan ${afternoonPlace.name}. Trải nghiệm ${afternoonPlace.highlights.slice(0, 2).join(", ")}. Ngắm cảnh hoàng hôn.`,
@@ -354,9 +395,7 @@ export function buildItinerary(options: PlannerOptions): GeneratedItinerary {
       {
         period: "Tối",
         timeSlot: isLastDay ? "18:00 – 20:30" : "18:00 – 22:00",
-        title: isLastDay
-          ? `Bữa tối đặc sản tại ${dinnerRestaurant.name} & Kết thúc tour`
-          : `Ăn tối đặc sản & Nghỉ đêm tại ${nightStay?.name || afternoonPlace.shortName}`,
+        title: slot4Title,
         type: isLastDay ? "meal" : "stay",
         restaurant: dinnerRestaurant,
         stay: nightStay,
@@ -374,10 +413,26 @@ export function buildItinerary(options: PlannerOptions): GeneratedItinerary {
       },
     ];
 
+    const dayTitle = (() => {
+      if (lang === "en") return `Explore ${morningPlace.shortName} – ${afternoonPlace.shortName}`;
+      if (lang === "zh") return `探索 ${morningPlace.shortName} – ${afternoonPlace.shortName}`;
+      if (lang === "ko") return `${morningPlace.shortName} – ${afternoonPlace.shortName} 탐방`;
+      if (lang === "ja") return `${morningPlace.shortName} – ${afternoonPlace.shortName} を巡る`;
+      return `Khám phá ${morningPlace.shortName} – ${afternoonPlace.shortName}`;
+    })();
+
+    const dateLabel = (() => {
+      if (lang === "en") return `Day ${dayNum}`;
+      if (lang === "zh") return `第 ${dayNum} 天`;
+      if (lang === "ko") return `${dayNum}일차`;
+      if (lang === "ja") return `${dayNum}日目`;
+      return `Ngày ${dayNum}`;
+    })();
+
     days.push({
       dayNumber: dayNum,
-      dateLabel: `Ngày ${dayNum}`,
-      dayTitle: `Khám phá ${morningPlace.shortName} – ${afternoonPlace.shortName}`,
+      dateLabel,
+      dayTitle,
       daySummary: `${morningPlace.highlights[0]} kết hợp trải nghiệm ẩm thực và danh thắng ${afternoonPlace.shortName}.`,
       slots,
       dayDistanceKm: dayDistance,
@@ -410,26 +465,71 @@ export function buildItinerary(options: PlannerOptions): GeneratedItinerary {
   // Thời gian di chuyển định dạng
   const hoursDrive = Math.floor(totalMinutes / 60);
   const remMinutes = totalMinutes % 60;
-  const totalDriveTime = `${hoursDrive > 0 ? `${hoursDrive} giờ ` : ""}${remMinutes} phút lái xe`;
+  let totalDriveTime = `${hoursDrive > 0 ? `${hoursDrive} giờ ` : ""}${remMinutes} phút lái xe`;
+  if (lang === "en") {
+    totalDriveTime = `${hoursDrive > 0 ? `${hoursDrive}h ` : ""}${remMinutes}m drive`;
+  } else if (lang === "zh") {
+    totalDriveTime = `${hoursDrive > 0 ? `${hoursDrive}小时` : ""}${remMinutes}分钟车程`;
+  } else if (lang === "ko") {
+    totalDriveTime = `${hoursDrive > 0 ? `${hoursDrive}시간 ` : ""}${remMinutes}분 운전`;
+  } else if (lang === "ja") {
+    totalDriveTime = `${hoursDrive > 0 ? `${hoursDrive}時間` : ""}${remMinutes}分ドライブ`;
+  }
 
   const districtGuide = district && DISTRICT_TRAVEL_GUIDES[district] ? DISTRICT_TRAVEL_GUIDES[district] : null;
 
-  const displayTitle = userChosenPlaces.length > 1
-    ? `Hành trình ${durationDays}N${durationDays > 1 ? `${durationDays - 1}Đ` : ""}: Ghép tuyến ${userChosenPlaces.slice(0, 3).map(p => p.shortName).join(" – ")}${userChosenPlaces.length > 3 ? ` (+${userChosenPlaces.length - 3})` : ""}`
-    : `Hành trình ${durationDays}N${durationDays > 1 ? `${durationDays - 1}Đ` : ""}: Khám phá ${anchor.shortName}`;
+  const shortDn = (() => {
+    if (lang === "en") return durationDays > 1 ? `${durationDays}D${durationDays - 1}N` : "1-Day";
+    if (lang === "zh") return durationDays > 1 ? `${durationDays}天${durationDays - 1}晚` : "1日";
+    if (lang === "ko") return durationDays > 1 ? `${durationDays - 1}박${durationDays}일` : "당일";
+    if (lang === "ja") return durationDays > 1 ? `${durationDays - 1}泊${durationDays}日` : "日帰り";
+    return `${durationDays}N${durationDays > 1 ? `${durationDays - 1}Đ` : ""}`;
+  })();
+
+  let displayTitle = "";
+  if (userChosenPlaces.length > 1) {
+    const stopsList = userChosenPlaces.slice(0, 3).map(p => p.shortName).join(" – ") + (userChosenPlaces.length > 3 ? ` (+${userChosenPlaces.length - 3})` : "");
+    if (lang === "en") displayTitle = `${shortDn} Route: ${stopsList}`;
+    else if (lang === "zh") displayTitle = `${shortDn}连线游：${stopsList}`;
+    else if (lang === "ko") displayTitle = `${shortDn} 연계 루트: ${stopsList}`;
+    else if (lang === "ja") displayTitle = `${shortDn}周遊ルート：${stopsList}`;
+    else displayTitle = `Hành trình ${shortDn}: Ghép tuyến ${stopsList}`;
+  } else {
+    if (lang === "en") displayTitle = `${shortDn} Itinerary: Discover ${anchor.shortName}`;
+    else if (lang === "zh") displayTitle = `${shortDn}行程：探索 ${anchor.shortName}`;
+    else if (lang === "ko") displayTitle = `${shortDn} 여정: ${anchor.shortName} 탐방`;
+    else if (lang === "ja") displayTitle = `${shortDn}の旅程：${anchor.shortName}を巡る`;
+    else displayTitle = `Hành trình ${shortDn}: Khám phá ${anchor.shortName}`;
+  }
 
   const defaultRouteAdvice = districtGuide
     ? `${districtGuide.bestRoutes} (Cự ly ~${districtGuide.distanceFromHanoi}, thời gian ~${districtGuide.travelTime}).`
     : (anchor.transportTips?.routeAdvice || "Cung đường liên huyện và cao tốc bằng phẳng, dễ di chuyển.");
 
+  const displaySubtitle = (() => {
+    if (lang === "en") return `${district ? `${district} · ` : ""}${anchor.region} · Transport: ${transport} · ${style}`;
+    if (lang === "zh") return `${district ? `${district} · ` : ""}${anchor.region} · 交通：${transport} · ${style}`;
+    if (lang === "ko") return `${district ? `${district} · ` : ""}${anchor.region} · 이동: ${transport} · ${style}`;
+    if (lang === "ja") return `${district ? `${district} · ` : ""}${anchor.region} · 移動手段：${transport} · ${style}`;
+    return `${district ? `${district} · ` : ""}${anchor.region} · Phương tiện ${transport} · ${style}`;
+  })();
+
+  const dNLabel = (() => {
+    if (lang === "en") return durationDays > 1 ? `${durationDays} days ${durationDays - 1} nights` : "1 day (Day trip)";
+    if (lang === "zh") return durationDays > 1 ? `${durationDays}天${durationDays - 1}晚` : "1日游（当天往返）";
+    if (lang === "ko") return durationDays > 1 ? `${durationDays - 1}박 ${durationDays}일` : "당일치기";
+    if (lang === "ja") return durationDays > 1 ? `${durationDays - 1}泊${durationDays}日` : "日帰り";
+    return `${durationDays} ngày ${durationDays > 1 ? `${durationDays - 1} đêm` : "(trong ngày)"}`;
+  })();
+
   return {
     id: `plan-${Date.now()}`,
     title: displayTitle,
-    subtitle: `${district ? `${district} · ` : ""}${anchor.region} · Phương tiện ${transport} · ${style}`,
+    subtitle: displaySubtitle,
     targetDestination: userChosenPlaces.length > 1 ? userChosenPlaces.map(p => p.shortName).join(", ") : anchor.name,
     region: userChosenPlaces.length > 1 ? "Liên tuyến đa điểm" : anchor.region,
     durationDays,
-    durationLabel: `${durationDays} ngày ${durationDays > 1 ? `${durationDays - 1} đêm` : "(trong ngày)"}`,
+    durationLabel: dNLabel,
     transport,
     style,
     travelers,

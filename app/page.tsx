@@ -195,6 +195,9 @@ export const PAYMENT_METHODS = [
 
 export const UI_TEXT = {
   vi: {
+    audioResume: "▶ Nghe tiếp",
+    modalGoodSeason: "Thời điểm tuyệt đẹp để đi trong tháng",
+    modalCautionSeason: "Cần lưu ý thời tiết trong tháng",
     brandSubtitle: "PHÚ THỌ · VĨNH PHÚC · HÒA BÌNH",
     explore: "Khám phá",
     trip: "Lịch trình",
@@ -587,8 +590,65 @@ export const UI_TEXT = {
     contactAtShop: "Liên hệ tại quán",
     pickupNoteLabel: "Ghi chú nhận món:",
     applyTourHint: "Bấm vào tour để áp dụng ngay",
+      catAll: "Tất cả",
+    catHeritage: "Di sản & tâm linh",
+    catNature: "Núi rừng & sinh thái",
+    catResort: "Nghỉ dưỡng & chữa lành",
+    catCraft: "Văn hóa & làng nghề",
+    catSightseeing: "Check-in & vui chơi",
+    seasonYearRound: "Quanh năm",
+    fromVietTri: "từ Việt Trì",
+    savedNotebookKicker: "SỔ TAY DU LỊCH CỦA BẠN",
+    savedNotebookTitle1: "Những nơi & món ngon",
+    savedNotebookTitle2: "bạn đã lưu lại.",
+    savedNotebookDesc: "Dữ liệu được lưu trữ trực tiếp trên thiết bị của bạn để bạn dễ dàng tra cứu lại khi lên đường.",
+    comboTour1: "Đền Hùng + Khoáng nóng Thanh Thủy",
+    comboTour2: "Tam Đảo + Thung lũng Mai Châu",
+    comboTour3: "Khoáng nóng Thanh Thủy + Kim Bôi",
+    comboTour4: "Trọn Vẹn 3 Tỉnh (Phú Thọ – Vĩnh Phúc – Hòa Bình)",
+    periodMorning: "SÁNG",
+    periodNoon: "TRƯA",
+    periodAfternoon: "CHIỀU",
+    periodEvening: "TỐI",
+    slotMorningDepart: "Khởi hành & Khám phá",
+    slotDineAt: "Thưởng thức ẩm thực tại",
+    slotAfternoonExp: "Trải nghiệm & Check-in",
+    slotDinnerAt: "Bữa tối đặc sản & Nghỉ ngơi tại",
+    slotTourEndDinner: "Bữa tối đặc sản & Kết thúc tour",
+    itineraryJourneyPrefix: "Hành trình",
+    itineraryDiscover: "Khám phá",
+    itineraryCombined: "Ghép tuyến",
+    audioVoiceStudioFemale: "Giọng AI Nữ Hà Nội (Chuẩn Studio - Êm ái)",
+    audioVoiceStudioMale: "Giọng AI Nam Miền Bắc (Trầm ấm - Rõ ràng)",
+    audioVoiceEnglish: "Giọng AI Tiếng Anh (Bản ngữ Quốc tế)",
+    detailTabFood: "Ẩm thực & Quán ngon gần đây",
+    detailTabStay: "Khách sạn & Nơi nghỉ gần đây",
+    detailReviewKicker: "GÓC NHÌN & CẢM NHẬN DU KHÁCH",
+    detailReviewTitle: "Hình ảnh & trải nghiệm thực tế",
+    detailReviewEmpty: "Chưa có nhận xét nào. Hãy là người đầu tiên chia sẻ trải nghiệm của bạn!",
+    detailTasteLabel: "Hương vị:",
+    detailOpenHours: "Giờ mở cửa:",
+    detailCallBookTable: "{t.detailCallBookTable}",
+    detailBookRoomFrom: "Đặt phòng · từ",
+    detailPerNightUnit: "/đêm →",
+    nearLocationUnsupported: "Thiết bị không hỗ trợ định vị",
+    nearLocationLocating: "Đang xác định vị trí…",
+    nearLocationSuccess: "Đã dùng vị trí hiện tại",
+    nearLocationDenied: "Không thể lấy vị trí — hãy cấp quyền GPS",
+      detailViewMap: "Xem bản đồ →",
+    detailReviewName: "Họ và tên hiển thị",
+    detailReviewRating: "Đánh giá sao",
+    detailReviewShare: "Chia sẻ trải nghiệm",
+    detailReviewPlaceholder: "Bạn thích điều gì? Thời điểm nào đẹp? Có lưu ý gì cho người đi sau?",
+    detailReviewAddPhotos: "＋ Thêm tối đa 2 ảnh",
+    detailReviewPhotoLimit: "Mỗi ảnh dưới 800 KB",
+    detailReviewSubmit: "Đăng nhận xét",
+    fromYou: "từ bạn",
   },
   en: {
+    audioResume: "▶ Resume",
+    modalGoodSeason: "Prime time to visit in month",
+    modalCautionSeason: "Note weather conditions in month",
     brandSubtitle: "PHU THO · VINH PHUC · HOA BINH",
     explore: "Explore",
     trip: "Itinerary",
@@ -970,8 +1030,65 @@ export const UI_TEXT = {
     contactAtShop: "Contact at store",
     pickupNoteLabel: "Pickup note:",
     applyTourHint: "Tap a tour to apply instantly",
+      catAll: "All",
+    catHeritage: "Heritage & Spiritual",
+    catNature: "Nature & Eco",
+    catResort: "Resort & Healing",
+    catCraft: "Culture & Craft Villages",
+    catSightseeing: "Check-in & Sightseeing",
+    seasonYearRound: "Year-Round",
+    fromVietTri: "from Viet Tri",
+    savedNotebookKicker: "YOUR TRAVEL NOTEBOOK",
+    savedNotebookTitle1: "Destinations & cuisine",
+    savedNotebookTitle2: "you have bookmarked.",
+    savedNotebookDesc: "Data is saved locally on your device for fast, effortless lookup during your journey.",
+    comboTour1: "Hung Temple + Thanh Thuy Hot Springs",
+    comboTour2: "Tam Dao + Mai Chau Valley",
+    comboTour3: "Thanh Thuy + Kim Boi Hot Springs",
+    comboTour4: "Grand 3-Province Tour (Phu Tho – Vinh Phuc – Hoa Binh)",
+    periodMorning: "MORNING",
+    periodNoon: "NOON",
+    periodAfternoon: "AFTERNOON",
+    periodEvening: "EVENING",
+    slotMorningDepart: "Depart & Discover",
+    slotDineAt: "Savor local cuisine at",
+    slotAfternoonExp: "Experience & Check-in",
+    slotDinnerAt: "Specialty dinner & stay at",
+    slotTourEndDinner: "Farewell dinner & Tour conclusion",
+    itineraryJourneyPrefix: "Journey",
+    itineraryDiscover: "Discover",
+    itineraryCombined: "Connected Route",
+    audioVoiceStudioFemale: "AI Female Hanoi (Studio Standard - Gentle)",
+    audioVoiceStudioMale: "AI Male Northern (Deep & Clear)",
+    audioVoiceEnglish: "English AI Voice (Native International)",
+    detailTabFood: "Nearby Dining & Specialties",
+    detailTabStay: "Nearby Hotels & Lodging",
+    detailReviewKicker: "TRAVELER REVIEWS & IMPRESSIONS",
+    detailReviewTitle: "Photos & authentic experiences",
+    detailReviewEmpty: "No reviews yet. Be the first to share your experience!",
+    detailTasteLabel: "Taste & Flavor:",
+    detailOpenHours: "Opening Hours:",
+    detailCallBookTable: "Call to reserve table / preorder →",
+    detailBookRoomFrom: "Book Room · from",
+    detailPerNightUnit: "/night →",
+    nearLocationUnsupported: "Device does not support geolocation",
+    nearLocationLocating: "Locating…",
+    nearLocationSuccess: "Current location active",
+    nearLocationDenied: "Unable to get location — please allow GPS access",
+      detailViewMap: "View Map →",
+    detailReviewName: "Display Name",
+    detailReviewRating: "Star Rating",
+    detailReviewShare: "Share Your Experience",
+    detailReviewPlaceholder: "What did you love? Best time to visit? Any tips for future travelers?",
+    detailReviewAddPhotos: "＋ Add up to 2 photos",
+    detailReviewPhotoLimit: "Under 800 KB each",
+    detailReviewSubmit: "Post Review",
+    fromYou: "from you",
   },
   zh: {
+    audioResume: "▶ 继续播放",
+    modalGoodSeason: "当月为绝佳出游时节：",
+    modalCautionSeason: "当月出行需注意天气情况：",
     brandSubtitle: "富寿 · 永福 · 和平",
     explore: "探索",
     trip: "行程",
@@ -1267,8 +1384,65 @@ export const UI_TEXT = {
     contactAtShop: "店内咨询",
     pickupNoteLabel: "取货/用餐备注：",
     applyTourHint: "点击路线即可一键应用",
+      catAll: "全部",
+    catHeritage: "历史遗产与心灵",
+    catNature: "山林与自然生态",
+    catResort: "度假温泉与身心疗愈",
+    catCraft: "民俗文化与传统手工艺村",
+    catSightseeing: "网红打卡与游乐",
+    seasonYearRound: "全年皆宜",
+    fromVietTri: "距越池市",
+    savedNotebookKicker: "您的专属旅行手账",
+    savedNotebookTitle1: "收藏的名胜景点与",
+    savedNotebookTitle2: "地道风味美食。",
+    savedNotebookDesc: "数据安全保存在您的设备本地，方便您在旅途中随时轻松查阅。",
+    comboTour1: "雄王庙 + 清水温泉",
+    comboTour2: "三岛山 + 迈州山谷",
+    comboTour3: "清水温泉 + 金杯温泉",
+    comboTour4: "三省经典全景游（富寿 – 永福 – 和平）",
+    periodMorning: "上午",
+    periodNoon: "中午",
+    periodAfternoon: "下午",
+    periodEvening: "晚上",
+    slotMorningDepart: "出发前往并探索",
+    slotDineAt: "美食品鉴于",
+    slotAfternoonExp: "深度体验与打卡",
+    slotDinnerAt: "特色晚餐与住宿于",
+    slotTourEndDinner: "欢送特色晚餐并结束旅程",
+    itineraryJourneyPrefix: "行程",
+    itineraryDiscover: "探索",
+    itineraryCombined: "连线游",
+    audioVoiceStudioFemale: "AI 河内女声（标准录音棚 - 温婉）",
+    audioVoiceStudioMale: "AI 北方男声（深沉清晰）",
+    audioVoiceEnglish: "国际英语 AI 原声",
+    detailTabFood: "附近美食与特色餐馆",
+    detailTabStay: "附近酒店与品质住宿",
+    detailReviewKicker: "游客视角与真实评价",
+    detailReviewTitle: "实景图片与旅行感悟",
+    detailReviewEmpty: "暂无评价。成为第一位分享您精彩体验的旅行者吧！",
+    detailTasteLabel: "风味特色：",
+    detailOpenHours: "营业时间：",
+    detailCallBookTable: "电话订位 / 提前点餐 →",
+    detailBookRoomFrom: "预订客房 · 起价",
+    detailPerNightUnit: "/晚 →",
+    nearLocationUnsupported: "设备不支持地理定位",
+    nearLocationLocating: "正在获取当前位置…",
+    nearLocationSuccess: "已使用当前位置",
+    nearLocationDenied: "无法获取位置 — 请开启GPS权限",
+      detailViewMap: "查看地图 →",
+    detailReviewName: "显示姓名",
+    detailReviewRating: "星级评分",
+    detailReviewShare: "分享您的体验",
+    detailReviewPlaceholder: "您喜欢这里什么？何时最美？对后来的旅行者有什么建议？",
+    detailReviewAddPhotos: "＋ 最多添加2张照片",
+    detailReviewPhotoLimit: "每张照片小于800 KB",
+    detailReviewSubmit: "提交评价",
+    fromYou: "距离您",
   },
   ko: {
+    audioResume: "▶ 이어듣기",
+    modalGoodSeason: "여행하기 가장 좋은 달:",
+    modalCautionSeason: "해당 월 날씨에 유의하세요:",
     brandSubtitle: "푸토 · 빈푹 · 호아빈",
     explore: "탐색",
     trip: "일정",
@@ -1564,8 +1738,65 @@ export const UI_TEXT = {
     contactAtShop: "매장 문의",
     pickupNoteLabel: "수령 참고 사항:",
     applyTourHint: "투어를 탭하여 바로 적용하기",
+      catAll: "전체",
+    catHeritage: "문화유산 및 힐링",
+    catNature: "산림 및 자연생태",
+    catResort: "휴양 및 힐링",
+    catCraft: "전통문화 및 공예마을",
+    catSightseeing: "인생샷 및 레저",
+    seasonYearRound: "사계절 연중",
+    fromVietTri: "비엣찌 기준",
+    savedNotebookKicker: "나만의 여행 수첩",
+    savedNotebookTitle1: "저장해 둔 명소와",
+    savedNotebookTitle2: "로컬 미식 컬렉션.",
+    savedNotebookDesc: "데이터가 기기에 안전하게 저장되어 여행 중 언제든 편리하게 확인할 수 있습니다.",
+    comboTour1: "훙왕 사당 + 탄투이 온천",
+    comboTour2: "땀다오 + 마이쩌우 계곡",
+    comboTour3: "탄투이 + 낌보이 온천",
+    comboTour4: "3개 성 완전 정복 (푸토 – 빈푹 – 호아빈)",
+    periodMorning: "오전",
+    periodNoon: "점심",
+    periodAfternoon: "오후",
+    periodEvening: "저녁",
+    slotMorningDepart: "출발 및 탐방:",
+    slotDineAt: "현지 미식 체험:",
+    slotAfternoonExp: "체험 및 포토존:",
+    slotDinnerAt: "특선 석식 및 휴식:",
+    slotTourEndDinner: "환송 특선 석식 및 여정 마무리",
+    itineraryJourneyPrefix: "여정",
+    itineraryDiscover: "탐방",
+    itineraryCombined: "연계 루트",
+    audioVoiceStudioFemale: "하노이 여성 AI (스튜디오 표준 - 부드러움)",
+    audioVoiceStudioMale: "북부 남성 AI (차분하고 또렷함)",
+    audioVoiceEnglish: "글로벌 영어 AI 음성",
+    detailTabFood: "인근 맛집 및 대표 미식",
+    detailTabStay: "인근 호텔 및 숙소",
+    detailReviewKicker: "여행자 후기 및 생생한 리뷰",
+    detailReviewTitle: "실제 사진 및 방문 소감",
+    detailReviewEmpty: "아직 리뷰가 없습니다. 첫 번째로 후기를 공유해 보세요!",
+    detailTasteLabel: "맛과 풍미:",
+    detailOpenHours: "영업 시간:",
+    detailCallBookTable: "전화 예약 / 사전 주문하기 →",
+    detailBookRoomFrom: "객실 예약 · 최저",
+    detailPerNightUnit: "/박 →",
+    nearLocationUnsupported: "기기에서 위치 서비스를 지원하지 않습니다",
+    nearLocationLocating: "위치 확인 중…",
+    nearLocationSuccess: "현재 위치 적용됨",
+    nearLocationDenied: "위치를 가져올 수 없습니다 — GPS 권한을 허용해 주세요",
+      detailViewMap: "지도 보기 →",
+    detailReviewName: "표시 이름",
+    detailReviewRating: "별점 평가",
+    detailReviewShare: "방문 후기 작성",
+    detailReviewPlaceholder: "어떤 점이 좋았나요? 추천 방문 시기는? 다음 여행자를 위한 팁은?",
+    detailReviewAddPhotos: "＋ 사진 최대 2장 추가",
+    detailReviewPhotoLimit: "각 사진 800KB 이하",
+    detailReviewSubmit: "후기 등록",
+    fromYou: "현재 위치 기준",
   },
   ja: {
+    audioResume: "▶ 再生再開",
+    modalGoodSeason: "今月は絶好の旅行シーズン：",
+    modalCautionSeason: "今月の天候にご注意ください：",
     brandSubtitle: "フート省 · ビンフック省 · ホアビン省",
     explore: "探索",
     trip: "旅程",
@@ -1861,6 +2092,60 @@ export const UI_TEXT = {
     contactAtShop: "店舗にてお問い合わせ",
     pickupNoteLabel: "受け取り時の注意事項：",
     applyTourHint: "ツアーをタップして今すぐ適用",
+      catAll: "すべて",
+    catHeritage: "遺産・スピリチュアル",
+    catNature: "自然・エコツーリズム",
+    catResort: "温泉リゾート・癒し",
+    catCraft: "伝統文化・工芸村",
+    catSightseeing: "映えスポット・レジャー",
+    seasonYearRound: "通年おすすめ",
+    fromVietTri: "ヴィエッチーから",
+    savedNotebookKicker: "あなたの旅のノート",
+    savedNotebookTitle1: "お気に入りのスポット＆",
+    savedNotebookTitle2: "ご当地グルメ。",
+    savedNotebookDesc: "データは端末にローカル保存され、旅先でもいつでも簡単に確認できます。",
+    comboTour1: "フン寺院 + タントゥイ温泉",
+    comboTour2: "タムダオ + マイチャウ渓谷",
+    comboTour3: "タントゥイ + キムボイ温泉",
+    comboTour4: "3省周遊グランドツアー（フートー – ヴィンフック – ホアビン）",
+    periodMorning: "午前",
+    periodNoon: "昼",
+    periodAfternoon: "午後",
+    periodEvening: "夜",
+    slotMorningDepart: "出発・見学：",
+    slotDineAt: "郷土料理を堪能：",
+    slotAfternoonExp: "体験＆散策：",
+    slotDinnerAt: "名物ディナー＆滞在：",
+    slotTourEndDinner: "名物ディナー＆ツアー終了",
+    itineraryJourneyPrefix: "旅程",
+    itineraryDiscover: "巡る",
+    itineraryCombined: "周遊ルート",
+    audioVoiceStudioFemale: "ハノイ女性AI（スタジオ音質・優雅）",
+    audioVoiceStudioMale: "北部男性AI（落ち着いたクリアな声）",
+    audioVoiceEnglish: "国際英語 AIボイス",
+    detailTabFood: "周辺のグルメ・名店",
+    detailTabStay: "周辺のホテル・宿泊施設",
+    detailReviewKicker: "旅行者の声・リアルレビュー",
+    detailReviewTitle: "実際の写真と体験談",
+    detailReviewEmpty: "まだレビューがありません。最初の体験談を投稿してみましょう！",
+    detailTasteLabel: "味・特徴：",
+    detailOpenHours: "営業時間：",
+    detailCallBookTable: "席の予約・事前注文はこちら →",
+    detailBookRoomFrom: "宿泊予約 · 1泊",
+    detailPerNightUnit: "/泊 →",
+    nearLocationUnsupported: "端末が位置情報に対応していません",
+    nearLocationLocating: "位置情報を取得中…",
+    nearLocationSuccess: "現在地を取得しました",
+    nearLocationDenied: "位置情報を取得できません — GPS権限を許可してください",
+      detailViewMap: "地図を見る →",
+    detailReviewName: "表示名",
+    detailReviewRating: "評価（星）",
+    detailReviewShare: "体験を共有",
+    detailReviewPlaceholder: "良かった点は？おすすめの時期は？次の旅行者へのアドバイスは？",
+    detailReviewAddPhotos: "＋ 最大2枚の写真を追加",
+    detailReviewPhotoLimit: "各写真800KB以下",
+    detailReviewSubmit: "レビューを投稿",
+    fromYou: "現在地から",
   },
 };
 
@@ -1927,6 +2212,302 @@ function estimateTravel(distance: number) {
 
 function isInSeason(place: Place, month = new Date().getMonth() + 1) {
   return place.seasonMonths.includes(month);
+}
+
+
+const EVENT_I18N: Record<
+  string,
+  Record<
+    LanguageCode,
+    {
+      name: string;
+      location: string;
+      schedule: string;
+      description: string;
+    }
+  >
+> = {
+  "gio-to-hung-vuong": {
+    vi: {
+      name: "Giỗ Tổ Hùng Vương – Lễ hội Đền Hùng",
+      location: "Khu di tích lịch sử Đền Hùng, Việt Trì",
+      schedule: "Ngày chính hội 10/3 âm lịch; hoạt động thường diễn ra nhiều ngày",
+      description: "Lễ dâng hương, hoạt động văn hóa dân gian và hành trình về cội nguồn.",
+    },
+    en: {
+      name: "Hung Kings Temple Festival",
+      location: "Hung Kings Historical Site, Viet Tri",
+      schedule: "Main ritual on 10th day of 3rd lunar month; activities span multiple days",
+      description: "Incense offering ceremony, folk culture activities, and heritage pilgrimage.",
+    },
+    zh: {
+      name: "雄王庙祭祖盛典",
+      location: "越池市雄王庙历史古迹区",
+      schedule: "农历三月初十为主祭日；民俗活动持续数天",
+      description: "庄严肃穆的祭祖上香大典、民间传统游艺与寻根之旅。",
+    },
+    ko: {
+      name: "훙왕 기일 축제",
+      location: "비엣찌 훙왕 역사 유적지",
+      schedule: "음력 3월 10일 본제; 다채로운 행사가 여러 날 동안 개최",
+      description: "엄숙한 분향 의식, 전통 민속 축제 및 민족 기원 순례.",
+    },
+    ja: {
+      name: "フン王記念祭（フン寺院祭り）",
+      location: "ヴィエッチー フン王歴史遺跡地区",
+      schedule: "旧暦3月10日（本祭）；各種催しが数日間にわたり開催",
+      description: "厳粛な献香式、伝統芸能、民族の起源をたどる巡礼の旅。",
+    },
+  },
+  "den-mau-au-co": {
+    vi: {
+      name: "Lễ hội Đền Mẫu Âu Cơ",
+      location: "Hiền Lương, Hạ Hòa",
+      schedule: "Ngày chính lễ 7 tháng Giêng âm lịch",
+      description: "Tưởng nhớ Quốc Mẫu Âu Cơ với nghi lễ truyền thống và sinh hoạt cộng đồng.",
+    },
+    en: {
+      name: "Mother Au Co Temple Festival",
+      location: "Hien Luong, Ha Hoa",
+      schedule: "Main ceremony on 7th day of 1st lunar month",
+      description: "Honoring Mother Au Co with ancient solemn rituals and folk gatherings.",
+    },
+    zh: {
+      name: "妪姬国母庙会",
+      location: "夏和县贤良社",
+      schedule: "农历正月初七为主祭日",
+      description: "缅怀民族之母妪姬国母，举行庄严传统祭礼与社区民俗文化交流。",
+    },
+    ko: {
+      name: "어우꺼 국모 사당 축제",
+      location: "하호아 히엔르엉",
+      schedule: "음력 정월 7일 본제",
+      description: "전통 제례와 마을 공동체 행사를 통해 국모 어우꺼를 기림.",
+    },
+    ja: {
+      name: "アウコー国母寺院祭り",
+      location: "ハホア・ヒエンルオン",
+      schedule: "旧暦1月7日（本祭）",
+      description: "アウコー国母を追悼する伝統祭祀と温かな地域コミュニティの交流。",
+    },
+  },
+  "tro-tram": {
+    vi: {
+      name: "Lễ hội Trò Trám",
+      location: "Tứ Xã, Lâm Thao, Phú Thọ",
+      schedule: "Đêm 11, rạng sáng 12 tháng Giêng âm lịch",
+      description: "Lễ hội dân gian đặc sắc gắn với tín ngưỡng phồn thực của cư dân vùng trung du.",
+    },
+    en: {
+      name: "Tro Tram Fertility Festival",
+      location: "Tu Xa, Lam Thao, Phu Tho",
+      schedule: "Night of 11th & dawn of 12th of 1st lunar month",
+      description: "Unique traditional festival celebrating fertility rites of northern midlanders.",
+    },
+    zh: {
+      name: "焯沾民俗节（繁衍祈福节）",
+      location: "富寿省临洮县四社",
+      schedule: "农历正月十一深夜至十二日清晨",
+      description: "独具特色且历史悠久的民间传统节庆，展现中游丘陵地区的繁衍崇拜信仰。",
+    },
+    ko: {
+      name: "쪼짬 축제 (풍요와 다산의 민속제)",
+      location: "푸토 럼타오 뜨싸",
+      schedule: "음력 정월 11일 밤~12일 새벽",
+      description: "중부 구릉지 농경 주민들의 다산과 풍요 기원 전통 민속 축제.",
+    },
+    ja: {
+      name: "チョー・チャム祭り（豊穣・子孙繁栄祈願祭）",
+      location: "フートー ラムタオ・トゥーサー",
+      schedule: "旧暦1月11日深夜〜12日未明",
+      description: "中流域の肥沃・繁栄信仰に根ざしたユニークで熱気あふれる伝統奇祭。",
+    },
+  },
+  "hat-xoan-hung-lo": {
+    vi: {
+      name: "Nghe Hát Xoan tại làng cổ Hùng Lô",
+      location: "Đình cổ Hùng Lô, Việt Trì",
+      schedule: "Theo lịch biểu diễn và lịch đặt đoàn; cần liên hệ trước",
+      description: "Trải nghiệm di sản Hát Xoan trong không gian đình cổ; không nên đến tự phát mà chưa xác nhận lịch.",
+    },
+    en: {
+      name: "Xoan Singing at Hung Lo Ancient Village",
+      location: "Hung Lo Ancient Communal House, Viet Tri",
+      schedule: "Per performance schedule & group booking; advance contact required",
+      description: "Experience UNESCO-listed Xoan folk singing in ancient communal house; booking recommended.",
+    },
+    zh: {
+      name: "雄炉古村春歌（Hat Xoan）非遗赏析",
+      location: "越池市雄炉古村亭",
+      schedule: "依演出安排及团体预约；需提前联络确认",
+      description: "在300年历史古村亭中体验联合国非遗春歌；建议提前预约行程。",
+    },
+    ko: {
+      name: "훙로 고촌 쏘안(Xoan) 민요 공연 관람",
+      location: "비엣찌 훙로 고촌 사당",
+      schedule: "공연 일정 및 단체 예약제; 사전 연락 필수",
+      description: "300년 역사의 사당에서 유네스코 인류무형문화유산 쏘안 민요를 감상; 사전 예약 권장.",
+    },
+    ja: {
+      name: "フンロー古村でのソアン民謡鑑賞",
+      location: "ヴィエッチー フンロー古村の亭",
+      schedule: "公演スケジュールおよび団体予約制；事前連絡推奨",
+      description: "築300年の歴史を誇る古建築の亭でユネスコ無形文化遺産ソアン民謡を鑑賞；事前確認推奨。",
+    },
+  },
+};
+
+function getCategoryLabel(cat: string, t: typeof UI_TEXT.vi): string {
+  if (cat.includes("Di sản")) return t.catHeritage;
+  if (cat.includes("Núi rừng")) return t.catNature;
+  if (cat.includes("Nghỉ dưỡng")) return t.catResort;
+  if (cat.includes("Văn hóa")) return t.catCraft;
+  if (cat.includes("Check-in")) return t.catSightseeing;
+  return t.catAll;
+}
+
+function getRegionLabel(region: string, t: typeof UI_TEXT.vi): string {
+  if (region.includes("Phú Thọ")) return t.provPhuTho;
+  if (region.includes("Vĩnh Phúc")) return t.provVinhPhuc;
+  if (region.includes("Hòa Bình")) return t.provHoaBinh;
+  if (region.includes("3") || region.includes("Tất cả") || region.includes("Liên")) return t.provAll;
+  return region;
+}
+
+function getSeasonLabel(season: string, t: typeof UI_TEXT.vi): string {
+  if (season.includes("xuân") || season.includes("Spring")) return t.seasonSpring;
+  if (season.includes("hè") || season.includes("Summer")) return t.seasonSummer;
+  if (season.includes("thu") || season.includes("Autumn")) return t.seasonAutumn;
+  if (season.includes("đông") || season.includes("Winter")) return t.seasonWinter;
+  if (season.includes("năm") || season.includes("Year") || season.includes("quanh")) return t.seasonYearRound;
+  return season;
+}
+
+function getStyleLabel(style: string, t: typeof UI_TEXT.vi): string {
+  if (style.includes("Văn hóa") || style.includes("cội nguồn") || style.includes("Culture")) return t.tripStyleCulture;
+  if (style.includes("Nghỉ dưỡng") || style.includes("Onsen") || style.includes("Spa")) return t.tripStyleSpa;
+  if (style.includes("săn mây") || style.includes("Phượt") || style.includes("Adventure")) return t.tripStyleAdventure;
+  if (style.includes("Gia đình") || style.includes("Family")) return t.tripStyleFamily;
+  if (style.includes("Ẩm thực") || style.includes("Food")) return t.tripStyleFood;
+  return style;
+}
+
+function getTransportLabel(transport: string, t: typeof UI_TEXT.vi): string {
+  if (transport.includes("Ô tô") || transport.includes("Car")) return t.tripCar;
+  if (transport.includes("Xe máy") || transport.includes("Motor")) return t.tripMotorbike;
+  if (transport.includes("Limousine") || transport.includes("khách")) return t.tripLimousine;
+  if (transport.includes("Taxi") || transport.includes("hợp đồng")) return t.tripTaxi;
+  return transport;
+}
+
+function getPeriodLabel(period: string, t: typeof UI_TEXT.vi): string {
+  const p = period.toLowerCase();
+  if (p.includes("sáng") || p.includes("morning")) return t.periodMorning;
+  if (p.includes("trưa") || p.includes("noon")) return t.periodNoon;
+  if (p.includes("chiều") || p.includes("afternoon")) return t.periodAfternoon;
+  if (p.includes("tối") || p.includes("evening") || p.includes("night")) return t.periodEvening;
+  return period;
+}
+
+function formatDaysNights(days: number, lang: LanguageCode): string {
+  if (days <= 1) {
+    if (lang === "en") return "1 day";
+    if (lang === "zh") return "1日游";
+    if (lang === "ko") return "당일치기";
+    if (lang === "ja") return "日帰り";
+    return "1 ngày";
+  }
+  const nights = days - 1;
+  if (lang === "en") return `${days}D${nights}N`;
+  if (lang === "zh") return `${days}天${nights}晚`;
+  if (lang === "ko") return `${nights}박${days}일`;
+  if (lang === "ja") return `${nights}泊${days}日`;
+  return `${days}N${nights}Đ`;
+}
+
+function getTourBadgeLabel(badge: string, lang: LanguageCode): string {
+  if (badge.includes("Phổ biến")) {
+    if (lang === "en") return "Most Popular";
+    if (lang === "zh") return "最受欢迎";
+    if (lang === "ko") return "인기 1위";
+    if (lang === "ja") return "一番人気";
+  }
+  if (badge.includes("Sống ảo") || badge.includes("Nghỉ dưỡng")) {
+    if (lang === "en") return "Resort & Scenic";
+    if (lang === "zh") return "度假与摄影";
+    if (lang === "ko") return "휴양 및 인생샷";
+    if (lang === "ja") return "リゾート・絶景";
+  }
+  if (badge.includes("Trị liệu") || badge.includes("Văn hóa")) {
+    if (lang === "en") return "Culture & Therapy";
+    if (lang === "zh") return "文化与疗愈";
+    if (lang === "ko") return "문화 및 온천 힐링";
+    if (lang === "ja") return "文化・温泉セラピー";
+  }
+  if (badge.includes("Thiên nhiên")) {
+    if (lang === "en") return "Majestic Nature";
+    if (lang === "zh") return "壮美自然";
+    if (lang === "ko") return "경이로운 대자연";
+    if (lang === "ja") return "雄大な大自然";
+  }
+  if (badge.includes("Sơn thủy")) {
+    if (lang === "en") return "Scenic Landscapes";
+    if (lang === "zh") return "山水如画";
+    if (lang === "ko") return "그림 같은 산수";
+    if (lang === "ja") return "美しい山水";
+  }
+  if (badge.includes("Siêu tour") || badge.includes("3 tỉnh")) {
+    if (lang === "en") return "Grand 3-Province Tour";
+    if (lang === "zh") return "三省旗舰大环线";
+    if (lang === "ko") return "3개 성 그랜드 투어";
+    if (lang === "ja") return "3省周遊グランドツアー";
+  }
+  return badge;
+}
+
+function getLocalizedItineraryTitle(itinerary: GeneratedItinerary, lang: LanguageCode, t: typeof UI_TEXT.vi): string {
+  if (lang === "vi") return itinerary.title;
+  const dN = formatDaysNights(itinerary.durationDays, lang);
+  const dest = itinerary.targetDestination;
+  if (itinerary.title.includes("Ghép tuyến") || itinerary.region.includes("Liên")) {
+    if (lang === "en") return `${dN} Route: ${dest}`;
+    if (lang === "zh") return `${dN}连线游：${dest}`;
+    if (lang === "ko") return `${dN} 연계 루트: ${dest}`;
+    if (lang === "ja") return `${dN}周遊ルート：${dest}`;
+  }
+  if (lang === "en") return `${dN} Itinerary: Discover ${dest}`;
+  if (lang === "zh") return `${dN}行程：探索 ${dest}`;
+  if (lang === "ko") return `${dN} 여정: ${dest} 탐방`;
+  if (lang === "ja") return `${dN}の旅程：${dest}を巡る`;
+  return itinerary.title;
+}
+
+function getLocalizedItinerarySubtitle(itinerary: GeneratedItinerary, lang: LanguageCode, t: typeof UI_TEXT.vi): string {
+  if (lang === "vi") return itinerary.subtitle;
+  const reg = getRegionLabel(itinerary.region, t);
+  const trans = getTransportLabel(itinerary.transport, t);
+  const sty = getStyleLabel(itinerary.style, t);
+  if (lang === "en") return `${reg} · Transport: ${trans} · ${sty}`;
+  if (lang === "zh") return `${reg} · 交通：${trans} · ${sty}`;
+  if (lang === "ko") return `${reg} · 이동: ${trans} · ${sty}`;
+  if (lang === "ja") return `${reg} · 移動手段：${trans} · ${sty}`;
+  return itinerary.subtitle;
+}
+
+function getLocalizedDriveTime(driveTimeStr: string, lang: LanguageCode): string {
+  if (lang === "vi") return driveTimeStr;
+  let hours = 0;
+  let mins = 0;
+  const hMatch = driveTimeStr.match(/(\d+)\s*(?:giờ|h|小时|시간|時間)/i);
+  if (hMatch) hours = parseInt(hMatch[1], 10);
+  const mMatch = driveTimeStr.match(/(\d+)\s*(?:phút|m|min|分钟|분|分)/i);
+  if (mMatch) mins = parseInt(mMatch[1], 10);
+  if (hours === 0 && mins === 0) return driveTimeStr;
+  if (lang === "en") return `${hours > 0 ? `${hours}h ` : ""}${mins}m drive`;
+  if (lang === "zh") return `${hours > 0 ? `${hours}小时` : ""}${mins}分钟车程`;
+  if (lang === "ko") return `${hours > 0 ? `${hours}시간 ` : ""}${mins}분 운전`;
+  if (lang === "ja") return `${hours > 0 ? `${hours}時間` : ""}${mins}分ドライブ`;
+  return driveTimeStr;
 }
 
 export default function Home() {
@@ -2029,7 +2610,7 @@ export default function Home() {
 
   // Near & Services
   const [position, setPosition] = useState<{ lat: number; lng: number } | null>(null);
-  const [locationMessage, setLocationMessage] = useState("Chưa bật định vị");
+  const [locationStatus, setLocationStatus] = useState<"idle" | "unsupported" | "locating" | "success" | "denied">("idle");
   const [serviceFilter, setServiceFilter] = useState("Tất cả");
   const [serviceProvinceFilter, setServiceProvinceFilter] = useState("Tất cả");
   const [selectedNearItemId, setSelectedNearItemId] = useState("place-den-hung");
@@ -2379,18 +2960,18 @@ export default function Home() {
 
   const locate = () => {
     if (!navigator.geolocation) {
-      setLocationMessage("Thiết bị không hỗ trợ định vị");
+      setLocationStatus("unsupported");
       return;
     }
-    setLocationMessage("Đang xác định vị trí…");
+    setLocationStatus("locating");
     navigator.geolocation.getCurrentPosition(
       ({ coords }) => {
         setPosition({ lat: coords.latitude, lng: coords.longitude });
-        setLocationMessage("Đã dùng vị trí hiện tại");
+        setLocationStatus("success");
         showToast("Đã sắp xếp gợi ý theo vị trí của bạn");
       },
       () => {
-        setLocationMessage("Không thể lấy vị trí — hãy cấp quyền GPS");
+        setLocationStatus("denied");
         showToast("Bạn có thể bật quyền Vị trí trong cài đặt trình duyệt");
       },
       { enableHighAccuracy: true, timeout: 10000 },
@@ -2463,6 +3044,7 @@ export default function Home() {
       budget,
       style: interest,
       travelers,
+      lang: currentLang,
     });
     setGeneratedItinerary(res);
     showToast(`✦ Đã áp dụng ${name}!`);
@@ -2593,6 +3175,7 @@ export default function Home() {
 
   const finalCartTotal = Math.max(0, cartSubtotal - voucherDiscount);
   const t = UI_TEXT[currentLang] || UI_TEXT.vi;
+  const locationMessage = locationStatus === "unsupported" ? t.nearLocationUnsupported : locationStatus === "locating" ? t.nearLocationLocating : locationStatus === "success" ? t.nearLocationSuccess : locationStatus === "denied" ? t.nearLocationDenied : t.nearLocationNotEnabled;
   const formatPrice = (amount: number) => formatMoney(amount, currentCurrency);
 
   const bookingNights = useMemo(() => {
@@ -3802,8 +4385,8 @@ export default function Home() {
     <article className={`place-card ${compact ? "place-card--compact" : ""}`} key={place.id}>
       <button className="place-card__image-button" onClick={() => openPlace(place)} aria-label={`Xem ${place.name}`}>
         <img className="place-card__image" src={place.image} alt={place.name} loading="lazy" onError={handleImageError} />
-        <span className="place-card__category">{place.category}</span>
-        <span className="place-card__region-badge">{place.region}</span>
+        <span className="place-card__category">{getCategoryLabel(place.category, t)}</span>
+        <span className="place-card__region-badge">{getRegionLabel(place.region, t)}</span>
         {distanceFromUser(place) && <span className="place-card__distance">⌖ {distanceFromUser(place)}</span>}
       </button>
       <button
@@ -3826,7 +4409,7 @@ export default function Home() {
             <span className="place-card__distance-info">
               {distanceFromUser(place)
                 ? `${distanceFromUser(place)} · ${estimateTravel(haversine(position!.lat, position!.lng, place.lat, place.lng))}`
-                : `${place.distanceFromVietTri} km từ Việt Trì`}
+                : `${place.distanceFromVietTri} km ${t.fromVietTri}`}
             </span>
             <div className="place-card__actions-row">
               <a
@@ -3940,8 +4523,24 @@ export default function Home() {
                     className={`i18n-dropdown-item ${currentLang === code ? "is-selected" : ""}`}
                     onClick={() => {
                       setCurrentLang(code);
+                      setAudioLang(code === "vi" ? "vi" : "en");
+                      setSelectedVoiceURI(code === "vi" ? "ai-female-north" : "ai-en-us");
                       setLangDropdownOpen(false);
-                      showToast(`${t.toastLangChanged} ${LANGUAGES[code].label}`);
+                      setGeneratedItinerary((prev) =>
+                        buildItinerary({
+                          anchorPlaceId: selectedPlaceIds[0] || targetPlaceId,
+                          selectedPlaceIds,
+                          district: tripDistrict !== "Tất cả" ? tripDistrict : undefined,
+                          region: tripRegion !== "Tất cả" ? tripRegion : undefined,
+                          durationDays: days,
+                          transport,
+                          budget,
+                          style: interest,
+                          travelers,
+                          lang: code,
+                        })
+                      );
+                      showToast(`${UI_TEXT[code].toastLangChanged} ${LANGUAGES[code].label}`);
                     }}
                   >
                     <span>{LANGUAGES[code].flag} {LANGUAGES[code].label}</span>
@@ -3953,7 +4552,7 @@ export default function Home() {
           </div>
 
           <button className="weather-pill" onClick={() => showToast(`${weather.label} ${t.weatherToast}`)}>
-            <span>☀</span><b>{weather.temp}°</b><small>Việt Trì</small>
+            <span>☀</span><b>{weather.temp}°</b><small>{currentLang === "zh" ? "越池" : currentLang === "ko" ? "비엣찌" : currentLang === "ja" ? "ヴィエッチー" : "Việt Trì"}</small>
           </button>
 
           <button
@@ -4100,7 +4699,7 @@ export default function Home() {
             <div className="category-row" role="group" aria-label={t.section01Title}>
               {categories.map((item) => (
                 <button key={item.label} onClick={() => { setCategory(item.label); setSearchFocused(false); setVisibleCount(8); }} className={category === item.label ? "is-active" : ""}>
-                  <span>{item.icon}</span>{item.label}
+                  <span>{item.icon}</span>{getCategoryLabel(item.label, t)}
                 </button>
               ))}
             </div>
@@ -4161,13 +4760,13 @@ export default function Home() {
               <button className="button button--cream" onClick={() => setActiveTab("trip")}>{t.planTripSmartBtn}</button>
             </div>
             <div className="mini-itinerary">
-              <div className="mini-itinerary__top"><span>{t.suggestedTourTitle}</span><b>2N1Đ</b></div>
+              <div className="mini-itinerary__top"><span>{t.suggestedTourTitle}</span><b>{formatDaysNights(2, currentLang)}</b></div>
               {[places[0], places[7] || places[1], places[2], places[12] || places[3]].map((place, index) => (
                 <div className="mini-stop" key={place.id}>
                   <span className="mini-stop__time">{place.bestStart}</span>
                   <span className="mini-stop__dot" />
                   <img src={place.image} alt="" loading="lazy" onError={handleImageError} />
-                  <span><b>{place.shortName}</b><small>{place.region} · {place.category}</small></span>
+                  <span><b>{place.shortName}</b><small>{getRegionLabel(place.region, t)} · {getCategoryLabel(place.category, t)}</small></span>
                 </div>
               ))}
               <div className="route-summary"><span>{t.routeSummary1}</span><span>{t.routeSummary2}</span></div>
@@ -4310,32 +4909,32 @@ export default function Home() {
                       className="quick-chip"
                       onClick={() => applyQuickCombination("Tour Cội Nguồn & Khoáng Nóng", ["den-hung", "hung-lo", "thanh-thuy"], 2)}
                     >
-                      <span>🏛️ Đền Hùng + Khoáng nóng Thanh Thủy</span>
-                      <b>2N1Đ →</b>
+                      <span>🏛️ {t.comboTour1}</span>
+                      <b>{formatDaysNights(2, currentLang)} →</b>
                     </button>
                     <button
                       type="button"
                       className="quick-chip"
                       onClick={() => applyQuickCombination("Tour Mây Núi 2 Tỉnh", ["tam-dao", "tay-thien", "ban-lac-mai-chau"], 2)}
                     >
-                      <span>☁️ Tam Đảo + Thung lũng Mai Châu</span>
-                      <b>2N1Đ →</b>
+                      <span>☁️ {t.comboTour2}</span>
+                      <b>{formatDaysNights(2, currentLang)} →</b>
                     </button>
                     <button
                       type="button"
                       className="quick-chip"
                       onClick={() => applyQuickCombination("Tour Suối Khoáng 2 Tỉnh", ["thanh-thuy", "khoang-nong-kim-boi"], 2)}
                     >
-                      <span>♨️ Khoáng nóng Thanh Thủy + Kim Bôi</span>
-                      <b>2N1Đ →</b>
+                      <span>♨️ {t.comboTour3}</span>
+                      <b>{formatDaysNights(2, currentLang)} →</b>
                     </button>
                     <button
                       type="button"
                       className="quick-chip"
                       onClick={() => applyQuickCombination("Đại Hành Trình 3 Tỉnh", ["den-hung", "tam-dao", "ban-lac-mai-chau", "khoang-nong-kim-boi"], 3)}
                     >
-                      <span>✨ Trọn Vẹn 3 Tỉnh (Phú Thọ – Vĩnh Phúc – Hòa Bình)</span>
-                      <b>3N2Đ →</b>
+                      <span>✨ {t.comboTour4}</span>
+                      <b>{formatDaysNights(3, currentLang)} →</b>
                     </button>
                   </div>
                 </div>
@@ -4357,7 +4956,7 @@ export default function Home() {
                         <img src={p.image} alt={p.name} className="place-check-card__thumb" loading="lazy" onError={handleImageError} />
                         <div className="place-check-card__meta">
                           <b>{p.shortName}</b>
-                          <small>{p.district} · {p.category}</small>
+                          <small>{p.district} · {getCategoryLabel(p.category, t)}</small>
                         </div>
                       </button>
                     );
@@ -4417,7 +5016,7 @@ export default function Home() {
                       className={`quick-step-chip ${days === d ? "is-active" : ""}`}
                       onClick={() => setDays(d)}
                     >
-                      {d === 1 ? `1 ${t.tripDays}` : `${d}N${d - 1}Đ`}
+                      {formatDaysNights(d, currentLang)}
                     </button>
                   ))}
                 </div>
@@ -4514,12 +5113,12 @@ export default function Home() {
                 <div className="guide-header-card__top">
                   <div>
                     <div className="guide-header-card__meta">
-                      <span>{generatedItinerary.region}</span>
+                      <span>{getRegionLabel(generatedItinerary.region, t)}</span>
                       <span>{generatedItinerary.durationDays} {t.tripDayLabel}</span>
-                      <span>{generatedItinerary.style}</span>
+                      <span>{getStyleLabel(generatedItinerary.style, t)}</span>
                     </div>
-                    <h2>{generatedItinerary.title}</h2>
-                    <p>{generatedItinerary.subtitle}</p>
+                    <h2>{getLocalizedItineraryTitle(generatedItinerary, currentLang, t)}</h2>
+                    <p>{getLocalizedItinerarySubtitle(generatedItinerary, currentLang, t)}</p>
                   </div>
                 </div>
 
@@ -4530,11 +5129,11 @@ export default function Home() {
                   </div>
                   <div className="guide-stat-item">
                     <small>{t.tripStatDriveTime}</small>
-                    <b>{generatedItinerary.totalDriveTime}</b>
+                    <b>{getLocalizedDriveTime(generatedItinerary.totalDriveTime, currentLang)}</b>
                   </div>
                   <div className="guide-stat-item">
                     <small>{t.tripStatTransport}</small>
-                    <b>{generatedItinerary.transport}</b>
+                    <b>{getTransportLabel(generatedItinerary.transport, t)}</b>
                   </div>
                   <div className="guide-stat-item">
                     <small>{t.tripStatCost}</small>
@@ -4550,16 +5149,10 @@ export default function Home() {
                       className={`audio-play-btn ${audioGuidePlaying ? "is-playing" : ""}`}
                       onClick={toggleItineraryAudio}
                     >
-                      <span>
-                        {audioGuidePlaying
-                          ? (audioLang === "vi" ? "⏸ Tạm dừng" : "⏸ Pause")
-                          : (audioLang === "vi" ? "▶ Nghe Thuyết Minh Lịch Trình" : "▶ Listen to Audio Guide")}
-                      </span>
+                      <span>{audioGuidePlaying ? t.audioPause : t.audioListen}</span>
                     </button>
                     {audioGuidePlaying && (
-                      <button type="button" className="audio-stop-btn" onClick={stopAllAudio}>
-                        ■ {audioLang === "vi" ? "Dừng" : "Stop"}
-                      </button>
+                      <button type="button" className="audio-stop-btn" onClick={stopAllAudio}>■ {t.audioStop}</button>
                     )}
 
                     {/* Language Switcher */}
@@ -4592,7 +5185,7 @@ export default function Home() {
                   {/* Voice Selector, Volume Slider & Speed Controls */}
                   <div className="audio-settings-strip">
                     <div className="audio-voice-control">
-                      <label htmlFor="voice-select">🗣️ {audioLang === "vi" ? "Giọng đọc:" : "Voice:"}</label>
+                      <label htmlFor="voice-select">🗣️ {t.audioVoiceLabel}</label>
                       <select
                         id="voice-select"
                         className="audio-voice-select"
@@ -4611,7 +5204,7 @@ export default function Home() {
                     </div>
 
                     <div className="audio-volume-control">
-                      <span>🔊 {audioLang === "vi" ? "Âm lượng:" : "Volume:"}</span>
+                      <span>🔊 {t.audioVolumeLabel}</span>
                       <input
                         type="range"
                         min="0.1"
@@ -4623,8 +5216,8 @@ export default function Home() {
                           setAudioVolume(v);
                           if (speechRef.current) speechRef.current.volume = v;
                         }}
-                        title={`Âm lượng: ${Math.round(audioVolume * 100)}%`}
-                        aria-label="Thanh chỉnh âm lượng thuyết minh"
+                        title={`${t.audioVolumeLabel} ${Math.round(audioVolume * 100)}%`}
+                        aria-label={t.audioVolumeLabel}
                       />
                       <small>{Math.round(audioVolume * 100)}%</small>
                     </div>
@@ -4682,7 +5275,7 @@ export default function Home() {
                       <span className="timeline-day-pill">{t.tripDayLabel} {dayPlan.dayNumber}</span>
                       <h3>{dayPlan.dayTitle}</h3>
                     </div>
-                    <span className="timeline-day__distance">{t.tripDayRoute} ~{dayPlan.dayDistanceKm} km ({dayPlan.dateLabel})</span>
+                    <span className="timeline-day__distance">{t.tripDayRoute} ~{dayPlan.dayDistanceKm} km ({t.tripDayLabel} {dayPlan.dayNumber})</span>
                   </div>
 
                   <div className="timeline-slots">
@@ -4699,7 +5292,7 @@ export default function Home() {
                       return (
                         <div className="slot-item" key={sIdx}>
                           <div className="slot-sidebar">
-                            <span className={`slot-period-tag slot-period-tag--${tagModifier}`}>{slot.period}</span>
+                            <span className={`slot-period-tag slot-period-tag--${tagModifier}`}>{getPeriodLabel(slot.period, t)}</span>
                             <span className="slot-time">{slot.timeSlot}</span>
                           </div>
 
@@ -4796,8 +5389,8 @@ export default function Home() {
                       onClick={() => handleApplyTourTemplate(tmpl)}
                     >
                       <div className="tour-template-card__header">
-                        <span className="tour-template-badge">{tmpl.region}</span>
-                        <span className="tour-template-duration">⏱ {tmpl.durationLabel}</span>
+                        <span className="tour-template-badge">{getRegionLabel(tmpl.region, t)} · {getTourBadgeLabel(tmpl.badge, currentLang)}</span>
+                        <span className="tour-template-duration">⏱ {formatDaysNights(tmpl.durationDays, currentLang)}</span>
                       </div>
                       <h3>{tmpl.title}</h3>
                       <p>{tmpl.summary}</p>
@@ -4979,7 +5572,7 @@ export default function Home() {
                     <span>{item.icon}</span>
                   </button>
                 ))}
-                {position && <span className="user-map-pin" style={mapPosition(position.lat, position.lng)} title={t.profileGuest}>Bạn</span>}
+                {position && <span className="user-map-pin" style={mapPosition(position.lat, position.lng)} title={t.profileGuest}>{currentLang === "vi" ? "Bạn" : currentLang === "zh" ? "您" : currentLang === "ko" ? "나" : currentLang === "ja" ? "現在地" : "You"}</span>}
               </div>
               {selectedNearItem && (
                 <div className="map-selection">
@@ -4987,7 +5580,7 @@ export default function Home() {
                   <p>
                     <small>{selectedNearItem.type}{selectedNearItem.province ? ` · ${selectedNearItem.province}` : ""}</small>
                     <b>{selectedNearItem.name}</b>
-                    <em>{position ? `${formatDistance(haversine(position.lat, position.lng, selectedNearItem.lat, selectedNearItem.lng))} từ bạn` : selectedNearItem.address ?? selectedNearItem.note}</em>
+                    <em>{position ? `${formatDistance(haversine(position.lat, position.lng, selectedNearItem.lat, selectedNearItem.lng))} ${t.fromYou}` : selectedNearItem.address ?? selectedNearItem.note}</em>
                   </p>
                   <a target="_blank" rel="noreferrer" href={`https://www.google.com/maps/dir/?api=1&destination=${selectedNearItem.lat},${selectedNearItem.lng}`}>{t.getDirectionsBtn}</a>
                 </div>
@@ -5040,16 +5633,22 @@ export default function Home() {
             <div className="event-list">
               {culturalEvents.map((event) => {
                 const eventPlace = event.placeId ? places.find((place) => place.id === event.placeId) : null;
+                const eventI18n = EVENT_I18N[event.id]?.[currentLang];
+                const eventName = eventI18n?.name || event.name;
+                const eventLocation = eventI18n?.location || event.location;
+                const eventSchedule = eventI18n?.schedule || event.schedule;
+                const eventDesc = eventI18n?.description || event.description;
+                const eventSeason = getSeasonLabel(event.season, t);
                 return (
                   <article key={event.id}>
-                    <span>{event.season}</span>
+                    <span>{eventSeason}</span>
                     <div>
-                      <h3>{event.name}</h3>
-                      <p>{event.description}</p>
-                      <small>⌖ {event.location}</small>
+                      <h3>{eventName}</h3>
+                      <p>{eventDesc}</p>
+                      <small>⌖ {eventLocation}</small>
                     </div>
                     <aside>
-                      <b>{event.schedule}</b>
+                      <b>{eventSchedule}</b>
                       {event.bookingRequired && <em>{t.bookingRequired}</em>}
                       {eventPlace && <button onClick={() => openPlace(eventPlace)}>{t.openPlaceBtn}</button>}
                     </aside>
@@ -5065,9 +5664,9 @@ export default function Home() {
       {activeTab === "saved" && (
         <section className="inner-page saved-page">
           <div className="inner-page__intro">
-            <span className="kicker">SỔ TAY DU LỊCH CỦA BẠN</span>
-            <h1>Những nơi & món ngon<br /><em>bạn đã lưu lại.</em></h1>
-            <p>Dữ liệu được lưu trữ trực tiếp trên thiết bị của bạn để bạn dễ dàng tra cứu lại khi lên đường.</p>
+            <span className="kicker">{t.savedNotebookKicker}</span>
+            <h1>{t.savedNotebookTitle1}<br /><em>{t.savedNotebookTitle2}</em></h1>
+            <p>{t.savedNotebookDesc}</p>
           </div>
 
           {/* SUB-TABS: PLACES, FOODS, ITINERARY */}
@@ -5311,7 +5910,7 @@ export default function Home() {
       </footer>
 
       {/* MOBILE BOTTOM NAVIGATION */}
-      <nav className="bottom-nav" aria-label="Điều hướng trên điện thoại">
+      <nav className="bottom-nav" aria-label={t.bottomNavAria}>
         {navigation.map((item) => (
           <button key={item.id} className={activeTab === item.id ? "is-active" : ""} onClick={() => setActiveTab(item.id)}>
             <span>{item.icon}</span>{item.label}
@@ -5343,7 +5942,7 @@ export default function Home() {
               <div className="modal-main">
                 <div className={`season-callout ${isInSeason(selected, currentMonth) ? "is-good" : "is-caution"}`}>
                   <span>{isInSeason(selected, currentMonth) ? "✓" : "!"}</span>
-                  <p><b>{isInSeason(selected, currentMonth) ? `Thời điểm tuyệt đẹp để đi trong tháng ${currentMonth}` : `Tháng ${currentMonth} cần lưu ý thời tiết`}</b><small>{selected.season}</small></p>
+                  <p><b>{isInSeason(selected, currentMonth) ? `${t.modalGoodSeason} ${currentMonth}` : `${t.modalCautionSeason} ${currentMonth}`}</b><small>{selected.season}</small></p>
                 </div>
                 <div className="fact-row fact-row--rich">
                   <span><small>{t.modalBestTime}</small><b>{selected.bestTime}</b></span>
@@ -5379,7 +5978,7 @@ export default function Home() {
                       {speechPlaceId === selected.id && audioState === "playing"
                         ? `⏸ ${t.audioPause}`
                         : speechPlaceId === selected.id && audioState === "paused"
-                        ? (audioLang === "vi" ? "▶ Nghe tiếp" : "▶ Resume")
+                        ? t.audioResume
                         : t.audioListen}
                     </button>
                     {speechPlaceId === selected.id && audioState !== "idle" && (
@@ -5389,7 +5988,7 @@ export default function Home() {
                     )}
 
                     {/* Language Switcher in Modal */}
-                    <div className="audio-lang-switcher" role="group" aria-label="Ngôn ngữ thuyết minh">
+                    <div className="audio-lang-switcher" role="group" aria-label={t.audioVoiceLabel}>
                       <button
                         type="button"
                         className={`audio-lang-btn ${audioLang === "vi" ? "is-active" : ""}`}
@@ -5477,8 +6076,8 @@ export default function Home() {
 
                 <div className="nearby-section">
                   <div className="nearby-tabs">
-                    <button className={detailMode === "eat" ? "is-active" : ""} onClick={() => setDetailMode("eat")}>Ẩm thực & Quán ngon gần đây</button>
-                    <button className={detailMode === "stay" ? "is-active" : ""} onClick={() => setDetailMode("stay")}>Khách sạn & Nơi nghỉ gần đây</button>
+                    <button className={detailMode === "eat" ? "is-active" : ""} onClick={() => setDetailMode("eat")}>🍲 {t.detailTabFood}</button>
+                    <button className={detailMode === "stay" ? "is-active" : ""} onClick={() => setDetailMode("stay")}>🏨 {t.detailTabStay}</button>
                   </div>
                   {(detailMode === "eat" ? selected.restaurants : selected.stays).map((item) => (
                     <article className="nearby-card" key={item.name}>
@@ -5487,15 +6086,15 @@ export default function Home() {
                         <span>{item.type}{item.rating ? ` · ★ ${item.rating} (${item.reviewCount ?? 0})` : ""}</span>
                         <b>{item.name}</b>
                         <small>{item.note}</small>
-                        {item.taste && <p><strong>Hương vị:</strong> {item.taste}</p>}
-                        <p><strong>Địa chỉ:</strong> {item.address}</p>
-                        <p><strong>Giờ mở cửa:</strong> {item.hours}</p>
+                        {item.taste && <p><strong>{t.detailTasteLabel}</strong> {item.taste}</p>}
+                        <p><strong>{t.addressLabel}</strong> {item.address}</p>
+                        <p><strong>{t.detailOpenHours}</strong> {item.hours}</p>
                         <div className="nearby-card__links">
                           {item.phone && <a href={`tel:${item.phone}`}>☎ {item.phone.replace(/(\d{4})(\d{3})(\d+)/, "$1 $2 $3")}</a>}
-                          <a target="_blank" rel="noreferrer" href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${item.name} ${item.address}`)}`}>Xem bản đồ →</a>
+                          <a target="_blank" rel="noreferrer" href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${item.name} ${item.address}`)}`}>{t.detailViewMap}</a>
                         </div>
-                        {detailMode === "eat" && item.phone && <a className="nearby-reserve-link" href={`tel:${item.phone}`}>Gọi đặt bàn / đặt món trước →</a>}
-                        {detailMode === "stay" && <button className="stay-book-button" onClick={() => openBooking(selected, item)}>Đặt phòng · từ {formatMoney(estimatedStayPrice(item))}/đêm →</button>}
+                        {detailMode === "eat" && item.phone && <a className="nearby-reserve-link" href={`tel:${item.phone}`}>{t.detailCallBookTable}</a>}
+                        {detailMode === "stay" && <button className="stay-book-button" onClick={() => openBooking(selected, item)}>{t.detailBookRoomFrom} {formatMoney(estimatedStayPrice(item))} {t.detailPerNightUnit}</button>}
                       </div>
                       <p className="nearby-card__distance"><b>{item.distance}</b><small>{item.travelTime}</small></p>
                     </article>
@@ -5504,21 +6103,21 @@ export default function Home() {
 
                 <section className="community-reviews">
                   <div className="community-reviews__heading">
-                    <span>GÓC NHÌN & CẢM NHẬN DU KHÁCH</span>
-                    <h3>Hình ảnh & trải nghiệm thực tế</h3>
+                    <span>{t.detailReviewKicker}</span>
+                    <h3>{t.detailReviewTitle}</h3>
                   </div>
                   <form className="review-form" onSubmit={submitReview}>
                     <div className="review-form__row">
-                      <label>Họ và tên hiển thị<input value={reviewName} maxLength={30} onChange={(event) => setReviewName(event.target.value)} /></label>
-                      <label>Đánh giá sao<span className="rating-picker">{[1, 2, 3, 4, 5].map((rating) => <button type="button" key={rating} className={rating <= reviewRating ? "is-active" : ""} onClick={() => setReviewRating(rating)}>★</button>)}</span></label>
+                      <label>{t.detailReviewName}<input value={reviewName} maxLength={30} onChange={(event) => setReviewName(event.target.value)} /></label>
+                      <label>{t.detailReviewRating}<span className="rating-picker">{[1, 2, 3, 4, 5].map((rating) => <button type="button" key={rating} className={rating <= reviewRating ? "is-active" : ""} onClick={() => setReviewRating(rating)}>★</button>)}</span></label>
                     </div>
-                    <label>Chia sẻ trải nghiệm<textarea value={reviewComment} maxLength={500} onChange={(event) => setReviewComment(event.target.value)} placeholder="Bạn thích điều gì? Thời điểm nào đẹp? Có lưu ý gì cho người đi sau?" /></label>
+                    <label>{t.detailReviewShare}<textarea value={reviewComment} maxLength={500} onChange={(event) => setReviewComment(event.target.value)} placeholder={t.detailReviewPlaceholder} /></label>
                     <div className="review-upload">
-                      <label>＋ Thêm tối đa 2 ảnh<input type="file" accept="image/jpeg,image/png,image/webp" multiple onChange={handleReviewPhotos} /></label>
-                      <span>Mỗi ảnh dưới 800 KB</span>
+                      <label>{t.detailReviewAddPhotos}<input type="file" accept="image/jpeg,image/png,image/webp" multiple onChange={handleReviewPhotos} /></label>
+                      <span>{t.detailReviewPhotoLimit}</span>
                     </div>
                     {reviewPhotos.length > 0 && <div className="review-photo-preview">{reviewPhotos.map((photo, index) => <button type="button" key={`${photo.slice(0, 32)}-${index}`} onClick={() => setReviewPhotos((current) => current.filter((_, itemIndex) => itemIndex !== index))}><img src={photo} alt={`Ảnh đánh giá ${index + 1}`} /><span>×</span></button>)}</div>}
-                    <button className="button button--dark" type="submit">Đăng nhận xét</button>
+                    <button className="button button--dark" type="submit">{t.detailReviewSubmit}</button>
                   </form>
                   <div className="review-list">
                     {selectedUserReviews.length ? selectedUserReviews.map((review) => (
@@ -5527,13 +6126,13 @@ export default function Home() {
                         <p>{review.comment}</p>
                         {review.photos.length > 0 && <div className="review-photos">{review.photos.map((photo, index) => <img key={`${review.id}-${index}`} src={photo} alt={`Ảnh của ${review.name}`} />)}</div>}
                       </article>
-                    )) : <div className="review-empty">Chưa có nhận xét nào. Hãy là người đầu tiên chia sẻ trải nghiệm của bạn!</div>}
+                    )) : <div className="review-empty">{t.detailReviewEmpty}</div>}
                   </div>
                 </section>
               </div>
               <aside className="modal-map">
                 <iframe title={`Bản đồ ${selected.name}`} src={`https://www.openstreetmap.org/export/embed.html?bbox=${selected.lng - 0.035}%2C${selected.lat - 0.025}%2C${selected.lng + 0.035}%2C${selected.lat + 0.025}&layer=mapnik&marker=${selected.lat}%2C${selected.lng}`} loading="lazy" />
-                <div><span>⌖</span><p><b>{selected.location}</b><small>{position ? `${formatDistance(haversine(position.lat, position.lng, selected.lat, selected.lng))} · ${estimateTravel(haversine(position.lat, position.lng, selected.lat, selected.lng))} từ bạn` : `${selected.distanceFromVietTri} km · ${selected.travelFromVietTri} từ Việt Trì`}</small></p></div>
+                <div><span>⌖</span><p><b>{selected.location}</b><small>{position ? `${formatDistance(haversine(position.lat, position.lng, selected.lat, selected.lng))} · ${estimateTravel(haversine(position.lat, position.lng, selected.lat, selected.lng))} ${t.fromYou}` : `${selected.distanceFromVietTri} km · ${selected.travelFromVietTri} ${t.fromVietTri}`}</small></p></div>
               </aside>
             </div>
           </section>
