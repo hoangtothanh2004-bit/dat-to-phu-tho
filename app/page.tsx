@@ -22,6 +22,7 @@ import {
 import { culturalEvents } from "@/data/events";
 import { tourTemplates, type TourTemplate } from "@/data/itineraryTemplates";
 import { buildItinerary, DISTRICT_TRAVEL_GUIDES, type GeneratedItinerary } from "@/lib/guidePlanner";
+import VisualItineraryV2 from "./components/VisualItineraryV2";
 
 const isStaticDemo = process.env.NEXT_PUBLIC_STATIC_DEMO === "true";
 
@@ -251,10 +252,10 @@ export const UI_TEXT = {
     section01Title: "Khám phá theo địa phương & sở thích",
     viewAllBtn: "Xem tất cả →",
     selectProvinceLabel: "CHỌN TỈNH:",
-    provAll: "✨ Tất cả 3 tỉnh",
-    provPhuTho: "🏛️ Phú Thọ",
-    provVinhPhuc: "☁️ Vĩnh Phúc",
-    provHoaBinh: "🌲 Hòa Bình",
+    provAll: "Tất cả 3 tỉnh",
+    provPhuTho: "Phú Thọ",
+    provVinhPhuc: "Vĩnh Phúc",
+    provHoaBinh: "Hòa Bình",
     seasonLabel: "ĐI THEO MÙA",
     seasonAll: "Tất cả",
     seasonInSeason: "Đang hợp mùa",
@@ -348,7 +349,7 @@ export const UI_TEXT = {
     tripControllerTitle: "BỘ ĐIỀU KHIỂN LỊCH TRÌNH",
     tripCustomize: "Tùy biến chuyến đi của bạn",
     tripStep1: "1. Chọn Tỉnh / Vùng du lịch",
-    tripCombine3: "✨ Ghép 3 Tỉnh",
+    tripCombine3: "Tất cả 3 tỉnh",
     tripStep2: "2. Chọn Huyện / Thị xã muốn tới",
     tripAllDistricts: "Toàn bộ các huyện (Lập tuyến tự do)",
     tripDirectionGuide: "🧭 HƯỚNG DẪN ĐƯỜNG ĐI:",
@@ -722,10 +723,10 @@ export const UI_TEXT = {
     section01Title: "Explore by region & interest",
     viewAllBtn: "View all →",
     selectProvinceLabel: "SELECT PROVINCE:",
-    provAll: "✨ All 3 Provinces",
-    provPhuTho: "🏛️ Phu Tho",
-    provVinhPhuc: "☁️ Vinh Phuc",
-    provHoaBinh: "🌲 Hoa Binh",
+    provAll: "All 3 Provinces",
+    provPhuTho: "Phu Tho",
+    provVinhPhuc: "Vinh Phuc",
+    provHoaBinh: "Hoa Binh",
     seasonLabel: "SEASONAL TRAVEL",
     seasonAll: "All",
     seasonInSeason: "Best this season",
@@ -817,7 +818,7 @@ export const UI_TEXT = {
     tripControllerTitle: "TRIP CONTROLLER",
     tripCustomize: "Customize your journey",
     tripStep1: "1. Select Province / Region",
-    tripCombine3: "✨ Combine 3 Provinces",
+    tripCombine3: "All 3 Provinces",
     tripStep2: "2. Select District / Town",
     tripAllDistricts: "All districts (Free routing)",
     tripDirectionGuide: "🧭 TRAVEL DIRECTIONS:",
@@ -1182,10 +1183,10 @@ export const UI_TEXT = {
     section01Title: "按地区与偏好探索",
     viewAllBtn: "查看全部 →",
     selectProvinceLabel: "选择省份:",
-    provAll: "✨ 汇聚三省全部",
-    provPhuTho: "🏛️ 富寿省",
-    provVinhPhuc: "☁️ 永福省",
-    provHoaBinh: "🌲 和平省",
+    provAll: "全部3省",
+    provPhuTho: "富寿省",
+    provVinhPhuc: "永福省",
+    provHoaBinh: "和平省",
     seasonLabel: "按季节旅行",
     seasonAll: "全部",
     seasonInSeason: "当季最佳",
@@ -1272,7 +1273,7 @@ export const UI_TEXT = {
     tripPageTitle1: "智能行程规划", tripPageTitle2: "当地专家全程指导。",
     tripPageDesc: "自动优化4大核心：🏛️观光·🍲美食·🛏️住宿·🚗交通，覆盖富寿、永福、和平三省。",
     tripControllerTitle: "行程控制面板", tripCustomize: "自定义您的旅程",
-    tripStep1: "1. 选择省份/区域", tripCombine3: "✨ 三省联游",
+    tripStep1: "1. 选择省份/区域", tripCombine3: "全部3省",
     tripStep2: "2. 选择县/区", tripAllDistricts: "全部县区（自由规划）",
     tripDirectionGuide: "🧭 出行指南：", tripRecommendedRoute: "推荐路线：",
     tripSignatureFoods: "特色美食：",
@@ -1556,10 +1557,10 @@ export const UI_TEXT = {
     section01Title: "지역 및 테마별 탐색",
     viewAllBtn: "전체 보기 →",
     selectProvinceLabel: "지역 선택:",
-    provAll: "✨ 3개 지역 전체",
-    provPhuTho: "🏛️ 푸토성",
-    provVinhPhuc: "☁️ 빈푹성",
-    provHoaBinh: "🌲 호아빈성",
+    provAll: "3개 지역 전체",
+    provPhuTho: "푸토성",
+    provVinhPhuc: "빈푹성",
+    provHoaBinh: "호아빈성",
     seasonLabel: "계절별 추천",
     seasonAll: "전체",
     seasonInSeason: "지금 가기 좋은 곳",
@@ -1646,7 +1647,7 @@ export const UI_TEXT = {
     tripPageTitle1: "스마트 일정 만들기", tripPageTitle2: "현지 가이드가 함께합니다.",
     tripPageDesc: "🏛️관광·🍲맛집·🛏️숙소·🚗교통 4대 요소를 자동 최적화, 푸토·빈푹·호아빈 3개 지역 전역.",
     tripControllerTitle: "일정 컨트롤러", tripCustomize: "나만의 여행 커스터마이즈",
-    tripStep1: "1. 지역/도 선택", tripCombine3: "✨ 3개 지역 합치기",
+    tripStep1: "1. 지역/도 선택", tripCombine3: "3개 지역 전체",
     tripStep2: "2. 군/구 선택", tripAllDistricts: "전체 군구 (자유 루트)",
     tripDirectionGuide: "🧭 이동 안내:", tripRecommendedRoute: "추천 경로:",
     tripSignatureFoods: "대표 맛집:",
@@ -1930,10 +1931,10 @@ export const UI_TEXT = {
     section01Title: "地域・テーマ別で探す",
     viewAllBtn: "すべて見る →",
     selectProvinceLabel: "省を選択:",
-    provAll: "✨ 3省すべて",
-    provPhuTho: "🏛️ フート省",
-    provVinhPhuc: "☁️ ビンフック省",
-    provHoaBinh: "🌲 ホアビン省",
+    provAll: "全3省",
+    provPhuTho: "フート省",
+    provVinhPhuc: "ヴィンフック省",
+    provHoaBinh: "ホアビン省",
     seasonLabel: "季節ごとの旅",
     seasonAll: "すべて",
     seasonInSeason: "今が旬",
@@ -2020,7 +2021,7 @@ export const UI_TEXT = {
     tripPageTitle1: "スマート旅程を作成", tripPageTitle2: "現地ガイドがサポート。",
     tripPageDesc: "🏛️観光·🍲グルメ·🛏️宿泊·🚗移動の4要素を自動最適化、フート・ビンフック・ホアビン3省全域。",
     tripControllerTitle: "旅程コントローラー", tripCustomize: "旅をカスタマイズ",
-    tripStep1: "1. 省/地域を選択", tripCombine3: "✨ 3省を組み合わせ",
+    tripStep1: "1. 省/地域を選択", tripCombine3: "全3省",
     tripStep2: "2. 郡/市を選択", tripAllDistricts: "全郡区（自由ルート）",
     tripDirectionGuide: "🧭 アクセス案内：", tripRecommendedRoute: "おすすめルート：",
     tripSignatureFoods: "名物料理：",
@@ -2640,6 +2641,7 @@ export default function Home() {
   const [transport, setTransport] = useState("Ô tô riêng");
   const [budget, setBudget] = useState("Tiêu chuẩn (~1.000.000đ/ngày)");
   const [interest, setInterest] = useState("Văn hóa & cội nguồn");
+  const [isBuilderCollapsed, setIsBuilderCollapsed] = useState<boolean>(true);
   const [generatedItinerary, setGeneratedItinerary] = useState<GeneratedItinerary>(() =>
     buildItinerary({
       anchorPlaceId: places[0]?.id || "den-hung",
@@ -2680,6 +2682,38 @@ export default function Home() {
       }
     };
   }, []);
+
+  // Restore or set active tab from URL or localStorage
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    try {
+      const urlParams = new URLSearchParams(window.location.search);
+      const tabParam = urlParams.get("tab");
+      if (tabParam && ["explore", "trip", "near", "saved", "profile"].includes(tabParam)) {
+        setActiveTab(tabParam as Tab);
+      } else if (window.location.hash === "#trip") {
+        setActiveTab("trip");
+      } else {
+        const savedTab = localStorage.getItem("last_active_tab");
+        if (savedTab && ["explore", "trip", "near", "saved", "profile"].includes(savedTab)) {
+          setActiveTab(savedTab as Tab);
+        }
+      }
+    } catch {
+      // Ignore storage errors
+    }
+  }, []);
+
+  const handleTabChange = (tab: Tab) => {
+    setActiveTab(tab);
+    if (typeof window !== "undefined") {
+      try {
+        localStorage.setItem("last_active_tab", tab);
+      } catch {
+        // Ignore storage errors
+      }
+    }
+  };
 
   const voiceOptions = useMemo(() => {
     if (audioLang === "vi") {
@@ -3692,6 +3726,7 @@ export default function Home() {
       travelers,
     });
     setGeneratedItinerary(res);
+    setIsBuilderCollapsed(true);
     showToast(`✦ Hướng dẫn viên đã tạo lịch trình ${days} ngày với ${selectedPlaceIds.length} điểm đã chọn!`);
   };
 
@@ -5289,15 +5324,48 @@ export default function Home() {
       {/* TAB 2: LỊCH TRÌNH (TRIP - TOUR GUIDE) */}
       {activeTab === "trip" && (
         <section className="inner-page trip-page">
-          <div className="inner-page__intro">
+          <div className="inner-page__intro inner-page__intro--compact">
             <h1>{t.tripPageTitle1}<br /><em>{t.tripPageTitle2}</em></h1>
             <p>{t.tripPageDesc}</p>
           </div>
 
-          <div className="builder-layout">
-            <aside className="builder-card">
-              <span className="builder-card__step">{t.tripControllerTitle}</span>
-              <h2>{t.tripCustomize}</h2>
+          <div className="builder-toggle-strip">
+            <button
+              type="button"
+              className="builder-toggle-btn"
+              onClick={() => setIsBuilderCollapsed(!isBuilderCollapsed)}
+              title={isBuilderCollapsed ? "Mở bộ tùy biến chuyến đi" : "Thu gọn bộ lọc để xem rộng"}
+            >
+              <span>{isBuilderCollapsed ? "⚙️ Mở bộ tùy biến chuyến đi (8 bước)" : "‹ Thu gọn bộ lọc để xem lịch trình toàn cảnh"}</span>
+              <small>{isBuilderCollapsed ? "Bấm để đổi ngày, xe, điểm đến" : "Chế độ xem rộng rãi chuẩn thiết kế"}</small>
+            </button>
+          </div>
+
+          <div className={`builder-layout ${isBuilderCollapsed ? "is-builder-collapsed" : ""}`}>
+            {!isBuilderCollapsed && (
+            <div
+              className="builder-backdrop"
+              onClick={() => setIsBuilderCollapsed(true)}
+              aria-hidden="true"
+            />
+          )}
+
+          <aside className={`builder-card builder-drawer ${!isBuilderCollapsed ? "is-open" : ""}`}>
+            <div className="builder-drawer__head">
+              <div>
+                <span className="builder-card__step">{t.tripControllerTitle}</span>
+                <h2>{t.tripCustomize}</h2>
+              </div>
+              <button
+                type="button"
+                className="builder-drawer__close"
+                onClick={() => setIsBuilderCollapsed(true)}
+                title="Đóng bộ tùy biến"
+                aria-label="Đóng bộ tùy biến"
+              >
+                ✕
+              </button>
+            </div>
 
               {/* 1. CHỌN TỈNH */}
               <div className="builder-group">
@@ -5305,9 +5373,9 @@ export default function Home() {
                 <div className="region-pill-group">
                   {[
                     { id: "Tất cả", label: t.tripCombine3 },
-                    { id: "Phú Thọ", label: "🏛️ " + t.provPhuTho },
-                    { id: "Vĩnh Phúc", label: "☁️ " + t.provVinhPhuc },
-                    { id: "Hòa Bình", label: "🌲 " + t.provHoaBinh },
+                    { id: "Phú Thọ", label: t.provPhuTho },
+                    { id: "Vĩnh Phúc", label: t.provVinhPhuc },
+                    { id: "Hòa Bình", label: t.provHoaBinh },
                   ].map((r) => (
                     <button
                       key={r.id}
@@ -5574,267 +5642,42 @@ export default function Home() {
 
             {/* PLAN RESULT PANEL */}
             <div className="plan-panel">
-              <div className="guide-header-card">
-                <div className="guide-header-card__top">
-                  <div>
-                    <div className="guide-header-card__meta">
-                      <span>{getRegionLabel(generatedItinerary.region, t)}</span>
-                      <span>{generatedItinerary.durationDays} {t.tripDayLabel}</span>
-                      <span>{getStyleLabel(generatedItinerary.style, t)}</span>
-                    </div>
-                    <h2>{getLocalizedItineraryTitle(generatedItinerary, currentLang, t)}</h2>
-                    <p>{getLocalizedItinerarySubtitle(generatedItinerary, currentLang, t)}</p>
-                  </div>
-                </div>
-
-                <div className="guide-stat-grid">
-                  <div className="guide-stat-item">
-                    <small>{t.tripStatDistance}</small>
-                    <b>~{generatedItinerary.totalDistanceKm} km</b>
-                  </div>
-                  <div className="guide-stat-item">
-                    <small>{t.tripStatDriveTime}</small>
-                    <b>{getLocalizedDriveTime(generatedItinerary.totalDriveTime, currentLang)}</b>
-                  </div>
-                  <div className="guide-stat-item">
-                    <small>{t.tripStatTransport}</small>
-                    <b>{getTransportLabel(generatedItinerary.transport, t)}</b>
-                  </div>
-                  <div className="guide-stat-item">
-                    <small>{t.tripStatCost}</small>
-                    <b>{formatMoney(generatedItinerary.estimatedCostPerPerson)}</b>
-                  </div>
-                </div>
-
-                {/* AUDIO GUIDE PLAYER WITH BILINGUAL & VOICE SWITCHER */}
-                <div className="audio-controller-bar">
-                  <div className="audio-controller-head">
-                    <button
-                      type="button"
-                      className={`audio-play-btn ${audioGuidePlaying ? "is-playing" : ""}`}
-                      onClick={toggleItineraryAudio}
-                    >
-                      <span>{audioGuidePlaying ? t.audioPause : t.audioListen}</span>
-                    </button>
-                    {audioGuidePlaying && (
-                      <button type="button" className="audio-stop-btn" onClick={stopAllAudio}>■ {t.audioStop}</button>
-                    )}
-
-                    {/* Language Switcher */}
-                    <div className="audio-lang-switcher" role="group" aria-label="Chọn ngôn ngữ thuyết minh">
-                      <button
-                        type="button"
-                        className={`audio-lang-btn ${audioLang === "vi" ? "is-active" : ""}`}
-                        onClick={() => {
-                          stopAllAudio();
-                          setAudioLang("vi");
-                          setSelectedVoiceURI("ai-female-north");
-                        }}
-                      >
-                        🇻🇳 Tiếng Việt
-                      </button>
-                      <button
-                        type="button"
-                        className={`audio-lang-btn ${audioLang === "en" ? "is-active" : ""}`}
-                        onClick={() => {
-                          stopAllAudio();
-                          setAudioLang("en");
-                          setSelectedVoiceURI("ai-en-us");
-                        }}
-                      >
-                        🇬🇧 English
-                      </button>
-                    </div>
-                  </div>
-
-                  {/* Voice Selector, Volume Slider & Speed Controls */}
-                  <div className="audio-settings-strip">
-                    <div className="audio-voice-control">
-                      <label htmlFor="voice-select">🗣️ {t.audioVoiceLabel}</label>
-                      <select
-                        id="voice-select"
-                        className="audio-voice-select"
-                        value={selectedVoiceURI}
-                        onChange={(e) => {
-                          setSelectedVoiceURI(e.target.value);
-                          if (audioGuidePlaying) stopAllAudio();
-                        }}
-                      >
-                        {voiceOptions.map((opt) => (
-                          <option key={opt.id} value={opt.id}>
-                            {opt.label}
-                          </option>
-                        ))}
-                      </select>
-                    </div>
-
-                    <div className="audio-volume-control">
-                      <span>🔊 {t.audioVolumeLabel}</span>
-                      <input
-                        type="range"
-                        min="0.1"
-                        max="1.0"
-                        step="0.05"
-                        value={audioVolume}
-                        onChange={(e) => {
-                          const v = parseFloat(e.target.value);
-                          setAudioVolume(v);
-                          if (speechRef.current) speechRef.current.volume = v;
-                        }}
-                        title={`${t.audioVolumeLabel} ${Math.round(audioVolume * 100)}%`}
-                        aria-label={t.audioVolumeLabel}
-                      />
-                      <small>{Math.round(audioVolume * 100)}%</small>
-                    </div>
-
-                    <div className="audio-rate-control">
-                      <span>{t.audioSpeedLabel}</span>
-                      <div className="audio-rate-pills">
-                        {[0.75, 1.0, 1.25, 1.5, 1.75, 2.0, 2.25, 2.5].map((r) => (
-                          <button
-                            type="button"
-                            key={r}
-                            className={`rate-btn ${audioRate === r ? "is-active" : ""}`}
-                            onClick={() => {
-                              setAudioRate(r);
-                              if (htmlAudioRef.current) htmlAudioRef.current.playbackRate = r;
-                              if (speechRef.current) speechRef.current.rate = r;
-                            }}
-                          >
-                            {r}x
-                          </button>
-                        ))}
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                {/* ACTION BAR */}
-                <div className="guide-action-bar">
-                  <a className="guide-action-btn" href={generatedItinerary.googleMapsUrl} target="_blank" rel="noreferrer">
-                    {t.tripViewGoogleMaps}
-                  </a>
-                  <button className="guide-action-btn" onClick={() => window.print()}>
-                    {t.tripPrintPdf}
-                  </button>
-                  <button className="guide-action-btn" onClick={sharePlan}>
-                    {t.tripShare}
-                  </button>
-                  <button className="guide-action-btn" onClick={savePlan}>
-                    {t.tripSaveNotebook}
-                  </button>
-                </div>
-
-                <div className="guide-tips-box">
-                  <b>{t.tripGuideTips}</b> {generatedItinerary.routeAdvice}
-                  <br />
-                  <b>{t.tripSafetyTips}</b> {generatedItinerary.cautionAdvice}
-                </div>
-              </div>
-
-              {/* TIMELINE DAYS */}
-              {generatedItinerary.days.map((dayPlan) => (
-                <div className="timeline-day" key={dayPlan.dayNumber}>
-                  <div className="timeline-day__header">
-                    <div className="timeline-day__header-title">
-                      <span className="timeline-day-pill">{t.tripDayLabel} {dayPlan.dayNumber}</span>
-                      <h3>{dayPlan.dayTitle}</h3>
-                    </div>
-                    <span className="timeline-day__distance">{t.tripDayRoute} ~{dayPlan.dayDistanceKm} km ({t.tripDayLabel} {dayPlan.dayNumber})</span>
-                  </div>
-
-                  <div className="timeline-slots">
-                    {dayPlan.slots.map((slot, sIdx) => {
-                      const periodKey = slot.period.toLowerCase();
-                      const tagModifier = periodKey.includes("sáng")
-                        ? "sang"
-                        : periodKey.includes("trưa")
-                        ? "trua"
-                        : periodKey.includes("chiều")
-                        ? "chieu"
-                        : "toi";
-
-                      return (
-                        <div className="slot-item" key={sIdx}>
-                          <div className="slot-sidebar">
-                            <span className={`slot-period-tag slot-period-tag--${tagModifier}`}>{getPeriodLabel(slot.period, t)}</span>
-                            <span className="slot-time">{slot.timeSlot}</span>
-                          </div>
-
-                          <div className="slot-main">
-                            <div className="slot-main__title">
-                              <h4>{slot.title}</h4>
-                              <span className="slot-cost">{formatMoney(slot.estimatedCostPerPerson)}/{t.tripPerson}</span>
-                            </div>
-
-                            {/* TRANSPORT TIP */}
-                            <div className="slot-transport-strip">
-                              <span>🚗</span>
-                              <div>
-                                <b>{t.tripTransportLabel}</b> {slot.transportAdvice}
-                              </div>
-                            </div>
-
-                            {/* 4-ELEMENT DETAIL GRID */}
-                            <div className="slot-detail-grid">
-                              <div className="slot-detail-box">
-                                <small>{t.slotWhereSightsee}</small>
-                                <p>
-                                  <b>{slot.activity}</b>
-                                  {slot.place && (
-                                    <>
-                                      <br />
-                                      <span>{t.slotDestination} <b>{slot.place.name}</b> ({slot.place.location})</span>
-                                      <br />
-                                      <span>{t.slotHighlights} {slot.place.highlights.slice(0, 3).join(" · ")}</span>
-                                    </>
-                                  )}
-                                </p>
-                              </div>
-
-                              <div className="slot-detail-box">
-                                <small>{t.slotWhereDine}</small>
-                                <p>
-                                  {slot.restaurant ? (
-                                    <>
-                                      <b>{slot.restaurant.name}</b> ({slot.restaurant.type})
-                                      <br />
-                                      <span>{t.slotSpecialtyMenu} {slot.restaurant.note}</span>
-                                      <br />
-                                      <small style={{ color: "var(--muted)" }}>{slot.restaurant.address} · {slot.restaurant.hours}</small>
-                                    </>
-                                  ) : (
-                                    <span>{t.slotFreeDine}</span>
-                                  )}
-                                </p>
-                              </div>
-
-                              {slot.stay && (
-                                <div className="slot-detail-box">
-                                  <small>{t.slotWhereStay}</small>
-                                  <p>
-                                    <b>{slot.stay.name}</b> ({slot.stay.type})
-                                    <br />
-                                    <span>{t.slotAmenities} {slot.stay.note}</span>
-                                    <br />
-                                    <small style={{ color: "var(--muted)" }}>{t.addressLabel} {slot.stay.address}</small>
-                                  </p>
-                                </div>
-                              )}
-                            </div>
-
-                            {slot.highlightNote && (
-                              <p style={{ margin: "4px 0 0", fontSize: "12px", color: "var(--muted)", fontStyle: "italic" }}>
-                                💬 {t.slotGuideAdvice} {slot.highlightNote}
-                              </p>
-                            )}
-                          </div>
-                        </div>
-                      );
-                    })}
-                  </div>
-                </div>
-              ))}
+              <VisualItineraryV2
+                generatedItinerary={generatedItinerary}
+                currentLang={currentLang}
+                t={t}
+                formatMoney={formatMoney}
+                currentCurrency={currentCurrency}
+                getRegionLabel={getRegionLabel}
+                getTransportLabel={getTransportLabel}
+                getStyleLabel={getStyleLabel}
+                getLocalizedItineraryTitle={getLocalizedItineraryTitle}
+                getLocalizedItinerarySubtitle={getLocalizedItinerarySubtitle}
+                getLocalizedDriveTime={getLocalizedDriveTime}
+                toggleItineraryAudio={toggleItineraryAudio}
+                togglePlaceAudio={togglePlaceAudio}
+                stopAllAudio={stopAllAudio}
+                audioGuidePlaying={audioGuidePlaying}
+                audioState={audioState}
+                speechPlaceId={speechPlaceId}
+                audioLang={audioLang}
+                setAudioLang={setAudioLang}
+                selectedVoiceURI={selectedVoiceURI}
+                setSelectedVoiceURI={setSelectedVoiceURI}
+                voiceOptions={voiceOptions}
+                audioVolume={audioVolume}
+                setAudioVolume={setAudioVolume}
+                audioRate={audioRate}
+                setAudioRate={setAudioRate}
+                sharePlan={sharePlan}
+                savePlan={savePlan}
+                favorites={favorites}
+                toggleFavorite={toggleFavorite}
+                showToast={showToast}
+                handleImageError={handleImageError}
+                isBuilderCollapsed={isBuilderCollapsed}
+                toggleBuilderCollapse={() => setIsBuilderCollapsed(!isBuilderCollapsed)}
+              />
 
               {/* QUICK TOUR TEMPLATES */}
               <div className="tour-template-section">
@@ -6801,7 +6644,7 @@ export default function Home() {
                         ))}
                       </div>
 
-                      {/* VietQR Quick Scan Box */}
+                      {/* INTERACTIVE PAYMENT METHOD BOXES */}
                       {paymentMethod === "vietqr" && (
                         <div className="vietqr-box">
                           <span className="heritage-gold-tag" style={{ marginBottom: "8px", display: "inline-block" }}>
@@ -6823,6 +6666,136 @@ export default function Home() {
                             <div>💰 <b>Số tiền:</b> {formatPrice(finalCartTotal)}</div>
                             <div>📝 <b>Nội dung:</b> DT-{checkoutPhone.slice(-4) || "OCOP"}</div>
                           </div>
+                        </div>
+                      )}
+
+                      {paymentMethod === "momo" && (
+                        <div className="vietqr-box" style={{ borderColor: "#d82d8b", background: "#fff5f9" }}>
+                          <span style={{ background: "#d82d8b", color: "#fff", padding: "3px 10px", borderRadius: "6px", fontSize: "11.5px", fontWeight: 800, display: "inline-block", marginBottom: "8px" }}>
+                            VÍ MOMO SIÊU TỐC
+                          </span>
+                          <p style={{ margin: "4px 0 10px", fontSize: "11.5px", color: "var(--muted)" }}>
+                            Mở ứng dụng MoMo và quét mã QR để xác nhận thanh toán tức thì
+                          </p>
+                          <div className="vietqr-mock-qr" style={{ borderColor: "#f3a5cf" }}>
+                            <img
+                              src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=2026-DATTO-MOMO-0912345678"
+                              alt="Mã MoMo QR"
+                              style={{ width: "135px", height: "135px", objectFit: "contain" }}
+                            />
+                          </div>
+                          <div className="vietqr-bank-details" style={{ borderColor: "#f3a5cf" }}>
+                            <div>📱 <b>Ví nhận MoMo:</b> 0912 345 678</div>
+                            <div>👤 <b>Người nhận:</b> CÔNG TY DU LỊCH ĐẤT TỔ</div>
+                            <div>💰 <b>Số tiền:</b> {formatPrice(finalCartTotal)}</div>
+                            <div>📝 <b>Lời nhắn:</b> DT-{checkoutPhone.slice(-4) || "MOMO"}</div>
+                          </div>
+                        </div>
+                      )}
+
+                      {paymentMethod === "zalopay" && (
+                        <div className="vietqr-box" style={{ borderColor: "#0068ff", background: "#f0f6ff" }}>
+                          <span style={{ background: "#0068ff", color: "#fff", padding: "3px 10px", borderRadius: "6px", fontSize: "11.5px", fontWeight: 800, display: "inline-block", marginBottom: "8px" }}>
+                            VÍ ĐIỆN TỬ ZALOPAY
+                          </span>
+                          <p style={{ margin: "4px 0 10px", fontSize: "11.5px", color: "var(--muted)" }}>
+                            Thanh toán an toàn qua Ví ZaloPay hoặc ứng dụng Zalo trên điện thoại
+                          </p>
+                          <div className="vietqr-mock-qr" style={{ borderColor: "#9ec5fe" }}>
+                            <img
+                              src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=2026-DATTO-ZALOPAY-MERCHANT"
+                              alt="Mã ZaloPay QR"
+                              style={{ width: "135px", height: "135px", objectFit: "contain" }}
+                            />
+                          </div>
+                          <div className="vietqr-bank-details" style={{ borderColor: "#9ec5fe" }}>
+                            <div>⚡ <b>Đơn vị nhận:</b> Đất Tổ Travel (ZaloPay Merchant)</div>
+                            <div>💰 <b>Số tiền:</b> {formatPrice(finalCartTotal)}</div>
+                            <div>📝 <b>Mã tham chiếu:</b> ZP-DT-{checkoutPhone.slice(-4) || "PAY"}</div>
+                          </div>
+                        </div>
+                      )}
+
+                      {paymentMethod === "card" && (
+                        <div className="vietqr-box" style={{ borderColor: "#0d5c46", background: "#f6faf8", textAlign: "left" }}>
+                          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "10px" }}>
+                            <span style={{ background: "#0d5c46", color: "#fff", padding: "3px 10px", borderRadius: "6px", fontSize: "11.5px", fontWeight: 800 }}>
+                              THẺ QUỐC TẾ & NỘI ĐỊA
+                            </span>
+                            <span style={{ fontSize: "12px", color: "#0d5c46", fontWeight: 700 }}>
+                              Visa · MasterCard · JCB · Napas
+                            </span>
+                          </div>
+                          <p style={{ margin: "0 0 12px", fontSize: "11.5px", color: "#476156" }}>
+                            🔒 Thông tin thẻ được mã hóa 256-bit SSL đạt tiêu chuẩn PCI-DSS Level 1.
+                          </p>
+                          <div style={{ display: "grid", gap: "8px" }}>
+                            <div>
+                              <small style={{ fontSize: "11px", fontWeight: 700, color: "#334155" }}>Số thẻ:</small>
+                              <input
+                                type="text"
+                                placeholder="4111 •••• •••• 8888"
+                                maxLength={19}
+                                style={{ width: "100%", height: "34px", padding: "0 10px", border: "1px solid #cbd5e1", borderRadius: "6px", fontSize: "13px", marginTop: "3px", letterSpacing: "1px" }}
+                              />
+                            </div>
+                            <div style={{ display: "grid", gridTemplateColumns: "2fr 1fr", gap: "8px" }}>
+                              <div>
+                                <small style={{ fontSize: "11px", fontWeight: 700, color: "#334155" }}>Tên in trên thẻ:</small>
+                                <input
+                                  type="text"
+                                  placeholder={checkoutName ? checkoutName.toUpperCase() : "NGUYEN VAN AN"}
+                                  style={{ width: "100%", height: "34px", padding: "0 10px", border: "1px solid #cbd5e1", borderRadius: "6px", fontSize: "12px", marginTop: "3px", textTransform: "uppercase" }}
+                                />
+                              </div>
+                              <div>
+                                <small style={{ fontSize: "11px", fontWeight: 700, color: "#334155" }}>Hạn / CVV:</small>
+                                <input
+                                  type="text"
+                                  placeholder="MM/YY · •••"
+                                  maxLength={10}
+                                  style={{ width: "100%", height: "34px", padding: "0 10px", border: "1px solid #cbd5e1", borderRadius: "6px", fontSize: "12px", marginTop: "3px" }}
+                                />
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      )}
+
+                      {paymentMethod === "paypal" && (
+                        <div className="vietqr-box" style={{ borderColor: "#003087", background: "#f2f7fc" }}>
+                          <span style={{ background: "#003087", color: "#fff", padding: "3px 10px", borderRadius: "6px", fontSize: "11.5px", fontWeight: 800, display: "inline-block", marginBottom: "8px" }}>
+                            PAYPAL CHECKOUT
+                          </span>
+                          <p style={{ margin: "4px 0 10px", fontSize: "11.5px", color: "var(--muted)" }}>
+                            Thanh toán an toàn quốc tế dành cho du khách nước ngoài
+                          </p>
+                          <div style={{ background: "#ffc439", color: "#111", padding: "10px 18px", borderRadius: "8px", fontWeight: 800, fontSize: "14px", display: "inline-flex", alignItems: "center", gap: "8px", margin: "8px 0" }}>
+                            <span>Pay with</span>
+                            <b style={{ color: "#003087", fontStyle: "italic", fontSize: "17px" }}>PayPal</b>
+                          </div>
+                          <div className="vietqr-bank-details" style={{ borderColor: "#b0d0ea" }}>
+                            <div>🌐 <b>Quy đổi USD:</b> ~${(finalCartTotal / 25450).toFixed(2)} USD</div>
+                            <div>🛡️ <b>Bảo vệ:</b> PayPal Buyer Protection</div>
+                            <div>📝 <b>Mã đơn:</b> DT-{checkoutPhone.slice(-4) || "PAYPAL"}</div>
+                          </div>
+                        </div>
+                      )}
+
+                      {paymentMethod === "cod" && (
+                        <div className="vietqr-box" style={{ borderColor: "#059669", background: "#f0fdf4", textAlign: "left" }}>
+                          <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "6px" }}>
+                            <span style={{ background: "#059669", color: "#fff", padding: "3px 10px", borderRadius: "6px", fontSize: "11.5px", fontWeight: 800 }}>
+                              THANH TOÁN TIỀN MẶT (COD)
+                            </span>
+                            <span style={{ fontSize: "13px" }}>💵</span>
+                          </div>
+                          <p style={{ margin: "0 0 6px", fontSize: "12px", color: "#166534", lineHeight: 1.45 }}>
+                            ✓ Quý khách được quyền kiểm tra hàng (đồng kiểm) trước khi thanh toán cho nhân viên giao nhận.
+                          </p>
+                          <p style={{ margin: 0, fontSize: "11.5px", color: "#475569" }}>
+                            Nhận vé tham quan hoặc đặc sản OCOP tận nơi tại khách sạn hoặc điểm hẹn.
+                          </p>
                         </div>
                       )}
                     </div>
@@ -6949,8 +6922,41 @@ export default function Home() {
             {cartDrawerTab === "orders" && (
               <div>
                 {/* Shopee-style Order Hub */}
-                <div style={{ marginBottom: "14px" }}>
+                <div style={{ marginBottom: "12px" }}>
                   {renderShopeeOrderHub("drawer")}
+                </div>
+
+                {/* Direct Status Filter Pill Tabs */}
+                <div className="cart-order-filter-pills" style={{ display: "flex", gap: "6px", overflowX: "auto", paddingBottom: "6px", marginBottom: "12px" }}>
+                  {[
+                    { id: "all", label: "Tất cả", count: userOrderList.length },
+                    { id: "pending", label: "Chờ xác nhận", count: userOrderList.filter((o) => filterOrderByStatus(o, "pending")).length },
+                    { id: "processing", label: "Đang chuẩn bị", count: userOrderList.filter((o) => filterOrderByStatus(o, "processing")).length },
+                    { id: "shipping", label: "Đang ship", count: userOrderList.filter((o) => filterOrderByStatus(o, "shipping")).length },
+                    { id: "completed", label: "Đã giao", count: userOrderList.filter((o) => filterOrderByStatus(o, "completed")).length },
+                    { id: "cancelled", label: "Đã hủy", count: userOrderList.filter((o) => filterOrderByStatus(o, "cancelled")).length },
+                  ].map((st) => (
+                    <button
+                      key={st.id}
+                      type="button"
+                      className={`pill ${orderStatusTab === st.id ? "pill--primary" : "pill--subtle"}`}
+                      style={{
+                        padding: "5px 11px",
+                        fontSize: "11px",
+                        fontWeight: 700,
+                        whiteSpace: "nowrap",
+                        cursor: "pointer",
+                        borderRadius: "20px",
+                        border: orderStatusTab === st.id ? "1px solid #0d5c46" : "1px solid #e2e8f0",
+                        background: orderStatusTab === st.id ? "#0d5c46" : "#ffffff",
+                        color: orderStatusTab === st.id ? "#ffffff" : "#475569",
+                        transition: "all 0.15s ease",
+                      }}
+                      onClick={() => setOrderStatusTab(st.id)}
+                    >
+                      {st.label} ({st.count})
+                    </button>
+                  ))}
                 </div>
 
                 {/* Filtered Order Cards */}
@@ -7002,6 +7008,7 @@ export default function Home() {
                                   style={
                                     isShipping ? { background: "#f5f3ff", color: "#6d28d9", borderColor: "#ddd6fe" } :
                                     isProcessing ? { background: "#eff6ff", color: "#1d4ed8", borderColor: "#bfdbfe" } :
+                                    isCancelled ? { background: "#fef2f2", color: "#b91c1c", borderColor: "#fecaca" } :
                                     undefined
                                   }
                                 >
@@ -7021,10 +7028,25 @@ export default function Home() {
                             </div>
 
                             <div className="customer-order-body">
-                              <p><b>Địa chỉ:</b> {order.address}</p>
-                              {order.appliedVoucher && (
-                                <p style={{ color: "var(--red)", fontSize: "11.5px" }}>🎁 <b>Ưu đãi:</b> {order.appliedVoucher}</p>
+                              {/* Customer Information Line */}
+                              <div style={{ background: "#f8fafc", padding: "8px 10px", borderRadius: "6px", margin: "6px 0", fontSize: "12px", display: "grid", gap: "2px" }}>
+                                <div>👤 <b>Người mua:</b> {order.customerName || authUser?.name || "Khách hàng"} {order.phone ? `(${order.phone})` : ""}</div>
+                                <div>📍 <b>Giao tới:</b> {order.address}</div>
+                                {order.note && order.note !== "Không có" && (
+                                  <div>📝 <b>Ghi chú:</b> {order.note}</div>
+                                )}
+                              </div>
+
+                              {isCancelled && (
+                                <div style={{ background: "#fef2f2", border: "1px dashed #fca5a5", borderRadius: "6px", padding: "6px 10px", fontSize: "11.5px", color: "#991b1b", margin: "6px 0" }}>
+                                  ✕ Đơn hàng đã được hủy theo yêu cầu của bạn. Bạn có thể nhấn <b>Đặt lại đơn này</b> bên dưới để mua lại nhanh chóng.
+                                </div>
                               )}
+
+                              {order.appliedVoucher && (
+                                <p style={{ color: "var(--red)", fontSize: "11.5px", margin: "4px 0" }}>🎁 <b>Ưu đãi:</b> {order.appliedVoucher}</p>
+                              )}
+
                               <div className="customer-order-items">
                                 {(order.items || []).map((it: any, i: number) => (
                                   <div key={i} className="customer-order-item-row">
@@ -7042,7 +7064,7 @@ export default function Home() {
                                     style={{ minHeight: "32px", padding: "0 10px", fontSize: "11px", color: "var(--red)", borderColor: "#f0b5ab" }}
                                     onClick={() => cancelOrder(order.id)}
                                   >
-                                    {t.cancelOrderBtn}
+                                    ✕ {t.cancelOrderBtn}
                                   </button>
                                 )}
                                 {isShipping && (
@@ -7062,7 +7084,7 @@ export default function Home() {
                                   style={{ minHeight: "32px", padding: "0 12px", fontSize: "11px" }}
                                   onClick={() => reorderItems(order)}
                                 >
-                                  {t.reorderBtn}
+                                  ↺ {t.reorderBtn}
                                 </button>
                               </div>
                             </div>

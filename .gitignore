@@ -54,3 +54,6 @@ next-env.d.ts
 *.tsbuildinfo
 /outputs/
 /work/
+scratch/
+*.zip
+pololu*/
