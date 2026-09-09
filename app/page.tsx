@@ -2620,6 +2620,10 @@ export default function Home() {
   const [query, setQuery] = useState("");
   const [searchFocused, setSearchFocused] = useState(false);
   const [visibleCount, setVisibleCount] = useState(8);
+  // Hero V2 States matching Image 1
+  const [heroSelectedMonth, setHeroSelectedMonth] = useState<number>(9);
+  const [heroMonthDropdownOpen, setHeroMonthDropdownOpen] = useState<boolean>(false);
+  const [heroBgImage, setHeroBgImage] = useState<string>("/images/hero-panorama.jpg");
   const [serverResultIds, setServerResultIds] = useState<string[] | null>(null);
   const [isServerSearching, setIsServerSearching] = useState(false);
   
@@ -4849,26 +4853,42 @@ export default function Home() {
   return (
     <main className="app-shell">
       {/* TOPBAR */}
-      <header className="topbar">
-        <button className="brand" onClick={() => setActiveTab("explore")} aria-label={t.explore}>
-          <span className="brand__mark">Đ</span>
-          <span><strong>Đất Tổ</strong><small>{t.brandSubtitle}</small></span>
+      <header className="topbar topbar--v2">
+        <button className="brand brand--v2" onClick={() => setActiveTab("explore")} aria-label={t.explore}>
+          <div className="brand__emblem-gold" title="Đất Tổ - Hùng Vương">
+            <svg viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="22" cy="22" r="21" fill="#fdfbf7" stroke="#d4af37" strokeWidth="1.8"/>
+              <circle cx="22" cy="22" r="18.5" fill="#f8f4eb" stroke="#c49746" strokeWidth="0.8" strokeDasharray="2.5 1.5"/>
+              <path d="M12 28H32M14 28V24M30 24V28M15 24H29M16 24V19M28 19V24M13 19C17 17 27 17 31 19M17 19V15M27 15V19M16 15C19 13.5 25 13.5 28 15M22 10V13M19 28V32M25 28V32" stroke="#b8860b" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+              <path d="M18 32H26V26C26 24.8954 25.1046 24 24 24H20C18.8954 24 18 24.8954 18 26V32Z" fill="#d4af37" fillOpacity="0.35" stroke="#b8860b" strokeWidth="1.2"/>
+            </svg>
+          </div>
+          <div className="brand__text-group">
+            <strong className="brand__title-gold">ĐẤT TỔ</strong>
+            <small className="brand__slogan">TRỢ LÝ DU LỊCH THÔNG MINH</small>
+          </div>
         </button>
-        <nav className="desktop-nav" aria-label={t.bottomNavAria}>
+        <nav className="desktop-nav desktop-nav--v2" aria-label={t.bottomNavAria}>
           <button className={activeTab === "explore" ? "is-active" : ""} onClick={() => setActiveTab("explore")}>
             {t.explore}
           </button>
           <button className={activeTab === "trip" ? "is-active" : ""} onClick={() => setActiveTab("trip")}>
             {t.trip}
           </button>
+          <button
+            type="button"
+            className="nav-link-food"
+            onClick={() => {
+              if (activeTab !== "explore") setActiveTab("explore");
+              setTimeout(() => {
+                document.getElementById("food-browser-section")?.scrollIntoView({ behavior: "smooth" });
+              }, 80);
+            }}
+          >
+            Ẩm thực
+          </button>
           <button className={activeTab === "near" ? "is-active" : ""} onClick={() => setActiveTab("near")}>
             {t.near}
-          </button>
-          <button className={activeTab === "saved" ? "is-active" : ""} onClick={() => setActiveTab("saved")}>
-            {t.saved}
-            {(favorites.length + savedDishes.length + savedItineraryList.length > 0) && (
-              <span className="nav-badge">{favorites.length + savedDishes.length + savedItineraryList.length}</span>
-            )}
           </button>
         </nav>
         <div className="topbar__actions">
@@ -4925,13 +4945,43 @@ export default function Home() {
             <span>☀</span><b>{weather.temp}°</b><small>{currentLang === "zh" ? "越池" : currentLang === "ko" ? "비엣찌" : currentLang === "ja" ? "ヴィエッチー" : "Việt Trì"}</small>
           </button>
 
+          {/* Heart button for Favorites/Saved */}
           <button
-            className="avatar"
-            onClick={() => setActiveTab("profile")}
-            aria-label={t.profile}
-            title={authUser ? `${authUser.name} (${authUser.role === "admin" ? t.roleAdmin : authUser.role === "merchant" ? t.roleMerchant : t.roleCustomer})` : t.loginAccount}
+            type="button"
+            className="topbar__heart-btn"
+            onClick={() => setActiveTab("saved")}
+            aria-label={t.saved}
+            title={`${t.saved} (${favorites.length + savedDishes.length + savedItineraryList.length})`}
           >
-            {authUser ? (authUser.avatar || authUser.name.slice(0, 2).toUpperCase()) : "👤"}
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+            </svg>
+            {(favorites.length + savedDishes.length + savedItineraryList.length > 0) && (
+              <span className="topbar__heart-badge">{favorites.length + savedDishes.length + savedItineraryList.length}</span>
+            )}
+          </button>
+
+          {/* Green Pill Login Button */}
+          <button
+            type="button"
+            className="topbar__login-pill-btn"
+            onClick={() => {
+              if (authUser) {
+                setActiveTab("profile");
+              } else {
+                setAuthModalTab("login");
+                setAuthModalOpen(true);
+              }
+            }}
+          >
+            {authUser ? (
+              <span className="topbar__user-label">
+                <span className="topbar__user-avatar">{authUser.avatar || authUser.name.slice(0, 2).toUpperCase()}</span>
+                <span>{authUser.name.split(" ").slice(-1)[0] || "Tài khoản"}</span>
+              </span>
+            ) : (
+              <span>Đăng nhập</span>
+            )}
           </button>
         </div>
       </header>
@@ -4939,106 +4989,302 @@ export default function Home() {
       {/* TAB 1: KHÁM PHÁ (EXPLORE) */}
       {activeTab === "explore" && (
         <>
-          <section className="hero">
-            <div className="hero__content">
-              <span className="kicker">{t.heroKicker}</span>
-              <h1>{t.heroTitle1}<br /><em>{t.heroTitle2}</em></h1>
-              <p>{t.heroDesc}</p>
-              <div className="search-area" onMouseLeave={() => setSearchFocused(false)} onPointerLeave={() => setSearchFocused(false)}>
-                <div className="search-box">
-                  <span aria-hidden="true">⌕</span>
+          <section className="hero-panoramic" style={{ backgroundImage: `url(${heroBgImage})` }}>
+            <div className="hero-panoramic__overlay" />
+
+            {/* Background switcher pill in top right corner of hero */}
+            <div className="hero-panoramic__bg-switcher">
+              <span className="hero-bg-switcher-label">📷 Nền:</span>
+              {[
+                { id: "panorama", label: "Toàn cảnh 3 tỉnh", src: "/images/hero-panorama.jpg" },
+                { id: "phutho", label: "Đền Hùng (Phú Thọ)", src: "/images/places/den-hung.png" },
+                { id: "vinhphuc", label: "Tam Đảo (Vĩnh Phúc)", src: "/images/places/tam-dao.jpg" },
+                { id: "hoabinh", label: "Thung Nai (Hòa Bình)", src: "/images/places/thung-nai-song-da.jpg" },
+              ].map((bg) => (
+                <button
+                  key={bg.id}
+                  type="button"
+                  className={`hero-bg-btn ${heroBgImage === bg.src ? "is-active" : ""}`}
+                  onClick={() => setHeroBgImage(bg.src)}
+                >
+                  {bg.label}
+                </button>
+              ))}
+            </div>
+
+            <div className="hero-panoramic__container">
+              {/* HERO HEADINGS */}
+              <div className="hero-panoramic__headings">
+                <h1 className="hero-panoramic__title">
+                  <span>ĐI ĐÚNG MÙA.</span>
+                  <span>CHẠM ĐÚNG ĐẤT TỔ.</span>
+                </h1>
+                <p className="hero-panoramic__subtitle">
+                  Khám phá Đất Tổ theo cách của bạn
+                </p>
+              </div>
+
+              {/* FLOATING SEARCH BAR CAPSULE */}
+              <div className="hero-search-capsule" onMouseLeave={() => setSearchFocused(false)}>
+                {/* 1. Destination Input */}
+                <div className="hero-search-capsule__input-wrap">
+                  <span className="hero-search-icon">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                      <circle cx="11" cy="11" r="8"></circle>
+                      <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                    </svg>
+                  </span>
                   <input
+                    type="text"
                     value={query}
-                    onChange={(event) => { setQuery(event.target.value); setSearchFocused(true); setVisibleCount(8); }}
+                    onChange={(e) => {
+                      setQuery(e.target.value);
+                      setSearchFocused(true);
+                      setVisibleCount(8);
+                    }}
                     onFocus={() => setSearchFocused(true)}
-                    onKeyDown={(event) => {
-                      if (event.key === "Escape") setSearchFocused(false);
-                      if (event.key === "Enter" && searchSuggestions[0]) {
-                        const suggestion = searchSuggestions[0];
-                        if (suggestion.kind === "place") selectSearchSuggestion(suggestion.place, suggestion.label);
-                        else selectFoodSuggestion(suggestion.dish);
+                    onKeyDown={(e) => {
+                      if (e.key === "Escape") setSearchFocused(false);
+                      if (e.key === "Enter") {
+                        setSearchFocused(false);
+                        document.getElementById("destinations-section")?.scrollIntoView({ behavior: "smooth" });
                       }
                     }}
-                    placeholder={t.searchInputPlaceholder}
-                    aria-label={t.searchAriaLabel}
-                    aria-controls="search-suggestions"
+                    placeholder="Bạn muốn đi đâu?"
+                    aria-label="Bạn muốn đi đâu?"
                   />
-                  <button onClick={() => { setSearchFocused(false); locate(); }} title={t.useCurrentLocation} aria-label={t.useCurrentLocation}>⌖</button>
                 </div>
+
+                <div className="hero-search-divider" />
+
+                {/* 2. Month Selector Dropdown */}
+                <div className="hero-search-capsule__month-wrap">
+                  <button
+                    type="button"
+                    className="hero-month-btn"
+                    onClick={() => setHeroMonthDropdownOpen(!heroMonthDropdownOpen)}
+                  >
+                    <span className="hero-cal-icon">
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                        <line x1="16" y1="2" x2="16" y2="6"></line>
+                        <line x1="8" y1="2" x2="8" y2="6"></line>
+                        <line x1="3" y1="10" x2="21" y2="10"></line>
+                      </svg>
+                    </span>
+                    <span className="hero-month-text">{heroSelectedMonth ? `Tháng ${heroSelectedMonth}` : "Tất cả tháng"}</span>
+                    <span className="hero-arrow-down">▾</span>
+                  </button>
+
+                  {heroMonthDropdownOpen && (
+                    <div className="hero-month-dropdown-menu">
+                      <button
+                        type="button"
+                        className={`hero-month-item ${heroSelectedMonth === 0 ? "is-selected" : ""}`}
+                        onClick={() => {
+                          setHeroSelectedMonth(0);
+                          setHeroMonthDropdownOpen(false);
+                          setSeasonFilter("Tất cả");
+                        }}
+                      >
+                        Tất cả các tháng (quanh năm)
+                      </button>
+                      {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map((m) => (
+                        <button
+                          key={m}
+                          type="button"
+                          className={`hero-month-item ${heroSelectedMonth === m ? "is-selected" : ""}`}
+                          onClick={() => {
+                            setHeroSelectedMonth(m);
+                            setHeroMonthDropdownOpen(false);
+                            if ([1, 2, 3].includes(m)) setSeasonFilter("Mùa xuân");
+                            else if ([4, 5, 6].includes(m)) setSeasonFilter("Mùa hè");
+                            else if ([7, 8, 9].includes(m)) setSeasonFilter("Mùa thu");
+                            else setSeasonFilter("Mùa đông");
+                            showToast(`Đã chọn Tháng ${m} · Khám phá những điểm đến lý tưởng nhất mùa này!`);
+                          }}
+                        >
+                          Tháng {m} {m === 9 ? "🍁 (Hiện tại)" : m === 3 || m === 4 ? "🏮 (Lễ hội Đền Hùng)" : ""}
+                        </button>
+                      ))}
+                    </div>
+                  )}
+                </div>
+
+                {/* 3. Search Action Button */}
+                <button
+                  type="button"
+                  className="hero-search-submit-btn"
+                  onClick={() => {
+                    setSearchFocused(false);
+                    document.getElementById("destinations-section")?.scrollIntoView({ behavior: "smooth" });
+                  }}
+                >
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                  </svg>
+                  <span>Tìm kiếm</span>
+                </button>
+
+                {/* Autocomplete Suggestions Dropdown */}
                 {searchFocused && searchSuggestions.length > 0 && (
-                  <div className="search-suggestions" id="search-suggestions" role="listbox">
-                    <span className="search-suggestions__label">{query ? t.searchSuggestionsMatched || "..." : t.searchSuggestionsPopular || "..."}</span>
-                    {searchSuggestions.map((item) => (
-                      <button key={item.id} role="option" aria-selected="false" onMouseDown={(event) => event.preventDefault()} onClick={() => item.kind === "place" ? selectSearchSuggestion(item.place, item.label) : selectFoodSuggestion(item.dish)}>
-                        <span>{item.icon}</span><p><b>{item.label}</b><small>{item.meta}</small></p><i>↗</i>
+                  <div className="hero-search-suggestions" role="listbox">
+                    <span className="search-suggestions__label">{query ? (t.searchSuggestionsMatched || "Gợi ý điểm đến") : (t.searchSuggestionsPopular || "Địa điểm nổi bật")}</span>
+                    {searchSuggestions.slice(0, 6).map((item) => (
+                      <button
+                        key={item.id}
+                        type="button"
+                        className="hero-suggestion-item"
+                        onMouseDown={(e) => e.preventDefault()}
+                        onClick={() => {
+                          setSearchFocused(false);
+                          if (item.kind === "place") selectSearchSuggestion(item.place, item.label);
+                          else selectFoodSuggestion(item.dish);
+                        }}
+                      >
+                        <span className="hero-sug-icon">{item.icon}</span>
+                        <div className="hero-sug-info">
+                          <b>{item.label}</b>
+                          <small>{item.meta}</small>
+                        </div>
+                        <span className="hero-sug-arrow">↗</span>
                       </button>
                     ))}
                   </div>
                 )}
               </div>
-              {/* QUICK TRENDING SEARCH CHIPS */}
-              <div className="hero__trending">
-                <span className="hero__trending-label">{t.heroTrendingLabel}</span>
+
+              {/* 6 CATEGORY QUICK FILTER CARDS */}
+              <div className="hero-category-cards-grid">
                 {[
-                  { label: t.heroTagHungTemple, term: "Đền Hùng" },
-                  { label: t.heroTagHotSpring, term: "Khoáng nóng Thanh Thủy" },
-                  { label: t.heroTagLongCoc, term: "Long Cốc" },
-                  { label: t.heroTagTamDao, term: "Tam Đảo" },
-                  { label: t.heroTagOcopFood, term: "OCOP" },
-                ].map((chip) => (
-                  <button
-                    key={chip.term}
-                    type="button"
-                    className="hero__trending-chip"
-                    onClick={() => {
-                      setQuery(chip.term);
-                      setSearchFocused(true);
+                  {
+                    id: "nature",
+                    icon: "🍃",
+                    label: "Thiên nhiên",
+                    action: () => {
+                      setCategory("Núi rừng & sinh thái");
                       setVisibleCount(8);
-                    }}
+                      document.getElementById("destinations-section")?.scrollIntoView({ behavior: "smooth" });
+                    },
+                    active: category === "Núi rừng & sinh thái",
+                  },
+                  {
+                    id: "culture",
+                    icon: "🏛️",
+                    label: "Văn hóa",
+                    action: () => {
+                      setCategory("Di sản & tâm linh");
+                      setVisibleCount(8);
+                      document.getElementById("destinations-section")?.scrollIntoView({ behavior: "smooth" });
+                    },
+                    active: category === "Di sản & tâm linh" || category === "Văn hóa & làng nghề",
+                  },
+                  {
+                    id: "checkin",
+                    icon: "📷",
+                    label: "Check-in",
+                    action: () => {
+                      setCategory("Check-in & vui chơi");
+                      setVisibleCount(8);
+                      document.getElementById("destinations-section")?.scrollIntoView({ behavior: "smooth" });
+                    },
+                    active: category === "Check-in & vui chơi",
+                  },
+                  {
+                    id: "resort",
+                    icon: "♨️",
+                    label: "Nghỉ dưỡng",
+                    action: () => {
+                      setCategory("Nghỉ dưỡng & chữa lành");
+                      setVisibleCount(8);
+                      document.getElementById("destinations-section")?.scrollIntoView({ behavior: "smooth" });
+                    },
+                    active: category === "Nghỉ dưỡng & chữa lành",
+                  },
+                  {
+                    id: "cuisine",
+                    icon: "🍜",
+                    label: "Ẩm thực",
+                    action: () => {
+                      document.getElementById("food-browser-section")?.scrollIntoView({ behavior: "smooth" });
+                    },
+                    active: false,
+                  },
+                  {
+                    id: "family",
+                    icon: "👥",
+                    label: "Gia đình",
+                    action: () => {
+                      setCategory("Tất cả");
+                      setTravelers(4);
+                      document.getElementById("destinations-section")?.scrollIntoView({ behavior: "smooth" });
+                      showToast("Gợi ý các điểm đến lý tưởng cho gia đình & trẻ nhỏ!");
+                    },
+                    active: travelers >= 3,
+                  },
+                ].map((card) => (
+                  <button
+                    key={card.id}
+                    type="button"
+                    className={`hero-category-card ${card.active ? "is-active" : ""}`}
+                    onClick={card.action}
                   >
-                    {chip.label}
+                    <span className="hero-cat-icon">{card.icon}</span>
+                    <span className="hero-cat-label">{card.label}</span>
                   </button>
                 ))}
               </div>
 
-              {/* MODERN TRUST COUNTER GRID */}
-              <div className="hero__trust-grid">
-                <div className="hero__trust-card">
-                  <div className="hero__trust-card-top">
-                    <span className="hero__trust-card-icon">🏛️</span>
-                    <span className="hero__trust-card-num">{places.length}+</span>
+              {/* FROSTED GLASS VALUE PROPOSITION BAR */}
+              <div className="hero-features-glass">
+                <div className="hero-feature-item" onClick={() => { setSelectedRegion("Tất cả"); document.getElementById("destinations-section")?.scrollIntoView({ behavior: "smooth" }); }}>
+                  <span className="hero-feat-icon">📍</span>
+                  <div className="hero-feat-content">
+                    <strong>3 TỈNH – MUÔN TRẢI NGHIỆM</strong>
+                    <small>Phú Thọ – Vĩnh Phúc – Hòa Bình</small>
                   </div>
-                  <span className="hero__trust-card-label">{t.tripPoints}</span>
                 </div>
-                <div className="hero__trust-card">
-                  <div className="hero__trust-card-top">
-                    <span className="hero__trust-card-icon">🗺️</span>
-                    <span className="hero__trust-card-num">3</span>
+
+                <div className="hero-feature-item" onClick={() => { setVouchersModalOpen(true); }}>
+                  <span className="hero-feat-icon">🧭</span>
+                  <div className="hero-feat-content">
+                    <strong>ĐI ĐÚNG MÙA</strong>
+                    <small>Gợi ý theo thời tiết & lễ hội</small>
                   </div>
-                  <span className="hero__trust-card-label">{t.nearAll3Provinces}</span>
                 </div>
-                <div className="hero__trust-card">
-                  <div className="hero__trust-card-top">
-                    <span className="hero__trust-card-icon">🍵</span>
-                    <span className="hero__trust-card-num">100%</span>
+
+                <div className="hero-feature-item" onClick={() => { setActiveTab("trip"); }}>
+                  <span className="hero-feat-icon">📋</span>
+                  <div className="hero-feat-content">
+                    <strong>LÊN LỊCH TRÌNH DỄ DÀNG</strong>
+                    <small>Tối ưu thời gian & chi phí</small>
                   </div>
-                  <span className="hero__trust-card-label">{t.heroTrustOcop}</span>
+                </div>
+
+                <div className="hero-feature-item" onClick={() => { document.getElementById("food-browser-section")?.scrollIntoView({ behavior: "smooth" }); }}>
+                  <span className="hero-feat-icon">❤️</span>
+                  <div className="hero-feat-content">
+                    <strong>TRẢI NGHIỆM TRỌN VẸN</strong>
+                    <small>Ăn ngon – Chơi đã – Nghỉ tốt</small>
+                  </div>
                 </div>
               </div>
-            </div>
-            <div className="hero__visual">
-              <span className="hero__badge-top">✦ {t.heroBadgeHeritage}</span>
-              <img src={places[0].image} alt={places[0].name} loading="lazy" onError={handleImageError} />
-              <div className="hero__caption">
-                <span>{t.featuredDestCaption}</span>
-                <strong>{places[0].name}</strong>
-                <button onClick={() => openPlace(places[0])}>{t.openGuideBtn}</button>
-              </div>
-              <div className="hero__stamp"><b>01</b><span>{t.stampOriginTitle}<br />{t.stampOriginSub}</span></div>
+
+              {/* SCROLL TO EXPLORE CUE */}
+              <button
+                type="button"
+                className="hero-scroll-cue"
+                onClick={() => {
+                  document.getElementById("destinations-section")?.scrollIntoView({ behavior: "smooth" });
+                }}
+              >
+                <span>Cuộn để khám phá</span>
+                <span className="hero-scroll-arrow">⌄</span>
+              </button>
             </div>
           </section>
 
-          {/* SPECIAL HERITAGE PROGRAM & REWARDS BANNER (VIP REDESIGN - MỤC 8) */}
           <section className="special-heritage-banner">
             <div className="special-heritage-header">
               <span className="heritage-gold-tag">✦ {t.heritageTag1}</span>
@@ -5171,7 +5417,7 @@ export default function Home() {
           </section>
 
           {/* REGION & CATEGORY SELECTION */}
-          <section className="content-section category-section">
+          <section className="content-section category-section" id="destinations-section">
             <div className="section-heading section-heading--inline">
               <div><span className="section-number">{t.section01Num}</span><h2>{t.section01Title}</h2></div>
               <button className="text-link" onClick={() => { setCategory("Tất cả"); setSelectedRegion("Tất cả"); setSeasonFilter("Tất cả"); setQuery(""); }}>{t.viewAllBtn}</button>
