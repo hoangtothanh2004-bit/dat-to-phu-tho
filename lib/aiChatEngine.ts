@@ -49,6 +49,7 @@ export type AiSurveyState = {
   district?: string;
   region?: string;
   durationDays?: number;
+  durationNights?: number;
   travelers?: number;
   transport?: string;
   budget?: string;
@@ -263,6 +264,22 @@ const DESTINATION_MAPPINGS: Array<{
     region: "Vĩnh Phúc",
     district: "Phúc Yên",
     desc: "Mặt hồ phẳng lặng hơn 500 ha bao quanh bởi rừng thông xanh biếc, thiên đường nghỉ dưỡng và thể thao nước.",
+  },
+  {
+    keywords: ["vĩnh yên", "vinh yen", "tp vĩnh yên", "tp vinh yen", "thành phố vĩnh yên", "đầm vạc", "dam vac", "chùa tích sơn", "chùa hà tiên"],
+    placeId: "dam-vac",
+    name: "TP. Vĩnh Yên & Đầm Vạc",
+    region: "Vĩnh Phúc",
+    district: "TP. Vĩnh Yên",
+    desc: "Trung tâm tỉnh lỵ Vĩnh Phúc nổi danh với thắng cảnh Đầm Vạc mênh mông, sân golf chuẩn quốc tế, chùa Tích Sơn nghìn năm tuổi và chùa Hà Tiên linh thiêng.",
+  },
+  {
+    keywords: ["phúc yên", "phuc yen", "thành phố phúc yên", "tp phúc yên", "tp phuc yen"],
+    placeId: "ho-dai-lai",
+    name: "TP. Phúc Yên (Hồ Đại Lải & Flamingo)",
+    region: "Vĩnh Phúc",
+    district: "TP. Phúc Yên",
+    desc: "Thành phố cửa ngõ Vĩnh Phúc với thắng cảnh Hồ Đại Lải thơ mộng, tổ hợp nghỉ dưỡng Flamingo và ẩm thực thịt trâu nướng tảng trứ danh.",
   },
   {
     keywords: ["đền hùng", "den hung", "vua hùng", "nghĩa lĩnh", "việt trì", "viet tri"],
@@ -858,12 +875,22 @@ export function extractEntitiesFromText(text: string, prevSurvey: AiSurveyState)
     const days = parseInt(multiDayMatch[1], 10);
     if (days >= 1 && days <= 7) {
       nextSurvey.durationDays = days;
+      if (multiDayMatch[2]) {
+        const nights = parseInt(multiDayMatch[2], 10);
+        if (nights >= 0 && nights <= 7) {
+          nextSurvey.durationNights = nights;
+        }
+      }
       extractedAny = true;
     }
   } else if (shortDayNightMatch) {
     const days = parseInt(shortDayNightMatch[1], 10);
     if (days >= 1 && days <= 7) {
       nextSurvey.durationDays = days;
+      const nights = parseInt(shortDayNightMatch[2], 10);
+      if (nights >= 0 && nights <= 7) {
+        nextSurvey.durationNights = nights;
+      }
       extractedAny = true;
     }
   } else if (shortDayOnlyMatch) {
@@ -874,9 +901,11 @@ export function extractEntitiesFromText(text: string, prevSurvey: AiSurveyState)
     }
   } else if (lower.includes("1 ngày") || lower.includes("trong ngày") || lower.includes("đi về trong ngày")) {
     nextSurvey.durationDays = 1;
+    nextSurvey.durationNights = 0;
     extractedAny = true;
   } else if (lower.includes("cuối tuần") || lower.includes("thứ 7 chủ nhật") || lower.includes("t7 cn")) {
     nextSurvey.durationDays = 2;
+    nextSurvey.durationNights = 1;
     extractedAny = true;
   }
 
@@ -1070,7 +1099,53 @@ export function processAiMessage(
   }
 
   // =========================================================================
-  // 3.5. COMBINED INTENT: User asks for BOTH attractions AND food in a district
+  // 3.5. PRIORITY: ITINERARY GENERATION (Both Destination AND Duration are present)
+  // When user provides BOTH Destination AND Duration, their primary intent is to
+  // GENERATE THE TRIP ITINERARY (even if phrasing includes "đi chơi ở", "du lịch ở", "ăn uống ở").
+  // =========================================================================
+  if (hasDestination && hasDuration) {
+    const finalDays = survey.durationDays || 2;
+    const finalNights = survey.durationNights !== undefined
+      ? survey.durationNights
+      : (finalDays > 1 ? finalDays - 1 : 0);
+    const finalTravelers = survey.travelers || 2;
+    const finalTransport = survey.transport || "Ô tô riêng";
+    const finalStyle = survey.style || "Văn hóa & cội nguồn";
+
+    // Generate accurate itinerary
+    const itinerary = buildItinerary({
+      anchorPlaceId: survey.anchorPlaceId,
+      selectedPlaceIds: survey.selectedPlaceIds.length > 0 ? survey.selectedPlaceIds : [survey.anchorPlaceId],
+      district: survey.district,
+      region: survey.region,
+      durationDays: finalDays,
+      durationNights: finalNights,
+      transport: finalTransport,
+      budget: survey.budget || "Tiêu chuẩn",
+      style: finalStyle,
+      travelers: finalTravelers,
+    });
+
+    const userGreeting = userName ? `Chào **${userName}**! ` : "";
+    const nightText = finalNights > 0 ? ` ${finalNights} đêm` : " trong ngày";
+
+    return {
+      text:
+        `🎉 ${userGreeting}Em đã thiết kế xong **Lịch trình ${finalDays} ngày${nightText}** khám phá **${survey.destinationText}** cho **${finalTravelers} người** đi bằng **${finalTransport}** đúng theo yêu cầu của bạn!\n\n` +
+        `Lịch trình được tính toán cung đường tối ưu, các điểm tham quan nổi tiếng, điểm nghỉ chân và gợi ý các món đặc sản địa phương ngon nhất. Bạn có thể xem ngay chi tiết bên dưới:`,
+      itinerary,
+      options: [
+        { label: "👉 Xem trên Trang Lịch Trình trực quan ➔", value: "view_trip_now", icon: "🗺️" },
+        { label: "💾 Lưu vào Lịch trình của tôi", value: "save_trip_now", icon: "⭐" },
+        { label: "🔄 Tùy chỉnh lịch trình khác", value: "start_planner", icon: "🔁" },
+      ],
+      updatedSurvey: survey,
+      isCompleted: true,
+    };
+  }
+
+  // =========================================================================
+  // 4. COMBINED INTENT: User asks for BOTH attractions AND food in a district
   // (e.g. "huyện đoan hùng có điểm du lịch và ăn uống gì", "tam nông có gì chơi và ăn gì"...)
   // =========================================================================
   if (matchedDistrict && isAskingFood && isAskingSightseeing) {
@@ -1324,45 +1399,6 @@ export function processAiMessage(
     };
   }
 
-  // =========================================================================
-  // 7. ITINERARY GENERATION (Both Destination AND Duration are present)
-  // =========================================================================
-  if (hasDestination && hasDuration) {
-    const finalDays = survey.durationDays || 2;
-    const finalTravelers = survey.travelers || 2;
-    const finalTransport = survey.transport || "Ô tô riêng";
-    const finalStyle = survey.style || "Văn hóa & cội nguồn";
-
-    // Generate accurate itinerary
-    const itinerary = buildItinerary({
-      anchorPlaceId: survey.anchorPlaceId,
-      selectedPlaceIds: survey.selectedPlaceIds.length > 0 ? survey.selectedPlaceIds : [survey.anchorPlaceId],
-      district: survey.district,
-      region: survey.region,
-      durationDays: finalDays,
-      transport: finalTransport,
-      budget: survey.budget || "Tiêu chuẩn",
-      style: finalStyle,
-      travelers: finalTravelers,
-    });
-
-    const userGreeting = userName ? `Chào **${userName}**! ` : "";
-    const nightText = finalDays > 1 ? ` ${finalDays - 1} đêm` : " trong ngày";
-
-    return {
-      text:
-        `🎉 ${userGreeting}Em đã thiết kế xong **Lịch trình ${finalDays} ngày${nightText}** khám phá **${survey.destinationText}** cho **${finalTravelers} người** đi bằng **${finalTransport}** đúng theo yêu cầu của bạn!\n\n` +
-        `Lịch trình được tính toán cung đường tối ưu, các điểm tham quan nổi tiếng, điểm nghỉ chân và gợi ý các món đặc sản địa phương ngon nhất. Bạn có thể xem ngay chi tiết bên dưới:`,
-      itinerary,
-      options: [
-        { label: "👉 Xem trên Trang Lịch Trình trực quan ➔", value: "view_trip_now", icon: "🗺️" },
-        { label: "💾 Lưu vào Lịch trình của tôi", value: "save_trip_now", icon: "⭐" },
-        { label: "🔄 Tùy chỉnh lịch trình khác", value: "start_planner", icon: "🔁" },
-      ],
-      updatedSurvey: survey,
-      isCompleted: true,
-    };
-  }
 
   // =========================================================================
   // 8. CASE C: We have Destination, but missing Duration
