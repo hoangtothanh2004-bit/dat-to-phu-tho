@@ -1,5 +1,41 @@
 import { places, type Place, foodRegions } from "@/data/travel";
+import { DISTRICT_DATABASE, findDistrictByQuery, type DistrictInfo } from "@/data/districtDirectory";
 import { buildItinerary, type GeneratedItinerary } from "./guidePlanner";
+
+export const DISTRICT_TO_ANCHOR_MAP: Record<string, string> = {
+  "viet-tri": "den-hung",
+  "thi-xa-phu-tho": "den-hung",
+  "lam-thao": "den-hung",
+  "phu-ninh": "den-hung",
+  "ha-hoa": "den-mau-au-co",
+  "doan-hung": "den-hung",
+  "cam-khe": "dam-ao-chau",
+  "thanh-ba": "dam-ao-chau",
+  "tam-nong": "thanh-thuy",
+  "thanh-thuy": "thanh-thuy",
+  "thanh-son": "long-coc",
+  "tan-son": "long-coc",
+  "yen-lap": "xuan-son",
+  "vinh-yen": "dam-vac",
+  "phuc-yen": "ho-dai-lai",
+  "tam-dao": "tam-dao",
+  "binh-xuyen": "lang-gom-huong-canh",
+  "vinh-tuong": "dam-vac",
+  "yen-lac": "dam-vac",
+  "lap-thach": "tam-dao",
+  "song-lo": "tam-dao",
+  "tam-duong": "tam-dao",
+  "tp-hoa-binh": "bao-tang-muong",
+  "mai-chau": "ban-lac-mai-chau",
+  "kim-boi": "khoang-nong-kim-boi",
+  "cao-phong": "thung-nai-song-da",
+  "luong-son": "bao-tang-muong",
+  "da-bac": "thung-nai-song-da",
+  "tan-lac": "ban-lac-mai-chau",
+  "lac-son": "ban-lac-mai-chau",
+  "lac-thuy": "khoang-nong-kim-boi",
+  "yen-thuy": "khoang-nong-kim-boi",
+};
 
 export type AiSurveyState = {
   destinationText: string;
@@ -259,7 +295,31 @@ const DESTINATION_MAPPINGS: Array<{
 
 // Check if query is outside website's scope
 export function checkOutOfScope(text: string): boolean {
-  const lower = text.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+  const lower = text
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/[đ]/g, "d");
+
+  // In-scope protected districts, landmarks, and regions of 3 provinces (NEVER out of scope)
+  const inScopeKeywords = [
+    "phu tho", "viet tri", "lam thao", "phu ninh", "ha hoa", "doan hung", "cam khe",
+    "thanh ba", "tam nong", "thanh thuy", "thanh son", "tan son", "yen lap", "thi xa phu tho",
+    "vinh phuc", "vinh yen", "phuc yen", "tam dao", "binh xuyen", "vinh tuong", "yen lac",
+    "lap thach", "song lo", "tam duong", "tay thien", "dai lai",
+    "hoa binh", "mai chau", "kim boi", "cao phong", "luong son", "da bac", "tan lac",
+    "lac son", "lac thuy", "yen thuy", "thung nai", "song da", "thac bo", "dam vac", "huong canh",
+    "tho tang", "dong dau", "da bia", "lung van", "thac mu", "chua tien", "dam da", "chi ne",
+    "xuan son", "long coc", "dao ngoc xanh", "vuon vua", "den hung", "hung lo"
+  ];
+  if (inScopeKeywords.some((kw) => lower.includes(kw))) {
+    return false;
+  }
+
+  // If matched to any district in our database, it is 100% in-scope
+  if (findDistrictByQuery(text)) {
+    return false;
+  }
 
   // Unrelated distant locations
   const outLocations = [
@@ -531,7 +591,8 @@ export function checkIsAskingSightseeing(text: string): boolean {
     "kham pha gi",
     "goi y diem",
     "goi y dia diem",
-    "goi y",
+    "goi y diem choi",
+    "goi y diem tham quan",
     "choi o dau",
     "choi nhung dau",
     "di dau choi",
@@ -545,8 +606,74 @@ export function checkIsAskingSightseeing(text: string): boolean {
     "du lich o",
     "den day choi gi",
     "den day di dau",
+    "diem du lich",
+    "co gi tham quan",
+    "co cho nao tham quan",
+    "canh dep",
+    "danh lam",
+    "thang canh",
   ];
   return patterns.some((p) => lower.includes(p));
+}
+
+export function checkIsAskingFood(text: string): boolean {
+  const lower = text
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/[đ]/g, "d");
+
+  const foodPatterns = [
+    "an gi",
+    "co gi an",
+    "co gi ngon",
+    "an gi ngon",
+    "mon gi ngon",
+    "an uong",
+    "an uong gi",
+    "an uong o",
+    "mon ngon",
+    "co mon gi",
+    "co mon nao",
+    "dac san",
+    "dac san gi",
+    "dac san nao",
+    "dac san co gi",
+    "quan an",
+    "nha hang",
+    "quan ngon",
+    "quan nao ngon",
+    "am thuc",
+    "cho nao an",
+    "dia diem an",
+    "mon gi",
+    "mon an",
+    "uong gi",
+    "thuc don",
+    "choi xong an",
+    "di dau an",
+    "an o dau",
+    "an o dau ngon",
+    "dia chi quan",
+    "quan nao",
+    "do an",
+    "do uong",
+    "com lam",
+    "thit chua",
+    "ca lang",
+    "banh tai",
+    "ca thinh",
+    "buoi doan hung",
+    "ga nhieu cua",
+    "ga chin cua",
+    "ga doi",
+    "thit trau",
+    "su su",
+    "de nui",
+    "banh hon",
+    "banh trung",
+  ];
+  return foodPatterns.some((p) => lower.includes(p));
 }
 
 export function checkIsAskingAlternative(text: string): boolean {
@@ -591,7 +718,7 @@ export function extractEntitiesFromText(text: string, prevSurvey: AiSurveyState)
   let extractedAny = false;
   let destinationMatched: (typeof DESTINATION_MAPPINGS)[0] | undefined;
 
-  // 1. Destination Extraction
+  // 1. Destination Extraction from explicit mappings
   for (const item of DESTINATION_MAPPINGS) {
     if (item.keywords.some((kw) => lower.includes(kw))) {
       nextSurvey.anchorPlaceId = item.placeId;
@@ -602,6 +729,28 @@ export function extractEntitiesFromText(text: string, prevSurvey: AiSurveyState)
       destinationMatched = item;
       extractedAny = true;
       break;
+    }
+  }
+
+  // Fallback: Check 32 districts database across Phu Tho, Vinh Phuc, Hoa Binh
+  if (!destinationMatched) {
+    const distInfo = findDistrictByQuery(text);
+    if (distInfo) {
+      const pId = DISTRICT_TO_ANCHOR_MAP[distInfo.id] || "den-hung";
+      nextSurvey.anchorPlaceId = pId;
+      nextSurvey.selectedPlaceIds = [pId];
+      nextSurvey.destinationText = distInfo.title;
+      nextSurvey.region = distInfo.province;
+      nextSurvey.district = distInfo.name;
+      destinationMatched = {
+        keywords: distInfo.keywords,
+        placeId: pId,
+        name: distInfo.name,
+        region: distInfo.province,
+        district: distInfo.name,
+        desc: distInfo.intro,
+      };
+      extractedAny = true;
     }
   }
 
@@ -727,144 +876,280 @@ export function processAiMessage(
   // 2. Entity Extraction
   const { survey, destinationMatched } = extractEntitiesFromText(trimmed, currentSurvey);
 
-  // 2.4. ALTERNATIVE SPOTS INTENT: User asks for OTHER places / alternatives
-  // (e.g. "có chỗ nào khác ngoài suối khoáng nóng thanh thủy", "ngoài đền hùng ra còn gì", "chỗ nào khác"...)
+  // Identify district from query or current survey state
+  const matchedDistrict =
+    findDistrictByQuery(trimmed) ||
+    (survey.district ? findDistrictByQuery(survey.district) : undefined) ||
+    (currentSurvey.district ? findDistrictByQuery(currentSurvey.district) : undefined);
+
   const isAskingAlternative = checkIsAskingAlternative(trimmed);
+  const isAskingFood = checkIsAskingFood(trimmed);
+  const isAskingSightseeing = checkIsAskingSightseeing(trimmed);
+  const hasDuration = Boolean(survey.durationDays && survey.durationDays >= 1);
+  const hasDestination = Boolean(survey.anchorPlaceId && survey.anchorPlaceId !== "");
+  const currentTrav = survey.travelers || 2;
+
+  // =========================================================================
+  // 3. ALTERNATIVE SPOTS INTENT: User asks for OTHER places / alternatives
+  // (e.g. "có chỗ nào khác ngoài suối khoáng nóng thanh thủy", "ngoài đền hùng ra còn gì"...)
+  // =========================================================================
   if (isAskingAlternative) {
+    if (matchedDistrict) {
+      // Find excluded words
+      let excludedLabel = "điểm vừa đề cập";
+      let filteredSpots = matchedDistrict.attractions;
+
+      if (lower.includes("khoang nong") || lower.includes("khoáng nóng") || lower.includes("onsen") || lower.includes("suoi") || lower.includes("suối")) {
+        excludedLabel = "Suối khoáng nóng";
+        filteredSpots = matchedDistrict.attractions.filter((s) => !s.name.toLowerCase().includes("khoáng") && !s.name.toLowerCase().includes("onsen"));
+      } else if (lower.includes("dao ngoc") || lower.includes("đảo ngọc")) {
+        excludedLabel = "Đảo Ngọc Xanh";
+        filteredSpots = matchedDistrict.attractions.filter((s) => !s.name.toLowerCase().includes("ngọc xanh"));
+      } else if (lower.includes("den hung") || lower.includes("đền hùng")) {
+        excludedLabel = "Đền Hùng";
+        filteredSpots = matchedDistrict.attractions.filter((s) => !s.name.toLowerCase().includes("hùng"));
+      } else if (lower.includes("long coc") || lower.includes("long cốc") || lower.includes("doi che") || lower.includes("đồi chè")) {
+        excludedLabel = "Đồi chè Long Cốc";
+        filteredSpots = matchedDistrict.attractions.filter((s) => !s.name.toLowerCase().includes("long cốc"));
+      } else {
+        excludedLabel = matchedDistrict.attractions[0]?.name || "điểm vừa đề cập";
+        filteredSpots = matchedDistrict.attractions.slice(1);
+      }
+
+      let spotsText = `Dạ, nếu bạn muốn tìm **các địa điểm vui chơi, tham quan khác** (thay vì *${excludedLabel}*) tại **${matchedDistrict.name}** (${matchedDistrict.province}) thì còn rất nhiều lựa chọn nổi bật sau ạ:\n\n`;
+      filteredSpots.forEach((sp, idx) => {
+        spotsText += `${idx + 1}. ${sp.icon} **${sp.name}** (${sp.category}):\n   - ${sp.desc}\n`;
+      });
+      spotsText += `\nBạn thấy thích **địa điểm nào nhất** trong các gợi ý trên, hoặc bạn muốn em tạo **Lịch trình kết hợp các điểm này** cho chuyến đi của bạn ạ? (Hãy bấm chọn gợi ý bên dưới hoặc gõ trực tiếp nhé! 🌿)`;
+
+      const options = filteredSpots.map((sp, idx) => ({
+        label: `${sp.icon} ${sp.name.split("(")[0].trim()}`,
+        value: `choose_spot_${matchedDistrict.id}_${idx}`,
+        icon: sp.icon,
+      }));
+      options.push({
+        label: `✨ Lên tour kết hợp các điểm trên (${filteredSpots.length} điểm)`,
+        value: matchedDistrict.comboActionValue,
+        icon: "✨",
+      });
+
+      const nextSurvey: AiSurveyState = {
+        ...currentSurvey,
+        anchorPlaceId: DISTRICT_TO_ANCHOR_MAP[matchedDistrict.id] || "den-hung",
+        destinationText: matchedDistrict.title,
+        district: matchedDistrict.name,
+        region: matchedDistrict.province,
+        selectedPlaceIds: [DISTRICT_TO_ANCHOR_MAP[matchedDistrict.id] || "den-hung"],
+      };
+
+      return {
+        text: spotsText,
+        options,
+        updatedSurvey: nextSurvey,
+      };
+    }
+
+    // Fallback to regional recommendations
     let areaKey = "thanh-thuy";
-    if (
-      lower.includes("thanh thủy") ||
-      lower.includes("thanh thuy") ||
-      currentSurvey.district?.includes("Thanh Thủy") ||
-      currentSurvey.anchorPlaceId === "thanh-thuy"
-    ) {
+    if (lower.includes("thanh thủy") || lower.includes("thanh thuy") || currentSurvey.district?.includes("Thanh Thủy")) {
       areaKey = "thanh-thuy";
-    } else if (
-      lower.includes("thanh sơn") ||
-      lower.includes("thanh son") ||
-      currentSurvey.district?.includes("Thanh Sơn") ||
-      currentSurvey.anchorPlaceId === "long-coc"
-    ) {
+    } else if (lower.includes("thanh sơn") || lower.includes("thanh son") || currentSurvey.district?.includes("Thanh Sơn")) {
       areaKey = "thanh-son";
-    } else if (
-      lower.includes("đền hùng") ||
-      lower.includes("den hung") ||
-      lower.includes("việt trì") ||
-      lower.includes("viet tri")
-    ) {
+    } else if (lower.includes("đền hùng") || lower.includes("den hung") || lower.includes("việt trì") || lower.includes("viet tri")) {
       areaKey = "den-hung";
-    } else if (
-      lower.includes("tam đảo") ||
-      lower.includes("tam dao")
-    ) {
+    } else if (lower.includes("tam đảo") || lower.includes("tam dao")) {
       areaKey = "tam-dao";
     }
 
     const rec = AREA_RECOMMENDATIONS[areaKey] || AREA_RECOMMENDATIONS["thanh-thuy"];
-
-    // Filter out spots that match what user wanted to exclude (e.g. "suối khoáng nóng" -> exclude onsen)
-    let excludedLabel = "Suối khoáng nóng";
-    let filteredSpots = rec.spots;
-    if (
-      lower.includes("khoang nong") ||
-      lower.includes("khoáng nóng") ||
-      lower.includes("onsen") ||
-      lower.includes("suoi") ||
-      lower.includes("suối")
-    ) {
-      excludedLabel = "Suối khoáng nóng";
-      filteredSpots = rec.spots.filter((s) => !s.actionValue.includes("onsen"));
-    } else if (lower.includes("dao ngoc") || lower.includes("đảo ngọc")) {
-      excludedLabel = "Đảo Ngọc Xanh";
-      filteredSpots = rec.spots.filter((s) => !s.actionValue.includes("dao_ngoc"));
-    } else if (lower.includes("den hung") || lower.includes("đền hùng")) {
-      excludedLabel = "Đền Hùng";
-      filteredSpots = rec.spots.filter((s) => !s.actionValue.includes("den_hung"));
-    } else if (lower.includes("long coc") || lower.includes("long cốc") || lower.includes("doi che") || lower.includes("đồi chè")) {
-      excludedLabel = "Đồi chè Long Cốc";
-      filteredSpots = rec.spots.filter((s) => !s.actionValue.includes("long_coc"));
-    } else {
-      excludedLabel = rec.spots[0]?.name || "điểm vừa đề cập";
-      filteredSpots = rec.spots.slice(1);
-    }
-
-    let spotsText = `Dạ, nếu bạn muốn tìm **các địa điểm vui chơi, tham quan khác** (thay vì *${excludedLabel}*) tại **${rec.title.split("–")[0]?.trim() || "khu vực này"}** thì còn rất nhiều lựa chọn nổi bật sau ạ:\n\n`;
+    let filteredSpots = rec.spots.slice(1);
+    let spotsText = `Dạ, nếu bạn muốn tìm **các địa điểm vui chơi khác** tại **${rec.title.split("–")[0]?.trim() || "khu vực này"}** thì còn các lựa chọn nổi bật sau ạ:\n\n`;
     filteredSpots.forEach((sp, idx) => {
       spotsText += `${idx + 1}. ${sp.icon} **${sp.name}**:\n   - ${sp.desc}\n`;
     });
-    spotsText += `\nBạn thấy thích **địa điểm nào nhất** trong các gợi ý trên, hoặc bạn muốn em tạo **Lịch trình kết hợp các điểm này** cho chuyến đi của bạn ạ? (Hãy bấm chọn gợi ý bên dưới hoặc gõ trực tiếp nhé! 🌿)`;
-
-    const options = filteredSpots.map((sp) => ({
-      label: sp.actionLabel,
-      value: sp.actionValue,
-      icon: sp.icon,
-    }));
-    options.push({
-      label: `✨ Lên tour kết hợp các điểm trên (${filteredSpots.length} điểm)`,
-      value: rec.comboValue,
-      icon: "✨",
-    });
-
-    const nextSurvey: AiSurveyState = {
-      ...currentSurvey,
-      anchorPlaceId: rec.anchorPlaceId,
-      destinationText: rec.title,
-      district: rec.district,
-      region: rec.region,
-      selectedPlaceIds: [rec.anchorPlaceId],
-    };
+    spotsText += `\nBạn thấy thích **địa điểm nào nhất** trong các gợi ý trên ạ?`;
 
     return {
       text: spotsText,
+      options: filteredSpots.map((sp) => ({ label: sp.actionLabel, value: sp.actionValue, icon: sp.icon })),
+      updatedSurvey: currentSurvey,
+    };
+  }
+
+  // =========================================================================
+  // 3.5. COMBINED INTENT: User asks for BOTH attractions AND food in a district
+  // (e.g. "huyện đoan hùng có điểm du lịch và ăn uống gì", "tam nông có gì chơi và ăn gì"...)
+  // =========================================================================
+  if (matchedDistrict && isAskingFood && isAskingSightseeing) {
+    let combinedText = `Dạ chào bạn! Khám phá **${matchedDistrict.name}** (${matchedDistrict.province}) có cả danh lam thắng cảnh đẹp và ẩm thực đặc sản nức tiếng:\n\n` +
+      `🏞️ **Địa điểm du lịch & trải nghiệm tiêu biểu:**\n`;
+
+    matchedDistrict.attractions.forEach((a, i) => {
+      combinedText += `${i + 1}. ${a.icon} **${a.name}** (${a.category}):\n   - ${a.desc}\n`;
+    });
+
+    combinedText += `\n🥢 **Ẩm thực đặc sản & Quán ăn gợi ý:**\n`;
+    matchedDistrict.culinary.forEach((c, idx) => {
+      combinedText += `${idx + 1}. **${c.dish}**:\n   - *Hương vị đặc sắc:* ${c.desc}\n   - 📍 *Địa chỉ / Quán gợi ý:* ${c.places || "Các nhà hàng đặc sản địa phương"}\n`;
+    });
+
+    if (matchedDistrict.recommendedStay) {
+      combinedText += `\n🏨 **Lưu trú gợi ý:** ${matchedDistrict.recommendedStay}\n`;
+    }
+
+    combinedText += `\nBạn có muốn em lên **Lịch trình kết hợp tham quan & ăn uống** tại ${matchedDistrict.name} cho đoàn mình không ạ? (Hãy bấm chọn gợi ý bên dưới hoặc gõ trực tiếp nhé! 🌿)`;
+
+    const nextSurvey: AiSurveyState = {
+      ...currentSurvey,
+      anchorPlaceId: DISTRICT_TO_ANCHOR_MAP[matchedDistrict.id] || "den-hung",
+      destinationText: matchedDistrict.title,
+      district: matchedDistrict.name,
+      region: matchedDistrict.province,
+      selectedPlaceIds: [DISTRICT_TO_ANCHOR_MAP[matchedDistrict.id] || "den-hung"],
+    };
+
+    const options = [
+      { label: `✨ Lên tour trọn gói ${matchedDistrict.name}`, value: matchedDistrict.comboActionValue, icon: "✨" },
+      { label: `⭐ 2 ngày 1 đêm (${matchedDistrict.name} - ${currentTrav} người)`, value: `choose_dur_2_${nextSurvey.anchorPlaceId}`, icon: "⭐" },
+      { label: `⚡ Đi trong ngày (1 ngày - ${currentTrav} người)`, value: `choose_dur_1_${nextSurvey.anchorPlaceId}`, icon: "⚡" },
+      { label: `🌿 3 ngày 2 đêm (${matchedDistrict.name} - ${currentTrav} người)`, value: `choose_dur_3_${nextSurvey.anchorPlaceId}`, icon: "🌿" },
+    ];
+
+    return {
+      text: combinedText,
       options,
       updatedSurvey: nextSurvey,
     };
   }
 
-  // 2.5. SIGHTSEEING CONSULTATION: User asks what spots to visit / what to do ("đi những đâu", "có gì chơi", "chơi gì", "tôi muốn đi chơi ở thanh thủy"...)
-  // Provide curated list of top attractions for the user to choose FIRST before forcing duration/itinerary
-  const isAskingSightseeing = checkIsAskingSightseeing(trimmed);
+  // =========================================================================
+  // 4. FOOD & DINING INTENT: User asks about food, dishes, restaurants, specialties
+  // (e.g. "ở cẩm khê ăn gì ngon", "mai châu ăn gì", "đặc sản đoan hùng có gì", "quán ăn ở vĩnh tường"...)
+  // =========================================================================
+  if (isAskingFood) {
+    if (matchedDistrict) {
+      let foodText = `🥢 **Khám phá ẩm thực & Quán ăn đặc sản tại ${matchedDistrict.name} (${matchedDistrict.province}):**\n\n`;
+      matchedDistrict.culinary.forEach((c, idx) => {
+        foodText += `${idx + 1}. **${c.dish}**:\n   - *Hương vị đặc sắc:* ${c.desc}\n   - 📍 *Địa chỉ / Quán gợi ý:* ${c.places || "Các nhà hàng đặc sản trung tâm huyện"}\n`;
+      });
+
+      foodText += `\n*(Bạn có thể kết hợp thưởng thức ẩm thực khi ghé thăm các điểm du lịch nổi tiếng tại ${matchedDistrict.name} như **${matchedDistrict.attractions.slice(0, 3).map((a) => a.name.split("(")[0].trim()).join(", ")}**.)*\n\n` +
+        `Bạn có muốn em lên **Lịch trình kết hợp tham quan & ăn uống** tại ${matchedDistrict.name} cho đoàn mình không ạ? (Hãy bấm chọn gợi ý bên dưới hoặc gõ trực tiếp nhé! 🌿)`;
+
+      const nextSurvey: AiSurveyState = {
+        ...currentSurvey,
+        anchorPlaceId: DISTRICT_TO_ANCHOR_MAP[matchedDistrict.id] || "den-hung",
+        destinationText: matchedDistrict.title,
+        district: matchedDistrict.name,
+        region: matchedDistrict.province,
+        selectedPlaceIds: [DISTRICT_TO_ANCHOR_MAP[matchedDistrict.id] || "den-hung"],
+      };
+
+      const options = [
+        { label: `✨ Lên tour ăn uống & du lịch ${matchedDistrict.name}`, value: matchedDistrict.comboActionValue, icon: "✨" },
+        { label: `🏞️ Xem điểm tham quan tại ${matchedDistrict.name}`, value: `explore_spots_${matchedDistrict.id}`, icon: "📍" },
+        { label: `⭐ 2 ngày 1 đêm (${matchedDistrict.name} - ${currentTrav} người)`, value: `choose_dur_2_${nextSurvey.anchorPlaceId}`, icon: "⭐" },
+        { label: `⚡ Đi trong ngày (1 ngày - ${currentTrav} người)`, value: `choose_dur_1_${nextSurvey.anchorPlaceId}`, icon: "⚡" },
+      ];
+
+      return {
+        text: foodText,
+        options,
+        updatedSurvey: nextSurvey,
+      };
+    }
+
+    // General regional food overview (Phú Thọ, Vĩnh Phúc, Hòa Bình)
+    return {
+      text:
+        "🥢 **Khám phá tinh hoa ẩm thực & Đặc sản OCOP 3 tỉnh Đất Tổ – Vĩnh Phúc – Hòa Bình:**\n\n" +
+        "1. 🥩 **Phú Thọ (Đất Tổ):**\n" +
+        "   - *Thịt chua Thanh Sơn (Nghị Thịnh / Điệp Đào):* Thịt lợn tươi ủ thính ngô thơm bùi gói lá chuối cuốn lá sung.\n" +
+        "   - *Cá lăng & cá ngạnh sông Lô sông Đà:* Nướng than hoa riềng mẻ hoặc om chuối đậu béo ngậy.\n" +
+        "   - *Bánh tai Phú Thọ & Bánh làng Dòng Lâm Thao:* Bánh dẻo thơm nhân thịt mỡ hành tiêu nóng hổi.\n" +
+        "   - *Cá thính Cẩm Khê & Bưởi Đoan Hùng tiến Vua:* Tép bưởi mọng nước ngọt thanh và cá thính ủ chum sành nức mũi.\n\n" +
+        "2. 🍃 **Vĩnh Phúc:**\n" +
+        "   - *Ngọn su su Tam Đảo:* Tươi giòn ngọt mát xào tỏi đượm vị núi mây sương mù.\n" +
+        "   - *Thịt trâu tươi nướng tảng Đại Lải:* Thịt trâu giật nướng than hồng chấm tương gừng.\n" +
+        "   - *Tép dầu Đầm Vạc kho tương, Bánh trùng mật mía Vĩnh Tường & Cá thính Lập Thạch.*\n\n" +
+        "3. 🍗 **Hòa Bình:**\n" +
+        "   - *Cơm lam nếp nương Mai Châu & Xôi ngũ sắc:* Nướng ống nứa dẻo thơm chấm muối vừng.\n" +
+        "   - *Cá suối nướng Pa pỉnh tộp & Cỗ lá lợn mán:* Chấm muối ớt hạt dổi mắc khén cay thơm ngào ngạt.\n" +
+        "   - *Măng chua nấu gà đồi Kim Bôi, Cam Cao Phong & Dê núi Lạc Thủy.*\n\n" +
+        "*(Bạn muốn tìm hiểu chi tiết ẩm thực của **huyện nào** trong 3 tỉnh trên ạ? Hãy gõ tên huyện hoặc chọn bên dưới nhé!)*",
+      options: [
+        { label: "🥩 Đặc sản Phú Thọ (Thịt chua, Cá lăng, Bưởi)", value: "explore_food_phu_tho", icon: "🥩" },
+        { label: "🌿 Đặc sản Vĩnh Phúc (Su su Tam Đảo, Trâu Đại Lải)", value: "explore_food_vinh_phuc", icon: "🍃" },
+        { label: "🍢 Đặc sản Hòa Bình (Cơm lam, Cá sông Đà, Cỗ lá)", value: "explore_food_hoa_binh", icon: "🍗" },
+        { label: "✨ Lên lịch trình ẩm thực trọn gói", value: "plan_food_tour", icon: "✨" },
+      ],
+      updatedSurvey: survey,
+    };
+  }
+
+  // =========================================================================
+  // 5. SIGHTSEEING INTENT: User asks what spots to visit / what to do
+  // (e.g. "ở cẩm khê có gì chơi", "đà bắc có điểm du lịch nào", "vĩnh tường có gì chơi"...)
+  // =========================================================================
   if (isAskingSightseeing) {
+    if (matchedDistrict) {
+      let spotsText = `Dạ, **${matchedDistrict.name}** (${matchedDistrict.province}) là điểm đến tuyệt vời với nhiều cảnh quan và di tích đặc sắc.\n\n${matchedDistrict.intro}\n\nDưới đây là **những địa điểm tham quan & trải nghiệm nổi bật nhất** tại ${matchedDistrict.name}:\n\n`;
+
+      matchedDistrict.attractions.forEach((sp, idx) => {
+        spotsText += `${idx + 1}. ${sp.icon} **${sp.name}**:\n   - *Loại hình:* ${sp.category}\n   - ${sp.desc}\n`;
+      });
+
+      spotsText += `\n🥢 **Ẩm thực đặc sắc:** ${matchedDistrict.culinary.map((c) => c.dish.split("(")[0].trim()).join(", ")}.\n`;
+      if (matchedDistrict.recommendedStay) {
+        spotsText += `🏨 **Lưu trú gợi ý:** ${matchedDistrict.recommendedStay}\n`;
+      }
+      spotsText += `\nBạn thích ghé thăm **địa điểm nào nhất** trong các gợi ý trên, hoặc bạn muốn em tạo **Lịch trình kết hợp trọn gói** cho đoàn mình ạ? (Hãy bấm chọn gợi ý bên dưới hoặc gõ trực tiếp nhé! 🌿)`;
+
+      const nextSurvey: AiSurveyState = {
+        ...currentSurvey,
+        anchorPlaceId: DISTRICT_TO_ANCHOR_MAP[matchedDistrict.id] || "den-hung",
+        destinationText: matchedDistrict.title,
+        district: matchedDistrict.name,
+        region: matchedDistrict.province,
+        selectedPlaceIds: [DISTRICT_TO_ANCHOR_MAP[matchedDistrict.id] || "den-hung"],
+      };
+
+      const options = matchedDistrict.attractions.slice(0, 4).map((sp, idx) => ({
+        label: `${sp.icon} ${sp.name.split("(")[0].trim()}`,
+        value: `choose_spot_${matchedDistrict.id}_${idx}`,
+        icon: sp.icon,
+      }));
+      options.push({
+        label: matchedDistrict.comboActionLabel,
+        value: matchedDistrict.comboActionValue,
+        icon: "✨",
+      });
+      options.push({
+        label: `🥢 Món ngon & Quán ăn ${matchedDistrict.name}`,
+        value: `explore_food_${matchedDistrict.id}`,
+        icon: "🍲",
+      });
+
+      return {
+        text: spotsText,
+        options,
+        updatedSurvey: nextSurvey,
+      };
+    }
+
+    // Regional sightseeing overview fallback
     let areaKey = "phu-tho";
-    if (
-      lower.includes("thanh thủy") ||
-      lower.includes("thanh thuy") ||
-      lower.includes("khoáng nóng") ||
-      lower.includes("khoang nong") ||
-      lower.includes("đảo ngọc xanh")
-    ) {
+    if (lower.includes("thanh thủy") || lower.includes("thanh thuy") || lower.includes("khoáng nóng")) {
       areaKey = "thanh-thuy";
-    } else if (
-      lower.includes("thanh sơn") ||
-      lower.includes("thanh son") ||
-      lower.includes("thịt chua") ||
-      lower.includes("thit chua") ||
-      lower.includes("long cốc") ||
-      lower.includes("tân sơn") ||
-      lower.includes("tan son") ||
-      lower.includes("xuân sơn")
-    ) {
+    } else if (lower.includes("thanh sơn") || lower.includes("thanh son") || lower.includes("thịt chua") || lower.includes("long cốc")) {
       areaKey = "thanh-son";
-    } else if (
-      lower.includes("đền hùng") ||
-      lower.includes("den hung") ||
-      lower.includes("việt trì") ||
-      lower.includes("viet tri") ||
-      lower.includes("hùng lô") ||
-      lower.includes("hung lo")
-    ) {
+    } else if (lower.includes("đền hùng") || lower.includes("den hung") || lower.includes("việt trì")) {
       areaKey = "den-hung";
-    } else if (
-      lower.includes("tam đảo") ||
-      lower.includes("tam dao") ||
-      lower.includes("tây thiên") ||
-      lower.includes("tay thien")
-    ) {
+    } else if (lower.includes("tam đảo") || lower.includes("tam dao") || lower.includes("tây thiên")) {
       areaKey = "tam-dao";
     }
 
     const rec = AREA_RECOMMENDATIONS[areaKey] || AREA_RECOMMENDATIONS["phu-tho"];
-
     let spotsText = `${rec.intro}\n\n`;
     rec.spots.forEach((sp, idx) => {
       spotsText += `${idx + 1}. ${sp.icon} **${sp.name}**:\n   - ${sp.desc}\n`;
@@ -898,33 +1183,57 @@ export function processAiMessage(
     };
   }
 
-  // 3. CASE A: User explicitly asks about foods / specialties
-  if (lower.includes("đặc sản") || lower.includes("món ngon") || lower.includes("ăn gì") || lower.includes("thịt chua") || lower.includes("cá lăng") || lower.includes("bánh tai")) {
+  // =========================================================================
+  // 6. GENERAL DISTRICT INQUIRY (User mentions district without duration)
+  // e.g. "ở cẩm khê có gì", "huyện đoan hùng có điểm du lịch và ăn uống gì", "tam nông có gì chơi và ăn gì", "cho tôi biết về đà bắc"
+  // =========================================================================
+  if (matchedDistrict && !hasDuration) {
+    let overviewText = `Dạ chào bạn! Khám phá **${matchedDistrict.name}** (${matchedDistrict.province}) – ${matchedDistrict.title.split("–")[1]?.trim() || "vùng đất giàu bản sắc văn hóa & cảnh sắc"}:\n\n` +
+      `${matchedDistrict.intro}\n\n` +
+      `🏞️ **Địa điểm du lịch & trải nghiệm tiêu biểu:**\n`;
+
+    matchedDistrict.attractions.forEach((a, i) => {
+      overviewText += `${i + 1}. ${a.icon} **${a.name}**: ${a.desc}\n`;
+    });
+
+    overviewText += `\n🥢 **Ẩm thực & Đặc sản nức tiếng:**\n`;
+    matchedDistrict.culinary.forEach((c) => {
+      overviewText += `• **${c.dish}**: ${c.desc} *(Địa chỉ: ${c.places})*\n`;
+    });
+
+    if (matchedDistrict.recommendedStay) {
+      overviewText += `\n🏨 **Lưu trú gợi ý:** ${matchedDistrict.recommendedStay}\n`;
+    }
+
+    overviewText += `\nBạn dự định đi trong **mấy ngày** để em hoàn thiện lịch trình tối ưu nhất cho đoàn mình ạ? (Bạn có thể chọn nhanh bên dưới hoặc gõ trực tiếp):`;
+
+    const nextSurvey: AiSurveyState = {
+      ...currentSurvey,
+      anchorPlaceId: DISTRICT_TO_ANCHOR_MAP[matchedDistrict.id] || "den-hung",
+      destinationText: matchedDistrict.title,
+      district: matchedDistrict.name,
+      region: matchedDistrict.province,
+      selectedPlaceIds: [DISTRICT_TO_ANCHOR_MAP[matchedDistrict.id] || "den-hung"],
+    };
+
+    const options = [
+      { label: `⭐ 2 ngày 1 đêm (${matchedDistrict.name} - ${currentTrav} người)`, value: `choose_dur_2_${nextSurvey.anchorPlaceId}`, icon: "⭐" },
+      { label: `⚡ Đi trong ngày (1 ngày - ${currentTrav} người)`, value: `choose_dur_1_${nextSurvey.anchorPlaceId}`, icon: "⚡" },
+      { label: `🌿 3 ngày 2 đêm (${matchedDistrict.name} - ${currentTrav} người)`, value: `choose_dur_3_${nextSurvey.anchorPlaceId}`, icon: "🌿" },
+      { label: `🥢 Chi tiết món ngon & quán ăn ${matchedDistrict.name}`, value: `explore_food_${matchedDistrict.id}`, icon: "🍲" },
+      { label: `🏞️ Xem chi tiết các điểm tham quan`, value: `explore_spots_${matchedDistrict.id}`, icon: "📍" },
+    ];
+
     return {
-      text:
-        "🥢 **Khám phá ẩm thực & Đặc sản OCOP trứ danh:**\n\n" +
-        "1. **Thịt chua Thanh Sơn (Nghị Thịnh / Điệp Đào):** Đặc sản nức tiếng làm từ thịt lợn tươi ủ men thính ngô thơm bùi, gói lá chuối, ăn kèm lá sung, ổi, đinh lăng chấm tương ớt.\n" +
-        "2. **Cá lăng sông Đà & sông Lô:** Thịt cá săn chắc béo ngậy, làm lẩu ngạnh om chuối đậu hoặc nướng than hoa riềng mẻ.\n" +
-        "3. **Bánh tai Phú Thọ (Bánh Hòn):** Bánh gạo tẻ dẻo thơm nhân thịt ba chỉ tiêu xay nóng hổi.\n" +
-        "4. **Gà nhiều cựa Vườn QG Xuân Sơn:** Giống gà huyền thoại tiến Vua, thịt ngọt chắc tự nhiên.\n" +
-        "5. **Ngọn su su Tam Đảo:** Tươi giòn ngọt mát xào tỏi đượm vị núi rừng.\n\n" +
-        "*(Bạn có thể bấm vào mục **Đặc sản OCOP** trên trang chủ để đặt giao tận nơi hoặc thêm vào giỏ hàng nhé!)*",
-      options: [
-        { label: "✨ Lên tour Thanh Sơn & Long Cốc", value: "plan_long_coc", icon: "🍃" },
-        { label: "🏛️ Lên tour Đền Hùng", value: "plan_den_hung", icon: "📍" },
-        { label: "🌫️ Lên tour Tam Đảo", value: "plan_tam_dao", icon: "🏔️" },
-      ],
-      updatedSurvey: survey,
+      text: overviewText,
+      options,
+      updatedSurvey: nextSurvey,
     };
   }
 
-  // 4. CASE B: Check if we have enough info to GENERATE the itinerary immediately!
-  // Condition: We have a valid destination AND a duration
-  const hasDestination = Boolean(survey.anchorPlaceId && survey.anchorPlaceId !== "");
-  const hasDuration = Boolean(survey.durationDays && survey.durationDays >= 1);
-  const hasTravelers = Boolean(survey.travelers && survey.travelers >= 1);
-
-  // If both destination and duration are known (even if travelers or transport weren't given, we use smart defaults)
+  // =========================================================================
+  // 7. ITINERARY GENERATION (Both Destination AND Duration are present)
+  // =========================================================================
   if (hasDestination && hasDuration) {
     const finalDays = survey.durationDays || 2;
     const finalTravelers = survey.travelers || 2;
@@ -962,13 +1271,14 @@ export function processAiMessage(
     };
   }
 
-  // 5. CASE C: We have Destination, but missing Duration
+  // =========================================================================
+  // 8. CASE C: We have Destination, but missing Duration
+  // =========================================================================
   if (hasDestination && !hasDuration) {
     const destInfo = destinationMatched || DESTINATION_MAPPINGS.find((d) => d.placeId === survey.anchorPlaceId);
     const destName = destInfo ? destInfo.name : survey.destinationText;
     const descText = destInfo ? destInfo.desc : "";
     const travelerText = survey.travelers ? `cho đoàn **${survey.travelers} người** ` : "";
-    const currentTrav = survey.travelers || 2;
 
     return {
       text:
@@ -984,7 +1294,9 @@ export function processAiMessage(
     };
   }
 
-  // 6. CASE D: We have Duration / Travelers, but missing Destination
+  // =========================================================================
+  // 9. CASE D: We have Duration / Travelers, but missing Destination
+  // =========================================================================
   if (!hasDestination && hasDuration) {
     const days = survey.durationDays || 2;
     const trav = survey.travelers || 2;

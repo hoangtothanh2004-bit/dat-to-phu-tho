@@ -2759,3 +2759,5 @@ export const comprehensiveServices: ServiceItem[] = [
   { id: "srv-hb-6", icon: "🅿️", name: "Bãi đỗ xe Cảng du lịch Thung Nai Sông Đà", type: "Bãi đỗ xe", province: "Hòa Bình", district: "Huyện Cao Phong", lat: 20.768, lng: 105.242, note: "Trông giữ xe qua đêm đi tàu lòng hồ Sông Đà", address: "Bến cảng Thung Nai, huyện Cao Phong" },
   { id: "srv-hb-7", icon: "⚡", name: "Trạm sạc VinFast TP. Hòa Bình", type: "Trạm sạc EV", province: "Hòa Bình", district: "TP. Hòa Bình", lat: 20.825, lng: 105.342, note: "Trạm sạc nhanh Vincom Plaza Hòa Bình", address: "Đường Cù Chính Lan, TP. Hòa Bình" }
 ];
+
+export * from "./districtDirectory";
