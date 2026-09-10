@@ -3558,76 +3558,118 @@ export default function Home() {
     stopAllAudio();
 
     const textToSpeak = audioLang === "en" ? (textEn || textVi) : textVi;
-    const isAiVoice = selectedVoiceURI.startsWith("ai-");
-    const isMaleAi = selectedVoiceURI === "ai-male-north";
+    if (!textToSpeak || typeof window === "undefined") return;
 
-    // If male AI voice is selected and browser SpeechSynthesis is available, use male-tuned synthesis
-    if (isMaleAi && typeof window !== "undefined" && "speechSynthesis" in window) {
-      const utterance = new SpeechSynthesisUtterance(textToSpeak);
-      const viVoices = availableVoices.filter((v) => v.lang.toLowerCase().startsWith("vi"));
-      const maleVoice = viVoices.find((v) => v.name.toLowerCase().includes("nam") || v.name.toLowerCase().includes("male") || v.name.toLowerCase().includes("b")) || viVoices[0];
-      if (maleVoice) {
-        utterance.voice = maleVoice;
+    const isMaleAi =
+      selectedVoiceURI === "ai-male-north" ||
+      selectedVoiceURI.toLowerCase().includes("nam") ||
+      selectedVoiceURI.toLowerCase().includes("male");
+
+    // Standard W3C Web Speech API available in all modern browsers
+    if ("speechSynthesis" in window) {
+      window.speechSynthesis.cancel();
+
+      // Split text into natural sentences to ensure audio doesn't stall on Chrome/Edge/Safari
+      const rawSentences = textToSpeak
+        .replace(/\s+/g, " ")
+        .split(/(?<=[.,!?;:\n])\s+/)
+        .map((s) => s.trim())
+        .filter(Boolean);
+
+      const sentences = rawSentences.length > 0 ? rawSentences : [textToSpeak];
+
+      // Find best matching voice
+      const allVoices = window.speechSynthesis.getVoices();
+      const viVoices = allVoices.filter((v) => v.lang.toLowerCase().startsWith("vi"));
+      const enVoices = allVoices.filter((v) => v.lang.toLowerCase().startsWith("en"));
+      const targetVoices = audioLang === "en" ? enVoices : viVoices;
+
+      let matchedVoice = targetVoices.find((v) => v.voiceURI === selectedVoiceURI);
+      if (!matchedVoice && targetVoices.length > 0) {
+        if (isMaleAi) {
+          matchedVoice =
+            targetVoices.find(
+              (v) =>
+                v.name.toLowerCase().includes("nam") ||
+                v.name.toLowerCase().includes("male") ||
+                v.name.toLowerCase().includes("b")
+            ) || targetVoices[0];
+        } else {
+          matchedVoice =
+            targetVoices.find(
+              (v) =>
+                v.name.toLowerCase().includes("nữ") ||
+                v.name.toLowerCase().includes("nu") ||
+                v.name.toLowerCase().includes("female") ||
+                v.name.toLowerCase().includes("hoaimy") ||
+                v.name.toLowerCase().includes("linh")
+            ) || targetVoices[0];
+        }
       }
-      utterance.lang = "vi-VN";
-      utterance.rate = audioRate * 0.92;
-      utterance.pitch = 0.70; // Trầm ấm nam tính
-      utterance.volume = audioVolume;
-      utterance.onstart = () => onStateChange?.(true);
-      utterance.onend = () => onStateChange?.(false);
-      utterance.onerror = () => onStateChange?.(false);
-      speechRef.current = utterance;
-      window.speechSynthesis.speak(utterance);
+
+      let currentIdx = 0;
+      let isCancelled = false;
+
+      const speakSentence = (idx: number) => {
+        if (isCancelled || idx >= sentences.length) {
+          onStateChange?.(false);
+          setAudioGuidePlaying(false);
+          setAudioState("idle");
+          return;
+        }
+
+        const sentenceText = sentences[idx];
+        const utterance = new SpeechSynthesisUtterance(sentenceText);
+
+        if (matchedVoice) {
+          utterance.voice = matchedVoice;
+        }
+        utterance.lang = audioLang === "en" ? "en-US" : "vi-VN";
+        utterance.volume = audioVolume;
+
+        if (isMaleAi) {
+          utterance.rate = audioRate * 0.92;
+          utterance.pitch = 0.72; // Trầm ấm nam tính
+        } else {
+          utterance.rate = audioRate * 0.95;
+          utterance.pitch = 1.05; // Truyền cảm nữ tính
+        }
+
+        utterance.onstart = () => {
+          if (idx === 0) onStateChange?.(true);
+        };
+
+        utterance.onend = () => {
+          if (!isCancelled) {
+            currentIdx++;
+            if (currentIdx < sentences.length) {
+              speakSentence(currentIdx);
+            } else {
+              onStateChange?.(false);
+              setAudioGuidePlaying(false);
+              setAudioState("idle");
+            }
+          }
+        };
+
+        utterance.onerror = (e: any) => {
+          if (e.error === "canceled" || e.error === "interrupted") return;
+          console.warn("SpeechSynthesis error:", e);
+          onStateChange?.(false);
+          setAudioGuidePlaying(false);
+          setAudioState("idle");
+        };
+
+        speechRef.current = utterance;
+        window.speechSynthesis.speak(utterance);
+      };
+
+      onStateChange?.(true);
+      speakSentence(0);
       return;
     }
 
-    if (isAiVoice) {
-      const lang = audioLang === "en" ? "en" : "vi";
-      const audioUrl = `/api/tts?text=${encodeURIComponent(textToSpeak)}&lang=${lang}&voice=${isMaleAi ? "male" : "female"}`;
-      const audio = new Audio(audioUrl);
-      audio.playbackRate = isMaleAi ? audioRate * 0.9 : audioRate;
-      audio.volume = audioVolume;
-
-      audio.onplay = () => {
-        onStateChange?.(true);
-      };
-      audio.onended = () => {
-        onStateChange?.(false);
-        stopAllAudio();
-      };
-      audio.onerror = () => {
-        onStateChange?.(false);
-        stopAllAudio();
-        showToast("Không thể tải âm thanh AI, vui lòng thử lại");
-      };
-
-      htmlAudioRef.current = audio;
-      audio.play().catch(() => {
-        onStateChange?.(false);
-      });
-      return;
-    }
-
-    // Fallback or explicit system voice selection
-    if (typeof window === "undefined" || !("speechSynthesis" in window)) {
-      showToast("Thiết bị chưa hỗ trợ phát giọng đọc hệ thống");
-      return;
-    }
-
-    const utterance = new SpeechSynthesisUtterance(textToSpeak);
-    const matchedVoice = availableVoices.find((v) => v.voiceURI === selectedVoiceURI);
-    if (matchedVoice) {
-      utterance.voice = matchedVoice;
-    }
-    utterance.lang = audioLang === "vi" ? "vi-VN" : "en-US";
-    utterance.rate = audioRate;
-    utterance.pitch = selectedVoiceURI.toLowerCase().includes("nam") || selectedVoiceURI.toLowerCase().includes("male") ? 0.72 : 1.0;
-    utterance.volume = audioVolume;
-    utterance.onstart = () => onStateChange?.(true);
-    utterance.onend = () => onStateChange?.(false);
-    utterance.onerror = () => onStateChange?.(false);
-    speechRef.current = utterance;
-    window.speechSynthesis.speak(utterance);
+    showToast("Thiết bị chưa hỗ trợ phát giọng đọc");
   };
 
   const toggleItineraryAudio = () => {

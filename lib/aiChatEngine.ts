@@ -32,6 +32,86 @@ const DESTINATION_MAPPINGS: Array<{
   desc: string;
 }> = [
   {
+    keywords: ["thanh sơn", "thanh son", "huyện thanh sơn", "huyen thanh son", "thịt chua thanh sơn", "thit chua thanh son", "thác chòi"],
+    placeId: "long-coc",
+    name: "Huyện Thanh Sơn & Tân Sơn (Đặc sản Thịt chua & Đồi chè Long Cốc)",
+    region: "Phú Thọ",
+    district: "Huyện Thanh Sơn",
+    desc: "Cái nôi văn hóa Mường Đất Tổ và thủ phủ đặc sản Thịt chua trứ danh (Nghị Thịnh / Điệp Đào), cửa ngõ khám phá đồi chè bát úp Long Cốc và rừng nguyên sinh Xuân Sơn.",
+  },
+  {
+    keywords: ["tân sơn", "tan son", "huyện tân sơn", "huyen tan son"],
+    placeId: "long-coc",
+    name: "Huyện Tân Sơn (Đồi chè Long Cốc & VQG Xuân Sơn)",
+    region: "Phú Thọ",
+    district: "Huyện Tân Sơn",
+    desc: "Thiên đường sinh thái với ốc đảo chè Long Cốc bồng bềnh mây sớm và Vườn quốc gia Xuân Sơn với hệ thống hang động kỳ vĩ.",
+  },
+  {
+    keywords: ["đoan hùng", "doan hung", "huyện đoan hùng", "bưởi đoan hùng"],
+    placeId: "den-hung",
+    name: "Huyện Đoan Hùng (Vùng đất bưởi tiến Vua)",
+    region: "Phú Thọ",
+    district: "Huyện Đoan Hùng",
+    desc: "Vùng đất trù phú ngã ba sông Lô, nổi tiếng với di tích Chiến thắng Sông Lô và giống bưởi Sửu, bưởi Bằng Luân thơm ngọt tiến Vua.",
+  },
+  {
+    keywords: ["lâm thao", "lam thao", "huyện lâm thao", "làng chu quyến"],
+    placeId: "den-hung",
+    name: "Huyện Lâm Thao (Đất học & Làng cổ)",
+    region: "Phú Thọ",
+    district: "Huyện Lâm Thao",
+    desc: "Vùng đất phù sa cổ ven sông Hồng, gắn liền với di tích khảo cổ Sơn Vi và các làng nghề bánh làng Dòng truyền thống.",
+  },
+  {
+    keywords: ["phù ninh", "phu ninh", "huyện phù ninh"],
+    placeId: "den-hung",
+    name: "Huyện Phù Ninh",
+    region: "Phú Thọ",
+    district: "Huyện Phù Ninh",
+    desc: "Cửa ngõ Đất Tổ với đồi chè xanh mướt và hội chọi trâu Phù Ninh cổ xưa.",
+  },
+  {
+    keywords: ["cẩm khê", "cam khe", "huyện cẩm khê"],
+    placeId: "dam-ao-chau",
+    name: "Huyện Cẩm Khê",
+    region: "Phú Thọ",
+    district: "Huyện Cẩm Khê",
+    desc: "Vùng đất đồng chiêm trù phú với nghề làm nón lá Sai Nga truyền thống và đầm sen ngát hương.",
+  },
+  {
+    keywords: ["tam nông", "tam nong", "huyện tam nông"],
+    placeId: "thanh-thuy",
+    name: "Huyện Tam Nông",
+    region: "Phú Thọ",
+    district: "Huyện Tam Nông",
+    desc: "Vùng đất nằm bên ngã ba sông Đà và sông Hồng, nổi tiếng với Khu nghỉ dưỡng Vườn Vua Resort & Villas.",
+  },
+  {
+    keywords: ["yên lập", "yen lap", "huyện yên lập"],
+    placeId: "xuan-son",
+    name: "Huyện Yên Lập",
+    region: "Phú Thọ",
+    district: "Huyện Yên Lập",
+    desc: "Vùng cao nguyên sơ với hồ Ly thanh bình và nét văn hóa độc đáo của đồng bào Mường, Dao.",
+  },
+  {
+    keywords: ["thanh ba", "thanh ba", "huyện thanh ba"],
+    placeId: "dam-ao-chau",
+    name: "Huyện Thanh Ba",
+    region: "Phú Thọ",
+    district: "Huyện Thanh Ba",
+    desc: "Vùng đồi búp chè xanh ngát và hồ Láng Cẩm phẳng lặng giữa trung du.",
+  },
+  {
+    keywords: ["phú thọ", "phu tho", "tỉnh phú thọ", "đất tổ", "dat to"],
+    placeId: "den-hung",
+    name: "Du lịch Phú Thọ (Đất Tổ Hùng Vương)",
+    region: "Phú Thọ",
+    district: "Việt Trì",
+    desc: "Cội nguồn ngàn năm dân tộc Việt Nam, kết nối Đền Hùng linh thiêng, Đồi chè Long Cốc, Suối khoáng Thanh Thủy và VQG Xuân Sơn.",
+  },
+  {
     keywords: ["tam đảo", "tam dao", "nhà thờ đá tam đảo", "thác bạc tam đảo", "quán gió", "cầu mây"],
     placeId: "tam-dao",
     name: "Khu du lịch Quốc gia Tam Đảo",
@@ -198,33 +278,50 @@ export function extractEntitiesFromText(text: string, prevSurvey: AiSurveyState)
   }
 
   // 2. Duration Extraction (e.g. "3 ngày 2 đêm", "2 ngày 1 đêm", "1 ngày", "3n2d", "2n1d")
-  const multiDayMatch = lower.match(/(\d+)\s*(?:ngày|ngay)\s*(\d+)?\s*(?:đêm|dem)?/);
-  const shortDayMatch = lower.match(/(\d+)\s*n\s*(\d+)?\s*d?/);
+  // IMPORTANT: Bắt chặt chẽ để "5 người" KHÔNG BAO GIỜ bị match thành 5 ngày!
+  const multiDayMatch = lower.match(/\b(\d+)\s*(?:ngày|ngay)(?:\s*(\d+)?\s*(?:đêm|dem))?\b/);
+  const shortDayNightMatch = lower.match(/\b(\d+)\s*n\s*(\d+)\s*(?:d|đ|đêm|dem)\b/);
+  // Chỉ match 'n' nếu ngay sau đó KHÔNG PHẢI là chữ cái (nhất là 'g' trong người, hoặc 'k', 'b', 'th')
+  const shortDayOnlyMatch = lower.match(/\b(\d+)\s*n\b(?!\s*(?:g|kh|b|th|v|c))/);
 
   if (multiDayMatch) {
     const days = parseInt(multiDayMatch[1], 10);
-    if (days >= 1 && days <= 5) {
+    if (days >= 1 && days <= 7) {
       nextSurvey.durationDays = days;
       extractedAny = true;
     }
-  } else if (shortDayMatch) {
-    const days = parseInt(shortDayMatch[1], 10);
-    if (days >= 1 && days <= 5) {
+  } else if (shortDayNightMatch) {
+    const days = parseInt(shortDayNightMatch[1], 10);
+    if (days >= 1 && days <= 7) {
+      nextSurvey.durationDays = days;
+      extractedAny = true;
+    }
+  } else if (shortDayOnlyMatch) {
+    const days = parseInt(shortDayOnlyMatch[1], 10);
+    if (days >= 1 && days <= 7) {
       nextSurvey.durationDays = days;
       extractedAny = true;
     }
   } else if (lower.includes("1 ngày") || lower.includes("trong ngày") || lower.includes("đi về trong ngày")) {
     nextSurvey.durationDays = 1;
     extractedAny = true;
-  } else if (lower.includes("cuối tuần") || lower.includes("thứ 7 chủ nhật")) {
+  } else if (lower.includes("cuối tuần") || lower.includes("thứ 7 chủ nhật") || lower.includes("t7 cn")) {
     nextSurvey.durationDays = 2;
     extractedAny = true;
   }
 
-  // 3. Travelers Extraction (e.g. "2 người", "cặp đôi", "gia đình 4 người", "1 mình")
-  const travelerMatch = lower.match(/(\d+)\s*(?:người|nguoi|khách|khach|bạn|thành viên)/);
+  // 3. Travelers Extraction (e.g. "5 người", "2 người", "cặp đôi", "gia đình 4 người", "1 mình")
+  const travelerMatch = lower.match(/(\d+)\s*(?:người|nguoi|khách|khach|thành viên|vé|ve)(?![a-zA-Zà-ỹÀ-Ỹ0-9])/);
+  const groupMatch = lower.match(/\b(?:đoàn|nhóm|doan|nhom)\s*(\d+)\b/);
+
   if (travelerMatch) {
     const count = parseInt(travelerMatch[1], 10);
+    if (count >= 1 && count <= 50) {
+      nextSurvey.travelers = count;
+      extractedAny = true;
+    }
+  } else if (groupMatch) {
+    const count = parseInt(groupMatch[1], 10);
     if (count >= 1 && count <= 50) {
       nextSurvey.travelers = count;
       extractedAny = true;
@@ -288,11 +385,11 @@ export function processAiMessage(
       text:
         "Dạ, em là **Trợ lý AI Đất Tổ** chuyên hỗ trợ thông tin và lịch trình du lịch trong phạm vi **Phú Thọ và các tuyến liên kết** (Tam Đảo, Tây Thiên, Mai Châu, Hòa Bình).\n\n" +
         "Yêu cầu của bạn hiện nằm ngoài phạm vi hoạt động của website. Để đảm bảo dữ liệu du lịch chính xác nhất và tránh quá tải hệ thống, em xin phép chỉ hỗ trợ các câu hỏi liên quan đến điểm đến, ẩm thực OCOP và lên lịch trình du lịch Đất Tổ & vùng phụ cận.\n\n" +
-        "Bạn có muốn em tư vấn hoặc lên lịch trình cho các điểm đến nổi tiếng như **Đền Hùng, Tam Đảo, Đồi chè Long Cốc, hay Suối khoáng nóng Thanh Thủy** không ạ? 🌿",
+        "Bạn có muốn em tư vấn hoặc lên lịch trình cho các điểm đến nổi tiếng như **Đền Hùng, Tam Đảo, Đồi chè Long Cốc, Thanh Sơn hay Suối khoáng nóng Thanh Thủy** không ạ? 🌿",
       options: [
-        { label: "🌫️ Lên lịch trình Tam Đảo", value: "plan_tam_dao", icon: "📍" },
+        { label: "🍃 Khám phá Thanh Sơn & Long Cốc", value: "plan_long_coc", icon: "📸" },
         { label: "🏛️ Khám phá Đền Hùng", value: "plan_den_hung", icon: "🏛️" },
-        { label: "🍃 Săn mây Đồi chè Long Cốc", value: "plan_long_coc", icon: "📸" },
+        { label: "🌫️ Lên lịch trình Tam Đảo", value: "plan_tam_dao", icon: "📍" },
         { label: "♨️ Tắm khoáng nóng Thanh Thủy", value: "plan_thanh_thuy", icon: "💆" },
       ],
       updatedSurvey: currentSurvey,
@@ -314,7 +411,7 @@ export function processAiMessage(
         "5. **Ngọn su su Tam Đảo:** Tươi giòn ngọt mát xào tỏi đượm vị núi rừng.\n\n" +
         "*(Bạn có thể bấm vào mục **Đặc sản OCOP** trên trang chủ để đặt giao tận nơi hoặc thêm vào giỏ hàng nhé!)*",
       options: [
-        { label: "✨ Lên lịch trình ẩm thực & nghỉ dưỡng", value: "plan_food_tour", icon: "🗺️" },
+        { label: "✨ Lên tour Thanh Sơn & Long Cốc", value: "plan_long_coc", icon: "🍃" },
         { label: "🏛️ Lên tour Đền Hùng", value: "plan_den_hung", icon: "📍" },
         { label: "🌫️ Lên tour Tam Đảo", value: "plan_tam_dao", icon: "🏔️" },
       ],
@@ -366,21 +463,23 @@ export function processAiMessage(
     };
   }
 
-  // 5. CASE C: We have Destination, but missing Duration / Travelers
+  // 5. CASE C: We have Destination, but missing Duration
   if (hasDestination && !hasDuration) {
     const destInfo = destinationMatched || DESTINATION_MAPPINGS.find((d) => d.placeId === survey.anchorPlaceId);
     const destName = destInfo ? destInfo.name : survey.destinationText;
     const descText = destInfo ? destInfo.desc : "";
+    const travelerText = survey.travelers ? `cho đoàn **${survey.travelers} người** ` : "";
+    const currentTrav = survey.travelers || 2;
 
     return {
       text:
-        `Dạ tuyệt vời! **${destName}** là điểm đến rất nổi bật.\n${descText ? `*(${descText})*\n\n` : "\n"}` +
-        `Để em lên lịch trình tối ưu nhất cho bạn, bạn dự định đi **mấy ngày** và cho **mấy người** ạ? (Bạn có thể gõ tự do ví dụ *"2 người 3 ngày 2 đêm"* hoặc chọn nhanh bên dưới):`,
+        `Dạ tuyệt vời! Em đã ghi nhận bạn muốn đến **${destName}** ${travelerText}!\n${descText ? `*(${descText})*\n\n` : "\n"}` +
+        `Bạn dự định đi trong **mấy ngày** để em hoàn thiện lịch trình tối ưu nhất cho đoàn mình ạ? (Bạn có thể chọn nhanh bên dưới hoặc gõ trực tiếp):`,
       options: [
-        { label: `⭐ 2 ngày 1 đêm (${survey.travelers || 2} người)`, value: `choose_dur_2_${survey.anchorPlaceId}`, icon: "🌟" },
-        { label: `🌿 3 ngày 2 đêm (${survey.travelers || 2} người)`, value: `choose_dur_3_${survey.anchorPlaceId}`, icon: "🍃" },
-        { label: "⚡ Đi trong ngày (1 ngày)", value: `choose_dur_1_${survey.anchorPlaceId}`, icon: "⚡" },
-        { label: "👨‍👩‍👧‍👦 Gia đình 4 người (2N1Đ)", value: `choose_family_2_${survey.anchorPlaceId}`, icon: "👨‍👩‍👧‍👦" },
+        { label: `⭐ 2 ngày 1 đêm (${currentTrav} người)`, value: `choose_dur_2_${survey.anchorPlaceId}`, icon: "🌟" },
+        { label: `🌿 3 ngày 2 đêm (${currentTrav} người)`, value: `choose_dur_3_${survey.anchorPlaceId}`, icon: "🍃" },
+        { label: `⚡ Đi trong ngày (1 ngày - ${currentTrav} người)`, value: `choose_dur_1_${survey.anchorPlaceId}`, icon: "⚡" },
+        { label: `✨ 4 ngày 3 đêm (${currentTrav} người)`, value: `choose_dur_4_${survey.anchorPlaceId}`, icon: "✨" },
       ],
       updatedSurvey: survey,
     };
@@ -396,9 +495,9 @@ export function processAiMessage(
         `Dạ em đã ghi nhận bạn muốn đi **${days} ngày** cho **${trav} người**!\n\n` +
         `Bạn muốn đến địa điểm nào tại Phú Thọ & vùng liên kết để em tạo lịch trình ngay ạ?`,
       options: [
+        { label: "🍃 Huyện Thanh Sơn & Đồi chè Long Cốc", value: "plan_long_coc", icon: "📸" },
         { label: "🏛️ Đền Hùng & TP Việt Trì", value: "plan_den_hung", icon: "🏛️" },
         { label: "🌫️ Khu du lịch Tam Đảo", value: "plan_tam_dao", icon: "🏔️" },
-        { label: "🍃 Đồi chè Long Cốc (Săn mây)", value: "plan_long_coc", icon: "📸" },
         { label: "♨️ Suối khoáng nóng Thanh Thủy", value: "plan_thanh_thuy", icon: "💆" },
         { label: "🌲 Vườn quốc gia Xuân Sơn", value: "plan_xuan_son", icon: "🌲" },
       ],

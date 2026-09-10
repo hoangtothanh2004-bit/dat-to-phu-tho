@@ -204,6 +204,7 @@ export default function VisualItineraryV2(props: VisualItineraryV2Props) {
   const [selectedDetailSlot, setSelectedDetailSlot] = useState<ItinerarySlot | null>(null);
   const [isDetailAccordionOpen, setIsDetailAccordionOpen] = useState<boolean>(true);
   const [expandedDayStops, setExpandedDayStops] = useState<Record<number, boolean>>({});
+  const [expandedCardSlots, setExpandedCardSlots] = useState<Record<string, boolean>>({});
   const [showAudioSettings, setShowAudioSettings] = useState<boolean>(false);
 
   const detailPanelRef = useRef<HTMLDivElement>(null);
@@ -213,6 +214,7 @@ export default function VisualItineraryV2(props: VisualItineraryV2Props) {
   useEffect(() => {
     setActiveItineraryDay(1);
     setSelectedDetailSlot(null);
+    setExpandedCardSlots({});
   }, [generatedItinerary.id]);
 
   const currentDayPlan =
@@ -240,6 +242,14 @@ export default function VisualItineraryV2(props: VisualItineraryV2Props) {
         detailPanelRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
       }, 60);
     }
+  };
+
+  const toggleCardExpanded = (slotKey: string, slot: ItinerarySlot) => {
+    setExpandedCardSlots((prev) => ({
+      ...prev,
+      [slotKey]: !prev[slotKey],
+    }));
+    setSelectedDetailSlot(slot);
   };
 
   const scrollToTimeline = () => {
@@ -497,6 +507,8 @@ export default function VisualItineraryV2(props: VisualItineraryV2Props) {
               const tag = getSlotCategoryTag(slot);
               const pillars = getSlotPillars(slot, currentDayPlan);
               const startTime = slot.timeSlot.split("–")[0]?.trim() || "07:30";
+              const slotKey = `${activeItineraryDay}-${sIdx}-${slot.title}`;
+              const isCardExpanded = !!expandedCardSlots[slotKey];
 
               return (
                 <div className="v2-timeline-item" key={sIdx}>
@@ -565,16 +577,82 @@ export default function VisualItineraryV2(props: VisualItineraryV2Props) {
                       <div className="v2-card__foot">
                         <button
                           type="button"
-                          className="v2-expand-btn"
+                          className={`v2-expand-btn ${isCardExpanded ? "is-expanded" : ""}`}
                           onClick={(e) => {
                             e.stopPropagation();
-                            handleCardClick(slot);
+                            toggleCardExpanded(slotKey, slot);
                           }}
                         >
-                          <span>Xem chi tiết 5 yếu tố</span>
-                          <span className="v2-expand-arrow">⌵</span>
+                          <span>{isCardExpanded ? "Thu gọn chi tiết 5 yếu tố" : "Xem chi tiết 5 yếu tố"}</span>
+                          <span className="v2-expand-arrow">{isCardExpanded ? "▴" : "⌵"}</span>
                         </button>
                       </div>
+
+                      {/* IN-PLACE ACCORDION: EXPANDED 5 PILLARS */}
+                      {isCardExpanded && (
+                        <div className="v2-card-expanded-pillars" onClick={(e) => e.stopPropagation()}>
+                          <div className="v2-expanded-pillar-item">
+                            <div className="v2-expanded-pillar-head">
+                              <span className="v2-expanded-pillar-icon">📍</span>
+                              <b>1. Đi đâu: {pillars.where.title}</b>
+                            </div>
+                            <p className="v2-expanded-pillar-body">{pillars.where.detail}</p>
+                            {pillars.where.highlights && pillars.where.highlights.length > 0 && (
+                              <div className="v2-expanded-highlights">
+                                {pillars.where.highlights.map((h, i) => (
+                                  <span key={i} className="v2-expanded-badge">✨ {h}</span>
+                                ))}
+                              </div>
+                            )}
+                          </div>
+
+                          <div className="v2-expanded-pillar-item">
+                            <div className="v2-expanded-pillar-head">
+                              <span className="v2-expanded-pillar-icon">🍽️</span>
+                              <b>2. Ăn gì: {pillars.dine.title}</b>
+                              {pillars.dine.distance && (
+                                <span className="v2-expanded-tag">Cách ~{pillars.dine.distance}</span>
+                              )}
+                            </div>
+                            <p className="v2-expanded-pillar-body">{pillars.dine.detail}</p>
+                          </div>
+
+                          <div className="v2-expanded-pillar-item">
+                            <div className="v2-expanded-pillar-head">
+                              <span className="v2-expanded-pillar-icon">🏨</span>
+                              <b>3. Ở đâu: {pillars.stay.title}</b>
+                            </div>
+                            <p className="v2-expanded-pillar-body">{pillars.stay.detail}</p>
+                          </div>
+
+                          <div className="v2-expanded-pillar-item">
+                            <div className="v2-expanded-pillar-head">
+                              <span className="v2-expanded-pillar-icon">🚗</span>
+                              <b>4. Phương tiện: {pillars.transport.title} (~{pillars.transport.distanceKm} km)</b>
+                            </div>
+                            <p className="v2-expanded-pillar-body">{pillars.transport.detail}</p>
+                          </div>
+
+                          <div className="v2-expanded-pillar-item v2-expanded-pillar-item--meta">
+                            <div className="v2-expanded-meta-col">
+                              <span className="v2-expanded-meta-label">⏱️ Khung giờ & Thời lượng:</span>
+                              <span className="v2-expanded-meta-val">{slot.timeSlot} – {pillars.duration.durationText}</span>
+                            </div>
+                            <div className="v2-expanded-meta-col">
+                              <span className="v2-expanded-meta-label">💵 Chi phí ước tính:</span>
+                              <span className="v2-expanded-meta-val text-emerald">
+                                {formatMoney(slot.estimatedCostPerPerson)} / người
+                              </span>
+                            </div>
+                          </div>
+
+                          {slot.highlightNote && (
+                            <div className="v2-expanded-tip">
+                              <span>💡 <b>Lưu ý trải nghiệm:</b> {slot.highlightNote}</span>
+                            </div>
+                          )}
+                        </div>
+                      )}
                     </div>
                   </article>
                 </div>

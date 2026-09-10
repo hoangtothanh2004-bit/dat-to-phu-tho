@@ -6770,6 +6770,138 @@ h3,
   gap: 14px;
 }
 
+.v2-expand-btn {
+  background: #f4faf6;
+  border: 1px solid rgba(13, 92, 70, 0.2);
+  font-size: 12.5px;
+  font-weight: 700;
+  color: #0d5c46;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  padding: 5px 12px;
+  border-radius: 8px;
+  transition: all 0.15s ease;
+}
+
+.v2-expand-btn:hover,
+.v2-expand-btn.is-expanded {
+  background: #0d5c46;
+  color: #ffffff;
+  border-color: #0d5c46;
+}
+
+.v2-expand-arrow {
+  font-size: 11px;
+}
+
+/* In-place Accordion for 5 Pillars */
+.v2-card-expanded-pillars {
+  margin-top: 10px;
+  padding: 12px;
+  background: #f8fcfa;
+  border: 1px solid rgba(13, 92, 70, 0.2);
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  animation: fadeInDown 0.2s ease;
+}
+
+.v2-expanded-pillar-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.v2-expanded-pillar-head {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13.5px;
+  color: #0d5c46;
+}
+
+.v2-expanded-pillar-icon {
+  font-size: 14px;
+}
+
+.v2-expanded-tag {
+  font-size: 11px;
+  background: rgba(13, 92, 70, 0.1);
+  color: #0d5c46;
+  padding: 2px 6px;
+  border-radius: 6px;
+  font-weight: 600;
+  margin-left: auto;
+}
+
+.v2-expanded-pillar-body {
+  margin: 0;
+  font-size: 13px;
+  color: #374151;
+  line-height: 1.5;
+  padding-left: 20px;
+}
+
+.v2-expanded-highlights {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding-left: 20px;
+  margin-top: 2px;
+}
+
+.v2-expanded-badge {
+  font-size: 11.5px;
+  background: #ffffff;
+  border: 1px solid rgba(13, 92, 70, 0.2);
+  color: #0d5c46;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-weight: 600;
+}
+
+.v2-expanded-pillar-item--meta {
+  background: #ffffff;
+  border: 1px dashed rgba(13, 92, 70, 0.25);
+  border-radius: 8px;
+  padding: 8px 12px;
+  flex-direction: row;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.v2-expanded-meta-col {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.v2-expanded-meta-label {
+  font-size: 11px;
+  color: #6b7280;
+  font-weight: 600;
+}
+
+.v2-expanded-meta-val {
+  font-size: 12.5px;
+  font-weight: 700;
+  color: #1f2937;
+}
+
+.v2-expanded-tip {
+  background: #fffbeb;
+  border: 1px solid #fef3c7;
+  color: #92400e;
+  font-size: 12px;
+  padding: 6px 10px;
+  border-radius: 8px;
+  line-height: 1.4;
+}
+
 .weather-pill--compact {
   border: 1px solid #e2e8f0;
   border-radius: 9999px;

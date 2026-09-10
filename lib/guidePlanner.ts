@@ -71,6 +71,16 @@ export const DISTRICT_TRAVEL_GUIDES: Record<string, DistrictGuide> = {
     highlights: ["Khu di tích lịch sử Đền Hùng", "Làng cổ & Đình cổ Hùng Lô (hát Xoan)", "Cầu đi bộ Công viên Văn Lang"],
     signatureFoods: ["Cá lăng sông Lô om chuối đậu", "Bánh tai Gia Cẩm", "Thịt chua Thanh Sơn"],
   },
+  "Huyện Thanh Sơn": {
+    district: "Huyện Thanh Sơn",
+    region: "Phú Thọ",
+    distanceFromHanoi: "95 km (55 km từ Việt Trì)",
+    travelTime: "1 giờ 45 phút",
+    recommendedTransport: "Ô tô riêng / Xe máy du lịch / Xe khách tuyến Hà Nội - Thanh Sơn",
+    bestRoutes: "Từ Hà Nội theo Quốc lộ 32 qua Cầu Trung Hà -> Thanh Sơn. Tuyến đường huyết mạch kết nối trực tiếp với Đồi chè Long Cốc, Vườn QG Xuân Sơn và Khoáng nóng Thanh Thủy.",
+    highlights: ["Thủ phủ Thịt chua truyền thống trứ danh (Nghị Thịnh / Điệp Đào)", "Khám phá văn hóa bản Mường & Thác Chòi", "Cửa ngõ kết nối Đồi chè Long Cốc và Vườn quốc gia Xuân Sơn"],
+    signatureFoods: ["Thịt chua Thanh Sơn gói lá chuối kèm lá sung, ổi, đinh lăng", "Rêu đá xào tỏi Mường", "Cơm lam cá suối nướng than hoa"],
+  },
   "Huyện Tân Sơn": {
     district: "Huyện Tân Sơn",
     region: "Phú Thọ",
