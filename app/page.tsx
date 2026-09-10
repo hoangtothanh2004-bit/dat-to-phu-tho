@@ -23,6 +23,7 @@ import { culturalEvents } from "@/data/events";
 import { tourTemplates, type TourTemplate } from "@/data/itineraryTemplates";
 import { buildItinerary, DISTRICT_TRAVEL_GUIDES, type GeneratedItinerary } from "@/lib/guidePlanner";
 import VisualItineraryV2 from "./components/VisualItineraryV2";
+import AiChatbotWidget from "./components/AiChatbotWidget";
 
 const isStaticDemo = process.env.NEXT_PUBLIC_STATIC_DEMO === "true";
 
@@ -3756,6 +3757,42 @@ export default function Home() {
     });
     setGeneratedItinerary(res);
     showToast(`Đã chọn: ${tmpl.title}`);
+  };
+
+  const handleApplyAiItinerary = (
+    itinerary: GeneratedItinerary,
+    params?: {
+      days: number;
+      transport: string;
+      style: string;
+      travelers: number;
+      anchorId: string;
+    }
+  ) => {
+    stopAllAudio();
+    setGeneratedItinerary(itinerary);
+    if (params) {
+      if (params.days) setDays(params.days);
+      if (params.transport) setTransport(params.transport);
+      if (params.style) setInterest(params.style);
+      if (params.travelers) setTravelers(params.travelers);
+      if (params.anchorId) {
+        setTargetPlaceId(params.anchorId);
+        setSelectedPlaceIds([params.anchorId]);
+      }
+    }
+    setActiveTab("trip");
+    setIsBuilderCollapsed(true);
+    showToast(`✦ Đã mở lịch trình thông minh: ${itinerary.title}`);
+  };
+
+  const handleSaveAiItinerary = (itinerary: GeneratedItinerary) => {
+    const next = [itinerary, ...savedItineraryList.filter((it) => it.id !== itinerary.id)];
+    setSavedItineraryList(next);
+    if (typeof window !== "undefined") {
+      window.localStorage.setItem("datto-saved-itineraries", JSON.stringify(next));
+    }
+    showToast("✦ Đã lưu lịch trình AI vào Sổ tay du lịch");
   };
 
   const selectSearchSuggestion = (place: Place, label: string) => {
@@ -8758,6 +8795,19 @@ function doPost(e) {
           </span>
         </div>
       </button>
+
+      {/* FLOATING AI CHATBOT (TRỢ LÝ AI ĐẤT TỔ - GÓC PHẢI) */}
+      <AiChatbotWidget
+        authUser={authUser}
+        onOpenAuthModal={() => {
+          setAuthModalTab("login");
+          setAuthModalOpen(true);
+        }}
+        onApplyItinerary={handleApplyAiItinerary}
+        onSaveItinerary={handleSaveAiItinerary}
+        showToast={showToast}
+        currentLang={currentLang}
+      />
 
       {/* TOAST NOTIFICATION */}
       {toast && <div className="toast" role="status"><span>✓</span>{toast}</div>}
