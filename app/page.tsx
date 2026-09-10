@@ -22,6 +22,7 @@ import {
 import { culturalEvents } from "@/data/events";
 import { tourTemplates, type TourTemplate } from "@/data/itineraryTemplates";
 import { buildItinerary, DISTRICT_TRAVEL_GUIDES, type GeneratedItinerary } from "@/lib/guidePlanner";
+import { getAllDistrictPlaces, getDistrictTravelGuide } from "@/lib/districtPlaceGenerator";
 import VisualItineraryV2 from "./components/VisualItineraryV2";
 import AiChatbotWidget from "./components/AiChatbotWidget";
 
@@ -3258,35 +3259,107 @@ export default function Home() {
 
   const currentMonth = new Date().getMonth() + 1;
 
+  const allTripPlaces = useMemo(() => {
+    return [...places, ...getAllDistrictPlaces()];
+  }, []);
+
   const availableDistricts = useMemo(() => {
     if (tripRegion === "Phú Thọ") {
-      return ["Tất cả", "TP. Việt Trì", "Huyện Tân Sơn", "Huyện Thanh Thủy", "Huyện Hạ Hòa"];
+      return [
+        "Tất cả",
+        "TP. Việt Trì",
+        "Thị xã Phú Thọ",
+        "Huyện Lâm Thao",
+        "Huyện Phù Ninh",
+        "Huyện Hạ Hòa",
+        "Huyện Đoan Hùng",
+        "Huyện Cẩm Khê",
+        "Huyện Thanh Ba",
+        "Huyện Tam Nông",
+        "Huyện Thanh Thủy",
+        "Huyện Thanh Sơn",
+        "Huyện Tân Sơn",
+        "Huyện Yên Lập",
+      ];
     }
     if (tripRegion === "Vĩnh Phúc") {
-      return ["Tất cả", "Huyện Tam Đảo", "TP. Phúc Yên", "TP. Vĩnh Yên", "Huyện Bình Xuyên"];
+      return [
+        "Tất cả",
+        "TP. Vĩnh Yên",
+        "TP. Phúc Yên",
+        "Huyện Tam Đảo",
+        "Huyện Bình Xuyên",
+        "Huyện Vĩnh Tường",
+        "Huyện Yên Lạc",
+        "Huyện Lập Thạch",
+        "Huyện Sông Lô",
+        "Huyện Tam Dương",
+      ];
     }
     if (tripRegion === "Hòa Bình") {
-      return ["Tất cả", "Huyện Mai Châu", "Huyện Kim Bôi", "Huyện Cao Phong", "TP. Hòa Bình"];
+      return [
+        "Tất cả",
+        "TP. Hòa Bình",
+        "Huyện Mai Châu",
+        "Huyện Kim Bôi",
+        "Huyện Cao Phong",
+        "Huyện Lương Sơn",
+        "Huyện Đà Bắc",
+        "Huyện Tân Lạc",
+        "Huyện Lạc Sơn",
+        "Huyện Lạc Thủy",
+        "Huyện Yên Thủy",
+      ];
     }
     return [
       "Tất cả",
-      "TP. Việt Trì", "Huyện Tân Sơn", "Huyện Thanh Thủy", "Huyện Hạ Hòa",
-      "Huyện Tam Đảo", "TP. Phúc Yên", "TP. Vĩnh Yên", "Huyện Bình Xuyên",
-      "Huyện Mai Châu", "Huyện Kim Bôi", "Huyện Cao Phong", "TP. Hòa Bình"
+      "TP. Việt Trì",
+      "Thị xã Phú Thọ",
+      "Huyện Lâm Thao",
+      "Huyện Phù Ninh",
+      "Huyện Hạ Hòa",
+      "Huyện Đoan Hùng",
+      "Huyện Cẩm Khê",
+      "Huyện Thanh Ba",
+      "Huyện Tam Nông",
+      "Huyện Thanh Thủy",
+      "Huyện Thanh Sơn",
+      "Huyện Tân Sơn",
+      "Huyện Yên Lập",
+      "TP. Vĩnh Yên",
+      "TP. Phúc Yên",
+      "Huyện Tam Đảo",
+      "Huyện Bình Xuyên",
+      "Huyện Vĩnh Tường",
+      "Huyện Yên Lạc",
+      "Huyện Lập Thạch",
+      "Huyện Sông Lô",
+      "Huyện Tam Dương",
+      "TP. Hòa Bình",
+      "Huyện Mai Châu",
+      "Huyện Kim Bôi",
+      "Huyện Cao Phong",
+      "Huyện Lương Sơn",
+      "Huyện Đà Bắc",
+      "Huyện Tân Lạc",
+      "Huyện Lạc Sơn",
+      "Huyện Lạc Thủy",
+      "Huyện Yên Thủy",
     ];
   }, [tripRegion]);
 
-  const activeDistrictGuide = tripDistrict !== "Tất cả" && DISTRICT_TRAVEL_GUIDES[tripDistrict]
-    ? DISTRICT_TRAVEL_GUIDES[tripDistrict]
-    : null;
+  const activeDistrictGuide =
+    tripDistrict !== "Tất cả"
+      ? DISTRICT_TRAVEL_GUIDES[tripDistrict] || getDistrictTravelGuide(tripDistrict)
+      : null;
 
   const availablePlacesForSelection = useMemo(() => {
-    return places.filter((p) => {
+    return allTripPlaces.filter((p) => {
       if (tripRegion !== "Tất cả" && p.region !== tripRegion) return false;
       if (tripDistrict !== "Tất cả" && p.district !== tripDistrict) return false;
       return true;
     });
-  }, [tripRegion, tripDistrict]);
+  }, [allTripPlaces, tripRegion, tripDistrict]);
 
   const togglePlaceSelection = (placeId: string) => {
     setSelectedPlaceIds((current) => {
@@ -3822,6 +3895,11 @@ export default function Home() {
         setTargetPlaceId(params.anchorId);
         setSelectedPlaceIds([params.anchorId]);
       }
+    }
+    const firstPlace = itinerary.days[0]?.slots[0]?.place;
+    if (firstPlace) {
+      if (firstPlace.district) setTripDistrict(firstPlace.district);
+      if (firstPlace.region) setTripRegion(firstPlace.region);
     }
     setActiveTab("trip");
     setIsBuilderCollapsed(true);

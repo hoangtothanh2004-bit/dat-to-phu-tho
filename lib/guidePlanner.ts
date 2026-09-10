@@ -1,4 +1,10 @@
 import { places, type NearbyItem, type Place } from "@/data/travel";
+import { DISTRICT_DATABASE, type DistrictInfo, findDistrictByQuery } from "@/data/districtDirectory";
+import {
+  getAllPlacesForDistrict,
+  getAllDistrictPlaces,
+  getDistrictTravelGuide,
+} from "./districtPlaceGenerator";
 
 export type ItinerarySlot = {
   period: "Sáng" | "Trưa" | "Chiều" | "Tối";
@@ -231,11 +237,33 @@ export function buildItinerary(options: PlannerOptions): GeneratedItinerary {
     lang = "vi",
   } = options;
 
+  // Master place pool combining handcrafted places and all 32 districts' spots
+  const allAvailablePlaces: Place[] = [...places, ...getAllDistrictPlaces()];
+
+  // Detect target district if specified by district name or district-based anchor
+  let targetDistrictInfo: DistrictInfo | undefined;
+  if (district && district !== "Tất cả") {
+    targetDistrictInfo = findDistrictByQuery(district);
+  }
+  if (!targetDistrictInfo && anchorPlaceId) {
+    const cleanId = anchorPlaceId.replace(/^district-/, "").split("-spot-")[0];
+    targetDistrictInfo = DISTRICT_DATABASE[cleanId] || findDistrictByQuery(anchorPlaceId);
+  }
+  if (!targetDistrictInfo && selectedPlaceIds.length > 0) {
+    for (const pid of selectedPlaceIds) {
+      const cleanId = pid.replace(/^district-/, "").split("-spot-")[0];
+      if (DISTRICT_DATABASE[cleanId]) {
+        targetDistrictInfo = DISTRICT_DATABASE[cleanId];
+        break;
+      }
+    }
+  }
+
   // 1. Xác định danh sách các điểm được người dùng ưu tiên ghép
   const userChosenPlaces: Place[] = [];
   if (selectedPlaceIds.length > 0) {
     for (const pid of selectedPlaceIds) {
-      const found = places.find((p) => p.id === pid);
+      const found = allAvailablePlaces.find((p) => p.id === pid);
       if (found && !userChosenPlaces.some((cp) => cp.id === found.id)) {
         userChosenPlaces.push(found);
       }
@@ -243,15 +271,20 @@ export function buildItinerary(options: PlannerOptions): GeneratedItinerary {
   }
 
   // Nếu không chọn mảng điểm, tìm điểm neo khởi đầu
-  let anchor = userChosenPlaces[0] || places.find((p) => p.id === anchorPlaceId);
-  if (!anchor) {
-    if (district) {
-      anchor = places.find((p) => p.district === district) || places[0];
-    } else if (region && region !== "Tất cả") {
-      anchor = places.find((p) => p.region === region) || places[0];
-    } else {
-      anchor = places[0]; // Default Đền Hùng
-    }
+  let anchor: Place;
+  if (userChosenPlaces.length > 0) {
+    anchor = userChosenPlaces[0];
+  } else if (targetDistrictInfo) {
+    const distPlaces = getAllPlacesForDistrict(targetDistrictInfo.id);
+    anchor = distPlaces[0] || allAvailablePlaces.find((p) => p.id === anchorPlaceId) || places[0];
+  } else if (anchorPlaceId) {
+    anchor = allAvailablePlaces.find((p) => p.id === anchorPlaceId) || places[0];
+  } else if (district) {
+    anchor = allAvailablePlaces.find((p) => p.district === district) || places[0];
+  } else if (region && region !== "Tất cả") {
+    anchor = allAvailablePlaces.find((p) => p.region === region) || places[0];
+  } else {
+    anchor = places[0]; // Default Đền Hùng
   }
 
   // 2. Gom cụm các điểm đến phù hợp theo cự ly và chủ đề
@@ -262,16 +295,29 @@ export function buildItinerary(options: PlannerOptions): GeneratedItinerary {
     chosenPlaces.unshift(anchor);
   }
 
+  // Nếu người dùng chọn huyện cụ thể, ưu tiên đưa các điểm tham quan thực tế của huyện đó vào
+  if (targetDistrictInfo && chosenPlaces.length < neededStops) {
+    const distPlaces = getAllPlacesForDistrict(targetDistrictInfo.id);
+    for (const dp of distPlaces) {
+      if (chosenPlaces.length >= neededStops) break;
+      if (!chosenPlaces.some((p) => p.id === dp.id)) {
+        chosenPlaces.push(dp);
+      }
+    }
+  }
+
   // Nếu vẫn chưa đủ điểm cho số ngày, tự động bổ sung các điểm lân cận
   if (chosenPlaces.length < neededStops) {
     const existingIds = new Set(chosenPlaces.map((p) => p.id));
-    const pool = places.filter((p) => !existingIds.has(p.id));
+    const pool = allAvailablePlaces.filter((p) => !existingIds.has(p.id));
 
     // Ưu tiên cùng huyện trước, sau đó cùng vùng, sau đó theo cự ly
     pool.sort((a, b) => {
       const lastPlace = chosenPlaces[chosenPlaces.length - 1] || anchor;
       if (district && a.district === district && b.district !== district) return -1;
       if (district && b.district === district && a.district !== district) return 1;
+      if (targetDistrictInfo && a.district === targetDistrictInfo.name && b.district !== targetDistrictInfo.name) return -1;
+      if (targetDistrictInfo && b.district === targetDistrictInfo.name && a.district !== targetDistrictInfo.name) return 1;
       if (a.region === lastPlace.region && b.region !== lastPlace.region) return -1;
       if (b.region === lastPlace.region && a.region !== lastPlace.region) return 1;
       const distA = haversineDistance(lastPlace.lat, lastPlace.lng, a.lat, a.lng);
@@ -461,12 +507,76 @@ export function buildItinerary(options: PlannerOptions): GeneratedItinerary {
 
   const totalCost = baseCostPerPerson * travelers;
 
+  const districtGuide = targetDistrictInfo
+    ? getDistrictTravelGuide(targetDistrictInfo.id) || DISTRICT_TRAVEL_GUIDES[targetDistrictInfo.name]
+    : district
+    ? DISTRICT_TRAVEL_GUIDES[district] || getDistrictTravelGuide(district)
+    : null;
+
+  const shortDn = (() => {
+    if (lang === "en") return durationDays > 1 ? `${durationDays}D${durationDays - 1}N` : "1-Day";
+    if (lang === "zh") return durationDays > 1 ? `${durationDays}天${durationDays - 1}晚` : "1日";
+    if (lang === "ko") return durationDays > 1 ? `${durationDays - 1}박${durationDays}일` : "당일";
+    if (lang === "ja") return durationDays > 1 ? `${durationDays - 1}泊${durationDays}日` : "日帰り";
+    return `${durationDays}N${durationDays > 1 ? `${durationDays - 1}Đ` : ""}`;
+  })();
+
+  let displayTitle = "";
+  if (targetDistrictInfo && userChosenPlaces.length <= 1) {
+    const districtTagline = targetDistrictInfo.title.includes("–")
+      ? targetDistrictInfo.title.split("–")[1]?.trim()
+      : targetDistrictInfo.title;
+    if (lang === "en") displayTitle = `${shortDn} Itinerary: Discover ${targetDistrictInfo.name}`;
+    else if (lang === "zh") displayTitle = `${shortDn}行程：探索 ${targetDistrictInfo.name}`;
+    else if (lang === "ko") displayTitle = `${shortDn} 여정: ${targetDistrictInfo.name} 탐방`;
+    else if (lang === "ja") displayTitle = `${shortDn}の旅程：${targetDistrictInfo.name}を巡る`;
+    else displayTitle = `Hành trình ${shortDn}: Khám phá ${targetDistrictInfo.name} – ${districtTagline}`;
+  } else if (userChosenPlaces.length > 1) {
+    const stopsList = userChosenPlaces.slice(0, 3).map(p => p.shortName).join(" – ") + (userChosenPlaces.length > 3 ? ` (+${userChosenPlaces.length - 3})` : "");
+    if (lang === "en") displayTitle = `${shortDn} Route: ${stopsList}`;
+    else if (lang === "zh") displayTitle = `${shortDn}连线游：${stopsList}`;
+    else if (lang === "ko") displayTitle = `${shortDn} 연계 루트: ${stopsList}`;
+    else if (lang === "ja") displayTitle = `${shortDn}周遊ルート：${stopsList}`;
+    else displayTitle = `Hành trình ${shortDn}: Ghép tuyến ${stopsList}`;
+  } else {
+    if (lang === "en") displayTitle = `${shortDn} Itinerary: Discover ${anchor.shortName}`;
+    else if (lang === "zh") displayTitle = `${shortDn}行程：探索 ${anchor.shortName}`;
+    else if (lang === "ko") displayTitle = `${shortDn} 여정: ${anchor.shortName} 탐방`;
+    else if (lang === "ja") displayTitle = `${shortDn}の旅程：${anchor.shortName}を巡る`;
+    else displayTitle = `Hành trình ${shortDn}: Khám phá ${anchor.shortName}`;
+  }
+
+  const effectiveDistrictName = targetDistrictInfo ? targetDistrictInfo.name : district;
+  const effectiveRegion = targetDistrictInfo ? targetDistrictInfo.province : anchor.region;
+
+  const displaySubtitle = (() => {
+    if (lang === "en") return `${effectiveDistrictName ? `${effectiveDistrictName} · ` : ""}${effectiveRegion} · Transport: ${transport} · ${style}`;
+    if (lang === "zh") return `${effectiveDistrictName ? `${effectiveDistrictName} · ` : ""}${effectiveRegion} · 交通：${transport} · ${style}`;
+    if (lang === "ko") return `${effectiveDistrictName ? `${effectiveDistrictName} · ` : ""}${effectiveRegion} · 이동: ${transport} · ${style}`;
+    if (lang === "ja") return `${effectiveDistrictName ? `${effectiveDistrictName} · ` : ""}${effectiveRegion} · 移動手段：${transport} · ${style}`;
+    return `${effectiveDistrictName ? `${effectiveDistrictName} · ` : ""}${effectiveRegion} · Phương tiện ${transport} · ${style}`;
+  })();
+
+  const dNLabel = (() => {
+    if (lang === "en") return durationDays > 1 ? `${durationDays} days ${durationDays - 1} nights` : "1 day (Day trip)";
+    if (lang === "zh") return durationDays > 1 ? `${durationDays}天${durationDays - 1}晚` : "1日游（当天往返）";
+    if (lang === "ko") return durationDays > 1 ? `${durationDays - 1}박 ${durationDays}일` : "당일치기";
+    if (lang === "ja") return durationDays > 1 ? `${durationDays - 1}泊${durationDays}日` : "日帰り";
+    return `${durationDays} ngày ${durationDays > 1 ? `${durationDays - 1} đêm` : "(trong ngày)"}`;
+  })();
+
   // Lời thoại hướng dẫn viên ảo (Tiếng Việt & English)
-  const audioGuideScript = `Chào mừng quý khách đến với hành trình du lịch ${anchor.shortName} và vùng đất cội nguồn Phú Thọ – Vĩnh Phúc – Hòa Bình. Tôi là trợ lý hướng dẫn viên số, rất vui được đồng hành cùng quý khách trong chuyến đi ${durationDays} ngày này. Lịch trình đã được tối ưu cân đối giữa thời gian tham quan, thưởng thức ẩm thực đặc sản và nghỉ dưỡng phục hồi sức khỏe. Kính chúc quý khách một chuyến đi trọn vẹn, an toàn và nhiều trải nghiệm đáng nhớ!`;
+  const audioGuideScript = targetDistrictInfo
+    ? `Chào mừng quý khách đến với hành trình khám phá ${targetDistrictInfo.name}, ${targetDistrictInfo.title}. Tôi là trợ lý du lịch số, rất vui được đồng hành cùng quý khách trong chuyến đi ${durationDays} ngày này. ${targetDistrictInfo.intro} Lịch trình được thiết kế tối ưu, kết hợp tham quan các danh lam tiêu biểu như ${targetDistrictInfo.attractions.map((a) => a.name.split("(")[0].trim()).join(", ")}, trải nghiệm văn hóa bản địa, thưởng thức đặc sản ${targetDistrictInfo.culinary.map((c) => c.dish.split("(")[0].trim()).join(", ")} và nghỉ dưỡng tiện nghi. Kính chúc quý khách có một chuyến đi an toàn, thư thái và trọn vẹn!`
+    : `Chào mừng quý khách đến với hành trình du lịch ${anchor.shortName} và vùng đất cội nguồn Phú Thọ – Vĩnh Phúc – Hòa Bình. Tôi là trợ lý hướng dẫn viên số, rất vui được đồng hành cùng quý khách trong chuyến đi ${durationDays} ngày này. Lịch trình đã được tối ưu cân đối giữa thời gian tham quan, thưởng thức ẩm thực đặc sản và nghỉ dưỡng phục hồi sức khỏe. Kính chúc quý khách một chuyến đi trọn vẹn, an toàn và nhiều trải nghiệm đáng nhớ!`;
 
-  const audioGuideScriptEn = `Welcome to your journey exploring ${anchor.shortName} and the northern cultural heritage of Phu Tho, Vinh Phuc, and Hoa Binh. I am your digital tour guide, delighted to accompany you on this ${durationDays}-day trip. This itinerary is carefully optimized for sightseeing, authentic regional gastronomy, and relaxing stays. Wishing you a wonderful, safe, and memorable trip in Vietnam!`;
+  const audioGuideScriptEn = targetDistrictInfo
+    ? `Welcome to your journey exploring ${targetDistrictInfo.name} in ${targetDistrictInfo.province}. I am your digital tour guide, delighted to accompany you on this ${durationDays}-day trip. This itinerary is carefully optimized for sightseeing, authentic regional gastronomy, and relaxing stays. Wishing you a wonderful, safe, and memorable trip!`
+    : `Welcome to your journey exploring ${anchor.shortName} and the northern cultural heritage of Phu Tho, Vinh Phuc, and Hoa Binh. I am your digital tour guide, delighted to accompany you on this ${durationDays}-day trip. This itinerary is carefully optimized for sightseeing, authentic regional gastronomy, and relaxing stays. Wishing you a wonderful, safe, and memorable trip in Vietnam!`;
 
-  const overviewNarrative = `Hành trình ${durationDays} ngày ${durationDays > 1 ? `${durationDays - 1} đêm` : "(trong ngày)"} được thiết kế tối ưu hóa lộ trình di chuyển bằng ${transport}, kết nối những tinh hoa đặc sắc nhất của ${anchor.region}: từ di sản tâm linh, cảnh quan mây núi đến ẩm thực đặc sản bản địa. Lịch trình phân bổ nhịp nhàng giữa thời gian tham quan, thưởng thức ẩm thực và nghỉ ngơi tái tạo năng lượng.`;
+  const overviewNarrative = targetDistrictInfo
+    ? `Hành trình ${durationDays} ngày ${durationDays > 1 ? `${durationDays - 1} đêm` : "(trong ngày)"} khám phá trọn vẹn ${targetDistrictInfo.name} (${targetDistrictInfo.province}) được tối ưu hóa cung đường di chuyển bằng ${transport}. Lịch trình kết nối các danh lam thắng cảnh đặc sắc như ${targetDistrictInfo.attractions.map((a) => a.name.split("(")[0].trim()).join(", ")}, thưởng thức ẩm thực đặc sản ${targetDistrictInfo.culinary.map((c) => c.dish.split("(")[0].trim()).join(", ")} và nghỉ ngơi tại ${targetDistrictInfo.recommendedStay || "khách sạn địa phương chu đáo"}.`
+    : `Hành trình ${durationDays} ngày ${durationDays > 1 ? `${durationDays - 1} đêm` : "(trong ngày)"} được thiết kế tối ưu hóa lộ trình di chuyển bằng ${transport}, kết nối những tinh hoa đặc sắc nhất của ${anchor.region}: từ di sản tâm linh, cảnh quan mây núi đến ẩm thực đặc sản bản địa. Lịch trình phân bổ nhịp nhàng giữa thời gian tham quan, thưởng thức ẩm thực và nghỉ ngơi tái tạo năng lượng.`;
 
   // Tạo Google Maps URL đa điểm
   const allStops = chosenPlaces.map((p) => `${p.lat},${p.lng}`);
@@ -486,58 +596,20 @@ export function buildItinerary(options: PlannerOptions): GeneratedItinerary {
     totalDriveTime = `${hoursDrive > 0 ? `${hoursDrive}時間` : ""}${remMinutes}分ドライブ`;
   }
 
-  const districtGuide = district && DISTRICT_TRAVEL_GUIDES[district] ? DISTRICT_TRAVEL_GUIDES[district] : null;
-
-  const shortDn = (() => {
-    if (lang === "en") return durationDays > 1 ? `${durationDays}D${durationDays - 1}N` : "1-Day";
-    if (lang === "zh") return durationDays > 1 ? `${durationDays}天${durationDays - 1}晚` : "1日";
-    if (lang === "ko") return durationDays > 1 ? `${durationDays - 1}박${durationDays}일` : "당일";
-    if (lang === "ja") return durationDays > 1 ? `${durationDays - 1}泊${durationDays}日` : "日帰り";
-    return `${durationDays}N${durationDays > 1 ? `${durationDays - 1}Đ` : ""}`;
-  })();
-
-  let displayTitle = "";
-  if (userChosenPlaces.length > 1) {
-    const stopsList = userChosenPlaces.slice(0, 3).map(p => p.shortName).join(" – ") + (userChosenPlaces.length > 3 ? ` (+${userChosenPlaces.length - 3})` : "");
-    if (lang === "en") displayTitle = `${shortDn} Route: ${stopsList}`;
-    else if (lang === "zh") displayTitle = `${shortDn}连线游：${stopsList}`;
-    else if (lang === "ko") displayTitle = `${shortDn} 연계 루트: ${stopsList}`;
-    else if (lang === "ja") displayTitle = `${shortDn}周遊ルート：${stopsList}`;
-    else displayTitle = `Hành trình ${shortDn}: Ghép tuyến ${stopsList}`;
-  } else {
-    if (lang === "en") displayTitle = `${shortDn} Itinerary: Discover ${anchor.shortName}`;
-    else if (lang === "zh") displayTitle = `${shortDn}行程：探索 ${anchor.shortName}`;
-    else if (lang === "ko") displayTitle = `${shortDn} 여정: ${anchor.shortName} 탐방`;
-    else if (lang === "ja") displayTitle = `${shortDn}の旅程：${anchor.shortName}を巡る`;
-    else displayTitle = `Hành trình ${shortDn}: Khám phá ${anchor.shortName}`;
-  }
-
   const defaultRouteAdvice = districtGuide
     ? `${districtGuide.bestRoutes} (Cự ly ~${districtGuide.distanceFromHanoi}, thời gian ~${districtGuide.travelTime}).`
     : (anchor.transportTips?.routeAdvice || "Cung đường liên huyện và cao tốc bằng phẳng, dễ di chuyển.");
-
-  const displaySubtitle = (() => {
-    if (lang === "en") return `${district ? `${district} · ` : ""}${anchor.region} · Transport: ${transport} · ${style}`;
-    if (lang === "zh") return `${district ? `${district} · ` : ""}${anchor.region} · 交通：${transport} · ${style}`;
-    if (lang === "ko") return `${district ? `${district} · ` : ""}${anchor.region} · 이동: ${transport} · ${style}`;
-    if (lang === "ja") return `${district ? `${district} · ` : ""}${anchor.region} · 移動手段：${transport} · ${style}`;
-    return `${district ? `${district} · ` : ""}${anchor.region} · Phương tiện ${transport} · ${style}`;
-  })();
-
-  const dNLabel = (() => {
-    if (lang === "en") return durationDays > 1 ? `${durationDays} days ${durationDays - 1} nights` : "1 day (Day trip)";
-    if (lang === "zh") return durationDays > 1 ? `${durationDays}天${durationDays - 1}晚` : "1日游（当天往返）";
-    if (lang === "ko") return durationDays > 1 ? `${durationDays - 1}박 ${durationDays}일` : "당일치기";
-    if (lang === "ja") return durationDays > 1 ? `${durationDays - 1}泊${durationDays}日` : "日帰り";
-    return `${durationDays} ngày ${durationDays > 1 ? `${durationDays - 1} đêm` : "(trong ngày)"}`;
-  })();
 
   return {
     id: `plan-${Date.now()}`,
     title: displayTitle,
     subtitle: displaySubtitle,
-    targetDestination: userChosenPlaces.length > 1 ? userChosenPlaces.map(p => p.shortName).join(", ") : anchor.name,
-    region: userChosenPlaces.length > 1 ? "Liên tuyến đa điểm" : anchor.region,
+    targetDestination: targetDistrictInfo
+      ? `${targetDistrictInfo.name} (${targetDistrictInfo.province})`
+      : userChosenPlaces.length > 1
+      ? userChosenPlaces.map((p) => p.shortName).join(", ")
+      : anchor.name,
+    region: targetDistrictInfo ? targetDistrictInfo.province : userChosenPlaces.length > 1 ? "Liên tuyến đa điểm" : anchor.region,
     durationDays,
     durationLabel: dNLabel,
     transport,
@@ -551,7 +623,9 @@ export function buildItinerary(options: PlannerOptions): GeneratedItinerary {
     audioGuideScript,
     audioGuideScriptEn,
     routeAdvice: defaultRouteAdvice,
-    cautionAdvice: anchor.warning || "Chú ý theo dõi thời tiết và chuẩn bị trang phục phù hợp với từng điểm đến.",
+    cautionAdvice: targetDistrictInfo
+      ? `Đoàn cần chú ý giữ gìn vệ sinh môi trường, chuẩn bị trang phục phù hợp khi tham quan các danh thắng tại ${targetDistrictInfo.name} và tuân thủ tốc độ khi lái xe.`
+      : (anchor.warning || "Chú ý theo dõi thời tiết và chuẩn bị trang phục phù hợp với từng điểm đến."),
     days,
     googleMapsUrl,
   };

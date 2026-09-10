@@ -141,13 +141,18 @@ export default function AiChatbotWidget({
     }
   }, [authUser?.id, authUser?.name, isEn]);
 
+  const surveyRef = useRef(survey);
+  surveyRef.current = survey;
+
   // Core Natural Language Processor
-  const handleProcessInput = (text: string) => {
+  const handleProcessInput = (text: string, overrideSurvey?: AiSurveyState) => {
     setIsThinking(true);
 
     setTimeout(() => {
-      const res = processAiMessage(text, survey, authUser?.name);
+      const activeSurvey = overrideSurvey || surveyRef.current;
+      const res = processAiMessage(text, activeSurvey, authUser?.name);
       setSurvey(res.updatedSurvey);
+      surveyRef.current = res.updatedSurvey;
 
       const aiMsg: ChatMessage = {
         id: `ai-${Date.now()}`,
@@ -205,7 +210,8 @@ export default function AiChatbotWidget({
 
     if (value === "start_planner") {
       setSurvey(initialSurveyState);
-      handleProcessInput("giúp tôi lên lịch trình");
+      surveyRef.current = initialSurveyState;
+      handleProcessInput("giúp tôi lên lịch trình", initialSurveyState);
       return;
     }
 
@@ -244,11 +250,65 @@ export default function AiChatbotWidget({
       return;
     }
 
-    // Specific duration buttons like choose_dur_3_tam-dao
+    // Specific duration buttons like choose_dur_2_district-doan-hung
     if (value.startsWith("choose_dur_")) {
       const parts = value.split("_");
-      const days = parts[2] || "2";
-      handleProcessInput(`${days} ngày`);
+      const targetAnchor = parts.slice(3).join("_");
+      const nextSurvey = { ...surveyRef.current };
+      if (targetAnchor) {
+        nextSurvey.anchorPlaceId = targetAnchor;
+        nextSurvey.selectedPlaceIds = [targetAnchor];
+      }
+      setSurvey(nextSurvey);
+      surveyRef.current = nextSurvey;
+      handleProcessInput(label, nextSurvey);
+      return;
+    }
+
+    // Specific spot button like choose_spot_doan-hung_0
+    if (value.startsWith("choose_spot_")) {
+      const parts = value.split("_");
+      const distId = parts[2];
+      const spotIdx = parseInt(parts[3] || "0", 10);
+      const targetAnchor = distId ? `district-${distId}${spotIdx > 0 ? `-spot-${spotIdx}` : ""}` : "";
+      const nextSurvey = { ...surveyRef.current };
+      if (targetAnchor) {
+        nextSurvey.anchorPlaceId = targetAnchor;
+        nextSurvey.selectedPlaceIds = [targetAnchor];
+      }
+      setSurvey(nextSurvey);
+      surveyRef.current = nextSurvey;
+      handleProcessInput(label, nextSurvey);
+      return;
+    }
+
+    // Specific district combo button like plan_doan_hung_combo
+    if (value.startsWith("plan_") && value.endsWith("_combo")) {
+      const distId = value.replace(/^plan_/, "").replace(/_combo$/, "").replace(/_/g, "-");
+      const targetAnchor = `district-${distId}`;
+      const nextSurvey = {
+        ...surveyRef.current,
+        anchorPlaceId: targetAnchor,
+        selectedPlaceIds: [targetAnchor],
+      };
+      setSurvey(nextSurvey);
+      surveyRef.current = nextSurvey;
+      handleProcessInput(label, nextSurvey);
+      return;
+    }
+
+    // Explore spots button like explore_spots_doan-hung
+    if (value.startsWith("explore_spots_")) {
+      const distId = value.replace("explore_spots_", "");
+      const targetAnchor = `district-${distId}`;
+      const nextSurvey = {
+        ...surveyRef.current,
+        anchorPlaceId: targetAnchor,
+        selectedPlaceIds: [targetAnchor],
+      };
+      setSurvey(nextSurvey);
+      surveyRef.current = nextSurvey;
+      handleProcessInput(label, nextSurvey);
       return;
     }
 

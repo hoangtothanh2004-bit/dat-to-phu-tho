@@ -3,38 +3,43 @@ import { DISTRICT_DATABASE, findDistrictByQuery, type DistrictInfo } from "@/dat
 import { buildItinerary, type GeneratedItinerary } from "./guidePlanner";
 
 export const DISTRICT_TO_ANCHOR_MAP: Record<string, string> = {
+  // Phú Thọ (13 huyện/thị/thành)
   "viet-tri": "den-hung",
-  "thi-xa-phu-tho": "den-hung",
-  "lam-thao": "den-hung",
-  "phu-ninh": "den-hung",
+  "thi-xa-phu-tho": "district-thi-xa-phu-tho",
+  "lam-thao": "district-lam-thao",
+  "phu-ninh": "district-phu-ninh",
   "ha-hoa": "den-mau-au-co",
-  "doan-hung": "den-hung",
-  "cam-khe": "dam-ao-chau",
-  "thanh-ba": "dam-ao-chau",
-  "tam-nong": "thanh-thuy",
+  "doan-hung": "district-doan-hung",
+  "cam-khe": "district-cam-khe",
+  "thanh-ba": "district-thanh-ba",
+  "tam-nong": "district-tam-nong",
   "thanh-thuy": "thanh-thuy",
-  "thanh-son": "long-coc",
+  "thanh-son": "district-thanh-son",
   "tan-son": "long-coc",
-  "yen-lap": "xuan-son",
+  "yen-lap": "district-yen-lap",
+
+  // Vĩnh Phúc (9 huyện/thành)
   "vinh-yen": "dam-vac",
   "phuc-yen": "ho-dai-lai",
   "tam-dao": "tam-dao",
   "binh-xuyen": "lang-gom-huong-canh",
-  "vinh-tuong": "dam-vac",
-  "yen-lac": "dam-vac",
-  "lap-thach": "tam-dao",
-  "song-lo": "tam-dao",
-  "tam-duong": "tam-dao",
+  "vinh-tuong": "district-vinh-tuong",
+  "yen-lac": "district-yen-lac",
+  "lap-thach": "district-lap-thach",
+  "song-lo": "district-song-lo",
+  "tam-duong": "district-tam-duong",
+
+  // Hòa Bình (10 huyện/thành)
   "tp-hoa-binh": "bao-tang-muong",
   "mai-chau": "ban-lac-mai-chau",
   "kim-boi": "khoang-nong-kim-boi",
   "cao-phong": "thung-nai-song-da",
-  "luong-son": "bao-tang-muong",
-  "da-bac": "thung-nai-song-da",
-  "tan-lac": "ban-lac-mai-chau",
-  "lac-son": "ban-lac-mai-chau",
-  "lac-thuy": "khoang-nong-kim-boi",
-  "yen-thuy": "khoang-nong-kim-boi",
+  "luong-son": "district-luong-son",
+  "da-bac": "district-da-bac",
+  "tan-lac": "district-tan-lac",
+  "lac-son": "district-lac-son",
+  "lac-thuy": "district-lac-thuy",
+  "yen-thuy": "district-yen-thuy",
 };
 
 export type AiSurveyState = {
@@ -85,15 +90,15 @@ const DESTINATION_MAPPINGS: Array<{
   },
   {
     keywords: ["đoan hùng", "doan hung", "huyện đoan hùng", "bưởi đoan hùng"],
-    placeId: "den-hung",
-    name: "Huyện Đoan Hùng (Vùng đất bưởi tiến Vua)",
+    placeId: "district-doan-hung",
+    name: "Huyện Đoan Hùng (Vương quốc bưởi tiến Vua & Chiến thắng Sông Lô)",
     region: "Phú Thọ",
     district: "Huyện Đoan Hùng",
     desc: "Vùng đất trù phú ngã ba sông Lô, nổi tiếng với di tích Chiến thắng Sông Lô và giống bưởi Sửu, bưởi Bằng Luân thơm ngọt tiến Vua.",
   },
   {
     keywords: ["lâm thao", "lam thao", "huyện lâm thao", "làng chu quyến"],
-    placeId: "den-hung",
+    placeId: "district-lam-thao",
     name: "Huyện Lâm Thao (Đất học & Làng cổ)",
     region: "Phú Thọ",
     district: "Huyện Lâm Thao",
@@ -101,7 +106,7 @@ const DESTINATION_MAPPINGS: Array<{
   },
   {
     keywords: ["phù ninh", "phu ninh", "huyện phù ninh"],
-    placeId: "den-hung",
+    placeId: "district-phu-ninh",
     name: "Huyện Phù Ninh",
     region: "Phú Thọ",
     district: "Huyện Phù Ninh",
@@ -109,35 +114,123 @@ const DESTINATION_MAPPINGS: Array<{
   },
   {
     keywords: ["cẩm khê", "cam khe", "huyện cẩm khê"],
-    placeId: "dam-ao-chau",
-    name: "Huyện Cẩm Khê",
+    placeId: "district-cam-khe",
+    name: "Huyện Cẩm Khê (Làng nón Sai Nga & Đầm Rộc Trịnh)",
     region: "Phú Thọ",
     district: "Huyện Cẩm Khê",
-    desc: "Vùng đất đồng chiêm trù phú với nghề làm nón lá Sai Nga truyền thống và đầm sen ngát hương.",
+    desc: "Vùng đất đồng chiêm trù phú với nghề làm nón lá Sai Nga truyền thống, đầm sinh thái Rộc Trịnh và đặc sản cá thính trứ danh.",
   },
   {
     keywords: ["tam nông", "tam nong", "huyện tam nông"],
-    placeId: "thanh-thuy",
-    name: "Huyện Tam Nông",
+    placeId: "district-tam-nong",
+    name: "Huyện Tam Nông (Vườn Vua Resort & Đầm Sen Bạch Thủy)",
     region: "Phú Thọ",
     district: "Huyện Tam Nông",
-    desc: "Vùng đất nằm bên ngã ba sông Đà và sông Hồng, nổi tiếng với Khu nghỉ dưỡng Vườn Vua Resort & Villas.",
+    desc: "Vùng đất ngã ba sông Đà và sông Hồng, nổi tiếng với Khu nghỉ dưỡng Vườn Vua Resort & Villas và đầm sen Bạch Thủy.",
   },
   {
     keywords: ["yên lập", "yen lap", "huyện yên lập"],
-    placeId: "xuan-son",
-    name: "Huyện Yên Lập",
+    placeId: "district-yen-lap",
+    name: "Huyện Yên Lập (Hồ Ly & Bản Mường)",
     region: "Phú Thọ",
     district: "Huyện Yên Lập",
     desc: "Vùng cao nguyên sơ với hồ Ly thanh bình và nét văn hóa độc đáo của đồng bào Mường, Dao.",
   },
   {
     keywords: ["thanh ba", "thanh ba", "huyện thanh ba"],
-    placeId: "dam-ao-chau",
-    name: "Huyện Thanh Ba",
+    placeId: "district-thanh-ba",
+    name: "Huyện Thanh Ba (Đồi chè & Hồ Láng Cẩm)",
     region: "Phú Thọ",
     district: "Huyện Thanh Ba",
     desc: "Vùng đồi búp chè xanh ngát và hồ Láng Cẩm phẳng lặng giữa trung du.",
+  },
+  {
+    keywords: ["thị xã phú thọ", "thi xa phu tho", "tx phú thọ", "tx phu tho"],
+    placeId: "district-thi-xa-phu-tho",
+    name: "Thị xã Phú Thọ (Đô thị cổ bên sông Thao)",
+    region: "Phú Thọ",
+    district: "Thị xã Phú Thọ",
+    desc: "Đô thị trung du cổ kính hơn 120 năm tuổi với đền Trù Mật, Chùa A Di Đà và làng nghề truyền thống.",
+  },
+  {
+    keywords: ["thanh sơn", "thanh son", "huyện thanh sơn", "thịt chua thanh sơn"],
+    placeId: "district-thanh-son",
+    name: "Huyện Thanh Sơn (Thủ phủ thịt chua & Thác Chòi)",
+    region: "Phú Thọ",
+    district: "Huyện Thanh Sơn",
+    desc: "Cửa ngõ Tây Nam Đất Tổ trứ danh với đặc sản Thịt chua, văn hóa Mường đặc sắc, Thác Chòi và đồi chè xanh mướt.",
+  },
+  {
+    keywords: ["lập thạch", "lap thach", "huyện lập thạch"],
+    placeId: "district-lap-thach",
+    name: "Huyện Lập Thạch",
+    region: "Vĩnh Phúc",
+    district: "Huyện Lập Thạch",
+    desc: "Vùng đất cổ ven sông Lô với đền thờ Tả Tướng quốc Trần Nguyên Hãn và tháp gốm Bình Sơn.",
+  },
+  {
+    keywords: ["sông lô", "song lo", "huyện sông lô"],
+    placeId: "district-song-lo",
+    name: "Huyện Sông Lô",
+    region: "Vĩnh Phúc",
+    district: "Huyện Sông Lô",
+    desc: "Vùng cảnh quan sinh thái với núi Sáng, thác Bay và dòng sông Lô lịch sử.",
+  },
+  {
+    keywords: ["đà bắc", "da bac", "huyện đà bắc"],
+    placeId: "district-da-bac",
+    name: "Huyện Đà Bắc (Bản du lịch cộng đồng Đà Bia & Lòng hồ Sông Đà)",
+    region: "Hòa Bình",
+    district: "Huyện Đà Bắc",
+    desc: "Vùng hồ thủy điện thơ mộng với các bản du lịch cộng đồng homestay người Mường, Dao và chèo kayak trên vịnh hồ xanh ngọc.",
+  },
+  {
+    keywords: ["lương sơn", "luong son", "huyện lương sơn"],
+    placeId: "district-luong-son",
+    name: "Huyện Lương Sơn",
+    region: "Hòa Bình",
+    district: "Huyện Lương Sơn",
+    desc: "Cửa ngõ xứ Mường với các resort nghỉ dưỡng sinh thái gần Hà Nội và hang Trầm kỳ thú.",
+  },
+  {
+    keywords: ["cao phong", "cao phong", "huyện cao phong", "cam cao phong"],
+    placeId: "thung-nai-song-da",
+    name: "Huyện Cao Phong (Thung Nai Sông Đà & Vườn cam trĩu quả)",
+    region: "Hòa Bình",
+    district: "Huyện Cao Phong",
+    desc: "Vương quốc cam ngọt nức tiếng và cảng Thung Nai xuất phát đi lòng hồ Sông Đà, đền Bờ linh thiêng.",
+  },
+  {
+    keywords: ["tân lạc", "tan lac", "huyện tân lạc", "lũng vân"],
+    placeId: "district-tan-lac",
+    name: "Huyện Tân Lạc (Thung lũng Mây Lũng Vân)",
+    region: "Hòa Bình",
+    district: "Huyện Tân Lạc",
+    desc: "Nóc nhà xứ Mường Bi quanh năm mây mù che phủ, động Nam Sơn kỳ ảo và khí hậu mát mẻ nguyên sơ.",
+  },
+  {
+    keywords: ["lạc sơn", "lac son", "huyện lạc sơn", "thác mu"],
+    placeId: "district-lac-son",
+    name: "Huyện Lạc Sơn (Thác Mu hùng vĩ)",
+    region: "Hòa Bình",
+    district: "Huyện Lạc Sơn",
+    desc: "Vùng đất cội nguồn văn hóa Mường Vang với dòng thác Mu tung bọt trắng xóa giữa núi rừng đại ngàn.",
+  },
+  {
+    keywords: ["lạc thủy", "lac thuy", "huyện lạc thủy", "chùa tiên"],
+    placeId: "district-lac-thuy",
+    name: "Huyện Lạc Thủy (Quần thể Chùa Tiên & Đầm Đa)",
+    region: "Hòa Bình",
+    district: "Huyện Lạc Thủy",
+    desc: "Quần thể tâm linh danh thắng Chùa Tiên - Đầm Đa với hệ thống hang động thạch nhũ lung linh.",
+  },
+  {
+    keywords: ["yên thủy", "yen thuy", "huyện yên thủy"],
+    placeId: "district-yen-thuy",
+    name: "Huyện Yên Thủy",
+    region: "Hòa Bình",
+    district: "Huyện Yên Thủy",
+    desc: "Cổ tự Chùa Hang linh thiêng trong lòng núi đá vôi và văn hóa Mường đặc sắc.",
   },
   {
     keywords: ["phú thọ", "phu tho", "tỉnh phú thọ", "đất tổ", "dat to"],
@@ -736,7 +829,7 @@ export function extractEntitiesFromText(text: string, prevSurvey: AiSurveyState)
   if (!destinationMatched) {
     const distInfo = findDistrictByQuery(text);
     if (distInfo) {
-      const pId = DISTRICT_TO_ANCHOR_MAP[distInfo.id] || "den-hung";
+      const pId = DISTRICT_TO_ANCHOR_MAP[distInfo.id] || `district-${distInfo.id}`;
       nextSurvey.anchorPlaceId = pId;
       nextSurvey.selectedPlaceIds = [pId];
       nextSurvey.destinationText = distInfo.title;
@@ -935,11 +1028,11 @@ export function processAiMessage(
 
       const nextSurvey: AiSurveyState = {
         ...currentSurvey,
-        anchorPlaceId: DISTRICT_TO_ANCHOR_MAP[matchedDistrict.id] || "den-hung",
+        anchorPlaceId: DISTRICT_TO_ANCHOR_MAP[matchedDistrict.id] || `district-${matchedDistrict.id}`,
         destinationText: matchedDistrict.title,
         district: matchedDistrict.name,
         region: matchedDistrict.province,
-        selectedPlaceIds: [DISTRICT_TO_ANCHOR_MAP[matchedDistrict.id] || "den-hung"],
+        selectedPlaceIds: [DISTRICT_TO_ANCHOR_MAP[matchedDistrict.id] || `district-${matchedDistrict.id}`],
       };
 
       return {
@@ -1001,11 +1094,11 @@ export function processAiMessage(
 
     const nextSurvey: AiSurveyState = {
       ...currentSurvey,
-      anchorPlaceId: DISTRICT_TO_ANCHOR_MAP[matchedDistrict.id] || "den-hung",
+      anchorPlaceId: DISTRICT_TO_ANCHOR_MAP[matchedDistrict.id] || `district-${matchedDistrict.id}`,
       destinationText: matchedDistrict.title,
       district: matchedDistrict.name,
       region: matchedDistrict.province,
-      selectedPlaceIds: [DISTRICT_TO_ANCHOR_MAP[matchedDistrict.id] || "den-hung"],
+      selectedPlaceIds: [DISTRICT_TO_ANCHOR_MAP[matchedDistrict.id] || `district-${matchedDistrict.id}`],
     };
 
     const options = [
@@ -1038,11 +1131,11 @@ export function processAiMessage(
 
       const nextSurvey: AiSurveyState = {
         ...currentSurvey,
-        anchorPlaceId: DISTRICT_TO_ANCHOR_MAP[matchedDistrict.id] || "den-hung",
+        anchorPlaceId: DISTRICT_TO_ANCHOR_MAP[matchedDistrict.id] || `district-${matchedDistrict.id}`,
         destinationText: matchedDistrict.title,
         district: matchedDistrict.name,
         region: matchedDistrict.province,
-        selectedPlaceIds: [DISTRICT_TO_ANCHOR_MAP[matchedDistrict.id] || "den-hung"],
+        selectedPlaceIds: [DISTRICT_TO_ANCHOR_MAP[matchedDistrict.id] || `district-${matchedDistrict.id}`],
       };
 
       const options = [
@@ -1107,11 +1200,11 @@ export function processAiMessage(
 
       const nextSurvey: AiSurveyState = {
         ...currentSurvey,
-        anchorPlaceId: DISTRICT_TO_ANCHOR_MAP[matchedDistrict.id] || "den-hung",
+        anchorPlaceId: DISTRICT_TO_ANCHOR_MAP[matchedDistrict.id] || `district-${matchedDistrict.id}`,
         destinationText: matchedDistrict.title,
         district: matchedDistrict.name,
         region: matchedDistrict.province,
-        selectedPlaceIds: [DISTRICT_TO_ANCHOR_MAP[matchedDistrict.id] || "den-hung"],
+        selectedPlaceIds: [DISTRICT_TO_ANCHOR_MAP[matchedDistrict.id] || `district-${matchedDistrict.id}`],
       };
 
       const options = matchedDistrict.attractions.slice(0, 4).map((sp, idx) => ({
@@ -1209,11 +1302,11 @@ export function processAiMessage(
 
     const nextSurvey: AiSurveyState = {
       ...currentSurvey,
-      anchorPlaceId: DISTRICT_TO_ANCHOR_MAP[matchedDistrict.id] || "den-hung",
+      anchorPlaceId: DISTRICT_TO_ANCHOR_MAP[matchedDistrict.id] || `district-${matchedDistrict.id}`,
       destinationText: matchedDistrict.title,
       district: matchedDistrict.name,
       region: matchedDistrict.province,
-      selectedPlaceIds: [DISTRICT_TO_ANCHOR_MAP[matchedDistrict.id] || "den-hung"],
+      selectedPlaceIds: [DISTRICT_TO_ANCHOR_MAP[matchedDistrict.id] || `district-${matchedDistrict.id}`],
     };
 
     const options = [
