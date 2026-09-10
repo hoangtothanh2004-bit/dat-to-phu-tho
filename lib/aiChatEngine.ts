@@ -252,6 +252,260 @@ export function checkOutOfScope(text: string): boolean {
   return false;
 }
 
+export interface AreaRecommendation {
+  title: string;
+  intro: string;
+  spots: Array<{
+    name: string;
+    icon: string;
+    desc: string;
+    actionValue: string;
+    actionLabel: string;
+  }>;
+  comboValue: string;
+  comboLabel: string;
+  anchorPlaceId: string;
+  district: string;
+  region: string;
+}
+
+export const AREA_RECOMMENDATIONS: Record<string, AreaRecommendation> = {
+  "thanh-thuy": {
+    title: "Huyện Thanh Thủy – Thiên đường nghỉ dưỡng khoáng nóng & sinh thái ven sông Đà",
+    intro: "Dạ, **Huyện Thanh Thủy** là điểm đến nghỉ dưỡng khoáng nóng và du lịch sinh thái nổi tiếng nhất Phú Thọ ven dòng sông Đà thơ mộng.\n\nNếu bạn dự định đi chơi ở Thanh Thủy, dưới đây là **những địa điểm vui chơi & trải nghiệm hấp dẫn nhất** bạn có thể lựa chọn:",
+    spots: [
+      {
+        name: "Khu nghỉ dưỡng Suối khoáng nóng Radon (Wyndham Lynn Times / Bamboo / Tre Nguồn)",
+        icon: "♨️",
+        desc: "Ngâm khoáng nóng tự nhiên chuẩn Onsen Nhật Bản, thư giãn xông hơi đá muối Himalaya, phục hồi sức khỏe và làm đẹp da.",
+        actionValue: "choose_spot_thanh_thuy_onsen",
+        actionLabel: "♨️ Tắm khoáng nóng Onsen Thanh Thủy",
+      },
+      {
+        name: "Khu du lịch sinh thái Đảo Ngọc Xanh",
+        icon: "🏝️",
+        desc: "Tổ hợp vui chơi giải trí lớn nhất vùng với công viên nước, vòng quay mặt trời, trò chơi cảm giác mạnh, công viên khủng long (rất lý tưởng cho gia đình & trẻ nhỏ).",
+        actionValue: "choose_spot_dao_ngoc_xanh",
+        actionLabel: "🏝️ Vui chơi Đảo Ngọc Xanh",
+      },
+      {
+        name: "Khu di tích lịch sử Đền Lăng Sương",
+        icon: "⛩️",
+        desc: "Ngôi đền linh thiêng duy nhất phụng thờ toàn gia Đức Thánh Tản Viên (Sơn Tinh) cùng thân mẫu Quốc Mẫu Đinh Thị Đen giữa cảnh quan non nước thanh bình.",
+        actionValue: "choose_spot_den_lang_suong",
+        actionLabel: "⛩️ Chiêm bái Đền Lăng Sương",
+      },
+      {
+        name: "Khu nghỉ dưỡng Vườn Vua Resort & Villas (tiếp giáp Thanh Thủy - Tam Nông)",
+        icon: "🏰",
+        desc: "Quần thể biệt thự phong cách châu Âu bên đầm sen Bạch Thủy bát ngát, chèo thuyền kayak, đạp xe dạo hồ và tắm khoáng ngoài trời.",
+        actionValue: "choose_spot_vuon_vua",
+        actionLabel: "🏰 Nghỉ dưỡng Vườn Vua Resort",
+      },
+      {
+        name: "Thưởng thức ẩm thực Cá sông Đà & Cung đường ven sông",
+        icon: "🐟",
+        desc: "Thưởng thức các món đặc sản trứ danh: Cá ngạnh nướng than hoa, cá lăng om chuối đậu, lẩu cá ngạnh và ngắm hoàng hôn đỏ rực buông xuống sông Đà.",
+        actionValue: "choose_spot_ca_song_da",
+        actionLabel: "🐟 Khám phá ẩm thực Cá sông Đà",
+      },
+    ],
+    comboValue: "plan_thanh_thuy_combo",
+    comboLabel: "✨ Lên lịch trình kết hợp trọn gói Thanh Thủy",
+    anchorPlaceId: "thanh-thuy",
+    district: "Huyện Thanh Thủy",
+    region: "Phú Thọ",
+  },
+  "thanh-son": {
+    title: "Huyện Thanh Sơn – Cửa ngõ văn hóa Mường & Thủ phủ Thịt chua Đất Tổ",
+    intro: "Dạ, **Thanh Sơn** nổi tiếng với nét đẹp văn hóa bản Mường nguyên sơ, ẩm thực trứ danh và là cửa ngõ tuyệt vời kết nối Đồi chè Long Cốc và Vườn QG Xuân Sơn.\n\nĐến Thanh Sơn, bạn nhất định nên tham quan và trải nghiệm các điểm đến sau:",
+    spots: [
+      {
+        name: "Trải nghiệm đặc sản & Làng nghề Thịt chua Thanh Sơn (Nghị Thịnh / Điệp Đào)",
+        icon: "🥩",
+        desc: "Tìm hiểu bí quyết ủ men thính ngô truyền thống của đồng bào Mường, thưởng thức thịt chua nức tiếng gói lá chuối kèm lá sung, ổi, đinh lăng tươi giòn.",
+        actionValue: "choose_spot_thit_chua",
+        actionLabel: "🥩 Trải nghiệm Thịt chua Thanh Sơn",
+      },
+      {
+        name: "Đồi chè bát úp Long Cốc (tiếp giáp Thanh Sơn - Tân Sơn)",
+        icon: "🍃",
+        desc: "Được mệnh danh 'ốc đảo chè đẹp nhất Việt Nam' với hàng trăm quả đồi chè hình bát úp bồng bềnh trong sương sớm, thiên đường săn mây và chụp ảnh.",
+        actionValue: "choose_spot_long_coc",
+        actionLabel: "🍃 Săn mây Đồi chè Long Cốc",
+      },
+      {
+        name: "Vườn quốc gia Xuân Sơn (tiếp giáp cung đường)",
+        icon: "🌲",
+        desc: "Lá phổi xanh nguyên sinh với hệ thống hang Lạng kỳ vĩ, suối trong veo, bản Cỏi mộc mạc và gà nhiều cựa tiến Vua huyền thoại.",
+        actionValue: "choose_spot_xuan_son",
+        actionLabel: "🌲 Khám phá Vườn QG Xuân Sơn",
+      },
+      {
+        name: "Thác Chòi & Các dòng suối đá nguyên sơ bản Mường",
+        icon: "🏞️",
+        desc: "Dòng thác trong vắt đổ giữa rừng già bản Mường xanh mát, điểm lý tưởng để cắm trại, picnic, tắm suối và hít thở không khí núi rừng.",
+        actionValue: "choose_spot_thac_choi",
+        actionLabel: "🏞️ Khám phá Thác Chòi & Bản Mường",
+      },
+    ],
+    comboValue: "plan_thanh_son_combo",
+    comboLabel: "✨ Lên tour Thanh Sơn & Long Cốc kết hợp",
+    anchorPlaceId: "long-coc",
+    district: "Huyện Thanh Sơn",
+    region: "Phú Thọ",
+  },
+  "den-hung": {
+    title: "TP. Việt Trì & Khu di tích lịch sử Đền Hùng",
+    intro: "Dạ, **TP. Việt Trì và Đền Hùng** là cội nguồn linh thiêng của dân tộc Việt Nam. Đến đây, bạn có thể ghé thăm các điểm đến tiêu biểu sau:",
+    spots: [
+      {
+        name: "Khu di tích lịch sử Quốc gia đặc biệt Đền Hùng",
+        icon: "🏛️",
+        desc: "Hành hương qua Đền Hạ, Đền Trung, Đền Thượng trên đỉnh Nghĩa Lĩnh cao 175m, viếng Lăng Hùng Vương và Đền Quốc Tổ Lạc Long Quân.",
+        actionValue: "choose_spot_den_hung",
+        actionLabel: "🏛️ Chiêm bái Đền Hùng",
+      },
+      {
+        name: "Làng cổ & Đình cổ Hùng Lô",
+        icon: "🎶",
+        desc: "Di tích kiến trúc cổ kính hơn 300 năm tuổi với điêu khắc gỗ tinh xảo và là cái nôi thưởng thức Di sản Hát Xoan Phú Thọ được UNESCO vinh danh.",
+        actionValue: "choose_spot_hung_lo",
+        actionLabel: "🎶 Thăm Làng cổ & Nghe Hát Xoan",
+      },
+      {
+        name: "Công viên Văn Lang & Cầu đi bộ biểu tượng",
+        icon: "🌉",
+        desc: "Dạo mát quanh hồ Văn Lang thơ mộng, chụp ảnh cầu đi bộ nghệ thuật và thưởng thức nhạc nước lung linh về đêm.",
+        actionValue: "choose_spot_van_lang",
+        actionLabel: "🌉 Dạo chơi Công viên Văn Lang",
+      },
+      {
+        name: "Phố ẩm thực ngã ba sông & Cá lăng sông Lô",
+        icon: "🐟",
+        desc: "Thưởng thức cá lăng nướng than riềng mẻ, cá quất om chuối đậu và bánh tai Phú Thọ nóng hổi.",
+        actionValue: "choose_spot_viet_tri_food",
+        actionLabel: "🐟 Ẩm thực Cá lăng sông Lô",
+      },
+    ],
+    comboValue: "plan_viet_tri_combo",
+    comboLabel: "✨ Lên lịch trình Đền Hùng & Việt Trì",
+    anchorPlaceId: "den-hung",
+    district: "TP. Việt Trì",
+    region: "Phú Thọ",
+  },
+  "tam-dao": {
+    title: "Khu du lịch Quốc gia Tam Đảo & Tây Thiên",
+    intro: "Dạ, **Tam Đảo** bồng bềnh giữa mây ngàn ở độ cao 900m với khí hậu mát mẻ 4 mùa trong 1 ngày. Các điểm check-in và tham quan không thể bỏ qua gồm có:",
+    spots: [
+      {
+        name: "Nhà thờ Đá cổ & Quảng trường trung tâm Tam Đảo",
+        icon: "🏰",
+        desc: "Công trình kiến trúc Gothic bằng đá từ thời Pháp, điểm ngắm mây và biểu tượng check-in số 1 của thị trấn.",
+        actionValue: "choose_spot_tam_dao_church",
+        actionLabel: "🏰 Nhà thờ Đá & Quảng trường",
+      },
+      {
+        name: "Cổng Trời, Cầu Mây & Quán Gió Tam Đảo",
+        icon: "☁️",
+        desc: "Điểm ngắm hoàng hôn tuyệt đẹp, phóng tầm mắt ôm trọn thung lũng sương mù và thưởng thức cà phê trên mây.",
+        actionValue: "choose_spot_cau_may",
+        actionLabel: "☁️ Săn mây Cầu Mây & Quán Gió",
+      },
+      {
+        name: "Thác Bạc Tam Đảo",
+        icon: "🌊",
+        desc: "Dòng thác trắng xóa ẩn mình giữa rừng sâu xanh biếc, nước mát lạnh quanh năm.",
+        actionValue: "choose_spot_thac_bac",
+        actionLabel: "🌊 Khám phá Thác Bạc",
+      },
+      {
+        name: "Quần thể Di tích & Danh thắng Tây Thiên (tiếp giáp chân núi)",
+        icon: "🛕",
+        desc: "Cáp treo lên Đền Thượng Quốc Mẫu Tây Thiên và Thiền viện Trúc Lâm thanh tịnh.",
+        actionValue: "choose_spot_tay_thien",
+        actionLabel: "🛕 Chiêm bái Tây Thiên",
+      },
+    ],
+    comboValue: "plan_tam_dao_combo",
+    comboLabel: "✨ Lên lịch trình khám phá Tam Đảo trọn gói",
+    anchorPlaceId: "tam-dao",
+    district: "Huyện Tam Đảo",
+    region: "Vĩnh Phúc",
+  },
+  "phu-tho": {
+    title: "Tỉnh Phú Thọ – Miền Đất Tổ cội nguồn ngàn năm",
+    intro: "Dạ, **Phú Thọ** có rất nhiều điểm đến tuyệt đẹp được chia theo 4 cụm du lịch đặc sắc. Bạn có thể tham khảo các điểm nổi bật sau:",
+    spots: [
+      {
+        name: "Khu di tích lịch sử Đền Hùng & TP. Việt Trì",
+        icon: "🏛️",
+        desc: "Cội nguồn dân tộc linh thiêng trên đỉnh Nghĩa Lĩnh, Làng cổ Hùng Lô, nghe Hát Xoan UNESCO và hồ Văn Lang.",
+        actionValue: "plan_den_hung",
+        actionLabel: "🏛️ Cụm Đền Hùng & Việt Trì",
+      },
+      {
+        name: "Suối khoáng nóng Thanh Thủy & Đảo Ngọc Xanh",
+        icon: "♨️",
+        desc: "Nghỉ dưỡng tắm Onsen khoáng nóng Radon Nhật Bản, công viên nước Đảo Ngọc Xanh, Đền Lăng Sương.",
+        actionValue: "plan_thanh_thuy",
+        actionLabel: "♨️ Cụm Khoáng nóng Thanh Thủy",
+      },
+      {
+        name: "Đồi chè Long Cốc & Vườn quốc gia Xuân Sơn (Thanh Sơn - Tân Sơn)",
+        icon: "🍃",
+        desc: "Săn mây trên hàng trăm quả đồi chè bát úp, trekking rừng nguyên sinh, hang Lạng và thưởng thức thịt chua Thanh Sơn.",
+        actionValue: "plan_long_coc",
+        actionLabel: "🍃 Cụm Đồi chè Long Cốc & Xuân Sơn",
+      },
+      {
+        name: "Đền Mẫu Âu Cơ & Đầm Ao Châu (Hạ Hòa)",
+        icon: "🛕",
+        desc: "Cội nguồn Mẹ Tiên Âu Cơ và vịnh nước 99 ngách đồi chè thanh bình.",
+        actionValue: "choose_spot_ha_hoa",
+        actionLabel: "🛕 Cụm Đền Mẫu Âu Cơ & Ao Châu",
+      },
+    ],
+    comboValue: "plan_phu_tho_full",
+    comboLabel: "✨ Lên lịch trình tổng hợp Đất Tổ (2N1Đ / 3N2Đ)",
+    anchorPlaceId: "den-hung",
+    district: "Việt Trì",
+    region: "Phú Thọ",
+  },
+};
+
+export function checkIsAskingSightseeing(text: string): boolean {
+  const lower = text
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/[đ]/g, "d");
+  const patterns = [
+    "di nhung dau",
+    "di dau",
+    "co gi choi",
+    "choi gi",
+    "co gi dep",
+    "nen di dau",
+    "tham quan gi",
+    "co nhung diem nao",
+    "co diem nao",
+    "diem nao dep",
+    "cho nao choi",
+    "co gi hay",
+    "kham pha nhung gi",
+    "kham pha gi",
+    "goi y diem",
+    "goi y dia diem",
+    "choi o dau",
+    "choi nhung dau",
+    "di dau choi",
+    "nhung diem nao",
+    "cac diem nao",
+  ];
+  return patterns.some((p) => lower.includes(p));
+}
+
 // Extract parameters from natural language
 export function extractEntitiesFromText(text: string, prevSurvey: AiSurveyState): {
   survey: AiSurveyState;
@@ -398,6 +652,83 @@ export function processAiMessage(
 
   // 2. Entity Extraction
   const { survey, destinationMatched } = extractEntitiesFromText(trimmed, currentSurvey);
+
+  // 2.5. SIGHTSEEING CONSULTATION: User asks what spots to visit / what to do ("đi những đâu", "có gì chơi", "chơi gì", "có gì đẹp"...)
+  // Provide curated list of top attractions for the user to choose FIRST before forcing duration/itinerary
+  const isAskingSightseeing = checkIsAskingSightseeing(trimmed);
+  if (isAskingSightseeing) {
+    let areaKey = "phu-tho";
+    if (
+      lower.includes("thanh thủy") ||
+      lower.includes("thanh thuy") ||
+      lower.includes("khoáng nóng") ||
+      lower.includes("khoang nong") ||
+      lower.includes("đảo ngọc xanh")
+    ) {
+      areaKey = "thanh-thuy";
+    } else if (
+      lower.includes("thanh sơn") ||
+      lower.includes("thanh son") ||
+      lower.includes("thịt chua") ||
+      lower.includes("thit chua") ||
+      lower.includes("long cốc") ||
+      lower.includes("tân sơn") ||
+      lower.includes("tan son") ||
+      lower.includes("xuân sơn")
+    ) {
+      areaKey = "thanh-son";
+    } else if (
+      lower.includes("đền hùng") ||
+      lower.includes("den hung") ||
+      lower.includes("việt trì") ||
+      lower.includes("viet tri") ||
+      lower.includes("hùng lô") ||
+      lower.includes("hung lo")
+    ) {
+      areaKey = "den-hung";
+    } else if (
+      lower.includes("tam đảo") ||
+      lower.includes("tam dao") ||
+      lower.includes("tây thiên") ||
+      lower.includes("tay thien")
+    ) {
+      areaKey = "tam-dao";
+    }
+
+    const rec = AREA_RECOMMENDATIONS[areaKey] || AREA_RECOMMENDATIONS["phu-tho"];
+
+    let spotsText = `${rec.intro}\n\n`;
+    rec.spots.forEach((sp, idx) => {
+      spotsText += `${idx + 1}. ${sp.icon} **${sp.name}**:\n   - ${sp.desc}\n`;
+    });
+    spotsText += `\nBạn thích ghé thăm **địa điểm nào nhất** trong các gợi ý trên, hoặc bạn muốn em tạo **Lịch trình kết hợp trọn gói** cho chuyến đi của bạn ạ? (Hãy bấm chọn gợi ý bên dưới hoặc gõ trực tiếp nhé! 🌿)`;
+
+    const options = rec.spots.map((sp) => ({
+      label: sp.actionLabel,
+      value: sp.actionValue,
+      icon: sp.icon,
+    }));
+    options.push({
+      label: rec.comboLabel,
+      value: rec.comboValue,
+      icon: "✨",
+    });
+
+    const nextSurvey: AiSurveyState = {
+      ...currentSurvey,
+      anchorPlaceId: rec.anchorPlaceId,
+      destinationText: rec.title,
+      district: rec.district,
+      region: rec.region,
+      selectedPlaceIds: [rec.anchorPlaceId],
+    };
+
+    return {
+      text: spotsText,
+      options,
+      updatedSurvey: nextSurvey,
+    };
+  }
 
   // 3. CASE A: User explicitly asks about foods / specialties
   if (lower.includes("đặc sản") || lower.includes("món ngon") || lower.includes("ăn gì") || lower.includes("thịt chua") || lower.includes("cá lăng") || lower.includes("bánh tai")) {
