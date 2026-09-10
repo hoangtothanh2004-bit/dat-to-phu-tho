@@ -160,12 +160,44 @@ const DESTINATION_MAPPINGS: Array<{
     desc: "Lá phổi xanh ngút ngàn với hệ sinh thái rừng nhiệt đới trên núi đá vôi nguyên sinh, suối trong vắt và hang động kỳ vĩ.",
   },
   {
-    keywords: ["thanh thủy", "thanh thuy", "khoáng nóng", "khoang nong", "onsen", "wyndham", "bamboo", "tre nguồn", "đảo ngọc xanh"],
+    keywords: ["huyện thanh thủy", "huyen thanh thuy", "du lịch thanh thủy", "du lich thanh thuy", "thanh thủy", "thanh thuy"],
+    placeId: "thanh-thuy",
+    name: "Huyện Thanh Thủy (Khoáng nóng Onsen & Vui chơi sinh thái)",
+    region: "Phú Thọ",
+    district: "Huyện Thanh Thủy",
+    desc: "Thiên đường nghỉ dưỡng khoáng nóng Radon, tổ hợp vui chơi Đảo Ngọc Xanh, Đền Lăng Sương và thưởng thức ẩm thực cá sông Đà.",
+  },
+  {
+    keywords: ["khoáng nóng thanh thủy", "khoang nong thanh thuy", "suối khoáng nóng thanh thủy", "suoi khoang nong thanh thuy", "khoáng nóng", "khoang nong", "onsen", "wyndham", "bamboo", "tre nguồn"],
     placeId: "thanh-thuy",
     name: "Suối khoáng nóng Thanh Thủy",
     region: "Phú Thọ",
     district: "Huyện Thanh Thủy",
-    desc: "Nguồn nước khoáng Radon quý hiếm tự nhiên tốt cho sức khỏe, trung tâm nghỉ dưỡng Onsen chuẩn Nhật và vui chơi sinh thái ven sông Đà.",
+    desc: "Nguồn nước khoáng Radon quý hiếm tự nhiên tốt cho sức khỏe, trung tâm nghỉ dưỡng Onsen chuẩn Nhật và trị liệu thư giãn.",
+  },
+  {
+    keywords: ["đảo ngọc xanh", "dao ngoc xanh", "công viên đảo ngọc xanh", "khu du lịch đảo ngọc xanh"],
+    placeId: "thanh-thuy",
+    name: "Khu du lịch sinh thái Đảo Ngọc Xanh",
+    region: "Phú Thọ",
+    district: "Huyện Thanh Thủy",
+    desc: "Tổ hợp vui chơi giải trí lớn nhất vùng với công viên nước, vòng quay mặt trời, các trò chơi cảm giác mạnh và công viên khủng long.",
+  },
+  {
+    keywords: ["đền lăng sương", "den lang suong", "lăng sương"],
+    placeId: "thanh-thuy",
+    name: "Khu di tích lịch sử Đền Lăng Sương",
+    region: "Phú Thọ",
+    district: "Huyện Thanh Thủy",
+    desc: "Ngôi đền linh thiêng duy nhất thờ toàn gia Đức Thánh Tản Viên (Sơn Tinh) và thân mẫu Quốc Mẫu Đinh Thị Đen.",
+  },
+  {
+    keywords: ["vườn vua", "vuon vua", "vườn vua resort", "vuon vua resort"],
+    placeId: "thanh-thuy",
+    name: "Khu nghỉ dưỡng Vườn Vua Resort & Villas",
+    region: "Phú Thọ",
+    district: "Huyện Tam Nông",
+    desc: "Quần thể biệt thự nghỉ dưỡng bên đầm sen Bạch Thủy bát ngát, chèo thuyền kayak và tắm khoáng nóng ngoài trời.",
   },
   {
     keywords: ["hùng lô", "hung lo", "làng cổ", "đình cổ", "hát xoan"],
@@ -492,18 +524,60 @@ export function checkIsAskingSightseeing(text: string): boolean {
     "co diem nao",
     "diem nao dep",
     "cho nao choi",
+    "co cho nao",
+    "nhung cho nao",
     "co gi hay",
     "kham pha nhung gi",
     "kham pha gi",
     "goi y diem",
     "goi y dia diem",
+    "goi y",
     "choi o dau",
     "choi nhung dau",
     "di dau choi",
     "nhung diem nao",
     "cac diem nao",
+    "di choi",
+    "di choi o",
+    "muon di choi",
+    "muon di choi o",
+    "tham quan o",
+    "du lich o",
+    "den day choi gi",
+    "den day di dau",
   ];
   return patterns.some((p) => lower.includes(p));
+}
+
+export function checkIsAskingAlternative(text: string): boolean {
+  const lower = text
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/[đ]/g, "d");
+
+  const altPatterns = [
+    "co cho nao khac",
+    "cho nao khac",
+    "diem nao khac",
+    "dia diem khac",
+    "cho khac",
+    "diem khac",
+    "ngoai",
+    "khac ngoai",
+    "con cho nao",
+    "con diem nao",
+    "con gi khac",
+    "con gi nua khong",
+    "con gi nua",
+    "khong muon di",
+    "khong thich",
+    "thay vi",
+    "ngoai tru",
+    "chua muon",
+  ];
+
+  return altPatterns.some((p) => lower.includes(p));
 }
 
 // Extract parameters from natural language
@@ -653,7 +727,101 @@ export function processAiMessage(
   // 2. Entity Extraction
   const { survey, destinationMatched } = extractEntitiesFromText(trimmed, currentSurvey);
 
-  // 2.5. SIGHTSEEING CONSULTATION: User asks what spots to visit / what to do ("đi những đâu", "có gì chơi", "chơi gì", "có gì đẹp"...)
+  // 2.4. ALTERNATIVE SPOTS INTENT: User asks for OTHER places / alternatives
+  // (e.g. "có chỗ nào khác ngoài suối khoáng nóng thanh thủy", "ngoài đền hùng ra còn gì", "chỗ nào khác"...)
+  const isAskingAlternative = checkIsAskingAlternative(trimmed);
+  if (isAskingAlternative) {
+    let areaKey = "thanh-thuy";
+    if (
+      lower.includes("thanh thủy") ||
+      lower.includes("thanh thuy") ||
+      currentSurvey.district?.includes("Thanh Thủy") ||
+      currentSurvey.anchorPlaceId === "thanh-thuy"
+    ) {
+      areaKey = "thanh-thuy";
+    } else if (
+      lower.includes("thanh sơn") ||
+      lower.includes("thanh son") ||
+      currentSurvey.district?.includes("Thanh Sơn") ||
+      currentSurvey.anchorPlaceId === "long-coc"
+    ) {
+      areaKey = "thanh-son";
+    } else if (
+      lower.includes("đền hùng") ||
+      lower.includes("den hung") ||
+      lower.includes("việt trì") ||
+      lower.includes("viet tri")
+    ) {
+      areaKey = "den-hung";
+    } else if (
+      lower.includes("tam đảo") ||
+      lower.includes("tam dao")
+    ) {
+      areaKey = "tam-dao";
+    }
+
+    const rec = AREA_RECOMMENDATIONS[areaKey] || AREA_RECOMMENDATIONS["thanh-thuy"];
+
+    // Filter out spots that match what user wanted to exclude (e.g. "suối khoáng nóng" -> exclude onsen)
+    let excludedLabel = "Suối khoáng nóng";
+    let filteredSpots = rec.spots;
+    if (
+      lower.includes("khoang nong") ||
+      lower.includes("khoáng nóng") ||
+      lower.includes("onsen") ||
+      lower.includes("suoi") ||
+      lower.includes("suối")
+    ) {
+      excludedLabel = "Suối khoáng nóng";
+      filteredSpots = rec.spots.filter((s) => !s.actionValue.includes("onsen"));
+    } else if (lower.includes("dao ngoc") || lower.includes("đảo ngọc")) {
+      excludedLabel = "Đảo Ngọc Xanh";
+      filteredSpots = rec.spots.filter((s) => !s.actionValue.includes("dao_ngoc"));
+    } else if (lower.includes("den hung") || lower.includes("đền hùng")) {
+      excludedLabel = "Đền Hùng";
+      filteredSpots = rec.spots.filter((s) => !s.actionValue.includes("den_hung"));
+    } else if (lower.includes("long coc") || lower.includes("long cốc") || lower.includes("doi che") || lower.includes("đồi chè")) {
+      excludedLabel = "Đồi chè Long Cốc";
+      filteredSpots = rec.spots.filter((s) => !s.actionValue.includes("long_coc"));
+    } else {
+      excludedLabel = rec.spots[0]?.name || "điểm vừa đề cập";
+      filteredSpots = rec.spots.slice(1);
+    }
+
+    let spotsText = `Dạ, nếu bạn muốn tìm **các địa điểm vui chơi, tham quan khác** (thay vì *${excludedLabel}*) tại **${rec.title.split("–")[0]?.trim() || "khu vực này"}** thì còn rất nhiều lựa chọn nổi bật sau ạ:\n\n`;
+    filteredSpots.forEach((sp, idx) => {
+      spotsText += `${idx + 1}. ${sp.icon} **${sp.name}**:\n   - ${sp.desc}\n`;
+    });
+    spotsText += `\nBạn thấy thích **địa điểm nào nhất** trong các gợi ý trên, hoặc bạn muốn em tạo **Lịch trình kết hợp các điểm này** cho chuyến đi của bạn ạ? (Hãy bấm chọn gợi ý bên dưới hoặc gõ trực tiếp nhé! 🌿)`;
+
+    const options = filteredSpots.map((sp) => ({
+      label: sp.actionLabel,
+      value: sp.actionValue,
+      icon: sp.icon,
+    }));
+    options.push({
+      label: `✨ Lên tour kết hợp các điểm trên (${filteredSpots.length} điểm)`,
+      value: rec.comboValue,
+      icon: "✨",
+    });
+
+    const nextSurvey: AiSurveyState = {
+      ...currentSurvey,
+      anchorPlaceId: rec.anchorPlaceId,
+      destinationText: rec.title,
+      district: rec.district,
+      region: rec.region,
+      selectedPlaceIds: [rec.anchorPlaceId],
+    };
+
+    return {
+      text: spotsText,
+      options,
+      updatedSurvey: nextSurvey,
+    };
+  }
+
+  // 2.5. SIGHTSEEING CONSULTATION: User asks what spots to visit / what to do ("đi những đâu", "có gì chơi", "chơi gì", "tôi muốn đi chơi ở thanh thủy"...)
   // Provide curated list of top attractions for the user to choose FIRST before forcing duration/itinerary
   const isAskingSightseeing = checkIsAskingSightseeing(trimmed);
   if (isAskingSightseeing) {
