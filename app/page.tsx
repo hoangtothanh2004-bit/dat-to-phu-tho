@@ -5460,21 +5460,24 @@ export default function Home() {
               <span className="heritage-gold-tag">✦ {t.heritageTag1}</span>
               <span className="heritage-subtag">★ {t.heritageTag2}</span>
             </div>
-            <h3 style={{ margin: "6px 0 10px", fontSize: "26px", color: "white", fontFamily: "var(--font-display)", letterSpacing: "0.01em" }}>
+            <h3 className="special-heritage-title">
               {t.heritageTitle}
             </h3>
-            <p style={{ margin: 0, fontSize: "13.5px", color: "#dce3d8", maxWidth: "740px", lineHeight: "1.65" }}>
+            <p className="special-heritage-desc">
               {t.heritageDesc}
             </p>
 
             {/* VIP REWARD TICKET CARDS */}
             <div className="reward-ticket-grid">
               {/* Ticket 1: 30K Check-in Voucher */}
-              <div className="reward-ticket">
+              <div className="reward-ticket reward-ticket--voucher">
                 <div>
                   <div className="reward-ticket__top">
-                    <span className="reward-ticket__badge">{t.rewardTicket1Badge}</span>
-                    <span className="reward-ticket__icon">🎟️</span>
+                    <span className="reward-ticket__badge reward-ticket__badge--fire">
+                      <span className="reward-ticket__badge-icon">🎟️</span>
+                      <span>{t.rewardTicket1Badge}</span>
+                    </span>
+                    <span className="reward-ticket__tag-status">Đang mở</span>
                   </div>
                   <div className="reward-ticket__title">{t.perk1Title}</div>
                   <p className="reward-ticket__desc">{t.perk1Desc}</p>
@@ -5492,11 +5495,14 @@ export default function Home() {
               </div>
 
               {/* Ticket 2: 15%-20% Tour Group Discount */}
-              <div className="reward-ticket">
+              <div className="reward-ticket reward-ticket--group">
                 <div>
                   <div className="reward-ticket__top">
-                    <span className="reward-ticket__badge">{t.rewardTicket2Badge}</span>
-                    <span className="reward-ticket__icon">🎁</span>
+                    <span className="reward-ticket__badge reward-ticket__badge--gold">
+                      <span className="reward-ticket__badge-icon">🎁</span>
+                      <span>{t.rewardTicket2Badge}</span>
+                    </span>
+                    <span className="reward-ticket__tag-status">HOT</span>
                   </div>
                   <div className="reward-ticket__title">{t.perk2Title}</div>
                   <p className="reward-ticket__desc">{t.perk2Desc}</p>
@@ -5517,11 +5523,14 @@ export default function Home() {
               </div>
 
               {/* Ticket 3: 5-Star OCOP Specialty Gift */}
-              <div className="reward-ticket">
+              <div className="reward-ticket reward-ticket--ocop">
                 <div>
                   <div className="reward-ticket__top">
-                    <span className="reward-ticket__badge">{t.rewardTicket3Badge}</span>
-                    <span className="reward-ticket__icon">🏆</span>
+                    <span className="reward-ticket__badge reward-ticket__badge--emerald">
+                      <span className="reward-ticket__badge-icon">🏆</span>
+                      <span>{t.rewardTicket3Badge}</span>
+                    </span>
+                    <span className="reward-ticket__tag-status">OCOP 5★</span>
                   </div>
                   <div className="reward-ticket__title">{t.perk3Title}</div>
                   <p className="reward-ticket__desc">{t.perk3Desc}</p>
@@ -5741,21 +5750,53 @@ export default function Home() {
       {activeTab === "trip" && (
         <section className="inner-page trip-page">
           <div className="inner-page__intro inner-page__intro--compact trip-hero-intro">
-            <div className="trip-hero-badge">
-              <span className="trip-hero-badge__dot" />
-              <span>✨ TRỢ LÝ THIẾT KẾ LỊCH TRÌNH THÔNG MINH · LIÊN KẾT 3 TỈNH</span>
+            <div className="trip-hero-left">
+              <div className="trip-hero-badge">
+                <span className="trip-hero-badge__dot" />
+                <span>✨ TRỢ LÝ THIẾT KẾ LỊCH TRÌNH THÔNG MINH · LIÊN KẾT 3 TỈNH</span>
+              </div>
+              <h1 className="trip-hero-title">
+                <span className="trip-hero-title__primary">{t.tripPageTitle1}</span>
+                <span className="trip-hero-title__accent">{t.tripPageTitle2}</span>
+              </h1>
+              <div className="trip-hero-pillars">
+                <span className="trip-pillar-chip"><i className="trip-pillar-chip__icon">🏛️</i> Lộ trình tham quan</span>
+                <span className="trip-pillar-chip"><i className="trip-pillar-chip__icon">🍲</i> Món ngon đặc sản</span>
+                <span className="trip-pillar-chip"><i className="trip-pillar-chip__icon">🛏️</i> Điểm nghỉ dưỡng</span>
+                <span className="trip-pillar-chip"><i className="trip-pillar-chip__icon">🚗</i> Phương tiện & thời gian</span>
+              </div>
+              <p className="trip-hero-desc">{t.tripPageDesc}</p>
             </div>
-            <h1 className="trip-hero-title">
-              <span className="trip-hero-title__primary">{t.tripPageTitle1}</span>
-              <span className="trip-hero-title__accent">{t.tripPageTitle2}</span>
-            </h1>
-            <div className="trip-hero-pillars">
-              <span className="trip-pillar-chip"><i className="trip-pillar-chip__icon">🏛️</i> Lộ trình tham quan</span>
-              <span className="trip-pillar-chip"><i className="trip-pillar-chip__icon">🍲</i> Món ngon đặc sản</span>
-              <span className="trip-pillar-chip"><i className="trip-pillar-chip__icon">🛏️</i> Điểm nghỉ dưỡng</span>
-              <span className="trip-pillar-chip"><i className="trip-pillar-chip__icon">🚗</i> Phương tiện & thời gian</span>
+
+            <div className="trip-hero-visual" aria-hidden="true">
+              <div className="trip-hero-visual__media">
+                <img
+                  src="/images/itinerary-teaser-bg.png"
+                  alt="Du lịch liên kết Phú Thọ - Vĩnh Phúc - Hòa Bình"
+                  className="trip-hero-visual__img"
+                  loading="lazy"
+                  onError={handleImageError}
+                />
+                <div className="trip-hero-visual__overlay" />
+                <span className="trip-hero-visual__pill">🌟 TUYẾN DU LỊCH 3 TỈNH ĐẤT TỔ</span>
+                <div className="trip-hero-visual__badge-card">
+                  <div className="trip-hero-visual__provinces">
+                    <span className="trip-badge-province">Phú Thọ</span>
+                    <span className="trip-badge-sep">•</span>
+                    <span className="trip-badge-province">Vĩnh Phúc</span>
+                    <span className="trip-badge-sep">•</span>
+                    <span className="trip-badge-province">Hòa Bình</span>
+                  </div>
+                  <div className="trip-hero-visual__details">
+                    <span><b>32</b> Huyện thị</span>
+                    <span>·</span>
+                    <span><b>100+</b> Điểm đến</span>
+                    <span>·</span>
+                    <span><b>AI</b> Tối ưu lộ trình</span>
+                  </div>
+                </div>
+              </div>
             </div>
-            <p className="trip-hero-desc">{t.tripPageDesc}</p>
           </div>
 
           <div className="builder-toggle-strip">
@@ -6125,15 +6166,25 @@ export default function Home() {
                       className="tour-template-card"
                       onClick={() => handleApplyTourTemplate(tmpl)}
                     >
-                      <div className="tour-template-card__header">
+                      <div className="tour-template-thumb-wrap">
+                        <img
+                          className="tour-template-thumb"
+                          src={tmpl.image || "/images/places/den-hung.png"}
+                          alt={tmpl.title}
+                          loading="lazy"
+                          onError={handleImageError}
+                        />
+                        <span className="tour-template-thumb-overlay" />
                         <span className="tour-template-badge">{getRegionLabel(tmpl.region, t)} · {getTourBadgeLabel(tmpl.badge, currentLang)}</span>
                         <span className="tour-template-duration">⏱ {formatDaysNights(tmpl.durationDays, currentLang)}</span>
                       </div>
-                      <h3>{tmpl.title}</h3>
-                      <p>{tmpl.summary}</p>
-                      <div className="tour-template-card__footer">
-                        <span>{t.tripTransportLabel} {tmpl.recommendedTransport}</span>
-                        <b>{tmpl.estimatedBudgetPerPerson}</b>
+                      <div className="tour-template-card__body">
+                        <h3>{tmpl.title}</h3>
+                        <p>{tmpl.summary}</p>
+                        <div className="tour-template-card__footer">
+                          <span>{t.tripTransportLabel} {tmpl.recommendedTransport}</span>
+                          <b>{tmpl.estimatedBudgetPerPerson}</b>
+                        </div>
                       </div>
                     </button>
                   ))}
