@@ -3259,3 +3259,30 @@ body {
 .site-footer span {
   font-size: 11.5px !important;
 }
+
+/* Trang Tab Ưu Đãi & Voucher Đất Tổ */
+.vouchers-tab-page {
+  max-width: 960px !important;
+  margin: 0 auto !important;
+  padding: 40px clamp(16px, 3.5vw, 36px) 90px !important;
+}
+
+.vouchers-tab-page .voucher-grid {
+  display: grid !important;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)) !important;
+  gap: 18px !important;
+  margin-top: 20px !important;
+}
+
+.vouchers-tab-page .voucher-card {
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.05) !important;
+  border-radius: 14px !important;
+}
+
+.vouchers-tab-page .voucher-points-banner {
+  background: linear-gradient(135deg, #fff7ed 0%, #ffedd5 100%) !important;
+  border: 1px solid #fed7aa !important;
+  border-radius: 14px !important;
+  padding: 16px 20px !important;
+}
+

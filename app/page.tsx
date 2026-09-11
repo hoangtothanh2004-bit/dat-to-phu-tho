@@ -28,7 +28,7 @@ import AiChatbotWidget from "./components/AiChatbotWidget";
 
 const isStaticDemo = process.env.NEXT_PUBLIC_STATIC_DEMO === "true";
 
-type Tab = "explore" | "trip" | "near" | "saved" | "profile";
+type Tab = "explore" | "trip" | "near" | "saved" | "profile" | "vouchers";
 type SavedSubTab = "places" | "foods" | "itinerary";
 type AudioState = "idle" | "playing" | "paused";
 
@@ -88,6 +88,7 @@ const mapBounds = { minLat: 20.55, maxLat: 21.65, minLng: 104.85, maxLng: 105.75
 const navigation: { id: Tab; label: string; icon: string }[] = [
   { id: "explore", label: "Khám phá", icon: "⌕" },
   { id: "trip", label: "Lịch trình", icon: "▤" },
+  { id: "vouchers", label: "Ưu đãi", icon: "🎟️" },
   { id: "near", label: "Gần tôi", icon: "⌖" },
   { id: "saved", label: "Đã lưu", icon: "♡" },
   { id: "profile", label: "Cá nhân", icon: "♙" },
@@ -5711,6 +5712,9 @@ export default function Home() {
           >
             Ẩm thực
           </button>
+          <button className={activeTab === "vouchers" ? "is-active" : ""} onClick={() => setActiveTab("vouchers")}>
+            Ưu đãi
+          </button>
           <button className={activeTab === "near" ? "is-active" : ""} onClick={() => setActiveTab("near")}>
             {t.near}
           </button>
@@ -6130,11 +6134,6 @@ export default function Home() {
                     <span>Tham gia ngay</span>
                     <span className="travel-challenge-arrow">➔</span>
                   </button>
-                  <span className="travel-challenge-status-note">
-                    {completedChallenges.length > 0
-                      ? `Đã hoàn thành ${completedChallenges.length}/10 nhiệm vụ (+${challengePoints}đ)`
-                      : "Tham gia ngay để nhận quà OCOP 5 sao"}
-                  </span>
                 </div>
               </div>
 
@@ -6318,7 +6317,7 @@ export default function Home() {
               <button
                 type="button"
                 className="button button--cream"
-                onClick={() => setVouchersModalOpen(true)}
+                onClick={() => setActiveTab("vouchers")}
               >
                 🎟️ {t.viewAllVouchersBtn} ({DEFAULT_VOUCHERS.length}) →
               </button>
@@ -7048,7 +7047,121 @@ export default function Home() {
         </section>
       )}
 
-      {/* TAB 3: GẦN TÔI & TIỆN ÍCH (NEAR ME) */}
+      {/* TAB 3: MÃ GIẢM GIÁ & VOUCHER ĐẤT TỔ (VOUCHERS TAB) */}
+      {activeTab === "vouchers" && (
+        <section className="inner-page vouchers-tab-page">
+          <div className="inner-page__intro inner-page__intro--compact">
+            <span className="heritage-gold-tag" style={{ display: "inline-block", marginBottom: "8px" }}>✦ ƯU ĐÃI & KHUYẾN MÃI</span>
+            <h1 style={{ fontSize: "clamp(24px, 3.2vw, 34px)", fontWeight: 900, color: "#1b4332", margin: "6px 0 10px", letterSpacing: "0.01em" }}>
+              Mã Giảm Giá & Voucher Đất Tổ
+            </h1>
+            <p style={{ color: "#475569", fontSize: "14px", maxWidth: "680px", lineHeight: 1.5 }}>
+              Lưu mã và áp dụng trực tiếp khi đặt vé tour hoặc mua sắm đặc sản OCOP trên địa bàn 3 tỉnh Phú Thọ – Vĩnh Phúc – Hòa Bình.
+            </p>
+          </div>
+
+          {/* THÔNG BÁO ĐIỂM CHECK-IN TÍCH LŨY & ĐỔI VOUCHER BẰNG ĐIỂM */}
+          <div className="voucher-points-banner" style={{ maxWidth: "780px", margin: "22px 0 26px" }}>
+            <div style={{ display: "flex", alignItems: "center", gap: "14px" }}>
+              <span style={{ fontSize: "32px" }}>🪙</span>
+              <div>
+                <div style={{ fontSize: "11.5px", color: "#64748b", fontWeight: 800, textTransform: "uppercase", letterSpacing: "0.05em" }}>
+                  Điểm Thưởng Check-in Của Bạn
+                </div>
+                <div style={{ fontSize: "20px", fontWeight: 900, color: "#c2410c" }}>
+                  {challengePoints} điểm tích lũy
+                </div>
+              </div>
+            </div>
+            <button
+              type="button"
+              className="voucher-earn-points-btn"
+              onClick={() => {
+                setChallengeModalOpen(true);
+                setChallengeTab("quests");
+              }}
+            >
+              🧭 Tải ảnh Check-in nhận thêm điểm →
+            </button>
+          </div>
+
+          <div className="voucher-grid" style={{ maxWidth: "780px" }}>
+            {DEFAULT_VOUCHERS.map((voucher) => {
+              const isSaved = savedVouchers.includes(voucher.code);
+              const isApplied = appliedVoucherCode === voucher.code;
+              const cost = voucher.pointCost || 100;
+              const canRedeem = challengePoints >= cost;
+
+              return (
+                <div key={voucher.code} className="voucher-card">
+                  <div className="voucher-card-left">
+                    <b>{voucher.discountPercent ? `${voucher.discountPercent}%` : `${Math.round((voucher.discountAmount || 0) / 1000)}K`}</b>
+                    <small>GIẢM</small>
+                  </div>
+                  <div className="voucher-card-right">
+                    <div>
+                      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: "8px" }}>
+                        <h4>{voucher.title}</h4>
+                        <span className="voucher-points-cost-tag">
+                          🪙 {cost} điểm
+                        </span>
+                      </div>
+                      <p>{voucher.description}</p>
+                    </div>
+                    <div className="voucher-card-actions">
+                      <span className="voucher-code-badge">{voucher.code}</span>
+                      <div style={{ display: "flex", gap: "6px", alignItems: "center" }}>
+                        {isSaved ? (
+                          <span className="voucher-owned-badge">✓ Đã sở hữu</span>
+                        ) : (
+                          <button
+                            type="button"
+                            className="voucher-redeem-point-btn"
+                            onClick={() => handleRedeemVoucherWithPoints(voucher)}
+                            title={canRedeem ? `Đổi bằng ${cost} điểm check-in` : `Cần ${cost} điểm (bạn có ${challengePoints}đ)`}
+                          >
+                            🪙 Đổi (-{cost}đ)
+                          </button>
+                        )}
+                        <button
+                          type="button"
+                          className={`voucher-apply-btn ${isSaved ? "is-saved" : ""}`}
+                          onClick={() => {
+                            if (isSaved) {
+                              setSavedVouchers(savedVouchers.filter((c) => c !== voucher.code));
+                              showToast(`Đã bỏ lưu mã ${voucher.code}`);
+                            } else {
+                              setSavedVouchers([...savedVouchers, voucher.code]);
+                              showToast(`✦ Đã lưu mã ${voucher.code} vào ví voucher!`);
+                            }
+                          }}
+                        >
+                          {isSaved ? "Bỏ lưu" : "Lưu mã"}
+                        </button>
+                        <button
+                          type="button"
+                          className="voucher-apply-btn"
+                          style={{ background: isApplied ? "#24483d" : "var(--red)" }}
+                          onClick={() => {
+                            setAppliedVoucherCode(voucher.code);
+                            setCartDrawerTab("cart");
+                            setCartOpen(true);
+                            showToast(`✦ Đã áp dụng mã ${voucher.code} (${voucher.title})!`);
+                          }}
+                        >
+                          {isApplied ? "Đang dùng" : "Dùng ngay"}
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </section>
+      )}
+
+      {/* TAB 4: GẦN TÔI & TIỆN ÍCH (NEAR ME) */}
       {activeTab === "near" && (
         <section className="inner-page near-page">
           <div className="near-header">
