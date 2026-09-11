@@ -26,17 +26,18 @@ const displayFont = localFont({
 
 const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
-const title = "Đất Tổ — Trợ lý du lịch Phú Thọ";
+const title = "Đất Tổ — Trợ Lý Du Lịch Thông Minh";
 const description =
-  "Khám phá điểm đến, món ngon, chỗ nghỉ và tạo lịch trình thông minh cho chuyến đi Phú Thọ.";
+  "Khám phá điểm đến, món ngon, chỗ nghỉ và tạo lịch trình thông minh cho chuyến đi Phú Thọ – Vĩnh Phúc – Hòa Bình.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title,
   description,
   icons: {
-    icon: `${basePath}/favicon.svg`,
-    shortcut: `${basePath}/favicon.svg`,
+    icon: `${basePath}/images/logo-emblem.png`,
+    shortcut: `${basePath}/images/logo-emblem.png`,
+    apple: `${basePath}/images/logo-emblem.png`,
   },
   openGraph: {
     title,

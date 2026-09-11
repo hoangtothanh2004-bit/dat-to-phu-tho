@@ -8073,7 +8073,7 @@ h3,
 .ai-mascot-img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
   border-radius: 50%;
   transition: transform 0.2s;
 }
@@ -8176,7 +8176,7 @@ h3,
 .ai-header-avatar img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
   border-radius: 50%;
 }
 

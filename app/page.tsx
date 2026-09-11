@@ -5684,19 +5684,13 @@ export default function Home() {
     <main className="app-shell">
       {/* TOPBAR */}
       <header className="topbar topbar--v2">
-        <button className="brand brand--v2" onClick={() => setActiveTab("explore")} aria-label={t.explore}>
-          <div className="brand__emblem-gold" title="Đất Tổ - Hùng Vương">
-            <svg viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <circle cx="22" cy="22" r="21" fill="#fdfbf7" stroke="#d4af37" strokeWidth="1.8"/>
-              <circle cx="22" cy="22" r="18.5" fill="#f8f4eb" stroke="#c49746" strokeWidth="0.8" strokeDasharray="2.5 1.5"/>
-              <path d="M12 28H32M14 28V24M30 24V28M15 24H29M16 24V19M28 19V24M13 19C17 17 27 17 31 19M17 19V15M27 15V19M16 15C19 13.5 25 13.5 28 15M22 10V13M19 28V32M25 28V32" stroke="#b8860b" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-              <path d="M18 32H26V26C26 24.8954 25.1046 24 24 24H20C18.8954 24 18 24.8954 18 26V32Z" fill="#d4af37" fillOpacity="0.35" stroke="#b8860b" strokeWidth="1.2"/>
-            </svg>
-          </div>
-          <div className="brand__text-group">
-            <strong className="brand__title-gold">ĐẤT TỔ</strong>
-            <small className="brand__slogan">TRỢ LÝ DU LỊCH THÔNG MINH</small>
-          </div>
+        <button className="brand brand--v2" onClick={() => setActiveTab("explore")} aria-label="Đất Tổ - Trợ lý du lịch thông minh" style={{ display: "flex", alignItems: "center", gap: "10px", background: "none", border: 0, padding: 0, cursor: "pointer" }}>
+          <img
+            src="/images/logo-dat-to.png"
+            alt="Đất Tổ - Trợ lý du lịch thông minh"
+            className="brand__full-logo-img"
+            style={{ height: "46px", width: "auto", objectFit: "contain", display: "block" }}
+          />
         </button>
         <nav className="desktop-nav desktop-nav--v2" aria-label={t.bottomNavAria}>
           <button className={activeTab === "explore" ? "is-active" : ""} onClick={() => setActiveTab("explore")}>
@@ -7489,9 +7483,12 @@ export default function Home() {
 
       {/* SITE FOOTER */}
       <footer className="site-footer">
-        <div className="brand brand--footer">
-          <span className="brand__mark">Đ</span>
-          <span><strong>Đất Tổ</strong><small>{t.brandSubtitle}</small></span>
+        <div className="brand brand--footer" style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+          <img
+            src="/images/logo-dat-to.png"
+            alt="Đất Tổ - Trợ lý du lịch thông minh"
+            style={{ height: "42px", width: "auto", objectFit: "contain" }}
+          />
         </div>
         <p>{t.footerDesc}</p>
         <span>{t.footerLink}</span>
