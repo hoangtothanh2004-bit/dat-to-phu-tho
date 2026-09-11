@@ -41,10 +41,10 @@ export const DISTRICT_DATABASE: Record<string, DistrictInfo> = {
     intro: "TP. Việt Trì là trung tâm chính trị, kinh tế, văn hóa của tỉnh Phú Thọ, thành phố lễ hội cội nguồn dân tộc với quần thể Đền Hùng linh thiêng và di sản Hát Xoan nhân loại.",
     keywords: ["việt trì", "viet tri", "tp việt trì", "thành phố việt trì", "đền hùng", "den hung", "hùng lô", "hung lo", "hồ văn lang", "bến gót", "bạch hạc", "việt trì cũ"],
     attractions: [
-      { name: "Khu di tích lịch sử Quốc gia đặc biệt Đền Hùng", category: "Tâm linh - lịch sử", desc: "Quần thể đền thờ 18 đời Vua Hùng trên núi Nghĩa Lĩnh linh thiêng: Đền Hạ, Đền Trung, Đền Thượng, Lăng Hùng Vương và Đền Giếng.", icon: "🏛️" },
-      { name: "Làng cổ & Đình cổ Hùng Lô", category: "Văn hóa - di sản", desc: "Quần thể kiến trúc gỗ hơn 300 năm tuổi với nghệ thuật chạm khắc tinh xảo, cái nôi thưởng thức Di sản văn hóa phi vật thể Hát Xoan UNESCO.", icon: "🎶" },
+      { name: "Khu di tích lịch sử Quốc gia đặc biệt Đền Hùng", category: "Tâm linh - lịch sử", desc: "Quần thể đền thờ 18 đời Vua Hùng trên núi Nghĩa Lĩnh linh thiêng: Đền Hạ, Đền Trung, Đền Thượng, Lăng Hùng Vương và Đền Giếng.", location: "xã Hy Cương, thành phố Việt Trì, tỉnh Phú Thọ", icon: "🏛️" },
+      { name: "Làng cổ & Đình cổ Hùng Lô", category: "Văn hóa - di sản", desc: "Quần thể kiến trúc gỗ hơn 300 năm tuổi với nghệ thuật chạm khắc tinh xảo, cái nôi thưởng thức Di sản văn hóa phi vật thể Hát Xoan UNESCO.", location: "phường Vân Phú, tỉnh Phú Thọ", icon: "🎶" },
       { name: "Công viên Văn Lang & Cầu đi bộ biểu tượng", category: "Check-in - giải trí", desc: "Hồ nước thơ mộng giữa lòng thành phố, biểu tượng cầu đi bộ nghệ thuật lung linh ánh sáng và quảng trường nhạc nước về đêm.", icon: "🌉" },
-      { name: "Đền Tam Giang & Bến Gót (Ngã ba sông Bạch Hạc)", category: "Di tích - tâm linh", desc: "Nơi hội tụ của 3 dòng sông Hồng - sông Lô - sông Đà, gắn liền với huyền tích phong thủy Đất Tổ và đền thờ Thổ Lệnh Đại Vương.", icon: "⛵" },
+      { name: "Đền Tam Giang & Bến Gót (Ngã ba sông Bạch Hạc)", category: "Di tích - tâm linh", desc: "Nơi hội tụ của 3 dòng sông Hồng - sông Lô - sông Đà, gắn liền với huyền tích phong thủy Đất Tổ và đền thờ Thổ Lệnh Đại Vương.", location: "Phường Thanh Miếu, tỉnh Phú Thọ", icon: "⛵" },
       { name: "Đền Quốc Tổ Lạc Long Quân", category: "Tâm linh cội nguồn", desc: "Tọa lạc trên đồi Sim uy nghi, công trình kiến trúc truyền thống phụng thờ Đức Quốc Tổ Lạc Long Quân.", icon: "🛕" },
     ],
     culinary: [
@@ -139,8 +139,8 @@ export const DISTRICT_DATABASE: Record<string, DistrictInfo> = {
     keywords: ["hạ hòa", "ha hoa", "huyện hạ hòa", "hạ hòa cũ", "âu cơ", "đền mẫu âu cơ", "đầm ao châu", "ao châu", "ao giời suối tiên", "hiền lương", "quân khê"],
     attractions: [
       { name: "Khu di tích lịch sử Đền Mẫu Âu Cơ (Hiền Lương)", category: "Tâm linh cội nguồn", desc: "Nơi phụng thờ Mẹ Tiên Âu Cơ sinh ra bọc trăm trứng, ngày mùng 7 tháng Giêng lễ hội chính thu hút vạn du khách hướng về nguồn cội.", icon: "🛕" },
-      { name: "Danh thắng Đầm Ao Châu (99 ngách nước)", category: "Sinh thái danh thắng", desc: "Đầm nước tự nhiên rộng hơn 300ha với làn nước trong xanh phẳng lặng uốn lượn quanh các đồi chè, đồi cọ trù phú.", icon: "🏞️" },
-      { name: "Thác Ao Giời – Suối Tiên (Quân Khê)", category: "Thiên nhiên kỳ vĩ", desc: "Bắt nguồn từ đỉnh núi Nả cao vút đổ xuống qua nhiều tầng thác bọt tung trắng xóa, suối nước mát lạnh giữa rừng nguyên sinh.", icon: "🌊" },
+      { name: "Danh thắng Đầm Ao Châu (99 ngách nước)", category: "Sinh thái danh thắng", desc: "Đầm nước tự nhiên rộng hơn 300ha với làn nước trong xanh phẳng lặng uốn lượn quanh các đồi chè, đồi cọ trù phú.", location: "xã Hạ Hòa, tỉnh Phú Thọ", icon: "🏞️" },
+      { name: "Thác Ao Giời – Suối Tiên (Quân Khê)", category: "Thiên nhiên kỳ vĩ", desc: "Bắt nguồn từ đỉnh núi Nả cao vút đổ xuống qua nhiều tầng thác bọt tung trắng xóa, suối nước mát lạnh giữa rừng nguyên sinh.", location: "xã Hiền Lương, tỉnh Phú Thọ", icon: "🌊" },
       { name: "Chùa Linh Long", category: "Tâm linh thanh tịnh", desc: "Ngôi cổ tự nằm ẩn mình giữa khung cảnh núi rừng thanh tịnh, nơi chiêm bái cầu an tĩnh tâm.", icon: "⛩️" },
     ],
     culinary: [
@@ -285,7 +285,7 @@ export const DISTRICT_DATABASE: Record<string, DistrictInfo> = {
       { name: "Làng nghề & Điểm trải nghiệm Thịt chua Thanh Sơn (Nghị Thịnh / Điệp Đào)", category: "Trải nghiệm làng nghề", desc: "Tham quan quy trình ủ men thính ngô truyền thống của người Mường, tự tay đóng ống giang lá chuối và thưởng thức thịt chua tươi ngon.", icon: "🥩" },
       { name: "Thác Chòi (Cự Thắng)", category: "Thiên nhiên cắm trại", desc: "Dòng thác trong vắt đổ xuống qua các phiến đá phẳng giữa rừng đại ngàn, điểm lý tưởng cho dã ngoại picnic, cắm trại và tắm suối mát lạnh.", icon: "🏞️" },
       { name: "Bản văn hóa Mường nguyên sơ Cự Đồng", category: "Du lịch cộng đồng", desc: "Những nếp nhà sàn gỗ mái lá đơn sơ, trải nghiệm giã gạo nhảy sạp, nghe hát Ví hát Rang và thưởng thức rượu hoẵng men lá.", icon: "🏡" },
-      { name: "Cửa ngõ tiếp giáp Đồi chè Long Cốc", category: "Cung đường check-in", desc: "Tuyến đường uốn lượn qua các thung lũng lúa xanh mướt nối liền Thanh Sơn lên thiên đường săn mây Long Cốc.", icon: "🍃" },
+      { name: "Cửa ngõ tiếp giáp Đồi chè Long Cốc", category: "Cung đường check-in", desc: "Tuyến đường uốn lượn qua các thung lũng lúa xanh mướt nối liền Thanh Sơn lên thiên đường săn mây Long Cốc.", location: "xã Long Cốc, tỉnh Phú Thọ", icon: "🍃" },
     ],
     culinary: [
       { dish: "Thịt chua Thanh Sơn truyền thống (Nghị Thịnh / Điệp Đào)", desc: "Sản vật OCOP trứ danh: thịt lợn tươi thái mỏng ủ men thính ngô thơm nức, cuốn lá sung, lá ổi, đinh lăng chấm tương ớt cay nồng đậm vị.", places: "Cơ sở Thịt chua Nghị Thịnh (Khu Ba Mỏ), Cơ sở Điệp Đào, TT. Thanh Sơn" },
@@ -306,9 +306,9 @@ export const DISTRICT_DATABASE: Record<string, DistrictInfo> = {
     intro: "Tân Sơn là huyện vùng cao hùng vĩ nhất Phú Thọ, sở hữu 'ốc đảo chè đẹp nhất Việt Nam' Long Cốc với hàng trăm quả đồi bát úp nhấp nhô và VQG Xuân Sơn hoang sơ kỳ vĩ.",
     keywords: ["tân sơn", "tan son", "huyện tân sơn", "tân sơn cũ", "long cốc", "long coc", "đồi chè long cốc", "xuân sơn", "xuan son", "vườn quốc gia xuân sơn", "hang lạng", "bản cỏi", "bản dù", "gà nhiều cựa"],
     attractions: [
-      { name: "Đồi chè bát úp Long Cốc (Ốc đảo chè đẹp nhất Việt Nam)", category: "Kỳ quan thiên nhiên", desc: "Hàng trăm quả đồi chè hình bát úp tròn xoe nhấp nhô giữa thung lũng, buổi sớm mây mù bồng bềnh tựa chốn bồng lai tiên cảnh.", icon: "🍃" },
-      { name: "Vườn quốc gia Xuân Sơn", category: "Rừng nguyên sinh", desc: "Lá phổi xanh ngút ngàn với hệ sinh thái rừng nhiệt đới trên núi đá vôi nguyên sinh, sông suối trong veo mát lạnh quanh năm.", icon: "🌲" },
-      { name: "Hang Lạng & Hang Na kỳ vĩ", category: "Hang động thạch nhũ", desc: "Hệ thống hang ngầm xuyên lòng núi đá vôi dài hàng ngàn mét với muôn vàn thạch nhũ lấp lánh như cung điện dưới lòng đất.", icon: "🦇" },
+      { name: "Đồi chè bát úp Long Cốc (Ốc đảo chè đẹp nhất Việt Nam)", category: "Kỳ quan thiên nhiên", desc: "Hàng trăm quả đồi chè hình bát úp tròn xoe nhấp nhô giữa thung lũng, buổi sớm mây mù bồng bềnh tựa chốn bồng lai tiên cảnh.", location: "xã Long Cốc, tỉnh Phú Thọ", icon: "🍃" },
+      { name: "Vườn quốc gia Xuân Sơn", category: "Rừng nguyên sinh", desc: "Lá phổi xanh ngút ngàn với hệ sinh thái rừng nhiệt đới trên núi đá vôi nguyên sinh, sông suối trong veo mát lạnh quanh năm.", location: "xã Xuân Đài, tỉnh Phú Thọ", icon: "🌲" },
+      { name: "Hang Lạng & Hang Na kỳ vĩ", category: "Hang động thạch nhũ", desc: "Hệ thống hang ngầm xuyên lòng núi đá vôi dài hàng ngàn mét với muôn vàn thạch nhũ lấp lánh như cung điện dưới lòng đất.", location: "xã Xuân Đài, tỉnh Phú Thọ", icon: "🦇" },
       { name: "Bản Cỏi & Bản Dù văn hóa Dao Tiền", category: "Bản làng cộng đồng", desc: "Bản làng người Dao Tiền và người Mường mộc mạc bên suối, nơi lưu giữ phong tục thêu váy chàm dệt thổ cẩm và nghề nuôi gà chín cựa.", icon: "🏡" },
     ],
     culinary: [
@@ -358,7 +358,7 @@ export const DISTRICT_DATABASE: Record<string, DistrictInfo> = {
     attractions: [
       { name: "Khu du lịch sinh thái Đầm Vạc", category: "Sinh thái hồ nước", desc: "Hồ đầm tự nhiên lớn ví như viên ngọc bích giữa lòng thành phố, có sân golf Đầm Vạc chuẩn quốc tế và khu nghỉ dưỡng sinh thái ven hồ.", icon: "🦢" },
       { name: "Chùa Tích Sơn cổ tự", category: "Cổ tự tâm linh", desc: "Ngôi chùa cổ kính xây dựng từ thời Hậu Lê rợp bóng bồ đề, di tích kiến trúc nghệ thuật cấp Quốc gia linh thiêng.", icon: "🛕" },
-      { name: "Chùa Hà Tiên (Chùa Phật giáo lớn)", category: "Tâm linh danh thắng", desc: "Quần thể chùa nguy nga hoành tráng trên đồi cao với tháp Phật 9 tầng và không gian tâm linh thanh tịnh.", icon: "⛩️" },
+      { name: "Chùa Hà Tiên (Chùa Phật giáo lớn)", category: "Tâm linh danh thắng", desc: "Quần thể chùa nguy nga hoành tráng trên đồi cao với tháp Phật 9 tầng và không gian tâm linh thanh tịnh.", location: "Phường Vĩnh Yên, tỉnh Phú Thọ", icon: "⛩️" },
       { name: "Quảng trường Hồ Chí Minh & Phố đi bộ Vĩnh Yên", category: "Check-in đô thị", desc: "Không gian sinh hoạt cộng đồng sôi động về đêm với nhạc nước, ẩm thực đường phố và các quán cà phê hiện đại.", icon: "🌆" },
     ],
     culinary: [
@@ -380,8 +380,8 @@ export const DISTRICT_DATABASE: Record<string, DistrictInfo> = {
     intro: "TP. Phúc Yên là cửa ngõ giáp Hà Nội, nổi tiếng với hồ Đại Lải mênh mông, quần thể nghỉ dưỡng nghệ thuật Flamingo Đại Lải đẳng cấp và đặc sản thịt trâu tươi nướng tảng.",
     keywords: ["phúc yên", "phuc yen", "tp phúc yên", "thành phố phúc yên", "đại lải", "dai lai", "hồ đại lải", "flamingo đại lải", "ngọc thanh"],
     attractions: [
-      { name: "Khu du lịch Hồ Đại Lải & Flamingo Đại Lải Resort", category: "Nghỉ dưỡng đẳng cấp", desc: "Khu resort nghệ thuật ven hồ Đại Lải với rừng thông xanh mướt, biệt thự trên bán đảo, bảo tàng nghệ thuật trong rừng và chèo kayak.", icon: "🌲" },
-      { name: "Đảo Ngọc (Đảo Chim hồ Đại Lải)", category: "Sinh thái ngắm cảnh", desc: "Hòn đảo xanh giữa lòng hồ Đại Lải nơi hàng vạn cánh chim về trú ngụ, không gian hoang sơ lãng mạn thanh bình.", icon: "🏝️" },
+      { name: "Khu du lịch Hồ Đại Lải & Flamingo Đại Lải Resort", category: "Nghỉ dưỡng đẳng cấp", desc: "Khu resort nghệ thuật ven hồ Đại Lải với rừng thông xanh mướt, biệt thự trên bán đảo, bảo tàng nghệ thuật trong rừng và chèo kayak.", location: "Phường Xuân Hòa, tỉnh Phú Thọ", icon: "🌲" },
+      { name: "Đảo Ngọc (Đảo Chim hồ Đại Lải)", category: "Sinh thái ngắm cảnh", desc: "Hòn đảo xanh giữa lòng hồ Đại Lải nơi hàng vạn cánh chim về trú ngụ, không gian hoang sơ lãng mạn thanh bình.", location: "Phường Xuân Hòa, tỉnh Phú Thọ", icon: "🏝️" },
       { name: "Chiến khu cách mạng Ngọc Thanh", category: "Di tích lịch sử", desc: "Khu căn cứ địa kháng chiến kiên cường giữa thung lũng đồi núi rợp bóng rừng thông và suối Reo.", icon: "🚩" },
     ],
     culinary: [
@@ -403,10 +403,10 @@ export const DISTRICT_DATABASE: Record<string, DistrictInfo> = {
     intro: "Tam Đảo tọa lạc ở độ cao hơn 900m trên dãy núi Tam Đảo với khí hậu 4 mùa trong một ngày, thị trấn sương mờ phong cách châu Âu và quần thể danh thắng tâm linh Tây Thiên.",
     keywords: ["tam đảo", "tam dao", "huyện tam đảo", "tam đảo cũ", "tây thiên", "tay thien", "nhà thờ đá tam đảo", "quán gió", "cầu mây", "thác bạc", "đại bảo tháp mandala"],
     attractions: [
-      { name: "Nhà thờ Đá cổ & Quảng trường trung tâm Tam Đảo", category: "Kiến trúc Gothic", desc: "Kiến trúc đá thời Pháp cổ kính đứng uy nghiêm giữa màn sương mù, biểu tượng check-in số một của thị trấn Tam Đảo.", icon: "🏰" },
-      { name: "Cổng Trời, Cầu Mây & Quán Gió Tam Đảo", category: "Săn mây - ngắm cảnh", desc: "Điểm ngắm mây và hoàng hôn ngoạn mục, ôm trọn thung lũng bồng bềnh mây trắng và thưởng thức ly cà phê ấm nóng.", icon: "☁️" },
-      { name: "Thác Bạc Tam Đảo", category: "Thiên nhiên hùng vĩ", desc: "Dòng thác trắng xóa ẩn mình giữa rừng sâu xanh biếc, không khí mát rượi quanh năm.", icon: "🌊" },
-      { name: "Quần thể Danh thắng & Cáp treo Tây Thiên", category: "Tâm linh quốc gia", desc: "Nơi giao thoa giữa tín ngưỡng thờ Quốc Mẫu Tây Thiên và Phật giáo Trúc Lâm, Đại bảo tháp Mandala và đền Thượng uy nghiêm.", icon: "🛕" },
+      { name: "Nhà thờ Đá cổ & Quảng trường trung tâm Tam Đảo", category: "Kiến trúc Gothic", desc: "Kiến trúc đá thời Pháp cổ kính đứng uy nghiêm giữa màn sương mù, biểu tượng check-in số một của thị trấn Tam Đảo.", location: "xã Tam Đảo, tỉnh Phú Thọ", icon: "🏰" },
+      { name: "Cổng Trời, Cầu Mây & Quán Gió Tam Đảo", category: "Săn mây - ngắm cảnh", desc: "Điểm ngắm mây và hoàng hôn ngoạn mục, ôm trọn thung lũng bồng bềnh mây trắng và thưởng thức ly cà phê ấm nóng.", location: "xã Tam Đảo, tỉnh Phú Thọ", icon: "☁️" },
+      { name: "Thác Bạc Tam Đảo", category: "Thiên nhiên hùng vĩ", desc: "Dòng thác trắng xóa ẩn mình giữa rừng sâu xanh biếc, không khí mát rượi quanh năm.", location: "xã Tam Đảo, tỉnh Phú Thọ", icon: "🌊" },
+      { name: "Quần thể Danh thắng & Cáp treo Tây Thiên", category: "Tâm linh quốc gia", desc: "Nơi giao thoa giữa tín ngưỡng thờ Quốc Mẫu Tây Thiên và Phật giáo Trúc Lâm, Đại bảo tháp Mandala và đền Thượng uy nghiêm.", location: "xã Đại Đình, tỉnh Phú Thọ", icon: "🛕" },
     ],
     culinary: [
       { dish: "Ngọn su su Tam Đảo xào tỏi / luộc chấm muối vừng", desc: "Đặc sản số một: ngọn su su non mơn mởn trồng trên núi mây quanh năm giòn sần sật, ngọt lịm tự nhiên xào tỏi thơm phức.", places: "Phúc Hương Viên Tam Đảo, Nhà hàng Hải Yến, Chợ đêm Tam Đảo" },
@@ -427,8 +427,8 @@ export const DISTRICT_DATABASE: Record<string, DistrictInfo> = {
     intro: "Bình Xuyên nằm ở phía Đông Nam Vĩnh Phúc, nổi danh với làng nghề gốm sành Hương Canh hơn 300 năm tuổi giữ trọn chất đất mộc mạc và món bánh hòn, bánh nẳng ngọt bùi.",
     keywords: ["bình xuyên", "binh xuyen", "huyện bình xuyên", "bình xuyên cũ", "hương canh", "gốm hương canh", "bánh hòn hương canh", "hồ gia khau"],
     attractions: [
-      { name: "Làng nghề Gốm cổ Hương Canh", category: "Làng nghề di sản", desc: "Làng gốm sành nức tiếng hàng trăm năm: chum, vại, ấm chén gốm mộc không tráng men mà nước không ngấm, tiếng gõ kêu đanh như chuông đồng.", icon: "🏺" },
-      { name: "Cụm di tích Đình Hương Canh cổ kính", category: "Kiến trúc nghệ thuật", desc: "Ngôi đình cổ thời Hậu Lê với nghệ thuật chạm khắc gỗ tinh xảo bậc nhất xứ Đoài.", icon: "🏛️" },
+      { name: "Làng nghề Gốm cổ Hương Canh", category: "Làng nghề di sản", desc: "Làng gốm sành nức tiếng hàng trăm năm: chum, vại, ấm chén gốm mộc không tráng men mà nước không ngấm, tiếng gõ kêu đanh như chuông đồng.", location: "xã Bình Nguyên, tỉnh Phú Thọ", icon: "🏺" },
+      { name: "Cụm di tích Đình Hương Canh cổ kính", category: "Kiến trúc nghệ thuật", desc: "Ngôi đình cổ thời Hậu Lê với nghệ thuật chạm khắc gỗ tinh xảo bậc nhất xứ Đoài.", location: "xã Bình Nguyên, tỉnh Phú Thọ", icon: "🏛️" },
       { name: "Hồ Gia Khau sinh thái", category: "Thiên nhiên dã ngoại", desc: "Hồ nước yên bình rợp bóng cây xanh, điểm câu cá dã ngoại cuối tuần của người dân địa phương.", icon: "🎣" },
     ],
     culinary: [
@@ -473,7 +473,7 @@ export const DISTRICT_DATABASE: Record<string, DistrictInfo> = {
     intro: "Yên Lạc là cái nôi khảo cổ học Đồng Đậu tiêu biểu cho 4 giai đoạn văn hóa tiền sử sông Hồng, vùng đồng bằng trù phú với các làng nghề mộc truyền thống lâu đời.",
     keywords: ["yên lạc", "yen lac", "huyện yên lạc", "yên lạc cũ", "đồng đậu", "di chỉ đồng đậu", "tề lỗ", "chùa biện sơn"],
     attractions: [
-      { name: "Di chỉ khảo cổ học Quốc gia Đồng Đậu", category: "Di tích tiền sử", desc: "Nơi lưu giữ các tầng văn hóa Phùng Nguyên - Đồng Đậu - Gò Mun - Đông Sơn với rìu đồng, thạp đồng chứng minh cội nguồn dân tộc.", icon: "🏺" },
+      { name: "Di chỉ khảo cổ học Quốc gia Đồng Đậu", category: "Di tích tiền sử", desc: "Nơi lưu giữ các tầng văn hóa Phùng Nguyên - Đồng Đậu - Gò Mun - Đông Sơn với rìu đồng, thạp đồng chứng minh cội nguồn dân tộc.", location: "xã Yên Lạc, tỉnh Phú Thọ", icon: "🏺" },
       { name: "Chùa Biện Sơn & Đền Tranh", category: "Tâm linh cổ tự", desc: "Cụm di tích cổ kính rợp bóng cây cổ thụ lưu giữ nhiều bia đá, hoành phi câu đối quý thời Lê - Nguyễn.", icon: "⛩️" },
       { name: "Làng nghề mộc mỹ nghệ Tề Lỗ & Đồng Văn", category: "Làng nghề truyền thống", desc: "Nơi các nghệ nhân chạm khắc đồ gỗ mỹ nghệ tinh xảo phục vụ khắp các tỉnh miền Bắc.", icon: "🪵" },
     ],
@@ -568,10 +568,10 @@ export const DISTRICT_DATABASE: Record<string, DistrictInfo> = {
     intro: "TP. Hòa Bình là thủ phủ xứ Mường bên dòng sông Đà hùng vĩ, nổi danh với Nhà máy Thủy điện Hòa Bình lịch sử, Tượng đài Bác Hồ và Bảo tàng Không gian Văn hóa Mường độc đáo.",
     keywords: ["tp hòa bình", "hòa bình", "hoa binh", "thành phố hòa bình", "tp hòa bình cũ", "thủy điện hòa bình", "bảo tàng mường", "giang mỗ", "sông đà"],
     attractions: [
-      { name: "Nhà máy Thủy điện Hòa Bình (Công trình thế kỷ)", category: "Công trình lịch sử", desc: "Kỳ tích chinh phục sông Đà với đập xả tràn khổng lồ, hầm tổ máy phát điện ngầm trong lòng núi và Tượng đài Bác Hồ uy nghi cao 18m.", icon: "⚡" },
-      { name: "Bảo tàng Không gian Văn hóa Mường", category: "Văn hóa dân tộc", desc: "Quần thể nhà sàn cổ tái hiện trọn vẹn đời sống văn hóa, phong tục, trang phục và công cụ lao động 4 tầng lớp xã hội Mường.", icon: "🏛️" },
+      { name: "Nhà máy Thủy điện Hòa Bình (Công trình thế kỷ)", category: "Công trình lịch sử", desc: "Kỳ tích chinh phục sông Đà với đập xả tràn khổng lồ, hầm tổ máy phát điện ngầm trong lòng núi và Tượng đài Bác Hồ uy nghi cao 18m.", location: "phường Thống Nhất, tỉnh Phú Thọ", icon: "⚡" },
+      { name: "Bảo tàng Không gian Văn hóa Mường", category: "Văn hóa dân tộc", desc: "Quần thể nhà sàn cổ tái hiện trọn vẹn đời sống văn hóa, phong tục, trang phục và công cụ lao động 4 tầng lớp xã hội Mường.", location: "Số 202 đường Tây Tiến, phường Thái Bình, tỉnh Phú Thọ", icon: "🏛️" },
       { name: "Bản du lịch văn hóa Giang Mỗ (dưới chân núi Mỗ)", category: "Bản làng cộng đồng", desc: "Hơn 100 nếp nhà sàn Mường cổ nguyên vẹn nép mình bên sườn núi đá vôi, trải nghiệm giã gạo nhảy sạp và nghe hát sắc bùa.", icon: "🏡" },
-      { name: "Đền Chúa Thác Bờ (Cảng Thung Nai)", category: "Tâm linh linh thiêng", desc: "Nơi phụng thờ Bà chúa Thác Bờ Đinh Thị Vân giúp vua Lê Lợi dẹp loạn giữ yên bờ cõi.", icon: "⛩️" },
+      { name: "Đền Chúa Thác Bờ (Cảng Thung Nai)", category: "Tâm linh linh thiêng", desc: "Nơi phụng thờ Bà chúa Thác Bờ Đinh Thị Vân giúp vua Lê Lợi dẹp loạn giữ yên bờ cõi.", location: "xóm Săng Bờ, xã Tiền Phong, tỉnh Phú Thọ", icon: "⛩️" },
     ],
     culinary: [
       { dish: "Cá lăng & Cá chiên sông Đà nướng than hoa", desc: "Cá tươi ngon bắt từ dòng nước xiết sông Đà thịt săn giòn béo ngậy, nướng than hoa thơm lừng chấm muối ớt hạt dổi cay nồng.", places: "Nhà hàng Cá Sông Đà Hòa Bình, Bếp Mường Thái Bình (Đường Tây Tiến)" },
@@ -592,10 +592,10 @@ export const DISTRICT_DATABASE: Record<string, DistrictInfo> = {
     intro: "Mai Châu là thung lũng thơ mộng của đồng bào dân tộc Thái, nơi có những nếp nhà sàn thanh bình giữa đồng lúa bát ngát, đèo Đá Trắng mây phủ quanh năm và thiên đường săn mây Hang Kia - Pà Cò.",
     keywords: ["mai châu", "mai chau", "huyện mai châu", "mai châu cũ", "bản lác", "ban lac", "thung khe", "đèo đá trắng", "hang kia", "pà cò", "cơm lam mai châu"],
     attractions: [
-      { name: "Bản Lác 1 & Bản Lác 2 (Bản du lịch cộng đồng người Thái)", category: "Văn hóa cộng đồng", desc: "Những nếp nhà sàn gỗ cao ráo mộc mạc, đạp xe giữa thung lũng lúa xanh mướt, dệt thổ cẩm và thưởng thức múa xòe bên ánh lửa trại.", icon: "🏡" },
-      { name: "Đèo Thung Khe (Đèo Đá Trắng mây phủ quanh năm)", category: "Check-in thiên nhiên", desc: "Vách đá trắng muốt tựa tuyết phủ châu Âu quanh năm mây mù lượn lờ, điểm dừng chân ngắm trọn thung lũng Mai Châu từ trên cao.", icon: "⛰️" },
-      { name: "Điểm săn mây Hang Kia – Pà Cò", category: "Săn mây ngoạn mục", desc: "Biển mây trắng xóa bồng bềnh mỗi sớm mai ở độ cao 1.200m và chợ phiên H'Mông rực rỡ sắc màu thổ cẩm vào sáng chủ nhật.", icon: "☁️" },
-      { name: "Thác Gò Lào & Bản Pom Coọng", category: "Thiên nhiên hoang sơ", desc: "Dòng thác trắng xóa đổ giữa rừng trúc xanh rì và bản làng Pom Coọng thanh bình êm ả.", icon: "🌊" },
+      { name: "Bản Lác 1 & Bản Lác 2 (Bản du lịch cộng đồng người Thái)", category: "Văn hóa cộng đồng", desc: "Những nếp nhà sàn gỗ cao ráo mộc mạc, đạp xe giữa thung lũng lúa xanh mướt, dệt thổ cẩm và thưởng thức múa xòe bên ánh lửa trại.", location: "xã Mai Châu, tỉnh Phú Thọ", icon: "🏡" },
+      { name: "Đèo Thung Khe (Đèo Đá Trắng mây phủ quanh năm)", category: "Check-in thiên nhiên", desc: "Vách đá trắng muốt tựa tuyết phủ châu Âu quanh năm mây mù lượn lờ, điểm dừng chân ngắm trọn thung lũng Mai Châu từ trên cao.", location: "xã Mường Bi, tỉnh Phú Thọ", icon: "⛰️" },
+      { name: "Điểm săn mây Hang Kia – Pà Cò", category: "Săn mây ngoạn mục", desc: "Biển mây trắng xóa bồng bềnh mỗi sớm mai ở độ cao 1.200m và chợ phiên H'Mông rực rỡ sắc màu thổ cẩm vào sáng chủ nhật.", location: "xã Pà Cò, tỉnh Phú Thọ", icon: "☁️" },
+      { name: "Thác Gò Lào & Bản Pom Coọng", category: "Thiên nhiên hoang sơ", desc: "Dòng thác trắng xóa đổ giữa rừng trúc xanh rì và bản làng Pom Coọng thanh bình êm ả.", location: "xã Mai Châu, tỉnh Phú Thọ", icon: "🌊" },
     ],
     culinary: [
       { dish: "Cơm lam nếp nương Mai Châu & Xôi ngũ sắc", desc: "Gạo nếp nương thơm dẻo ngâm nước suối nướng trong ống tre nứa non trên than hồng chấm muối vừng ngọt bùi mê mẩn.", places: "Bếp Thái Bản Lác 1, Hợp tác xã du lịch cộng đồng Bản Lác" },
@@ -640,7 +640,7 @@ export const DISTRICT_DATABASE: Record<string, DistrictInfo> = {
     keywords: ["cao phong", "cao phong cũ", "huyện cao phong", "thung nai", "thung nai sông đà", "đền thác bờ", "cam cao phong", "động thác bờ"],
     attractions: [
       { name: "Khu du lịch lòng hồ Sông Đà Thung Nai (Vịnh Hạ Long trên núi)", category: "Kỳ quan sông hồ", desc: "Mặt hồ sông Đà mênh mông nước xanh màu ngọc bích, hàng trăm hòn đảo đá vôi bồng bềnh trong sương sớm, đi thuyền ngoạn cảnh kỳ thú.", icon: "⛵" },
-      { name: "Đền Chúa Thác Bờ & Động Thác Bờ linh thiêng", category: "Tâm linh danh thắng", desc: "Ngôi đền nổi tiếng linh thiêng bên vách đá lòng hồ, hang động lung linh kỳ ảo với hàng ngàn khối thạch nhũ muôn hình vạn trạng.", icon: "🛕" },
+      { name: "Đền Chúa Thác Bờ & Động Thác Bờ linh thiêng", category: "Tâm linh danh thắng", desc: "Ngôi đền nổi tiếng linh thiêng bên vách đá lòng hồ, hang động lung linh kỳ ảo với hàng ngàn khối thạch nhũ muôn hình vạn trạng.", location: "Xã Thung Nai, tỉnh Phú Thọ", icon: "🛕" },
       { name: "Vườn cam đồi Cao Phong bạt ngàn", category: "Nông nghiệp sinh thái", desc: "Những thung lũng cam trĩu quả vàng ươm vào mùa thu đông, du khách được tự tay hái cam và thưởng thức vị ngọt thơm ngọt lịm.", icon: "🍊" },
       { name: "Quần thể Hang động Núi Đầu Rồng", category: "Danh thắng hang động", desc: "Quần thể hang động tự nhiên với động Hoa Sơn, động Thanh Thủy mang vẻ đẹp huyền bí kỳ vĩ.", icon: "🦇" },
     ],
@@ -734,7 +734,7 @@ export const DISTRICT_DATABASE: Record<string, DistrictInfo> = {
     intro: "Lạc Sơn nằm ở trung tâm vùng Mường Vang, sở hữu danh thắng Thác Mu ba tầng nước đổ bọt trắng xóa tuyệt đẹp giữa đại ngàn và đồi cỏ Miền Đồi thảo nguyên bao la.",
     keywords: ["lạc sơn", "lac son", "huyện lạc sơn", "lạc sơn cũ", "thác mu", "thac mu", "miền đồi", "mường vang", "hang mãn nguyện"],
     attractions: [
-      { name: "Khu du lịch sinh thái Thác Mu (xã Tự Do)", category: "Thiên nhiên kỳ vĩ", desc: "Tuyệt tác thác nước 3 tầng đổ từ vách núi đá cao vút tung bọt trắng xóa, dòng suối dưới chân thác trong vắt mát lạnh giải nhiệt mùa hè.", icon: "🌊" },
+      { name: "Khu du lịch sinh thái Thác Mu (xã Tự Do)", category: "Thiên nhiên kỳ vĩ", desc: "Tuyệt tác thác nước 3 tầng đổ từ vách núi đá cao vút tung bọt trắng xóa, dòng suối dưới chân thác trong vắt mát lạnh giải nhiệt mùa hè.", location: "Xã Mường Thàng, tỉnh Phú Thọ", icon: "🌊" },
       { name: "Đồi cỏ thảo nguyên Miền Đồi", category: "Thảo nguyên check-in", desc: "Những đồi cỏ xanh ngút ngàn tựa thảo nguyên Thụy Sĩ, không gian lộng gió lý tưởng cho cắm trại ngắm sao và chụp ảnh.", icon: "🌱" },
       { name: "Hang Mãn Nguyện & Suối khoáng Vó Đùn", category: "Hang động danh thắng", desc: "Hang động nguyên sơ với thạch nhũ lung linh và dòng suối nước khoáng ấm tự nhiên chảy quanh năm.", icon: "🦇" },
     ],
@@ -757,8 +757,8 @@ export const DISTRICT_DATABASE: Record<string, DistrictInfo> = {
     intro: "Lạc Thủy nằm ở phía Đông Nam tỉnh Hòa Bình tiếp giáp Hà Nam và Ninh Bình, nổi danh với Quần thể di tích danh thắng Chùa Tiên - Đầm Đa huyền ảo và di tích Nhà máy in tiền đầu tiên của Việt Nam.",
     keywords: ["lạc thủy", "lac thuy", "huyện lạc thủy", "lạc thủy cũ", "chùa tiên", "đầm đa", "chùa tiên đầm đa", "chi nê", "nhà máy in tiền chi nê", "dê núi lạc thủy"],
     attractions: [
-      { name: "Quần thể Di tích & Danh thắng Chùa Tiên – Đầm Đa", category: "Tâm linh hang động", desc: "Quần thể hơn 20 đền chùa và hang động thạch nhũ kỳ vĩ phụng thờ Mẫu Âu Cơ, Mẫu Thượng Ngàn, Tam Tòa Thánh Mẫu thu hút hàng vạn khách hành hương.", icon: "🛕" },
-      { name: "Khu di tích Nhà máy in tiền Chi Nê", category: "Di tích lịch sử", desc: "Nơi Chính phủ Cách mạng lâm thời đặt nhà máy in đồng tiền tài chính Việt Nam đầu tiên năm 1946 tại đồn điền Chi Nê của nhà tư sản yêu nước Đỗ Đình Thiện.", icon: "🏦" },
+      { name: "Quần thể Di tích & Danh thắng Chùa Tiên – Đầm Đa", category: "Tâm linh hang động", desc: "Quần thể hơn 20 đền chùa và hang động thạch nhũ kỳ vĩ phụng thờ Mẫu Âu Cơ, Mẫu Thượng Ngàn, Tam Tòa Thánh Mẫu thu hút hàng vạn khách hành hương.", location: "thôn Lão Nội, xã Lạc Thủy, tỉnh Phú Thọ", icon: "🛕" },
+      { name: "Khu di tích Nhà máy in tiền Chi Nê", category: "Di tích lịch sử", desc: "Nơi Chính phủ Cách mạng lâm thời đặt nhà máy in đồng tiền tài chính Việt Nam đầu tiên năm 1946 tại đồn điền Chi Nê của nhà tư sản yêu nước Đỗ Đình Thiện.", location: "xã Lạc Thủy, tỉnh Phú Thọ", icon: "🏦" },
       { name: "Động Thủy Tiên & Động Tam Tòa", category: "Kỳ quan thạch nhũ", desc: "Hệ thống thạch nhũ đá vôi lung linh huyền ảo như chốn bồng lai tiên cảnh dưới lòng đất.", icon: "⛩️" },
     ],
     culinary: [

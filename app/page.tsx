@@ -2614,6 +2614,159 @@ function getLocalizedDriveTime(driveTimeStr: string, lang: LanguageCode): string
   return driveTimeStr;
 }
 
+
+export type TravelQuest = {
+  id: string;
+  title: string;
+  desc: string;
+  points: number;
+  province: string;
+  badge: string;
+  image: string;
+  task: string;
+  reward: string;
+};
+
+export const TRAVEL_CHALLENGES: TravelQuest[] = [
+  {
+    id: "quest-den-hung",
+    title: "Check-in Đền Hùng linh thiêng",
+    desc: "Viếng thăm Đền Thượng và Lăng Hùng Vương trên đỉnh Nghĩa Lĩnh, thắp nén tâm hương tri ân công đức Tổ Tiên.",
+    points: 100,
+    province: "Phú Thọ",
+    badge: "🏛️ Cội nguồn",
+    image: "/images/places/den-hung.png",
+    task: "Ghé thăm Đền Hùng",
+    reward: "+100 điểm thưởng",
+  },
+  {
+    id: "quest-long-coc",
+    title: "Săn bình minh Đồi chè Long Cốc",
+    desc: "Chụp ảnh khoảnh khắc sương sớm bảng lảng vờn quanh những ốc đảo chè xanh tròn như chiếc bát úp kỳ vĩ.",
+    points: 120,
+    province: "Phú Thọ",
+    badge: "🍵 Danh thắng",
+    image: "/images/places/long-coc.jpg",
+    task: "Check-in Đồi chè Long Cốc",
+    reward: "+120 điểm thưởng",
+  },
+  {
+    id: "quest-xuan-son",
+    title: "Trekking Vườn quốc gia Xuân Sơn",
+    desc: "Băng qua những tán rừng cổ thụ nguyên sinh, thám hiểm Hang Lạng và tận hưởng không khí 4 mùa trong 1 ngày.",
+    points: 100,
+    province: "Phú Thọ",
+    badge: "🌲 Sinh thái",
+    image: "/images/places/xuan-son.jpg",
+    task: "Check-in VQG Xuân Sơn",
+    reward: "+100 điểm thưởng",
+  },
+  {
+    id: "quest-tam-dao",
+    title: "Săn mây Cổng trời & Tam Đảo",
+    desc: "Dạo bước giữa biển mây ngàn bồng bềnh, check-in Nhà thờ đá cổ và ngắm toàn cảnh thị trấn trong sương.",
+    points: 150,
+    province: "Vĩnh Phúc",
+    badge: "⛰️ Mây ngàn",
+    image: "/images/places/tam-dao.jpg",
+    task: "Check-in Tam Đảo",
+    reward: "+150 điểm thưởng",
+  },
+  {
+    id: "quest-tay-thien",
+    title: "Chiêm bái Trúc Lâm Tây Thiên",
+    desc: "Hành hương miền đất Phật linh thiêng, vãn cảnh Đại Bảo Tháp Mandala và cầu bình an cho gia đình.",
+    points: 100,
+    province: "Vĩnh Phúc",
+    badge: "🛕 Tâm linh",
+    image: "/images/places/tay-thien.jpg",
+    task: "Check-in Tây Thiên",
+    reward: "+100 điểm thưởng",
+  },
+  {
+    id: "quest-thung-nai",
+    title: "Du thuyền Lòng hồ sông Đà Thung Nai",
+    desc: "Lướt trên làn nước ngọc bích 'Hạ Long trên cạn', chiêm bái Đền Chúa Thác Bờ và thăm Động Thác Bờ kỳ ảo.",
+    points: 120,
+    province: "Hòa Bình",
+    badge: "⛵ Non nước",
+    image: "/images/places/thung-nai-song-da.jpg",
+    task: "Check-in Thung Nai Sông Đà",
+    reward: "+120 điểm thưởng",
+  },
+  {
+    id: "quest-ban-lac",
+    title: "Đạp xe Mai Châu & Bản Lác",
+    desc: "Khám phá bản làng thanh bình của đồng bào Thái, thử trang phục thổ cẩm và thưởng thức xôi nếp nương thơm dẻo.",
+    points: 100,
+    province: "Hòa Bình",
+    badge: "🏡 Bản làng",
+    image: "/images/places/ban-lac-mai-chau.jpg",
+    task: "Check-in Bản Lác Mai Châu",
+    reward: "+100 điểm thưởng",
+  },
+  {
+    id: "quest-am-thuc",
+    title: "Thưởng thức Mỹ vị Ẩm thực Đất Tổ",
+    desc: "Nếm trọn hương vị Thịt chua Thanh Sơn cuốn lá sung, Cá lăng sông Đà nướng than hoa và Bánh tai Phú Thọ dẻo thơm.",
+    points: 80,
+    province: "Phú Thọ",
+    badge: "🍲 Ẩm thực",
+    image: "/images/food/thit-chua.jpg",
+    task: "Thưởng thức món ngon",
+    reward: "+80 điểm thưởng",
+  },
+  {
+    id: "quest-khoang-nong",
+    title: "Tắm khoáng nóng hồi phục năng lượng",
+    desc: "Trải nghiệm dòng khoáng nóng radon quý hiếm tại Thanh Thủy hoặc Kim Bôi xua tan mọi căng thẳng, mệt mỏi.",
+    points: 100,
+    province: "Phú Thọ / Hòa Bình",
+    badge: "♨️ Onsen",
+    image: "/images/places/thanh-thuy.jpg",
+    task: "Tắm suối khoáng nóng",
+    reward: "+100 điểm thưởng",
+  },
+  {
+    id: "quest-lang-nghe",
+    title: "Trải nghiệm Làng nghề cổ truyền",
+    desc: "Lắng nghe làn điệu Hát Xoan tại đình cổ Hùng Lô 300 năm hoặc trải nghiệm nặn gốm sành truyền thống Hương Canh.",
+    points: 80,
+    province: "Phú Thọ / Vĩnh Phúc",
+    badge: "🏺 Làng nghề",
+    image: "/images/places/hung-lo.jpg",
+    task: "Check-in Làng nghề",
+    reward: "+80 điểm thưởng",
+  },
+];
+
+export const TRAVEL_CHALLENGE_REWARDS = [
+  {
+    id: "rew-voucher-30k",
+    title: "Voucher Check-in 30.000đ",
+    desc: "Áp dụng giảm trực tiếp khi mua đặc sản OCOP hoặc đặt vé tham quan.",
+    cost: 150,
+    icon: "🎟️",
+    code: "DATTO10",
+  },
+  {
+    id: "rew-voucher-tour",
+    title: "Voucher Ưu Đãi Tour 15% – 20%",
+    desc: "Giảm giá đặc biệt cho tour du lịch nhóm liên tuyến 3 tỉnh Đất Tổ.",
+    cost: 250,
+    icon: "🎁",
+    code: "TOURDATTO20",
+  },
+  {
+    id: "rew-gift-ocop",
+    title: "Hộp Quà Đặc Sản OCOP 5 Sao",
+    desc: "Quà tặng gồm Trà hoa vàng Tam Đảo hoặc Hộp Thịt chua Thanh Sơn thượng hạng.",
+    cost: 400,
+    icon: "🏆",
+    code: "OCOP50K",
+  },
+];
+
 export default function Home() {
   const [activeTab, setActiveTab] = useState<Tab>("explore");
   const [savedSubTab, setSavedSubTab] = useState<SavedSubTab>("places");
@@ -3049,6 +3202,60 @@ export default function Home() {
   }, [orderList, authUser]);
 
   // Vouchers & Promotions States
+  
+  // Travel Challenge Program States (Matching User Image 2)
+  const [challengeModalOpen, setChallengeModalOpen] = useState(false);
+  const [completedChallenges, setCompletedChallenges] = useState<string[]>([]);
+  const [challengePoints, setChallengePoints] = useState<number>(0);
+  const [challengeTab, setChallengeTab] = useState<"quests" | "rewards">("quests");
+
+  useEffect(() => {
+    try {
+      const savedQ = localStorage.getItem("dat_to_completed_challenges");
+      const savedP = localStorage.getItem("dat_to_challenge_points");
+      if (savedQ) setCompletedChallenges(JSON.parse(savedQ));
+      if (savedP) setChallengePoints(Number(savedP));
+    } catch {
+      // ignore
+    }
+  }, []);
+
+  const handleToggleChallenge = (questId: string, pts: number, title: string) => {
+    let nextList: string[];
+    let nextPts = challengePoints;
+    if (completedChallenges.includes(questId)) {
+      nextList = completedChallenges.filter((id) => id !== questId);
+      nextPts = Math.max(0, nextPts - pts);
+      showToast(`Đã hoàn tác: ${title}`);
+    } else {
+      nextList = [...completedChallenges, questId];
+      nextPts = nextPts + pts;
+      showToast(`🎉 Chúc mừng! Bạn nhận được +${pts} điểm thưởng từ "${title}"!`);
+    }
+    setCompletedChallenges(nextList);
+    setChallengePoints(nextPts);
+    try {
+      localStorage.setItem("dat_to_completed_challenges", JSON.stringify(nextList));
+      localStorage.setItem("dat_to_challenge_points", String(nextPts));
+    } catch {}
+  };
+
+  const handleClaimChallengeReward = (cost: number, rewardTitle: string, voucherCode?: string) => {
+    if (challengePoints < cost) {
+      showToast(`⚠️ Bạn cần thêm ${cost - challengePoints} điểm để đổi ${rewardTitle}!`);
+      return;
+    }
+    const nextPts = challengePoints - cost;
+    setChallengePoints(nextPts);
+    try {
+      localStorage.setItem("dat_to_challenge_points", String(nextPts));
+    } catch {}
+    if (voucherCode && !savedVouchers.includes(voucherCode)) {
+      setSavedVouchers([...savedVouchers, voucherCode]);
+    }
+    showToast(`🎁 Đổi thành công ${rewardTitle}! Mã quà tặng đã được thêm vào ví voucher của bạn.`);
+  };
+
   const [vouchersModalOpen, setVouchersModalOpen] = useState(false);
   const [savedVouchers, setSavedVouchers] = useState<string[]>(["DATTO10", "OCOP50K"]);
   const [appliedVoucherCode, setAppliedVoucherCode] = useState<string | null>("DATTO10");
@@ -5432,6 +5639,115 @@ export default function Home() {
                 <span>Cuộn để khám phá</span>
                 <span className="hero-scroll-arrow">⌄</span>
               </button>
+            </div>
+          </section>
+
+          
+          {/* ========================================================================= */}
+          {/* 0. TRAVEL CHALLENGE BANNER (THỬ THÁCH DU LỊCH - THEO YÊU CẦU ẢNH 2) */}
+          {/* ========================================================================= */}
+          <section className="travel-challenge-banner" id="travel-challenge-section">
+            <div className="travel-challenge-banner__inner">
+              {/* Left Column: Title, Subtitle, Badges, CTA */}
+              <div className="travel-challenge-banner__left">
+                <div className="travel-challenge-badge-row">
+                  <span className="travel-challenge-hot-badge">🔥 HOT</span>
+                  <span className="travel-challenge-subtag">Chương trình tương tác 2026</span>
+                </div>
+                <h2 className="travel-challenge-title">
+                  Thử thách du lịch <span>🍀</span>
+                </h2>
+                <p className="travel-challenge-subtitle">
+                  Khám phá Phú Thọ – Tích điểm – Nhận quà
+                </p>
+                <div className="travel-challenge-features">
+                  <span className="travel-challenge-feat-pill">
+                    <span className="travel-challenge-feat-icon">🎯</span>
+                    <span>Hoàn thành nhiệm vụ thú vị</span>
+                  </span>
+                  <span className="travel-challenge-feat-pill">
+                    <span className="travel-challenge-feat-icon">🪙</span>
+                    <span>Tích điểm đổi quà hấp dẫn</span>
+                  </span>
+                  <span className="travel-challenge-feat-pill">
+                    <span className="travel-challenge-feat-icon">🧭</span>
+                    <span>Khám phá nhiều địa điểm độc đáo</span>
+                  </span>
+                </div>
+                <div className="travel-challenge-btn-row">
+                  <button
+                    type="button"
+                    className="travel-challenge-cta-btn"
+                    onClick={() => setChallengeModalOpen(true)}
+                  >
+                    <span>Tham gia ngay</span>
+                    <span className="travel-challenge-arrow">➔</span>
+                  </button>
+                  <span className="travel-challenge-status-note">
+                    {completedChallenges.length > 0
+                      ? `Đã hoàn thành ${completedChallenges.length}/10 nhiệm vụ (+${challengePoints}đ)`
+                      : "Tham gia ngay để nhận quà OCOP 5 sao"}
+                  </span>
+                </div>
+              </div>
+
+              {/* Right Column: Visual Journey Mockup Matching Image 2 */}
+              <div className="travel-challenge-banner__right" onClick={() => setChallengeModalOpen(true)} title="Nhấn để mở Bảng thử thách du lịch">
+                <div className="travel-challenge-visual">
+                  {/* Destination Card */}
+                  <div className="challenge-card-destination">
+                    <div className="challenge-card-dest-img" style={{ backgroundImage: "url('/images/places/den-hung.png')" }} />
+                    <div className="challenge-card-dest-info">
+                      <span className="challenge-card-dest-badge">🏛️ Cội nguồn</span>
+                      <strong className="challenge-card-dest-title">Check-in Đền Hùng</strong>
+                      <small className="challenge-card-dest-sub">Đỉnh Nghĩa Lĩnh linh thiêng</small>
+                    </div>
+                  </div>
+
+                  {/* Connecting Winding Dashed Trail */}
+                  <div className="challenge-card-trail">
+                    <svg viewBox="0 0 100 50" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ width: "100%", height: "100%" }}>
+                      <path d="M 5 40 Q 50 -10 95 25" stroke="#f97316" strokeWidth="2.6" strokeDasharray="5 4" strokeLinecap="round" />
+                      <circle cx="5" cy="40" r="4" fill="#ea580c" />
+                      <circle cx="95" cy="25" r="5" fill="#ea580c" />
+                    </svg>
+                  </div>
+
+                  {/* Smartphone / Challenge Quest Mockup */}
+                  <div className="challenge-card-phone">
+                    <div className="challenge-phone-screen">
+                      <div className="challenge-phone-notch" />
+                      <div className="challenge-phone-header">
+                        <span className="challenge-phone-title">Tiến độ</span>
+                        <span className="challenge-phone-points">🪙 +{challengePoints}đ</span>
+                      </div>
+                      <div className="challenge-phone-circle-wrap">
+                        <div className="challenge-phone-circle">
+                          <svg viewBox="0 0 36 36" className="challenge-circular-chart">
+                            <path
+                              className="challenge-circle-bg"
+                              d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
+                            />
+                            <path
+                              className="challenge-circle"
+                              strokeDasharray={`${Math.max(4, (completedChallenges.length / 10) * 100)}, 100`}
+                              d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
+                            />
+                          </svg>
+                          <div className="challenge-circle-text">
+                            <strong>{completedChallenges.length}/10</strong>
+                            <small>Nhiệm vụ</small>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="challenge-phone-gift-box">
+                        <span className="challenge-phone-gift-icon">🎁</span>
+                        <span className="challenge-phone-gift-label">Nhận quà OCOP</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </section>
 
@@ -8451,6 +8767,158 @@ function doPost(e) {
                   })}
               </div>
             )}
+          </div>
+        </div>
+      )}
+
+      
+      {/* ========================================================================= */}
+      {/* TRAVEL CHALLENGE INTERACTIVE MODAL */}
+      {/* ========================================================================= */}
+      {challengeModalOpen && (
+        <div
+          className="commerce-overlay"
+          role="presentation"
+          onMouseDown={(e) => {
+            if (e.target === e.currentTarget) setChallengeModalOpen(false);
+          }}
+        >
+          <div className="challenge-modal" role="dialog" aria-labelledby="challenge-modal-title">
+            <div className="challenge-modal-header">
+              <div className="challenge-modal-header__top">
+                <div>
+                  <span className="heritage-gold-tag">🍀 CHƯƠNG TRÌNH ĐẶC BIỆT 2026</span>
+                  <h2 id="challenge-modal-title" className="challenge-modal-title">Thử Thách Du Lịch Đất Tổ</h2>
+                  <p className="challenge-modal-desc">Khám phá 32 huyện thị 3 tỉnh Phú Thọ – Vĩnh Phúc – Hòa Bình, tích lũy điểm thưởng đổi voucher OCOP giá trị!</p>
+                </div>
+                <button
+                  type="button"
+                  className="challenge-modal-close"
+                  onClick={() => setChallengeModalOpen(false)}
+                  aria-label="Đóng"
+                >
+                  ×
+                </button>
+              </div>
+
+              {/* STATS SUMMARY BAR */}
+              <div className="challenge-stats-bar">
+                <div className="challenge-stat-item">
+                  <span className="challenge-stat-label">Tiến độ nhiệm vụ</span>
+                  <strong className="challenge-stat-value">{completedChallenges.length} / {TRAVEL_CHALLENGES.length}</strong>
+                </div>
+                <div className="challenge-stat-item">
+                  <span className="challenge-stat-label">Điểm thưởng</span>
+                  <strong className="challenge-stat-value" style={{ color: "#fb923c" }}>🪙 {challengePoints} điểm</strong>
+                </div>
+                <div className="challenge-stat-item">
+                  <span className="challenge-stat-label">Danh hiệu du khách</span>
+                  <strong className="challenge-stat-value" style={{ fontSize: "14px", color: "#6ee7b7" }}>
+                    {completedChallenges.length === 10
+                      ? "👑 Đại sứ Đất Tổ"
+                      : completedChallenges.length >= 5
+                      ? "🌟 Chiến binh Khám phá"
+                      : completedChallenges.length >= 1
+                      ? "🎒 Lữ khách Đồng hành"
+                      : "🌱 Tân thủ Khám phá"}
+                  </strong>
+                </div>
+                <div className="challenge-progress-bar-bg">
+                  <div
+                    className="challenge-progress-bar-fill"
+                    style={{ width: `${(completedChallenges.length / TRAVEL_CHALLENGES.length) * 100}%` }}
+                  />
+                </div>
+              </div>
+            </div>
+
+            {/* MODAL TABS */}
+            <div className="challenge-modal-tabs">
+              <button
+                type="button"
+                className={`challenge-tab-btn ${challengeTab === "quests" ? "is-active" : ""}`}
+                onClick={() => setChallengeTab("quests")}
+              >
+                📋 Danh sách nhiệm vụ ({TRAVEL_CHALLENGES.length})
+              </button>
+              <button
+                type="button"
+                className={`challenge-tab-btn ${challengeTab === "rewards" ? "is-active" : ""}`}
+                onClick={() => setChallengeTab("rewards")}
+              >
+                🎁 Đổi quà OCOP & Voucher ({TRAVEL_CHALLENGE_REWARDS.length})
+              </button>
+            </div>
+
+            {/* MODAL BODY */}
+            <div className="challenge-modal-body">
+              {challengeTab === "quests" ? (
+                <div className="challenge-quest-grid">
+                  {TRAVEL_CHALLENGES.map((quest) => {
+                    const isDone = completedChallenges.includes(quest.id);
+                    return (
+                      <div key={quest.id} className={`challenge-quest-card ${isDone ? "is-done" : ""}`}>
+                        <div className="challenge-quest-left">
+                          <div
+                            className="challenge-quest-thumb"
+                            style={{ backgroundImage: `url('${quest.image}')` }}
+                          />
+                          <div className="challenge-quest-details">
+                            <div className="challenge-quest-tags">
+                              <span className="challenge-quest-badge">{quest.badge}</span>
+                              <span className="challenge-quest-province">• {quest.province}</span>
+                            </div>
+                            <h4 className="challenge-quest-title">{quest.title}</h4>
+                            <p className="challenge-quest-desc">{quest.desc}</p>
+                          </div>
+                        </div>
+                        <div className="challenge-quest-right">
+                          <span className="challenge-quest-points">+{quest.points}đ</span>
+                          <button
+                            type="button"
+                            className={`challenge-checkin-btn ${isDone ? "challenge-checkin-btn--done" : "challenge-checkin-btn--todo"}`}
+                            onClick={() => handleToggleChallenge(quest.id, quest.points, quest.title)}
+                          >
+                            {isDone ? "✓ Đã hoàn thành" : "Check-in ngay 📍"}
+                          </button>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              ) : (
+                <div className="challenge-reward-grid">
+                  {TRAVEL_CHALLENGE_REWARDS.map((rew) => {
+                    const canClaim = challengePoints >= rew.cost;
+                    return (
+                      <div key={rew.id} className="challenge-reward-card">
+                        <div>
+                          <div className="challenge-reward-top">
+                            <span className="challenge-reward-icon">{rew.icon}</span>
+                            <span className="challenge-reward-cost">{rew.cost} điểm</span>
+                          </div>
+                          <h4 className="challenge-reward-title">{rew.title}</h4>
+                          <p className="challenge-reward-desc">{rew.desc}</p>
+                        </div>
+                        <button
+                          type="button"
+                          className={`challenge-reward-btn ${canClaim ? "challenge-reward-btn--can" : "challenge-reward-btn--locked"}`}
+                          onClick={() => {
+                            if (canClaim) {
+                              handleClaimChallengeReward(rew.cost, rew.title, rew.code);
+                            } else {
+                              showToast(`Cần thêm ${rew.cost - challengePoints} điểm để mở khóa phần quà này!`);
+                            }
+                          }}
+                        >
+                          {canClaim ? "🎁 Đổi quà ngay" : `Cần thêm ${rew.cost - challengePoints}đ`}
+                        </button>
+                      </div>
+                    );
+                  })}
+                </div>
+              )}
+            </div>
           </div>
         </div>
       )}
