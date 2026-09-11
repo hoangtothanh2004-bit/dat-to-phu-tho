@@ -2726,6 +2726,7 @@ export type ServiceItem = {
   note: string;
   address: string;
   phone?: string;
+  image?: string;
 };
 
 export const comprehensiveServices: ServiceItem[] = [

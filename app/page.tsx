@@ -67,6 +67,7 @@ type NearItem = {
   address?: string;
   phone?: string;
   place?: Place;
+  image?: string;
 };
 
 type SearchSuggestion =
@@ -3540,17 +3541,29 @@ export default function Home() {
     const destinationItems = places.map((place) => ({
       id: `place-${place.id}`, name: place.shortName, type: "Điểm đến", icon: "⌖", province: place.region, lat: place.lat, lng: place.lng,
       note: `${place.bestTime} · ${place.category}`, address: place.location, place,
+      image: place.image,
     }));
-    const serviceItems = comprehensiveServices.map((item) => ({ ...item }));
+    const serviceItems = comprehensiveServices.map((item) => {
+      let defaultImage = "/images/services/gas-station.jpg";
+      if (item.type === "Trạm xăng") defaultImage = "/images/services/gas-station.jpg";
+      else if (item.type === "Bãi đỗ xe") defaultImage = "/images/services/parking-lot.jpg";
+      else if (item.type === "Y tế") defaultImage = "/images/services/medical-center.jpg";
+      else if (item.type === "Trạm sạc EV") defaultImage = "/images/services/ev-charging.jpg";
+      else if (item.type === "Cứu hộ") defaultImage = "/images/services/traffic-rescue.jpg";
+      else if (item.type === "ATM") defaultImage = "/images/services/atm-kiosk.jpg";
+      return { ...item, image: item.image || defaultImage };
+    });
     const restaurantItems = places.flatMap((place, placeIndex) => place.restaurants.slice(0, 2).map((item, itemIndex) => ({
       id: `eat-${place.id}-${itemIndex}`, name: item.name, type: "Ăn uống", icon: "♨", province: place.region,
       lat: place.lat + (itemIndex + 1) * 0.0015, lng: place.lng + ((placeIndex % 2 ? -1 : 1) * (itemIndex + 1) * 0.0018),
       note: `${item.note} · ${item.hours}`, address: item.address, phone: item.phone, place,
+      image: place.image || "/images/food/thit-chua.jpg",
     })));
     const stayItems = places.flatMap((place, placeIndex) => place.stays.slice(0, 2).map((item, itemIndex) => ({
       id: `stay-${place.id}-${itemIndex}`, name: item.name, type: "Lưu trú", icon: "⌂", province: place.region,
       lat: place.lat - (itemIndex + 1) * 0.0014, lng: place.lng + ((placeIndex % 2 ? 1 : -1) * (itemIndex + 1) * 0.0016),
       note: `${item.note} · ${item.hours}`, address: item.address, phone: item.phone, place,
+      image: place.image || "/images/places/ban-lac-mai-chau.jpg",
     })));
     return [...destinationItems, ...restaurantItems, ...stayItems, ...serviceItems];
   }, []);
@@ -5727,9 +5740,22 @@ export default function Home() {
       {/* TAB 2: LỊCH TRÌNH (TRIP - TOUR GUIDE) */}
       {activeTab === "trip" && (
         <section className="inner-page trip-page">
-          <div className="inner-page__intro inner-page__intro--compact">
-            <h1>{t.tripPageTitle1}<br /><em>{t.tripPageTitle2}</em></h1>
-            <p>{t.tripPageDesc}</p>
+          <div className="inner-page__intro inner-page__intro--compact trip-hero-intro">
+            <div className="trip-hero-badge">
+              <span className="trip-hero-badge__dot" />
+              <span>✨ TRỢ LÝ THIẾT KẾ LỊCH TRÌNH THÔNG MINH · LIÊN KẾT 3 TỈNH</span>
+            </div>
+            <h1 className="trip-hero-title">
+              <span className="trip-hero-title__primary">{t.tripPageTitle1}</span>
+              <span className="trip-hero-title__accent">{t.tripPageTitle2}</span>
+            </h1>
+            <div className="trip-hero-pillars">
+              <span className="trip-pillar-chip"><i className="trip-pillar-chip__icon">🏛️</i> Lộ trình tham quan</span>
+              <span className="trip-pillar-chip"><i className="trip-pillar-chip__icon">🍲</i> Món ngon đặc sản</span>
+              <span className="trip-pillar-chip"><i className="trip-pillar-chip__icon">🛏️</i> Điểm nghỉ dưỡng</span>
+              <span className="trip-pillar-chip"><i className="trip-pillar-chip__icon">🚗</i> Phương tiện & thời gian</span>
+            </div>
+            <p className="trip-hero-desc">{t.tripPageDesc}</p>
           </div>
 
           <div className="builder-toggle-strip">
@@ -6193,10 +6219,16 @@ export default function Home() {
           <div className="near-header">
             <div>
               <span className="kicker">{t.nearKicker}</span>
-              <h1>{t.nearTitle1}<br /><em>{t.nearTitle2}</em></h1>
+              <h1>{t.nearTitle1}<br /><em className="near-title-highlight">{t.nearTitle2}</em></h1>
             </div>
             <div className="near-location-card">
-              <span className="pulse-dot" />
+              <div className="location-pin-icon-wrap" aria-hidden="true">
+                <svg className="location-pin-svg" viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" fill="#cf4d38" stroke="#cf4d38" />
+                  <circle cx="12" cy="10" r="3" fill="#ffffff" stroke="#ffffff" />
+                </svg>
+                <span className="pulse-radar-ring" />
+              </div>
               <p>
                 <b>{locationMessage}</b>
                 <small>{position ? `${position.lat.toFixed(4)}, ${position.lng.toFixed(4)}` : t.nearAllowLocation}</small>
@@ -6222,19 +6254,20 @@ export default function Home() {
 
             <div className="service-tabs">
               {[
-                { id: "Tất cả", label: t.provAll },
-                { id: "Trạm xăng", label: t.nearServiceGasStation },
-                { id: "Bãi đỗ xe", label: t.nearServiceParking },
-                { id: "Y tế", label: t.nearServiceMedical },
-                { id: "ATM", label: t.nearServiceATM },
-                { id: "Trạm sạc EV", label: t.nearServiceEV },
-                { id: "Cứu hộ", label: t.nearServiceRescue },
-                { id: "Điểm đến", label: t.nearServiceDestination },
-                { id: "Ăn uống", label: t.nearServiceFood },
-                { id: "Lưu trú", label: t.nearServiceStay },
+                { id: "Tất cả", label: t.provAll, icon: "🧭" },
+                { id: "Trạm xăng", label: t.nearServiceGasStation, icon: "⛽" },
+                { id: "Bãi đỗ xe", label: t.nearServiceParking, icon: "🅿️" },
+                { id: "Y tế", label: t.nearServiceMedical, icon: "🏥" },
+                { id: "ATM", label: t.nearServiceATM, icon: "🏧" },
+                { id: "Trạm sạc EV", label: t.nearServiceEV, icon: "⚡" },
+                { id: "Cứu hộ", label: t.nearServiceRescue, icon: "🛟" },
+                { id: "Điểm đến", label: t.nearServiceDestination, icon: "📍" },
+                { id: "Ăn uống", label: t.nearServiceFood, icon: "🍜" },
+                { id: "Lưu trú", label: t.nearServiceStay, icon: "🏨" },
               ].map((item) => (
                 <button key={item.id} className={serviceFilter === item.id ? "is-active" : ""} onClick={() => setServiceFilter(item.id)}>
-                  {item.label}
+                  <span className="service-tab-icon">{item.icon}</span>
+                  <span>{item.label}</span>
                 </button>
               ))}
             </div>
@@ -6308,9 +6341,12 @@ export default function Home() {
                 const distance = position ? formatDistance(haversine(position.lat, position.lng, item.lat, item.lng)) : "—";
                 return (
                   <article key={item.id} className={selectedNearItem?.id === item.id ? "is-active" : ""}>
-                    <span className="service-icon">{item.icon}</span>
+                    <div className="service-thumb-wrap">
+                      <img className="service-thumb" src={item.image || "/images/services/gas-station.jpg"} alt={item.name} loading="lazy" onError={handleImageError} />
+                      <span className="service-type-badge">{item.icon}</span>
+                    </div>
                     <button className="service-main" onClick={() => setSelectedNearItemId(item.id)}>
-                      <span>{item.type}{item.province ? ` · ${item.province}` : ""}</span>
+                      <span className="service-main__meta">{item.type}{item.province ? ` · ${item.province}` : ""}</span>
                       <b>{item.name}</b>
                       <small>{item.address || item.note}</small>
                     </button>
