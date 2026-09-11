@@ -3630,23 +3630,27 @@ export default function Home() {
   };
 
   const handleToggleChallenge = (questId: string, pts: number, title: string) => {
-    let nextList: string[];
-    let nextPts = challengePoints;
     if (completedChallenges.includes(questId)) {
-      nextList = completedChallenges.filter((id) => id !== questId);
-      nextPts = Math.max(0, nextPts - pts);
-      showToast(`Đã hoàn tác: ${title}`);
+      const nextList = completedChallenges.filter((id) => id !== questId);
+      const nextPts = Math.max(0, challengePoints - pts);
+      setCompletedChallenges(nextList);
+      setChallengePoints(nextPts);
+      const nextProofs = { ...questProofImages };
+      delete nextProofs[questId];
+      setQuestProofImages(nextProofs);
+      try {
+        localStorage.setItem("dat_to_completed_challenges", JSON.stringify(nextList));
+        localStorage.setItem("dat_to_challenge_points", String(nextPts));
+        localStorage.setItem("dat_to_quest_proofs", JSON.stringify(nextProofs));
+      } catch {}
+      showToast(`Đã hủy check-in: ${title}`);
     } else {
-      nextList = [...completedChallenges, questId];
-      nextPts = nextPts + pts;
-      showToast(`🎉 Chúc mừng! Bạn nhận được +${pts} điểm thưởng từ "${title}"!`);
+      // Bắt buộc phải qua xác minh ảnh chụp minh chứng, không cho phép check nhanh
+      const quest = TRAVEL_CHALLENGES.find((q) => q.id === questId);
+      if (quest) {
+        handleOpenVerification(quest);
+      }
     }
-    setCompletedChallenges(nextList);
-    setChallengePoints(nextPts);
-    try {
-      localStorage.setItem("dat_to_completed_challenges", JSON.stringify(nextList));
-      localStorage.setItem("dat_to_challenge_points", String(nextPts));
-    } catch {}
   };
 
   const handleClaimChallengeReward = (cost: number, rewardTitle: string, voucherCode?: string, rewObj?: TravelReward) => {
@@ -9453,31 +9457,27 @@ function doPost(e) {
                           <div className="challenge-quest-right">
                             <span className="challenge-quest-points">+{quest.points}đ</span>
                             {isDone ? (
-                              <button
-                                type="button"
-                                className="challenge-checkin-btn challenge-checkin-btn--done"
-                                onClick={() => handleToggleChallenge(quest.id, quest.points, quest.title)}
-                              >
-                                ✓ Đã xong (Hủy)
-                              </button>
-                            ) : (
                               <div style={{ display: "flex", flexDirection: "column", gap: "6px", width: "100%" }}>
+                                <div className="quest-verified-pill">
+                                  <span>✓ Đã xác minh</span>
+                                </div>
                                 <button
                                   type="button"
-                                  className="challenge-checkin-btn challenge-checkin-btn--upload"
-                                  onClick={() => handleOpenVerification(quest)}
-                                >
-                                  📸 Tải ảnh minh chứng
-                                </button>
-                                <button
-                                  type="button"
-                                  className="challenge-checkin-quick-btn"
+                                  className="challenge-quest-cancel-btn"
                                   onClick={() => handleToggleChallenge(quest.id, quest.points, quest.title)}
-                                  title="Check-in nhanh nếu chưa có ảnh chụp"
+                                  title="Hủy kết quả check-in này"
                                 >
-                                  ⚡ Check-in nhanh
+                                  ✕ Hủy check-in
                                 </button>
                               </div>
+                            ) : (
+                              <button
+                                type="button"
+                                className="challenge-checkin-btn challenge-checkin-btn--upload"
+                                onClick={() => handleOpenVerification(quest)}
+                              >
+                                📸 Tải ảnh minh chứng
+                              </button>
                             )}
                           </div>
                         </div>
