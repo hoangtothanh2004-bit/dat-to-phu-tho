@@ -2626,7 +2626,7 @@ export default function Home() {
   // Hero V2 States matching Image 1
   const [heroSelectedMonth, setHeroSelectedMonth] = useState<number>(9);
   const [heroMonthDropdownOpen, setHeroMonthDropdownOpen] = useState<boolean>(false);
-  const [heroBgImage, setHeroBgImage] = useState<string>("/images/hero-panorama.jpg");
+  const [heroBgImage, setHeroBgImage] = useState<string>("/images/hero/hero-river-valley.jpg");
   const [serverResultIds, setServerResultIds] = useState<string[] | null>(null);
   const [isServerSearching, setIsServerSearching] = useState(false);
   
@@ -5162,32 +5162,12 @@ export default function Home() {
           <section className="hero-panoramic" style={{ backgroundImage: `url(${heroBgImage})` }}>
             <div className="hero-panoramic__overlay" />
 
-            {/* Background switcher pill in top right corner of hero */}
-            <div className="hero-panoramic__bg-switcher">
-              <span className="hero-bg-switcher-label">📷 Nền:</span>
-              {[
-                { id: "panorama", label: "Toàn cảnh 3 tỉnh", src: "/images/hero-panorama.jpg" },
-                { id: "phutho", label: "Đền Hùng (Phú Thọ)", src: "/images/places/den-hung.png" },
-                { id: "vinhphuc", label: "Tam Đảo (Vĩnh Phúc)", src: "/images/places/tam-dao.jpg" },
-                { id: "hoabinh", label: "Thung Nai (Hòa Bình)", src: "/images/places/thung-nai-song-da.jpg" },
-              ].map((bg) => (
-                <button
-                  key={bg.id}
-                  type="button"
-                  className={`hero-bg-btn ${heroBgImage === bg.src ? "is-active" : ""}`}
-                  onClick={() => setHeroBgImage(bg.src)}
-                >
-                  {bg.label}
-                </button>
-              ))}
-            </div>
-
             <div className="hero-panoramic__container">
               {/* HERO HEADINGS */}
               <div className="hero-panoramic__headings">
                 <h1 className="hero-panoramic__title">
-                  <span>ĐI ĐÚNG MÙA.</span>
-                  <span>CHẠM ĐÚNG ĐẤT TỔ.</span>
+                  <span>ĐI ĐÚNG MÙA</span>
+                  <span>CHẠM ĐÚNG ĐẤT TỔ</span>
                 </h1>
                 <p className="hero-panoramic__subtitle">
                   Khám phá Đất Tổ theo cách của bạn
