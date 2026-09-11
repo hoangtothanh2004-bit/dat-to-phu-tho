@@ -54,6 +54,7 @@ export type AiSurveyState = {
   transport?: string;
   budget?: string;
   style?: string;
+  origin?: string;
 };
 
 export type AiResponseResult = {
@@ -864,10 +865,14 @@ export function extractEntitiesFromText(text: string, prevSurvey: AiSurveyState)
     }
   }
 
-  // 2. Duration Extraction (e.g. "3 ngày 2 đêm", "2 ngày 1 đêm", "1 ngày", "3n2d", "2n1d")
+  // 2. Duration Extraction (e.g. "3 ngày 2 đêm", "2 ngày 1 đêm", "1 ngày", "3n2d", "2n1d", "2n1dd")
   // IMPORTANT: Bắt chặt chẽ để "5 người" KHÔNG BAO GIỜ bị match thành 5 ngày!
   const multiDayMatch = lower.match(/\b(\d+)\s*(?:ngày|ngay)(?:\s*(\d+)?\s*(?:đêm|dem))?\b/);
-  const shortDayNightMatch = lower.match(/\b(\d+)\s*n\s*(\d+)\s*(?:d|đ|đêm|dem)\b/);
+  // Match 2n1d, 2n1dd, 2n1đ, 2n1đđ, 2n1dem, 2n 1d, 3n2dd, 3n2d...
+  const shortDayNightMatch =
+    lower.match(/\b(\d+)\s*n\s*(\d+)\s*(?:d+|đ+|dd+|đđ+|đêm|dem)\b/i) ||
+    lower.match(/\b(\d+)n(\d+)[dđ]+/i) ||
+    lower.match(/\b(\d+)\s*(?:ngày|ngay)\s*(\d+)?\s*(?:đêm|dem|d+|đ+)/i);
   // Chỉ match 'n' nếu ngay sau đó KHÔNG PHẢI là chữ cái (nhất là 'g' trong người, hoặc 'k', 'b', 'th')
   const shortDayOnlyMatch = lower.match(/\b(\d+)\s*n\b(?!\s*(?:g|kh|b|th|v|c))/);
 
@@ -969,6 +974,226 @@ export function extractEntitiesFromText(text: string, prevSurvey: AiSurveyState)
   return { survey: nextSurvey, extractedAny, destinationMatched };
 }
 
+export type RouteInquiry = {
+  originName: string;
+  originDistrict?: DistrictInfo;
+  destinationName: string;
+  destinationDistrict?: DistrictInfo;
+  rawText: string;
+  isAskingStops: boolean;
+};
+
+export function detectRouteInquiry(text: string): RouteInquiry | null {
+  const lower = text.toLowerCase();
+
+  const cleanPlace = (str: string) => {
+    return str
+      .split(/(?:\s+thì\s+|\s+thi\s+|\s+có\s+|\s+co\s+|\s+xây\s+|\s+xay\s+|\s+làm\s+|\s+lam\s+|\s+lên\s+|\s+len\s+|\s+cho\s+|\s+trong\s+|\s+với\s+|\s+voi\s+|\s+được\s+|\s+duoc\s+|\s+nhé\s+|\s+nhe\s+|\s+giúp\s+|\s+giup\s+|\s+tầm\s+|\s+khoảng\s+|\s+\d+\s*(?:ngày|ngay|n|d|đ)|,|\.|\?|!)/i)[0]
+      .trim();
+  };
+
+  const patterns = [
+    /từ\s+([a-zà-ỹ0-9\s]+?)\s+(?:lên|đến|đi|sang|về|tới|-|qua)\s+([a-zà-ỹ0-9\s]+?)(?:,|\.|\s+xây|\s+lên|\s+cho|\s+lịch|\s+co|\s+2n|\s+1n|\s+3n|\s+hãy|$)/i,
+    /(?:tôi\s+)?ở\s+([a-zà-ỹ0-9\s]+?)[,\s]+(?:tôi\s+)?muốn\s+(?:khám phá|du lịch|đi|lên lịch trình)\s+(?:từ\s+[a-zà-ỹ0-9\s]+?\s+)?(?:lên|đến|đi|sang|về|tới)\s+([a-zà-ỹ0-9\s]+?)(?:,|\.|\s+xây|\s+lên|\s+cho|\s+lịch|\s+co|\s+2n|\s+1n|\s+3n|\s+hãy|$)/i,
+    /lịch trình\s+(?:từ\s+)?([a-zà-ỹ0-9\s]+?)\s+(?:lên|đến|đi|sang|về|tới|-)\s+([a-zà-ỹ0-9\s]+?)(?:,|\.|\s+xây|\s+lên|\s+cho|\s+lịch|\s+co|\s+2n|\s+1n|\s+3n|\s+hãy|$)/i,
+  ];
+
+  let rawOrigin = "";
+  let rawDest = "";
+
+  for (const p of patterns) {
+    const m = lower.match(p);
+    if (m && m[1] && m[2]) {
+      rawOrigin = cleanPlace(m[1]);
+      rawDest = cleanPlace(m[2]);
+      break;
+    }
+  }
+
+  if (!rawOrigin && !rawDest) {
+    const liveInMatch = lower.match(/(?:tôi\s+)?ở\s+([a-zà-ỹ0-9\s]{2,20})[,\s]+.*?khám phá.*?([a-zà-ỹ0-9\s]{2,20})/i);
+    if (liveInMatch && liveInMatch[1] && liveInMatch[2]) {
+      rawOrigin = cleanPlace(liveInMatch[1]);
+      rawDest = cleanPlace(liveInMatch[2]);
+    }
+  }
+
+  if (!rawOrigin && !rawDest) return null;
+
+  const originDist = findDistrictByQuery(rawOrigin);
+  const destDist = findDistrictByQuery(rawDest);
+
+  if (!originDist && !destDist) return null;
+
+  const isAskingStops =
+    lower.includes("dừng chân") ||
+    lower.includes("dung chan") ||
+    lower.includes("điểm dừng") ||
+    lower.includes("ngắm cảnh") ||
+    lower.includes("ngam canh") ||
+    lower.includes("ăn uống") ||
+    lower.includes("an uong") ||
+    lower.includes("trên đường") ||
+    lower.includes("dọc đường") ||
+    lower.includes("lộ trình") ||
+    lower.includes("lịch trình") ||
+    lower.includes("khám phá");
+
+  return {
+    originName: originDist?.name || (rawOrigin ? rawOrigin.charAt(0).toUpperCase() + rawOrigin.slice(1) : "Điểm xuất phát"),
+    originDistrict: originDist,
+    destinationName: destDist?.name || (rawDest ? rawDest.charAt(0).toUpperCase() + rawDest.slice(1) : "Điểm đến"),
+    destinationDistrict: destDist,
+    rawText: text,
+    isAskingStops,
+  };
+}
+
+function handleRouteJourneyInquiry(
+  route: RouteInquiry,
+  survey: AiSurveyState,
+  userName?: string,
+  userText?: string
+): AiResponseResult {
+  const finalDays = survey.durationDays && survey.durationDays >= 1 ? survey.durationDays : 2;
+  const finalNights = survey.durationNights !== undefined
+    ? survey.durationNights
+    : (finalDays > 1 ? finalDays - 1 : 0);
+  const finalTravelers = survey.travelers || 2;
+  const finalTransport = survey.transport || "Ô tô riêng / Xe máy";
+  const userGreeting = userName ? `Chào **${userName}**! ` : "Dạ chào bạn! ";
+  const nightText = finalNights > 0 ? ` ${finalNights} đêm` : " trong ngày";
+
+  const lower = (userText || route.rawText).toLowerCase();
+  const isThanhSonRoute =
+    route.destinationDistrict?.id === "thanh-son" ||
+    route.destinationDistrict?.id === "tan-son" ||
+    lower.includes("thanh sơn") ||
+    lower.includes("thanh son") ||
+    lower.includes("long cốc") ||
+    lower.includes("long coc");
+
+  let routeText = "";
+  let anchorId = "district-thanh-son";
+  let selectedIds = ["district-thanh-son", "long-coc", "den-hung"];
+  let itineraryTitle = `Lộ trình ${route.originName} ➔ ${route.destinationName} (${finalDays}N${finalNights > 0 ? `${finalNights}Đ` : ""})`;
+  let itinerarySubtitle = `Điểm dừng ngắm cảnh, thưởng thức đặc sản & khám phá trọn vẹn cung đường Đất Tổ`;
+
+  if (isThanhSonRoute) {
+    anchorId = "district-thanh-son";
+    selectedIds = ["district-thanh-son", "long-coc", "den-hung"];
+    itineraryTitle = `Lộ trình ${route.originName} ➔ Thanh Sơn – Long Cốc (${finalDays}N${finalNights > 0 ? `${finalNights}Đ` : ""})`;
+    itinerarySubtitle = `Dừng chân Cầu Phong Châu, Thác Chòi, thưởng thức Thịt chua Nghị Thịnh & săn mây đồi chè Long Cốc`;
+
+    routeText =
+      `${userGreeting}Tuyến đường khám phá từ **${route.originName}** lên **${route.destinationName}** (kết nối Đồi chè Long Cốc & VQG Xuân Sơn) dài khoảng **48 – 55 km** (~1h15p di chuyển ô tô hoặc xe máy theo tuyến QL32C qua cầu Phong Châu nối QL32). Đây là cung đường du lịch tuyệt đẹp để bạn vừa ngắm cảnh trung du, vừa dừng chân thưởng thức trọn vẹn ẩm thực Đất Tổ!\n\n` +
+      `Dưới đây là gợi ý chi tiết các **điểm dừng chân ngắm cảnh & ăn uống nổi bật nhất** trên hành trình:\n\n` +
+      `---\n\n` +
+      `### 🛑 1. Các Điểm Dừng Chân Ngắm Cảnh & Check-in Trên Đường Đi\n` +
+      `1. 🌉 **Km 15 – 20: Cầu Phong Châu & Bến sông Hồng (Lâm Thao – Tam Nông)**:\n` +
+      `   - Dừng chân ngắm toàn cảnh dòng sông Hồng cuộn sóng phù sa đỏ, check-in đồi cọ trung du xanh ngút ngàn.\n` +
+      `   - *(Tùy chọn tâm linh)*: Ghé thăm Đền Lăng Sương (xã Trung Nghĩa, Thanh Thủy - quê mẹ Âu Cơ linh thiêng bên bờ sông Đà xanh ngắt) hoặc Làng cổ Hùng Lô nghe Hát Xoan.\n` +
+      `2. 🏞️ **Km 45 – 50: Thác Chòi nguyên sơ (xã Cự Thắng, Thanh Sơn)**:\n` +
+      `   - Dòng thác trong vắt đổ qua những phiến đá phẳng lì giữa đại ngàn nguyên sinh, điểm dừng chân lý tưởng để nghỉ ngơi ngắm cảnh, tắm suối mát rượi và cắm trại chụp ảnh.\n` +
+      `3. 🏡 **Bản văn hóa người Mường Cự Đồng / Cự Thắng (Thanh Sơn)**:\n` +
+      `   - Chiêm ngưỡng những nếp nhà sàn gỗ cổ kính, trải nghiệm không gian sinh hoạt mộc mạc và phong tục dệt thổ cẩm của đồng bào Mường bản địa.\n` +
+      `4. 🍃 **Km 60 – 70: Đồi chè bát úp Long Cốc (Ốc đảo chè đẹp nhất Việt Nam)**:\n` +
+      `   - Nằm ngay giáp ranh Thanh Sơn, hàng trăm quả đồi chè tròn xoe nhấp nhô giữa thung lũng, buổi sớm mây sương bồng bềnh tựa chốn bồng lai tiên cảnh.\n` +
+      `5. 🌲 **Vườn quốc gia Xuân Sơn (Tân Sơn)**:\n` +
+      `   - Khám phá Hang Na kỳ vĩ, Thác Chín Tầng và những bản làng người Dao Tiền (bản Cỏi, bản Dù) mộc mạc bên suối.\n\n` +
+      `---\n\n` +
+      `### 🥢 2. Các Điểm Dừng Chân Ăn Uống & Đặc Sản Theo Từng Chặng\n` +
+      `- 🥟 **Bữa sáng tại Việt Trì (Điểm xuất phát)**:\n` +
+      `  - Thưởng thức món **Bánh tai Phú Thọ** dẻo thơm ngậy nhân thịt mỡ hành tiêu nóng hổi (Quán Bà Định, P. Tân Dân) hoặc Bún riêu cua sông Lô đậm đà.\n` +
+      `- 🥤 **Giải khát dọc đường (Ngã ba Cổ Tiết / Tam Nông)**:\n` +
+      `  - Dừng chân uống nước mía cốt dừa, nước chè xanh nương cọ mát lành giải nhiệt.\n` +
+      `- 🥩 **Bữa trưa tại Thị trấn Thanh Sơn (Thủ phủ Thịt chua Đất Tổ)**:\n` +
+      `  - **Trải nghiệm & Mua sắm Thịt chua:** Ghé 2 cơ sở OCOP trứ danh **Thịt chua Nghị Thịnh (Khu Ba Mỏ)** hoặc **Thịt chua Điệp Đào** (xem nghệ nhân Mường đóng ống nứa và ủ thính ngô truyền thống).\n` +
+      `  - **Thực đơn trưa đặc sản:** Thịt chua cuốn lá sung chấm tương ớt cay nồng, Gà đồi nấu măng chua, Cá suối nguồn chiên giòn rụm, Rêu đá suối nướng hạt dổi mắc khén, Cơm lam nếp nương.\n` +
+      `- 🍖 **Bữa tối & Tiệc nướng bản Mường (Long Cốc / Cự Thắng)**:\n` +
+      `  - Đại tiệc **Cỗ lá lợn lửng mán 7 món** bày trên lá chuối rừng thơm nức mũi, nâng chén rượu hoẵng men lá / rượu cần Mường ấm nồng bên bếp lửa bập bùng.\n` +
+      `- 🍗 **Bữa trưa Ngày 2 (Xuân Sơn)**:\n` +
+      `  - Thưởng thức **Gà chín cựa Xuân Sơn tiến Vua** nướng than hoa rắc lá chanh giòn ngọt, rau dớn rừng xào tỏi, canh măng đắng.\n` +
+      `- 🎁 **Quà đặc sản mang về:** Thịt chua ống nứa Thanh Sơn, Chè búp tím Long Cốc, Gạo nếp gà gáy Mỹ Lung.\n\n` +
+      `---\n\n` +
+      `### 📋 3. Lịch Trình Chi Tiết 2 Ngày 1 Đêm Gợi Ý\n` +
+      `- **Ngày 1 (Việt Trì ➔ Thanh Sơn ➔ Đồi chè Long Cốc)**:\n` +
+      `  - *07h00:* Thưởng thức bánh tai tại Việt Trì, khởi hành theo QL32C.\n` +
+      `  - *08h30:* Dừng chân check-in Cầu Phong Châu, ngắm cảnh và nghỉ ngơi tại Thác Chòi Cự Thắng mát rượi.\n` +
+      `  - *11h30:* Đến TT. Thanh Sơn thưởng thức đại tiệc Thịt chua Nghị Thịnh, gà đồi măng chua, cá suối.\n` +
+      `  - *14h00:* Lên đường sang Đồi chè Long Cốc check-in hoàng hôn trên ốc đảo chè bát úp.\n` +
+      `  - *18h30:* Ăn tối cỗ lá lợn lửng mán, giao lưu cồng chiêng Mường, nghỉ đêm tại Homestay nhà sàn Long Cốc (Homestay Quỳnh Nga / Homestay Đồi Chè).\n` +
+      `- **Ngày 2 (Săn mây Long Cốc ➔ VQG Xuân Sơn ➔ Về lại Việt Trì)**:\n` +
+      `  - *05h30:* Thức giấc đón bình minh và săn biển mây bồng bềnh trên đỉnh đồi chè Long Cốc.\n` +
+      `  - *08h30:* Khám phá Hang Na & Thác Chín Tầng tại VQG Xuân Sơn.\n` +
+      `  - *11h45:* Thưởng thức Gà chín cựa tiến Vua & rau dớn rừng xào tỏi tại bản Cỏi.\n` +
+      `  - *14h00:* Ghé mua thịt chua ống nứa, chè Shan tuyết làm quà.\n` +
+      `  - *16h30:* Lên xe khởi hành thong thả về lại TP. Việt Trì.\n\n` +
+      `---\n` +
+      `Em đã tính toán và thiết kế sẵn **Thẻ Lịch Trình Tương Tác** hoàn chỉnh bên dưới với dự toán chi phí, quãng đường km và bản đồ di chuyển. Bạn có thể nhấn nút để xem trực quan hoặc lưu lại nhé:`;
+  } else {
+    // Other routes or general route
+    const destName = route.destinationDistrict?.name || route.destinationName;
+    const origName = route.originDistrict?.name || route.originName;
+    const dest = route.destinationDistrict || DISTRICT_DATABASE["viet-tri"];
+    anchorId = dest?.id ? (DISTRICT_TO_ANCHOR_MAP[dest.id] || `district-${dest.id}`) : "den-hung";
+    selectedIds = [anchorId];
+
+    routeText =
+      `${userGreeting}Em đã lên kế hoạch chi tiết cho hành trình từ **${origName}** đến **${destName}** (${finalDays} ngày${nightText}) dành cho **${finalTravelers} người** đi bằng **${finalTransport}**:\n\n` +
+      `🛑 **Điểm dừng chân ngắm cảnh & check-in trên đường:**\n` +
+      dest.attractions.map((a, i) => `${i + 1}. ${a.icon} **${a.name}**: ${a.desc}`).join("\n") +
+      `\n\n🥢 **Điểm dừng chân ăn uống & đặc sản theo chặng:**\n` +
+      dest.culinary.map((c, i) => `${i + 1}. **${c.dish}**: ${c.desc} *(Địa chỉ: ${c.places})*`).join("\n") +
+      (dest.recommendedStay ? `\n\n🏨 **Lưu trú gợi ý:** ${dest.recommendedStay}` : "") +
+      `\n\nBạn có thể xem chi tiết thẻ lịch trình đã được tối ưu bên dưới:`;
+  }
+
+  const itinerary = buildItinerary({
+    anchorPlaceId: anchorId,
+    selectedPlaceIds: selectedIds,
+    district: route.destinationDistrict?.name || survey.district || "Huyện Thanh Sơn",
+    region: route.destinationDistrict?.province || survey.region || "Phú Thọ",
+    durationDays: finalDays,
+    durationNights: finalNights,
+    transport: finalTransport,
+    budget: survey.budget || "Tiêu chuẩn",
+    style: survey.style || "Văn hóa & trải nghiệm",
+    travelers: finalTravelers,
+  });
+
+  itinerary.title = itineraryTitle;
+  itinerary.subtitle = itinerarySubtitle;
+
+  const nextSurvey: AiSurveyState = {
+    ...survey,
+    origin: route.originName,
+    anchorPlaceId: anchorId,
+    destinationText: `${route.originName} ➔ ${route.destinationName}`,
+    district: route.destinationDistrict?.name,
+    region: route.destinationDistrict?.province,
+    durationDays: finalDays,
+    durationNights: finalNights,
+    travelers: finalTravelers,
+    transport: finalTransport,
+  };
+
+  const destId = route.destinationDistrict?.id || "thanh-son";
+
+  return {
+    text: routeText,
+    itinerary,
+    options: [
+      { label: "👉 Xem trên Trang Lịch Trình trực quan ➔", value: "view_trip_now", icon: "🗺️" },
+      { label: "💾 Lưu vào Lịch trình của tôi", value: "save_trip_now", icon: "⭐" },
+      { label: `🥩 Xem quán ăn & đặc sản ${route.destinationName}`, value: `explore_food_${destId}`, icon: "🍲" },
+      { label: `🏞️ Các điểm tham quan tại ${route.destinationName}`, value: `explore_spots_${destId}`, icon: "📍" },
+    ],
+    updatedSurvey: nextSurvey,
+    isCompleted: true,
+  };
+}
+
 // Master Reasoning & Dialog Engine
 export function processAiMessage(
   userText: string,
@@ -997,6 +1222,17 @@ export function processAiMessage(
 
   // 2. Entity Extraction
   const { survey, destinationMatched } = extractEntitiesFromText(trimmed, currentSurvey);
+
+  // =========================================================================
+  // 2.5. ROUTE & JOURNEY INTENT: User asks for a route from Place A to Place B
+  // (e.g. "tôi ở việt trì, tôi muốn khám phá từ việt trì lên thanh sơn, xây dựng cho tôi lịch trình 2n1dd"
+  //       "đi từ việt trì lên thanh sơn có những điểm nào dừng chân ngắm cảnh ăn uống được"
+  //       "từ hà nội đi đền hùng", "từ việt trì sang tam đảo"...)
+  // =========================================================================
+  const routeInquiry = detectRouteInquiry(trimmed);
+  if (routeInquiry) {
+    return handleRouteJourneyInquiry(routeInquiry, survey, userName, trimmed);
+  }
 
   // Identify district from query or current survey state
   const matchedDistrict =

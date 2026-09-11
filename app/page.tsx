@@ -238,8 +238,8 @@ export const UI_TEXT = {
     vouchers: "Khuyến mãi",
     searchPlaceholder: "Tìm đền chùa, danh thắng, đặc sản OCOP...",
     heroKicker: "VỀ MIỀN DI SẢN CỘI NGUỒN",
-    heroTitle1: "Đi đúng mùa.",
-    heroTitle2: "Chạm đúng Đất Tổ.",
+    heroTitle1: "Đi để khám phá.",
+    heroTitle2: "Về để nhớ.",
     heroDesc: "Khám phá trọn vẹn danh lam thắng cảnh, di sản văn hóa và ẩm thực nức tiếng của 3 tỉnh Phú Thọ – Vĩnh Phúc – Hòa Bình.",
     featuredDestCaption: "ĐIỂM ĐẾN NỔI BẬT",
     openGuideBtn: "Mở cẩm nang →",
@@ -247,7 +247,7 @@ export const UI_TEXT = {
     stampOriginSub: "DÂN TỘC",
     heritageTag1: "✦ CHƯƠNG TRÌNH ĐẶC BIỆT 2026",
     heritageTag2: "✦ DU LỊCH DI SẢN & TÍCH ĐIỂM ĐỔI QUÀ",
-    heritageTitle: "Hành Trình Về Nguồn — Khám Phá Nhận Thưởng OCOP",
+    heritageTitle: "KHÁM PHÁ ĐẤT TỔ – GOM QUÀ YÊU THƯƠNG",
     heritageDesc: "Tham gia hành trình di sản 3 tỉnh Phú Thọ – Vĩnh Phúc – Hòa Bình, check-in các điểm đến biểu tượng để tích lũy điểm thưởng và nhận ngay các voucher quà tặng đặc sản độc quyền.",
     perk1Title: "🏛️ Check-in Đền Hùng",
     perk1Desc: "Tặng ngay voucher 30.000đ khi lưu điểm đến và kích hoạt thuyết minh AI di sản.",
@@ -5689,7 +5689,7 @@ export default function Home() {
             src="/images/logo-dat-to.png"
             alt="Đất Tổ - Trợ lý du lịch thông minh"
             className="brand__full-logo-img"
-            style={{ height: "46px", width: "auto", objectFit: "contain", display: "block" }}
+            style={{ height: "65px", width: "auto", objectFit: "contain", display: "block" }}
           />
         </button>
         <nav className="desktop-nav desktop-nav--v2" aria-label={t.bottomNavAria}>
@@ -5820,8 +5820,8 @@ export default function Home() {
               {/* HERO HEADINGS */}
               <div className="hero-panoramic__headings">
                 <h1 className="hero-panoramic__title">
-                  <span>ĐI ĐÚNG MÙA</span>
-                  <span>CHẠM ĐÚNG ĐẤT TỔ</span>
+                  <span>ĐI ĐỂ KHÁM PHÁ</span>
+                  <span>VỀ ĐỂ NHỚ</span>
                 </h1>
                 <p className="hero-panoramic__subtitle">
                   Khám phá Đất Tổ theo cách của bạn
@@ -7487,7 +7487,7 @@ export default function Home() {
           <img
             src="/images/logo-dat-to.png"
             alt="Đất Tổ - Trợ lý du lịch thông minh"
-            style={{ height: "42px", width: "auto", objectFit: "contain" }}
+            style={{ height: "50px", width: "auto", objectFit: "contain" }}
           />
         </div>
         <p>{t.footerDesc}</p>
