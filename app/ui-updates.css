@@ -2853,5 +2853,388 @@
   border: 1px solid #e2e8f0;
 }
 
+/* ==========================================================================
+   8. LAYOUT CONTAINER & TYPOGRAPHY ADJUSTMENTS (DESKTOP MARGINS & COMPACT FONTS)
+   - Chừa 2 bên lấy khoảng trống (Max-width 1240px centered with side margins on desktop)
+   - Cỡ chữ nhỏ gọn, sắc nét theo chuẩn website du lịch hiện đại (Dulichviet)
+   ========================================================================== */
 
+/* 8.1 KHUNG CHÍNH CHỪA 2 BÊN LẤY KHOẢNG TRỐNG (DESKTOP CONTAINER MARGINS) */
+body {
+  background-color: #f1f4f2 !important;
+  font-size: 14.5px !important;
+  line-height: 1.58 !important;
+}
 
+@media (min-width: 1240px) {
+  .app-shell {
+    max-width: 1240px !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    background-color: #ffffff !important;
+    box-shadow: 0 0 45px rgba(18, 38, 30, 0.08) !important;
+    border-left: 1px solid rgba(24, 51, 44, 0.08) !important;
+    border-right: 1px solid rgba(24, 51, 44, 0.08) !important;
+    overflow-x: clip !important;
+  }
+
+  /* Căn chỉnh các nút trôi nổi ăn khớp với lề khung giao diện 1240px */
+  .floating-cart-bubble {
+    left: max(24px, calc((100vw - 1240px) / 2 + 18px)) !important;
+  }
+  .ai-mascot-launcher-container {
+    right: max(24px, calc((100vw - 1240px) / 2 + 18px)) !important;
+  }
+}
+
+/* 8.2 TINH CHỈNH ĐỘ RỘNG VÀ KHOẢNG ĐỆM CÁC PHÂN ĐOẠN */
+.hero-panoramic {
+  width: 100% !important;
+  max-width: 100% !important;
+  min-height: clamp(480px, 60vh, 580px) !important;
+  padding: 40px 20px 32px !important;
+}
+
+.hero-panoramic__container {
+  max-width: 960px !important;
+}
+
+.special-heritage-banner {
+  max-width: 1180px !important;
+  margin: 28px auto !important;
+  padding: 28px 32px !important;
+}
+
+.travel-challenge-banner {
+  max-width: 1180px !important;
+  margin: 24px auto !important;
+  padding: 20px 20px 8px !important;
+}
+
+.content-section {
+  max-width: 100% !important;
+  padding: 44px clamp(18px, 3.5vw, 36px) !important;
+}
+
+.category-section {
+  padding: 44px clamp(18px, 3.5vw, 36px) 38px !important;
+}
+
+.itinerary-teaser {
+  max-width: 100% !important;
+  padding: 48px clamp(18px, 3.5vw, 36px) !important;
+}
+
+.inner-page {
+  max-width: 100% !important;
+  padding: 42px clamp(18px, 3.5vw, 36px) 80px !important;
+  min-height: calc(100vh - 72px) !important;
+}
+
+.topbar--v2 {
+  height: 70px !important;
+  padding: 0 clamp(16px, 3vw, 32px) !important;
+}
+
+.brand__full-logo-img {
+  height: 40px !important;
+}
+
+/* 8.3 THU NHỎ CỠ CHỮ TOÀN BỘ TRANG (TYPOGRAPHY SCALING) */
+
+/* Hero Banner & Ô Tìm kiếm */
+.hero-panoramic__title {
+  font-size: clamp(26px, 3.2vw, 38px) !important;
+  line-height: 1.2 !important;
+  letter-spacing: 0.02em !important;
+}
+
+.hero-panoramic__subtitle {
+  font-size: 14px !important;
+  margin-top: 8px !important;
+}
+
+.hero-search-capsule {
+  width: min(620px, 92vw) !important;
+  padding: 5px 8px 5px 18px !important;
+}
+
+.hero-search-capsule input {
+  font-size: 13px !important;
+}
+
+.hero-month-btn {
+  font-size: 12.5px !important;
+}
+
+.hero-search-submit-btn {
+  font-size: 13px !important;
+  padding: 9px 18px !important;
+}
+
+.hero-category-card {
+  padding: 10px 8px !important;
+}
+
+.hero-cat-icon {
+  font-size: 20px !important;
+}
+
+.hero-cat-label {
+  font-size: 12px !important;
+}
+
+.hero-features-glass {
+  padding: 10px 16px !important;
+  gap: 16px !important;
+}
+
+.hero-feat-content strong {
+  font-size: 11.5px !important;
+}
+
+.hero-feat-content small {
+  font-size: 10.5px !important;
+}
+
+/* Tiêu đề Phân đoạn chính */
+.section-header h2,
+.content-section > h2,
+.category-section h2,
+.places-section h2,
+.local-guide h2 {
+  font-size: clamp(22px, 2.4vw, 28px) !important;
+  line-height: 1.3 !important;
+}
+
+.section-header p,
+.content-section > p {
+  font-size: 13.5px !important;
+  line-height: 1.6 !important;
+}
+
+.kicker,
+.section-header .kicker {
+  font-size: 11px !important;
+  letter-spacing: 0.12em !important;
+}
+
+/* Banner Thử Thách Du Lịch */
+.travel-challenge-title {
+  font-size: clamp(22px, 2.4vw, 28px) !important;
+}
+
+.travel-challenge-subtitle {
+  font-size: 13.5px !important;
+  margin-bottom: 16px !important;
+}
+
+.travel-challenge-feat-pill {
+  font-size: 12px !important;
+  padding: 5px 12px !important;
+}
+
+.travel-challenge-cta-btn {
+  font-size: 13px !important;
+  padding: 10px 22px !important;
+}
+
+.travel-challenge-status-note {
+  font-size: 12px !important;
+}
+
+/* Banner Voucher Di Sản */
+.special-heritage-title {
+  font-size: clamp(20px, 2.4vw, 26px) !important;
+}
+
+.special-heritage-desc {
+  font-size: 13.5px !important;
+  line-height: 1.6 !important;
+}
+
+.reward-ticket__title {
+  font-size: 15px !important;
+}
+
+.reward-ticket__desc {
+  font-size: 12.5px !important;
+  line-height: 1.55 !important;
+}
+
+.reward-ticket__badge {
+  font-size: 11px !important;
+  padding: 5px 10px !important;
+}
+
+.reward-ticket__cta {
+  font-size: 11.5px !important;
+  padding: 7px 14px !important;
+}
+
+/* Thẻ Địa Điểm, Ẩm Thực, Dịch Vụ */
+.place-card h3,
+.food-card h3,
+.directory-card h3,
+.near-card h3 {
+  font-size: 15px !important;
+  font-weight: 800 !important;
+  line-height: 1.35 !important;
+}
+
+.place-card p,
+.food-card p,
+.directory-card p,
+.near-card p {
+  font-size: 12.5px !important;
+  line-height: 1.55 !important;
+}
+
+.place-card__meta,
+.food-card__meta {
+  font-size: 11.5px !important;
+}
+
+.tag,
+.badge {
+  font-size: 11px !important;
+}
+
+/* Nút Chọn Khu Vực, Danh Mục & Mùa */
+.region-filter-label {
+  font-size: 11px !important;
+}
+
+.region-pill {
+  font-size: 12px !important;
+  padding: 5px 14px !important;
+}
+
+.category-row button {
+  min-height: 58px !important;
+  font-size: 12.5px !important;
+  gap: 8px !important;
+}
+
+.category-row button span {
+  font-size: 18px !important;
+}
+
+.season-filter button {
+  min-height: 32px !important;
+  font-size: 11.5px !important;
+  padding: 0 13px !important;
+}
+
+/* Trợ Lý Lịch Trình Teaser (Explore Tab) */
+.itinerary-teaser__copy h2 {
+  font-size: clamp(22px, 2.5vw, 30px) !important;
+}
+
+.itinerary-teaser__copy p {
+  font-size: 13.5px !important;
+}
+
+.itinerary-teaser::before {
+  font-size: 180px !important;
+}
+
+/* Tab 2: Lịch Trình (Trip) */
+.trip-hero-intro {
+  padding: clamp(20px, 2.5vw, 32px) clamp(20px, 3vw, 36px) !important;
+  gap: 28px !important;
+}
+
+.trip-hero-title__primary,
+.trip-hero-title__accent {
+  font-size: clamp(24px, 2.8vw, 36px) !important;
+}
+
+.trip-hero-desc {
+  font-size: 13.5px !important;
+  line-height: 1.6 !important;
+}
+
+.trip-pillar-chip {
+  font-size: 12px !important;
+  padding: 5px 12px !important;
+}
+
+.tour-template-card h3 {
+  font-size: 15.5px !important;
+}
+
+.tour-template-card p {
+  font-size: 12.5px !important;
+  line-height: 1.55 !important;
+}
+
+.tour-template-card__footer span {
+  font-size: 11.5px !important;
+}
+
+.tour-template-card__footer b {
+  font-size: 14px !important;
+}
+
+/* Tab 3: Gần Tôi (Near Me) */
+.near-header h1 {
+  font-size: clamp(24px, 2.8vw, 34px) !important;
+  line-height: 1.25 !important;
+}
+
+.near-location-card p b {
+  font-size: 13px !important;
+}
+
+.near-location-card p small {
+  font-size: 11.5px !important;
+}
+
+/* Tab 4: Sổ Tay Đã Lưu (Saved Notebook) */
+.inner-page__intro h1 {
+  font-size: clamp(24px, 2.8vw, 36px) !important;
+  line-height: 1.25 !important;
+}
+
+.inner-page__intro p {
+  font-size: 13.5px !important;
+  line-height: 1.6 !important;
+}
+
+.saved-subtabs button {
+  font-size: 12.5px !important;
+  padding: 8px 16px !important;
+}
+
+/* Modal Chi Tiết Điểm Đến */
+.modal-main h2,
+.place-modal h2 {
+  font-size: 20px !important;
+}
+
+.modal-description {
+  font-size: 13.5px !important;
+  line-height: 1.65 !important;
+}
+
+.fact-row span b {
+  font-size: 13px !important;
+}
+
+.fact-row span small {
+  font-size: 10.5px !important;
+}
+
+/* Chân Trang (Site Footer) */
+.site-footer {
+  padding: 40px 24px 32px !important;
+}
+
+.site-footer p {
+  font-size: 13px !important;
+}
+
+.site-footer span {
+  font-size: 11.5px !important;
+}
