@@ -46,19 +46,21 @@
 
 /* 2. TAB LỊCH TRÌNH (TRIP) - THẺ SHOWCASE BÊN PHẢI KHUNG TIÊU ĐỀ */
 .trip-hero-intro {
-  margin-bottom: 28px !important;
+  max-width: 100% !important;
+  width: 100% !important;
+  margin-bottom: 32px !important;
   position: relative !important;
-  padding: 34px clamp(20px, 3.2vw, 40px) !important;
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.96) 0%, rgba(244, 250, 247, 0.98) 100%) !important;
-  border-radius: 24px !important;
-  border: 1px solid rgba(24, 51, 44, 0.1) !important;
-  box-shadow: 0 14px 40px rgba(24, 51, 44, 0.05) !important;
+  padding: clamp(28px, 3vw, 42px) clamp(24px, 3.5vw, 48px) !important;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.98) 0%, rgba(246, 251, 248, 0.98) 100%) !important;
+  border-radius: 26px !important;
+  border: 1.5px solid rgba(24, 51, 44, 0.12) !important;
+  box-shadow: 0 16px 44px rgba(24, 51, 44, 0.06) !important;
   display: grid !important;
-  grid-template-columns: minmax(0, 1.22fr) minmax(320px, 0.98fr) !important;
-  gap: 36px !important;
-  align-items: center !important;
+  grid-template-columns: minmax(0, 1.15fr) minmax(360px, 1fr) !important;
+  gap: clamp(28px, 3.2vw, 46px) !important;
+  align-items: stretch !important;
 }
-@media (max-width: 980px) {
+@media (max-width: 1024px) {
   .trip-hero-intro {
     grid-template-columns: 1fr !important;
     gap: 26px !important;
@@ -82,11 +84,11 @@
 .trip-hero-visual__media {
   position: relative !important;
   width: 100% !important;
-  height: 280px !important;
-  border-radius: 20px !important;
+  height: 330px !important;
+  border-radius: 22px !important;
   overflow: hidden !important;
-  box-shadow: 0 18px 45px rgba(24, 51, 44, 0.12) !important;
-  border: 1.5px solid rgba(255, 255, 255, 0.85) !important;
+  box-shadow: 0 20px 48px rgba(24, 51, 44, 0.16) !important;
+  border: 2px solid rgba(255, 255, 255, 0.9) !important;
 }
 .trip-hero-visual__img {
   width: 100% !important;
@@ -1388,3 +1390,1452 @@
   color: #94a3b8;
   cursor: not-allowed;
 }
+
+/* ==========================================================================
+   CHECK-IN AI PHOTO VERIFICATION MODAL & LASER SCANNER
+   ========================================================================== */
+.checkin-verify-modal {
+  background: #ffffff;
+  border-radius: 28px;
+  max-width: 740px;
+  width: 95vw;
+  max-height: 92vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  box-shadow: 0 28px 70px rgba(16, 41, 34, 0.35);
+  animation: challengeModalPop 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+}
+
+.checkin-verify-header {
+  background: linear-gradient(135deg, #102922 0%, #1a4d3c 60%, #13392c 100%);
+  color: #ffffff;
+  padding: 22px 28px 18px;
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.checkin-verify-header h3 {
+  font-size: 20px;
+  font-weight: 850;
+  margin: 6px 0 2px;
+  color: #ffffff;
+}
+
+.checkin-verify-header p {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.82);
+  margin: 0;
+}
+
+.checkin-verify-body {
+  padding: 22px 28px;
+  overflow-y: auto;
+  max-height: calc(92vh - 120px);
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* MISSION REFERENCE BANNER */
+.checkin-benchmark-banner {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 14px 18px;
+  background: #f4faf7;
+  border: 1.5px solid #cce3d8;
+  border-radius: 18px;
+}
+
+.checkin-benchmark-thumb {
+  width: 74px;
+  height: 74px;
+  border-radius: 14px;
+  object-fit: cover;
+  flex-shrink: 0;
+  box-shadow: 0 4px 12px rgba(24, 51, 44, 0.15);
+  border: 1.5px solid #ffffff;
+}
+
+.checkin-benchmark-info {
+  flex: 1;
+}
+
+.checkin-benchmark-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  font-weight: 850;
+  color: #1b4332;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.checkin-benchmark-title {
+  font-size: 16px;
+  font-weight: 850;
+  color: #1b4332;
+  margin: 2px 0 4px;
+}
+
+.checkin-benchmark-points {
+  display: inline-block;
+  font-size: 12.5px;
+  font-weight: 900;
+  color: #ea580c;
+  background: #fff7ed;
+  padding: 3px 10px;
+  border-radius: 999px;
+  border: 1px solid #fed7aa;
+}
+
+/* UPLOAD AREA */
+.checkin-upload-zone {
+  border: 2px dashed #cbd5e1;
+  border-radius: 20px;
+  padding: 24px 20px;
+  text-align: center;
+  background: #f8fafc;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  position: relative;
+}
+
+.checkin-upload-zone:hover {
+  border-color: #1b4332;
+  background: #f0fdf4;
+}
+
+.checkin-upload-zone input[type="file"] {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  cursor: pointer;
+  width: 100%;
+  height: 100%;
+}
+
+.checkin-upload-icon {
+  font-size: 38px;
+  line-height: 1;
+  margin-bottom: 8px;
+}
+
+.checkin-upload-title {
+  font-size: 15px;
+  font-weight: 850;
+  color: #1e293b;
+  margin-bottom: 4px;
+}
+
+.checkin-upload-hint {
+  font-size: 12.5px;
+  color: #64748b;
+  margin: 0;
+}
+
+/* SAMPLE PHOTO CHOOSER */
+.checkin-samples-row {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.checkin-samples-label {
+  font-size: 11.5px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #64748b;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.checkin-samples-list {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+@media (max-width: 600px) {
+  .checkin-samples-list {
+    grid-template-columns: 1fr;
+  }
+}
+
+.checkin-sample-btn {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border-radius: 14px;
+  border: 1.5px solid #e2e8f0;
+  background: #ffffff;
+  cursor: pointer;
+  text-align: left;
+  transition: all 0.2s ease;
+}
+
+.checkin-sample-btn:hover {
+  border-color: #1b4332;
+  background: #f4faf7;
+  transform: translateY(-2px);
+}
+
+.checkin-sample-btn.is-selected {
+  border-color: #1b4332;
+  background: #eaf5f0;
+  box-shadow: 0 0 0 2px rgba(27, 67, 50, 0.2);
+}
+
+.checkin-sample-thumb {
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.checkin-sample-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.checkin-sample-name {
+  font-size: 12.5px;
+  font-weight: 800;
+  color: #1e293b;
+  line-height: 1.3;
+}
+
+.checkin-sample-tag {
+  font-size: 10.5px;
+  font-weight: 700;
+}
+
+.checkin-sample-tag--match {
+  color: #16a34a;
+}
+
+.checkin-sample-tag--fail {
+  color: #dc2626;
+}
+
+/* SCAN PREVIEW & LASER */
+.checkin-preview-box {
+  position: relative;
+  width: 100%;
+  height: 280px;
+  border-radius: 20px;
+  overflow: hidden;
+  background: #0f172a;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
+}
+
+.checkin-preview-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.checkin-laser-scan {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, transparent 0%, #10b981 50%, transparent 100%);
+  box-shadow: 0 0 18px #10b981, 0 0 35px #10b981;
+  animation: laserScanLine 2s infinite ease-in-out;
+  pointer-events: none;
+}
+
+@keyframes laserScanLine {
+  0% { top: 0%; opacity: 0.8; }
+  50% { top: 96%; opacity: 1; }
+  100% { top: 0%; opacity: 0.8; }
+}
+
+.checkin-scan-grid-overlay {
+  position: absolute;
+  inset: 0;
+  background-image: linear-gradient(rgba(16, 185, 129, 0.08) 1px, transparent 1px),
+                    linear-gradient(90deg, rgba(16, 185, 129, 0.08) 1px, transparent 1px);
+  background-size: 24px 24px;
+  pointer-events: none;
+}
+
+.checkin-scan-hud {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  background: rgba(15, 23, 42, 0.82);
+  backdrop-filter: blur(8px);
+  color: #6ee7b7;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  padding: 5px 12px;
+  border-radius: 999px;
+  border: 1px solid rgba(110, 231, 183, 0.4);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.checkin-scan-hud-pulse {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #10b981;
+  box-shadow: 0 0 8px #10b981;
+  animation: pulseScan 1s infinite alternate;
+}
+
+@keyframes pulseScan {
+  from { transform: scale(0.8); opacity: 0.6; }
+  to { transform: scale(1.3); opacity: 1; }
+}
+
+/* SCAN STATUS & PROGRESS */
+.checkin-scan-status-card {
+  padding: 16px 20px;
+  border-radius: 16px;
+  background: #f1f5f9;
+  border: 1.5px solid #cbd5e1;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.checkin-scan-status-card--success {
+  background: #f0fdf4;
+  border-color: #86efac;
+}
+
+.checkin-scan-status-card--failed {
+  background: #fef2f2;
+  border-color: #fecaca;
+}
+
+.checkin-scan-step-text {
+  font-size: 13.5px;
+  font-weight: 800;
+  color: #1e293b;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.checkin-scan-meter {
+  height: 8px;
+  border-radius: 999px;
+  background: #e2e8f0;
+  overflow: hidden;
+}
+
+.checkin-scan-meter-fill {
+  height: 100%;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #3b82f6 0%, #10b981 100%);
+  transition: width 0.3s ease;
+}
+
+/* SUCCESS BANNER */
+.checkin-congrats-box {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  background: linear-gradient(135deg, #102922 0%, #1e523f 100%);
+  color: #ffffff;
+  padding: 16px 20px;
+  border-radius: 18px;
+  border: 1.5px solid #d7ab5a;
+  box-shadow: 0 8px 24px rgba(27, 67, 50, 0.25);
+}
+
+.checkin-congrats-icon {
+  font-size: 36px;
+  line-height: 1;
+}
+
+.checkin-congrats-title {
+  font-size: 16px;
+  font-weight: 900;
+  color: #fde047;
+  margin: 0 0 2px;
+}
+
+.checkin-congrats-desc {
+  font-size: 13px;
+  color: #e2e8f0;
+  margin: 0;
+}
+
+/* ACTIONS */
+.checkin-verify-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 4px;
+}
+
+.checkin-btn-primary {
+  flex: 1;
+  padding: 13px 20px;
+  background: linear-gradient(135deg, #1b4332 0%, #2d6a4f 100%);
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 850;
+  border: 0;
+  border-radius: 14px;
+  cursor: pointer;
+  box-shadow: 0 4px 16px rgba(27, 67, 50, 0.3);
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.checkin-btn-primary:hover:not(:disabled) {
+  background: linear-gradient(135deg, #2d6a4f 0%, #40916c 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 22px rgba(27, 67, 50, 0.4);
+}
+
+.checkin-btn-primary:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.checkin-btn-reward {
+  background: linear-gradient(135deg, #ea580c 0%, #c2410c 100%);
+  box-shadow: 0 4px 16px rgba(234, 88, 12, 0.35);
+}
+
+.checkin-btn-reward:hover:not(:disabled) {
+  background: linear-gradient(135deg, #f97316 0%, #ea580c 100%);
+  box-shadow: 0 8px 22px rgba(234, 88, 12, 0.45);
+}
+
+.checkin-btn-secondary {
+  padding: 13px 20px;
+  background: #f1f5f9;
+  color: #475569;
+  font-size: 14px;
+  font-weight: 800;
+  border: 1.5px solid #cbd5e1;
+  border-radius: 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.checkin-btn-secondary:hover {
+  background: #e2e8f0;
+  color: #1e293b;
+}
+
+/* ENHANCED REWARDS GRID WITH SPECIALTY PHOTOS */
+.challenge-reward-grid--rich {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 16px;
+}
+
+.challenge-reward-rich-card {
+  border: 1.5px solid #e2e8f0;
+  background: #ffffff;
+  border-radius: 20px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
+  transition: all 0.25s ease;
+}
+
+.challenge-reward-rich-card:hover {
+  border-color: #ea580c;
+  transform: translateY(-3px);
+  box-shadow: 0 12px 28px rgba(234, 88, 12, 0.12);
+}
+
+.challenge-reward-thumb-wrap {
+  position: relative;
+  width: 100%;
+  height: 145px;
+  overflow: hidden;
+  background: #f1f5f9;
+}
+
+.challenge-reward-thumb {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+
+.challenge-reward-rich-card:hover .challenge-reward-thumb {
+  transform: scale(1.08);
+}
+
+.challenge-reward-badge-pill {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background: rgba(16, 41, 34, 0.88);
+  backdrop-filter: blur(6px);
+  color: #ffffff;
+  font-size: 10.5px;
+  font-weight: 850;
+  padding: 3px 9px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.challenge-reward-cost-tag {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  background: #ea580c;
+  color: #ffffff;
+  font-size: 12px;
+  font-weight: 900;
+  padding: 4px 10px;
+  border-radius: 8px;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.25);
+}
+
+.challenge-reward-rich-body {
+  padding: 14px 16px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  justify-content: space-between;
+}
+
+.challenge-reward-meta-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 6px;
+  font-size: 11px;
+  color: #64748b;
+  font-weight: 700;
+}
+
+.challenge-reward-title-rich {
+  font-size: 14.5px;
+  font-weight: 850;
+  color: #1e293b;
+  margin: 0 0 6px;
+  line-height: 1.35;
+}
+
+.challenge-reward-desc-rich {
+  font-size: 12px;
+  color: #64748b;
+  line-height: 1.5;
+  margin: 0 0 14px;
+}
+
+/* REDEEM SUCCESS CERTIFICATE MODAL */
+.redeem-cert-modal {
+  background: #ffffff;
+  border-radius: 26px;
+  max-width: 520px;
+  width: 92vw;
+  overflow: hidden;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.3);
+  text-align: center;
+  padding: 32px 28px;
+  animation: challengeModalPop 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+}
+
+.redeem-cert-icon {
+  font-size: 54px;
+  line-height: 1;
+  margin-bottom: 12px;
+}
+
+.redeem-cert-title {
+  font-size: 22px;
+  font-weight: 900;
+  color: #1b4332;
+  margin: 0 0 6px;
+}
+
+.redeem-cert-desc {
+  font-size: 13.5px;
+  color: #475569;
+  line-height: 1.5;
+  margin: 0 0 20px;
+}
+
+.redeem-cert-code-box {
+  background: #f8fafc;
+  border: 2px dashed #94a3b8;
+  border-radius: 16px;
+  padding: 16px;
+  margin-bottom: 20px;
+}
+
+.redeem-cert-code-label {
+  font-size: 11px;
+  font-weight: 800;
+  color: #64748b;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 6px;
+}
+
+.redeem-cert-code-val {
+  font-size: 24px;
+  font-weight: 900;
+  color: #ea580c;
+  letter-spacing: 0.12em;
+  font-family: monospace;
+}
+
+.redeem-cert-note {
+  font-size: 12px;
+  color: #94a3b8;
+  margin-top: 8px;
+}
+
+/* ==========================================================================
+   CON DẤU ĐIỆN TỬ (DIGITAL STAMP) & HỘ CHIẾU DU LỊCH
+   ========================================================================== */
+.digital-stamp {
+  position: absolute;
+  top: 10px;
+  right: 14px;
+  width: 76px;
+  height: 76px;
+  border-radius: 50%;
+  border: 2.5px dashed #b91c1c;
+  color: #b91c1c;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  transform: rotate(-12deg);
+  pointer-events: none;
+  background: rgba(254, 242, 242, 0.75);
+  box-shadow: 0 0 0 3px rgba(185, 28, 28, 0.15), inset 0 0 0 2px rgba(185, 28, 28, 0.25);
+  animation: stampDown 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: 5;
+}
+
+@keyframes stampDown {
+  0% { transform: scale(2.4) rotate(15deg); opacity: 0; }
+  60% { transform: scale(0.9) rotate(-14deg); opacity: 0.9; }
+  100% { transform: scale(1) rotate(-12deg); opacity: 1; }
+}
+
+.digital-stamp__inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  line-height: 1;
+}
+
+.digital-stamp__star {
+  font-size: 8.5px;
+  letter-spacing: 2px;
+}
+
+.digital-stamp__text {
+  font-size: 9.5px;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin: 2px 0;
+}
+
+.digital-stamp__date {
+  font-size: 8px;
+  font-weight: 800;
+  opacity: 0.85;
+}
+
+/* PASSPORT STAMPS SUMMARY BAR */
+.passport-summary-card {
+  background: linear-gradient(135deg, #102922 0%, #1e523f 100%);
+  color: #ffffff;
+  border-radius: 20px;
+  padding: 16px 20px;
+  margin-bottom: 16px;
+  border: 1.5px solid #d7ab5a;
+  box-shadow: 0 8px 24px rgba(16, 41, 34, 0.25);
+}
+
+.passport-summary-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.passport-summary-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  font-weight: 850;
+  color: #fde047;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.passport-summary-stamps {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding: 4px 2px 8px;
+}
+
+.passport-stamp-mini {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  flex-shrink: 0;
+  transition: transform 0.2s ease;
+  position: relative;
+}
+
+.passport-stamp-mini:hover {
+  transform: scale(1.1);
+}
+
+.passport-stamp-mini--done {
+  background: rgba(220, 38, 38, 0.2);
+  border: 1.5px solid #ef4444;
+  color: #fca5a5;
+  box-shadow: 0 0 8px rgba(239, 68, 68, 0.4);
+}
+
+.passport-stamp-mini--todo {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1.5px dashed rgba(255, 255, 255, 0.3);
+  color: rgba(255, 255, 255, 0.5);
+}
+
+/* ==========================================================================
+   BỘ SƯU TẬP 6 HUY HIỆU DU KHÁCH (BADGES SHOWCASE)
+   ========================================================================== */
+.badges-view-section {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+.badges-header-intro {
+  background: #f8fafc;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 18px;
+  padding: 16px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+}
+
+.badges-header-intro h4 {
+  font-size: 16px;
+  font-weight: 850;
+  color: #1e293b;
+  margin: 0 0 4px;
+}
+
+.badges-header-intro p {
+  font-size: 13px;
+  color: #64748b;
+  margin: 0;
+}
+
+.badges-count-pill {
+  padding: 8px 16px;
+  background: linear-gradient(135deg, #1b4332 0%, #2d6a4f 100%);
+  color: #fde047;
+  border-radius: 999px;
+  font-size: 13.5px;
+  font-weight: 900;
+  flex-shrink: 0;
+  box-shadow: 0 4px 12px rgba(27, 67, 50, 0.25);
+}
+
+.badge-grid-6 {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+  gap: 14px;
+}
+
+.badge-card {
+  border-radius: 20px;
+  padding: 18px 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  position: relative;
+  transition: all 0.25s ease;
+}
+
+.badge-card--unlocked {
+  background: linear-gradient(135deg, #ffffff 0%, #f4faf7 100%);
+  border: 2px solid #86efac;
+  box-shadow: 0 8px 20px rgba(16, 185, 129, 0.12);
+}
+
+.badge-card--unlocked:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 28px rgba(16, 185, 129, 0.22);
+}
+
+.badge-card--locked {
+  background: #f8fafc;
+  border: 1.5px dashed #cbd5e1;
+  opacity: 0.72;
+}
+
+.badge-icon-box {
+  width: 62px;
+  height: 62px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  font-size: 28px;
+  margin-bottom: 10px;
+  position: relative;
+}
+
+.badge-card--unlocked .badge-icon-box {
+  background: linear-gradient(135deg, #dcfce7 0%, #bbf7d0 100%);
+  box-shadow: 0 0 16px rgba(16, 185, 129, 0.35);
+}
+
+.badge-card--locked .badge-icon-box {
+  background: #e2e8f0;
+  filter: grayscale(1);
+}
+
+.badge-title {
+  font-size: 15px;
+  font-weight: 850;
+  color: #1e293b;
+  margin: 0 0 4px;
+}
+
+.badge-desc {
+  font-size: 12px;
+  color: #64748b;
+  line-height: 1.4;
+  margin: 0 0 12px;
+  flex: 1;
+}
+
+.badge-status-pill {
+  font-size: 11px;
+  font-weight: 850;
+  padding: 4px 12px;
+  border-radius: 999px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.badge-status-pill--unlocked {
+  background: #166534;
+  color: #ffffff;
+}
+
+.badge-status-pill--locked {
+  background: #e2e8f0;
+  color: #64748b;
+}
+
+/* ==========================================================================
+   BẢNG XẾP HẠNG HUY HIỆU (LEADERBOARD)
+   ========================================================================== */
+.leaderboard-section {
+  background: #ffffff;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 22px;
+  overflow: hidden;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.04);
+}
+
+.leaderboard-header {
+  background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+  color: #ffffff;
+  padding: 16px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.leaderboard-header h4 {
+  font-size: 15px;
+  font-weight: 850;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #fde047;
+}
+
+.leaderboard-user-highlight {
+  background: #f0fdf4;
+  border-bottom: 2px solid #86efac;
+  padding: 14px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 13.5px;
+}
+
+.leaderboard-user-tag {
+  background: #166534;
+  color: #ffffff;
+  font-size: 10.5px;
+  font-weight: 850;
+  padding: 3px 8px;
+  border-radius: 6px;
+  text-transform: uppercase;
+}
+
+.leaderboard-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.leaderboard-table th {
+  background: #f8fafc;
+  padding: 10px 16px;
+  font-size: 11px;
+  font-weight: 800;
+  color: #64748b;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  text-align: left;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.leaderboard-table td {
+  padding: 12px 16px;
+  font-size: 13px;
+  color: #1e293b;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.leaderboard-table tr:last-child td {
+  border-bottom: 0;
+}
+
+.leaderboard-table tr.is-current-user {
+  background: #f0fdf4;
+  font-weight: 800;
+}
+
+.leaderboard-rank-badge {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  font-size: 12px;
+  font-weight: 900;
+}
+
+.leaderboard-rank-badge--1 {
+  background: #fef08a;
+  color: #854d0e;
+  box-shadow: 0 2px 8px rgba(234, 179, 8, 0.4);
+}
+
+.leaderboard-rank-badge--2 {
+  background: #e2e8f0;
+  color: #475569;
+}
+
+.leaderboard-rank-badge--3 {
+  background: #fed7aa;
+  color: #9a3412;
+}
+
+.leaderboard-user-cell {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.leaderboard-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: #e2e8f0;
+  display: grid;
+  place-items: center;
+  font-size: 15px;
+  flex-shrink: 0;
+}
+
+/* ==========================================================================
+   3 LOẠI VOUCHER MỐC CON DẤU (MILESTONE VOUCHERS)
+   ========================================================================== */
+.milestones-vouchers-container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 28px;
+}
+
+.milestone-section-title {
+  font-size: 15px;
+  font-weight: 850;
+  color: #1e293b;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0;
+}
+
+.milestone-vouchers-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+}
+
+@media (max-width: 820px) {
+  .milestone-vouchers-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.milestone-card {
+  border-radius: 20px;
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.05);
+  transition: all 0.25s ease;
+}
+
+.milestone-card--unlocked {
+  background: linear-gradient(135deg, #ffffff 0%, #fffbeb 100%);
+  border: 2px solid #f59e0b;
+}
+
+.milestone-card--unlocked:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 28px rgba(245, 158, 11, 0.2);
+}
+
+.milestone-card--locked {
+  background: #f8fafc;
+  border: 1.5px dashed #cbd5e1;
+}
+
+.milestone-card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 10px;
+}
+
+.milestone-badge-pill {
+  font-size: 11px;
+  font-weight: 900;
+  padding: 4px 10px;
+  border-radius: 999px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.milestone-badge-pill--unlocked {
+  background: #f59e0b;
+  color: #ffffff;
+}
+
+.milestone-badge-pill--locked {
+  background: #e2e8f0;
+  color: #64748b;
+}
+
+.milestone-icon {
+  font-size: 28px;
+}
+
+.milestone-title {
+  font-size: 15px;
+  font-weight: 850;
+  color: #1e293b;
+  margin: 0 0 6px;
+  line-height: 1.35;
+}
+
+.milestone-benefit {
+  font-size: 12.5px;
+  color: #475569;
+  line-height: 1.5;
+  margin: 0 0 14px;
+}
+
+.milestone-progress-bar {
+  height: 6px;
+  background: #e2e8f0;
+  border-radius: 999px;
+  overflow: hidden;
+  margin-bottom: 12px;
+}
+
+.milestone-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #f59e0b 0%, #10b981 100%);
+  border-radius: 999px;
+  transition: width 0.3s ease;
+}
+
+.milestone-btn {
+  width: 100%;
+  padding: 10px;
+  border-radius: 12px;
+  font-size: 13px;
+  font-weight: 800;
+  cursor: pointer;
+  border: 0;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+.milestone-btn--claim {
+  background: linear-gradient(135deg, #ea580c 0%, #c2410c 100%);
+  color: #ffffff;
+  box-shadow: 0 4px 12px rgba(234, 88, 12, 0.3);
+}
+
+.milestone-btn--claim:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(234, 88, 12, 0.4);
+}
+
+.milestone-btn--saved {
+  background: #dcfce7;
+  color: #166534;
+  border: 1px solid #86efac;
+  cursor: default;
+}
+
+.milestone-btn--locked {
+  background: #e2e8f0;
+  color: #94a3b8;
+  cursor: not-allowed;
+}
+
+/* ==========================================================================
+   CHALLENGE PROOF PHOTO UPLOAD & VOUCHER EXCHANGE VIA CHECK-IN POINTS
+   ========================================================================== */
+
+/* PROOF PHOTO CALLOUT BANNER AT TOP OF QUEST LIST */
+.challenge-proof-banner {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 18px;
+  background: linear-gradient(135deg, #f0fdf4 0%, #ecfdf5 100%);
+  border: 1.5px solid #86efac;
+  border-radius: 16px;
+  margin-bottom: 18px;
+}
+
+.challenge-proof-banner__icon {
+  font-size: 26px;
+  flex-shrink: 0;
+}
+
+.challenge-proof-banner__text strong {
+  display: block;
+  font-size: 13.5px;
+  font-weight: 850;
+  color: #166534;
+  margin-bottom: 2px;
+}
+
+.challenge-proof-banner__text p {
+  margin: 0;
+  font-size: 12px;
+  color: #15803d;
+  line-height: 1.45;
+}
+
+/* PROOF STATUS ON QUEST CARDS */
+.quest-proof-status-row {
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.quest-proof-done-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11.5px;
+  font-weight: 800;
+  color: #15803d;
+  background: #dcfce7;
+  border: 1px solid #86efac;
+  padding: 3px 10px;
+  border-radius: 999px;
+}
+
+.quest-proof-view-link {
+  background: none;
+  border: 0;
+  color: #047857;
+  text-decoration: underline;
+  cursor: pointer;
+  font-size: 11px;
+  font-weight: 800;
+  padding: 0;
+}
+
+.quest-proof-direct-upload-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11.5px;
+  font-weight: 750;
+  color: #166534;
+  background: #ecfdf5;
+  border: 1.5px dashed #34d399;
+  padding: 4px 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.quest-proof-direct-upload-label:hover {
+  background: #d1fae5;
+  border-color: #059669;
+  transform: translateY(-1px);
+}
+
+.challenge-checkin-btn--upload {
+  background: linear-gradient(135deg, #15803d 0%, #16a34a 100%) !important;
+  color: #ffffff !important;
+  box-shadow: 0 4px 12px rgba(22, 163, 74, 0.3) !important;
+  border: 0 !important;
+  font-weight: 850 !important;
+}
+
+.challenge-checkin-btn--upload:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(22, 163, 74, 0.45) !important;
+}
+
+.challenge-checkin-quick-btn {
+  background: none;
+  border: 1px solid #e2e8f0;
+  color: #64748b;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 5px 8px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  width: 100%;
+  text-align: center;
+}
+
+.challenge-checkin-quick-btn:hover {
+  background: #f1f5f9;
+  color: #1e293b;
+  border-color: #cbd5e1;
+}
+
+/* VOUCHERS MODAL POINTS BANNER (IMAGE 2) */
+.voucher-points-banner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: linear-gradient(135deg, #fff7ed 0%, #ffedd5 100%);
+  border: 1.5px solid #fed7aa;
+  border-radius: 16px;
+  padding: 12px 18px;
+  margin-bottom: 20px;
+}
+
+.voucher-earn-points-btn {
+  background: #ea580c;
+  color: #ffffff;
+  border: 0;
+  font-size: 12.5px;
+  font-weight: 800;
+  padding: 8px 14px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 8px rgba(234, 88, 12, 0.25);
+}
+
+.voucher-earn-points-btn:hover {
+  background: #c2410c;
+  transform: translateY(-1px);
+}
+
+.voucher-points-cost-tag {
+  font-size: 11px;
+  font-weight: 900;
+  color: #c2410c;
+  background: #ffedd5;
+  border: 1px solid #fdba74;
+  padding: 2px 8px;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+
+.voucher-redeem-point-btn {
+  background: linear-gradient(135deg, #ea580c 0%, #d97706 100%);
+  color: #ffffff;
+  border: 0;
+  font-size: 12px;
+  font-weight: 800;
+  padding: 6px 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 6px rgba(234, 88, 12, 0.25);
+  white-space: nowrap;
+}
+
+.voucher-redeem-point-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 10px rgba(234, 88, 12, 0.35);
+}
+
+.voucher-owned-badge {
+  font-size: 11.5px;
+  font-weight: 800;
+  color: #166534;
+  background: #dcfce7;
+  border: 1px solid #86efac;
+  padding: 5px 10px;
+  border-radius: 8px;
+  display: inline-flex;
+  align-items: center;
+}
+
+/* VOUCHER EXCHANGE GRID INSIDE CHALLENGE REWARDS TAB */
+.challenge-voucher-exchange-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px;
+  margin-bottom: 28px;
+}
+
+@media (max-width: 640px) {
+  .challenge-voucher-exchange-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.challenge-voucher-exchange-card {
+  background: #ffffff;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 16px;
+  padding: 14px;
+  display: flex;
+  gap: 14px;
+  align-items: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+  transition: all 0.2s ease;
+}
+
+.challenge-voucher-exchange-card:hover {
+  border-color: #cbd5e1;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.07);
+}
+
+.challenge-voucher-discount-box {
+  background: linear-gradient(135deg, #1b4332 0%, #2d6a4f 100%);
+  color: #ffffff;
+  border-radius: 12px;
+  padding: 12px 10px;
+  text-align: center;
+  min-width: 62px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.challenge-voucher-discount-box b {
+  font-size: 18px;
+  font-weight: 900;
+  line-height: 1;
+}
+
+.challenge-voucher-discount-box small {
+  font-size: 9.5px;
+  letter-spacing: 0.1em;
+  opacity: 0.85;
+  margin-top: 4px;
+}
+
+.challenge-voucher-exchange-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.challenge-exchange-btn {
+  padding: 6px 12px;
+  border-radius: 9px;
+  font-size: 12px;
+  font-weight: 800;
+  border: 0;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.challenge-exchange-btn--active {
+  background: linear-gradient(135deg, #ea580c 0%, #c2410c 100%);
+  color: #ffffff;
+  box-shadow: 0 2px 8px rgba(234, 88, 12, 0.25);
+}
+
+.challenge-exchange-btn--active:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(234, 88, 12, 0.35);
+}
+
+.challenge-exchange-btn--disabled {
+  background: #f1f5f9;
+  color: #94a3b8;
+  cursor: not-allowed;
+  border: 1px solid #e2e8f0;
+}
+
+
+

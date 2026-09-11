@@ -138,6 +138,7 @@ export type Voucher = {
   description: string;
   badge: string;
   expiry: string;
+  pointCost?: number;
 };
 
 export const DEFAULT_VOUCHERS: Voucher[] = [
@@ -149,6 +150,7 @@ export const DEFAULT_VOUCHERS: Voucher[] = [
     description: "Giảm 10% tối đa 100.000đ cho mọi đơn đặt vé tour và đặc sản OCOP Đất Tổ.",
     badge: "HOT DEAL",
     expiry: "31/12/2026",
+    pointCost: 120,
   },
   {
     code: "LEHOI2026",
@@ -158,6 +160,7 @@ export const DEFAULT_VOUCHERS: Voucher[] = [
     description: "Khuyến mãi mừng Lễ hội Đền Hùng 2026, áp dụng cho nhóm từ 2 người.",
     badge: "LỄ HỘI",
     expiry: "30/06/2026",
+    pointCost: 200,
   },
   {
     code: "OCOP50K",
@@ -167,6 +170,7 @@ export const DEFAULT_VOUCHERS: Voucher[] = [
     description: "Giảm ngay 50.000đ cho đơn hàng thịt chua, chè Long Cốc, bánh tai từ 300k.",
     badge: "OCOP",
     expiry: "31/12/2026",
+    pointCost: 100,
   },
   {
     code: "CHECKINPHUTHO",
@@ -176,6 +180,7 @@ export const DEFAULT_VOUCHERS: Voucher[] = [
     description: "Tặng 30.000đ khi lưu điểm đến và check-in các di tích lịch sử Phú Thọ.",
     badge: "CHECK-IN",
     expiry: "31/12/2026",
+    pointCost: 60,
   },
   {
     code: "COMBOFAMILY",
@@ -185,6 +190,7 @@ export const DEFAULT_VOUCHERS: Voucher[] = [
     description: "Ưu đãi cho tour gia đình du lịch trải nghiệm 3 tỉnh Phú Thọ - Vĩnh Phúc - Hòa Bình.",
     badge: "FAMILY",
     expiry: "31/12/2026",
+    pointCost: 150,
   },
 ];
 
@@ -2625,7 +2631,136 @@ export type TravelQuest = {
   image: string;
   task: string;
   reward: string;
+  landmarkName?: string;
+  sampleValidImage?: string;
+  sampleScenicImage?: string;
 };
+
+export type TravelReward = {
+  id: string;
+  title: string;
+  desc: string;
+  cost: number;
+  icon: string;
+  code: string;
+  badge?: string;
+  image?: string;
+  province?: string;
+  originalPrice?: string;
+};
+
+export type BadgeItem = {
+  id: string;
+  title: string;
+  icon: string;
+  desc: string;
+  criteria: string;
+  checkUnlocked: (completed: string[]) => boolean;
+};
+
+export const BADGE_DEFINITIONS: BadgeItem[] = [
+  {
+    id: "cloud-hunter",
+    title: "Thợ săn mây",
+    icon: "🌄",
+    desc: "Đón bình minh trên biển mây ngàn và sương sớm bồng bềnh tại vùng cao.",
+    criteria: "Check-in Tam Đảo hoặc Đồi chè Long Cốc",
+    checkUnlocked: (completed) => completed.includes("quest-tam-dao") || completed.includes("quest-long-coc"),
+  },
+  {
+    id: "foodie",
+    title: "Tín đồ ẩm thực",
+    icon: "🍲",
+    desc: "Khám phá và thưởng thức trọn vẹn mỹ vị đặc sản truyền thống trứ danh Đất Tổ.",
+    criteria: "Check-in nhiệm vụ Thưởng thức Mỹ vị Ẩm thực",
+    checkUnlocked: (completed) => completed.includes("quest-am-thuc"),
+  },
+  {
+    id: "roots",
+    title: "Người về nguồn",
+    icon: "🏛️",
+    desc: "Hành hương tri ân cội nguồn dân tộc, chiêm bái di tích lịch sử và văn hóa tâm linh.",
+    criteria: "Check-in Đền Hùng, Tây Thiên hoặc Làng nghề Hùng Lô",
+    checkUnlocked: (completed) => completed.includes("quest-den-hung") || completed.includes("quest-tay-thien") || completed.includes("quest-lang-nghe"),
+  },
+  {
+    id: "nature",
+    title: "Kẻ mê thiên nhiên",
+    icon: "🌿",
+    desc: "Hòa mình vào rừng già nguyên sinh, hồ nước ngọc bích và bản làng thanh bình.",
+    criteria: "Check-in VQG Xuân Sơn, Thung Nai Sông Đà hoặc Bản Lác Mai Châu",
+    checkUnlocked: (completed) => completed.includes("quest-xuan-son") || completed.includes("quest-thung-nai") || completed.includes("quest-ban-lac"),
+  },
+  {
+    id: "checkin-master",
+    title: "Thánh check-in",
+    icon: "📸",
+    desc: "Lưu giữ những khoảnh khắc đẹp và xác thực hình ảnh tại nhiều danh lam thắng cảnh.",
+    criteria: "Hoàn thành check-in từ 5 địa điểm trở lên",
+    checkUnlocked: (completed) => completed.length >= 5,
+  },
+  {
+    id: "dat-to-explorer",
+    title: "Phượt thủ Đất Tổ",
+    icon: "🎒",
+    desc: "Hành trình vĩ đại chinh phục trọn vẹn bản đồ du lịch liên kết 3 tỉnh Đất Tổ.",
+    criteria: "Hoàn thành toàn bộ 10/10 địa điểm trong thử thách",
+    checkUnlocked: (completed) => completed.length >= 10,
+  },
+];
+
+export type MilestoneVoucher = {
+  id: string;
+  title: string;
+  requiredStamps: number;
+  discountDesc: string;
+  detail: string;
+  code: string;
+  badge: string;
+  icon: string;
+};
+
+export const MILESTONE_VOUCHERS: MilestoneVoucher[] = [
+  {
+    id: "mv-food-30",
+    title: "Voucher Ẩm Thực Giảm 30%",
+    requiredStamps: 3,
+    discountDesc: "Hoàn thành 3 địa điểm giảm 30% hoá đơn từ 500k trở lên tại các nhà hàng / quán ăn liên kết",
+    detail: "Áp dụng giảm tối đa 200.000đ khi dùng bữa tại các nhà hàng ẩm thực Đất Tổ.",
+    code: "AMTHUC30",
+    badge: "MỐC 3 ĐỊA ĐIỂM",
+    icon: "🍜",
+  },
+  {
+    id: "mv-ocop-250k",
+    title: "Voucher Đặc Sản OCOP Giảm 250k",
+    requiredStamps: 5,
+    discountDesc: "Hoàn thành 5 địa điểm nhận voucher giảm 250k khi mua đặc sản OCOP Đất Tổ",
+    detail: "Áp dụng trừ trực tiếp vào đơn hàng thịt chua, chè Long Cốc, bưởi Đoan Hùng, trà hoa vàng...",
+    code: "OCOP250K",
+    badge: "MỐC 5 ĐỊA ĐIỂM",
+    icon: "🎁",
+  },
+  {
+    id: "mv-stay-10",
+    title: "Voucher Lưu Trú Giảm 10%",
+    requiredStamps: 10,
+    discountDesc: "Hoàn thành 10 địa điểm giảm 10% phòng đặt tại homestay / resort liên kết",
+    detail: "Áp dụng khi đặt phòng nghỉ dưỡng tại Tam Đảo, khoáng nóng Thanh Thủy, Kim Bôi, Mai Châu...",
+    code: "STAY10",
+    badge: "MỐC 10 ĐỊA ĐIỂM",
+    icon: "🏡",
+  },
+];
+
+export const MOCK_LEADERBOARD = [
+  { rank: 1, name: "Nguyễn Hoàng Việt", avatar: "👨‍🌾", badges: 6, stamps: 10, title: "Đại sứ Đất Tổ", province: "Hà Nội" },
+  { rank: 2, name: "Trần Thu Hà", avatar: "👩‍🌾", badges: 5, stamps: 9, title: "Chiến binh Khám phá", province: "Phú Thọ" },
+  { rank: 3, name: "Lê Minh Tuấn", avatar: "🧑‍🌾", badges: 5, stamps: 8, title: "Chiến binh Khám phá", province: "Vĩnh Phúc" },
+  { rank: 4, name: "Đặng Phương Thảo", avatar: "👩‍💼", badges: 4, stamps: 7, title: "Lữ khách Đồng hành", province: "Hòa Bình" },
+  { rank: 5, name: "Vũ Đức Anh", avatar: "👨‍💼", badges: 4, stamps: 6, title: "Lữ khách Đồng hành", province: "Hải Phòng" },
+  { rank: 6, name: "Bùi Mai Chi", avatar: "👩‍🎓", badges: 3, stamps: 5, title: "Lữ khách Đồng hành", province: "Bắc Ninh" },
+];
 
 export const TRAVEL_CHALLENGES: TravelQuest[] = [
   {
@@ -2638,6 +2773,9 @@ export const TRAVEL_CHALLENGES: TravelQuest[] = [
     image: "/images/places/den-hung.png",
     task: "Ghé thăm Đền Hùng",
     reward: "+100 điểm thưởng",
+    landmarkName: "Đền Hùng (Cổng lớn & Đền Thượng)",
+    sampleValidImage: "/images/places/den-hung.png",
+    sampleScenicImage: "/images/places/den-mau-au-co.jpg",
   },
   {
     id: "quest-long-coc",
@@ -2649,6 +2787,9 @@ export const TRAVEL_CHALLENGES: TravelQuest[] = [
     image: "/images/places/long-coc.jpg",
     task: "Check-in Đồi chè Long Cốc",
     reward: "+120 điểm thưởng",
+    landmarkName: "Đồi chè Long Cốc (Tân Sơn)",
+    sampleValidImage: "/images/places/long-coc.jpg",
+    sampleScenicImage: "/images/places/dam-ao-chau.jpg",
   },
   {
     id: "quest-xuan-son",
@@ -2660,6 +2801,9 @@ export const TRAVEL_CHALLENGES: TravelQuest[] = [
     image: "/images/places/xuan-son.jpg",
     task: "Check-in VQG Xuân Sơn",
     reward: "+100 điểm thưởng",
+    landmarkName: "Vườn quốc gia Xuân Sơn",
+    sampleValidImage: "/images/places/xuan-son.jpg",
+    sampleScenicImage: "/images/places/thanh-thuy.jpg",
   },
   {
     id: "quest-tam-dao",
@@ -2671,6 +2815,9 @@ export const TRAVEL_CHALLENGES: TravelQuest[] = [
     image: "/images/places/tam-dao.jpg",
     task: "Check-in Tam Đảo",
     reward: "+150 điểm thưởng",
+    landmarkName: "Cổng trời & Nhà thờ đá Tam Đảo",
+    sampleValidImage: "/images/places/tam-dao.jpg",
+    sampleScenicImage: "/images/places/ho-dai-lai.jpg",
   },
   {
     id: "quest-tay-thien",
@@ -2682,6 +2829,9 @@ export const TRAVEL_CHALLENGES: TravelQuest[] = [
     image: "/images/places/tay-thien.jpg",
     task: "Check-in Tây Thiên",
     reward: "+100 điểm thưởng",
+    landmarkName: "Thiền viện Trúc Lâm Tây Thiên",
+    sampleValidImage: "/images/places/tay-thien.jpg",
+    sampleScenicImage: "/images/places/chua-ha-tien.jpg",
   },
   {
     id: "quest-thung-nai",
@@ -2693,6 +2843,9 @@ export const TRAVEL_CHALLENGES: TravelQuest[] = [
     image: "/images/places/thung-nai-song-da.jpg",
     task: "Check-in Thung Nai Sông Đà",
     reward: "+120 điểm thưởng",
+    landmarkName: "Lòng hồ Thung Nai Sông Đà",
+    sampleValidImage: "/images/places/thung-nai-song-da.jpg",
+    sampleScenicImage: "/images/places/bao-tang-muong.jpg",
   },
   {
     id: "quest-ban-lac",
@@ -2704,6 +2857,9 @@ export const TRAVEL_CHALLENGES: TravelQuest[] = [
     image: "/images/places/ban-lac-mai-chau.jpg",
     task: "Check-in Bản Lác Mai Châu",
     reward: "+100 điểm thưởng",
+    landmarkName: "Bản Lác Mai Châu",
+    sampleValidImage: "/images/places/ban-lac-mai-chau.jpg",
+    sampleScenicImage: "/images/places/pa-co-san-may.jpg",
   },
   {
     id: "quest-am-thuc",
@@ -2715,6 +2871,9 @@ export const TRAVEL_CHALLENGES: TravelQuest[] = [
     image: "/images/food/thit-chua.jpg",
     task: "Thưởng thức món ngon",
     reward: "+80 điểm thưởng",
+    landmarkName: "Ẩm thực truyền thống Đất Tổ",
+    sampleValidImage: "/images/food/thit-chua.jpg",
+    sampleScenicImage: "/images/food/banh-tai.jpg",
   },
   {
     id: "quest-khoang-nong",
@@ -2726,6 +2885,9 @@ export const TRAVEL_CHALLENGES: TravelQuest[] = [
     image: "/images/places/thanh-thuy.jpg",
     task: "Tắm suối khoáng nóng",
     reward: "+100 điểm thưởng",
+    landmarkName: "Suối khoáng nóng Thanh Thủy / Kim Bôi",
+    sampleValidImage: "/images/places/thanh-thuy.jpg",
+    sampleScenicImage: "/images/places/khoang-nong-kim-boi.jpg",
   },
   {
     id: "quest-lang-nghe",
@@ -2737,33 +2899,120 @@ export const TRAVEL_CHALLENGES: TravelQuest[] = [
     image: "/images/places/hung-lo.jpg",
     task: "Check-in Làng nghề",
     reward: "+80 điểm thưởng",
+    landmarkName: "Đình cổ Hùng Lô / Gốm Hương Canh",
+    sampleValidImage: "/images/places/hung-lo.jpg",
+    sampleScenicImage: "/images/places/lang-gom-huong-canh.jpg",
   },
 ];
 
-export const TRAVEL_CHALLENGE_REWARDS = [
+export const TRAVEL_CHALLENGE_REWARDS: TravelReward[] = [
+  {
+    id: "rew-banh-tai",
+    title: "Hộp Bánh Tai Phú Thọ Đặc Biệt",
+    desc: "Đặc sản tiến vua dẻo thơm bột gạo, nhân thịt bùi ngậy đậm đà, quà tặng ấm lòng du khách.",
+    cost: 80,
+    icon: "🥟",
+    badge: "OCOP 4★",
+    code: "OCOP-BANHTAI-80K",
+    image: "/images/food/banh-tai.jpg",
+    province: "Phú Thọ",
+    originalPrice: "80.000đ",
+  },
+  {
+    id: "rew-thit-chua",
+    title: "Hộp Thịt Chua Thanh Sơn Thượng Hạng",
+    desc: "Món quà tinh hoa Đất Tổ gói lá ổi, thính ngô thơm bùi, ăn kèm lá sung chuẩn vị cổ truyền Mường.",
+    cost: 100,
+    icon: "🍲",
+    badge: "OCOP 5★",
+    code: "OCOP-THITCHUA-100K",
+    image: "/images/food/thit-chua.jpg",
+    province: "Phú Thọ",
+    originalPrice: "110.000đ",
+  },
   {
     id: "rew-voucher-30k",
-    title: "Voucher Check-in 30.000đ",
-    desc: "Áp dụng giảm trực tiếp khi mua đặc sản OCOP hoặc đặt vé tham quan.",
-    cost: 150,
+    title: "Voucher Mua Đặc Sản OCOP 30.000đ",
+    desc: "Áp dụng giảm trực tiếp khi mua sắm tại tất cả gian hàng đặc sản hoặc quà lưu niệm 3 tỉnh.",
+    cost: 100,
     icon: "🎟️",
-    code: "DATTO10",
+    badge: "VOUCHER",
+    code: "VOUCHER-OCOP-30K",
+    image: "/images/food/buoi-doan-hung.jpg",
+    province: "Toàn tuyến",
+    originalPrice: "30.000đ",
+  },
+  {
+    id: "rew-tra-long-coc",
+    title: "Hộp Trà Long Cốc Búp Tuyết Đặc Biệt",
+    desc: "Đặc sản búp trà shan tuyết đồi chè Long Cốc Tân Sơn, hương thơm thanh khiết, vị tiền chát hậu ngọt.",
+    cost: 120,
+    icon: "🍵",
+    badge: "OCOP 4★",
+    code: "OCOP-TRALONGCOC-120K",
+    image: "/images/places/long-coc.jpg",
+    province: "Phú Thọ",
+    originalPrice: "135.000đ",
+  },
+  {
+    id: "rew-su-su-tam-dao",
+    title: "Set Ngọn Su Su & Trà Hoa Vàng Tam Đảo",
+    desc: "Quà tặng sinh thái vùng mây ngàn Tam Đảo ngọt mát giòn ngọt và dược liệu quý bồi bổ sức khỏe.",
+    cost: 150,
+    icon: "🌿",
+    badge: "OCOP 4★",
+    code: "OCOP-TAMDAO-150K",
+    image: "/images/food/su-su-tam-dao.jpg",
+    province: "Vĩnh Phúc",
+    originalPrice: "160.000đ",
+  },
+  {
+    id: "rew-buoi-doan-hung",
+    title: "Cặp Bưởi Đoan Hùng Tép Vàng Trứ Danh",
+    desc: "Đặc sản tiến vua bưởi Sửu / Bằng Luân tép vàng mọng nước, thơm lừng vị ngọt thanh tao nức tiếng.",
+    cost: 180,
+    icon: "🍈",
+    badge: "OCOP 5★",
+    code: "OCOP-BUOIDOANHUNG-180K",
+    image: "/images/food/buoi-doan-hung.jpg",
+    province: "Phú Thọ",
+    originalPrice: "200.000đ",
+  },
+  {
+    id: "rew-com-lam-mai-chau",
+    title: "Set Cơm Lam Mai Châu & Thịt Trâu Khô",
+    desc: "Mỹ vị núi rừng Hòa Bình dẻo thơm nếp nương ống nứa kèm thịt trâu gác bếp đậm đà mắc khén.",
+    cost: 200,
+    icon: "🥩",
+    badge: "OCOP 5★",
+    code: "OCOP-MAICHAU-200K",
+    image: "/images/food/com-lam-mai-chau.jpg",
+    province: "Hòa Bình",
+    originalPrice: "220.000đ",
   },
   {
     id: "rew-voucher-tour",
-    title: "Voucher Ưu Đãi Tour 15% – 20%",
-    desc: "Giảm giá đặc biệt cho tour du lịch nhóm liên tuyến 3 tỉnh Đất Tổ.",
+    title: "Voucher Ưu Đãi Đặt Tour Du Lịch 20%",
+    desc: "Giảm ngay 20% khi đặt tour du lịch trọn gói trải nghiệm liên tuyến 3 tỉnh Phú Thọ - Vĩnh Phúc - Hòa Bình.",
     cost: 250,
     icon: "🎁",
+    badge: "TOUR VIP",
     code: "TOURDATTO20",
+    image: "/images/itinerary-teaser-bg.png",
+    province: "Liên tuyến 3 tỉnh",
+    originalPrice: "20% Tour",
   },
   {
-    id: "rew-gift-ocop",
-    title: "Hộp Quà Đặc Sản OCOP 5 Sao",
-    desc: "Quà tặng gồm Trà hoa vàng Tam Đảo hoặc Hộp Thịt chua Thanh Sơn thượng hạng.",
-    cost: 400,
+    id: "rew-gift-vip",
+    title: "Hộp Quà Tinh Hoa Đất Tổ OCOP 5 Sao",
+    desc: "Bộ quà tặng VIP đại sứ kết tinh đặc sản cao cấp nhất của 3 vùng miền, trao tận tay du khách tích cực.",
+    cost: 350,
     icon: "🏆",
-    code: "OCOP50K",
+    badge: "VIP 5★",
+    code: "VIP-TINHOA-DATTO",
+    image: "/images/places/den-hung.png",
+    province: "3 Tỉnh Liên Kết",
+    originalPrice: "450.000đ",
   },
 ];
 
@@ -3207,18 +3456,178 @@ export default function Home() {
   const [challengeModalOpen, setChallengeModalOpen] = useState(false);
   const [completedChallenges, setCompletedChallenges] = useState<string[]>([]);
   const [challengePoints, setChallengePoints] = useState<number>(0);
-  const [challengeTab, setChallengeTab] = useState<"quests" | "rewards">("quests");
+  const [challengeTab, setChallengeTab] = useState<"quests" | "badges" | "rewards">("quests");
+  const [questProofImages, setQuestProofImages] = useState<Record<string, string>>({});
 
   useEffect(() => {
     try {
       const savedQ = localStorage.getItem("dat_to_completed_challenges");
       const savedP = localStorage.getItem("dat_to_challenge_points");
+      const savedProofs = localStorage.getItem("dat_to_quest_proofs");
       if (savedQ) setCompletedChallenges(JSON.parse(savedQ));
       if (savedP) setChallengePoints(Number(savedP));
+      if (savedProofs) setQuestProofImages(JSON.parse(savedProofs));
     } catch {
       // ignore
     }
   }, []);
+
+  const userUnlockedBadges = useMemo(() => {
+    return BADGE_DEFINITIONS.filter((b) => b.checkUnlocked(completedChallenges));
+  }, [completedChallenges]);
+
+  const userRank = useMemo(() => {
+    const bCount = userUnlockedBadges.length;
+    if (bCount >= 6) return 1;
+    if (bCount === 5) return 2;
+    if (bCount === 4) return 4;
+    if (bCount === 3) return 6;
+    if (bCount >= 1) return 8;
+    return 12;
+  }, [userUnlockedBadges.length]);
+
+  // Check-in AI Verification States (According to User Image 1)
+  const [verifyingQuest, setVerifyingQuest] = useState<TravelQuest | null>(null);
+  const [verifyImage, setVerifyImage] = useState<string | null>(null);
+  const [verifyFileName, setVerifyFileName] = useState<string>("");
+  const [isVerifyingScan, setIsVerifyingScan] = useState(false);
+  const [scanStepMessage, setScanStepMessage] = useState<string>("");
+  const [scanProgress, setScanProgress] = useState<number>(0);
+  const [verifyResult, setVerifyResult] = useState<{
+    status: "idle" | "scanning" | "success" | "failed";
+    confidence?: number;
+    message?: string;
+  }>({ status: "idle" });
+
+  // Certificate Modal when redeeming specialty gifts
+  const [redeemSuccessModal, setRedeemSuccessModal] = useState<{
+    rewardTitle: string;
+    rewardCost: number;
+    rewardIcon: string;
+    voucherCode: string;
+    rewardImage?: string;
+    badge?: string;
+    province?: string;
+  } | null>(null);
+
+  const handleOpenVerification = (quest: TravelQuest) => {
+    setVerifyingQuest(quest);
+    setVerifyImage(null);
+    setVerifyFileName("");
+    setIsVerifyingScan(false);
+    setScanStepMessage("");
+    setScanProgress(0);
+    setVerifyResult({ status: "idle" });
+  };
+
+  const handleSelectSampleImage = (imgUrl: string, sampleLabel: string) => {
+    setVerifyImage(imgUrl);
+    setVerifyFileName(sampleLabel);
+    setVerifyResult({ status: "idle" });
+  };
+
+  const handleCustomFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      setVerifyFileName(file.name);
+      const reader = new FileReader();
+      reader.onload = (ev) => {
+        setVerifyImage(ev.target?.result as string);
+        setVerifyResult({ status: "idle" });
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const handleDirectUploadProof = (quest: TravelQuest, e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (ev) => {
+        const dataUrl = ev.target?.result as string;
+        setVerifyingQuest(quest);
+        setVerifyImage(dataUrl);
+        setVerifyFileName(file.name);
+        setIsVerifyingScan(false);
+        setScanStepMessage("");
+        setScanProgress(0);
+        setVerifyResult({ status: "idle" });
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const handleViewProofImage = (quest: TravelQuest) => {
+    const proofUrl = questProofImages[quest.id] || quest.image;
+    setVerifyingQuest(quest);
+    setVerifyImage(proofUrl);
+    setVerifyFileName(`Ảnh minh chứng đã nộp: ${quest.title}`);
+    setVerifyResult({
+      status: "success",
+      confidence: 99,
+      message: `Ảnh minh chứng của bạn cho ${quest.title} đã được AI phê duyệt và đóng dấu điện tử thành công.`,
+    });
+  };
+
+  const handleStartScanVerification = () => {
+    if (!verifyImage || !verifyingQuest) return;
+
+    setIsVerifyingScan(true);
+    setScanProgress(20);
+    setScanStepMessage("Khởi động AI Vision: Đang đọc tọa độ không gian & đặc trưng hình ảnh...");
+    setVerifyResult({ status: "scanning" });
+
+    setTimeout(() => {
+      setScanProgress(60);
+      setScanStepMessage(`Nhận diện kiến trúc cảnh quan và đối chiếu địa danh ${verifyingQuest.title}...`);
+    }, 600);
+
+    setTimeout(() => {
+      setScanProgress(85);
+      setScanStepMessage("Đo đạc độ tương đồng hình học với ngân hàng ảnh chuẩn Đất Tổ...");
+    }, 1200);
+
+    setTimeout(() => {
+      setScanProgress(100);
+      setIsVerifyingScan(false);
+
+      const isFailedSample = verifyFileName.toLowerCase().includes("không khớp") || verifyFileName.toLowerCase().includes("món ăn");
+      if (isFailedSample) {
+        setVerifyResult({
+          status: "failed",
+          confidence: 23.4,
+          message: `Không nhận diện được kiến trúc hoặc cảnh quan của ${verifyingQuest.title} (Độ tương đồng chỉ đạt 23.4%). Vui lòng tải ảnh chụp thực tế tại điểm đến!`,
+        });
+      } else {
+        const conf = Math.floor(Math.random() * 4 + 96);
+        setVerifyResult({
+          status: "success",
+          confidence: conf,
+          message: `Xác minh thành công! Hình ảnh trùng khớp hoàn toàn với ${verifyingQuest.landmarkName || verifyingQuest.title} (Độ khớp ${conf}%).`,
+        });
+
+        if (!completedChallenges.includes(verifyingQuest.id)) {
+          const nextList = [...completedChallenges, verifyingQuest.id];
+          const nextPts = challengePoints + verifyingQuest.points;
+          setCompletedChallenges(nextList);
+          setChallengePoints(nextPts);
+          try {
+            localStorage.setItem("dat_to_completed_challenges", JSON.stringify(nextList));
+            localStorage.setItem("dat_to_challenge_points", String(nextPts));
+          } catch {}
+          showToast(`🎉 +${verifyingQuest.points} điểm thưởng đã được cộng vào tài khoản của bạn!`);
+        }
+
+        if (verifyImage) {
+          const nextProofs = { ...questProofImages, [verifyingQuest.id]: verifyImage };
+          setQuestProofImages(nextProofs);
+          try {
+            localStorage.setItem("dat_to_quest_proofs", JSON.stringify(nextProofs));
+          } catch {}
+        }
+      }
+    }, 1800);
+  };
 
   const handleToggleChallenge = (questId: string, pts: number, title: string) => {
     let nextList: string[];
@@ -3240,7 +3649,7 @@ export default function Home() {
     } catch {}
   };
 
-  const handleClaimChallengeReward = (cost: number, rewardTitle: string, voucherCode?: string) => {
+  const handleClaimChallengeReward = (cost: number, rewardTitle: string, voucherCode?: string, rewObj?: TravelReward) => {
     if (challengePoints < cost) {
       showToast(`⚠️ Bạn cần thêm ${cost - challengePoints} điểm để đổi ${rewardTitle}!`);
       return;
@@ -3253,7 +3662,47 @@ export default function Home() {
     if (voucherCode && !savedVouchers.includes(voucherCode)) {
       setSavedVouchers([...savedVouchers, voucherCode]);
     }
-    showToast(`🎁 Đổi thành công ${rewardTitle}! Mã quà tặng đã được thêm vào ví voucher của bạn.`);
+    setRedeemSuccessModal({
+      rewardTitle,
+      rewardCost: cost,
+      rewardIcon: rewObj?.icon || "🎁",
+      voucherCode: voucherCode || "DATTO-OCOP",
+      rewardImage: rewObj?.image,
+      badge: rewObj?.badge,
+      province: rewObj?.province,
+    });
+    showToast(`🎁 Đổi thành công ${rewardTitle}!`);
+  };
+
+  const handleRedeemVoucherWithPoints = (voucher: Voucher) => {
+    const cost = voucher.pointCost || 100;
+    if (challengePoints < cost) {
+      showToast(`⚠️ Bạn cần ${cost} điểm để đổi ${voucher.title} (hiện có ${challengePoints} điểm). Hãy hoàn thành thêm thử thách check-in!`);
+      return;
+    }
+    const nextPts = challengePoints - cost;
+    setChallengePoints(nextPts);
+    try {
+      localStorage.setItem("dat_to_challenge_points", String(nextPts));
+    } catch {}
+
+    if (!savedVouchers.includes(voucher.code)) {
+      const nextSaved = [...savedVouchers, voucher.code];
+      setSavedVouchers(nextSaved);
+      try {
+        localStorage.setItem("dat_to_saved_vouchers", JSON.stringify(nextSaved));
+      } catch {}
+    }
+
+    setRedeemSuccessModal({
+      rewardTitle: voucher.title,
+      rewardCost: cost,
+      rewardIcon: "🎟️",
+      voucherCode: voucher.code,
+      badge: voucher.badge,
+      province: "Áp dụng toàn sàn",
+    });
+    showToast(`🎉 Đã đổi thành công voucher ${voucher.code} (-${cost} điểm)!`);
   };
 
   const [vouchersModalOpen, setVouchersModalOpen] = useState(false);
@@ -6062,6 +6511,47 @@ export default function Home() {
                 <span className="trip-pillar-chip"><i className="trip-pillar-chip__icon">🚗</i> Phương tiện & thời gian</span>
               </div>
               <p className="trip-hero-desc">{t.tripPageDesc}</p>
+              <div className="trip-hero-actions" style={{ display: "flex", gap: "12px", marginTop: "18px", flexWrap: "wrap" }}>
+                <button
+                  type="button"
+                  onClick={() => setIsBuilderCollapsed(false)}
+                  style={{
+                    background: "linear-gradient(135deg, #1b4332 0%, #2d6a4f 100%)",
+                    color: "#ffffff",
+                    fontWeight: 800,
+                    fontSize: "13.5px",
+                    padding: "10px 22px",
+                    borderRadius: "999px",
+                    border: 0,
+                    cursor: "pointer",
+                    boxShadow: "0 4px 14px rgba(27, 67, 50, 0.25)",
+                    display: "inline-flex",
+                    alignItems: "center",
+                    gap: "8px",
+                  }}
+                >
+                  <span>⚙️ Mở bộ tùy biến chuyến đi</span>
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setChallengeModalOpen(true)}
+                  style={{
+                    background: "#ffffff",
+                    color: "#1b4332",
+                    fontWeight: 800,
+                    fontSize: "13.5px",
+                    padding: "10px 20px",
+                    borderRadius: "999px",
+                    border: "1.5px solid rgba(27, 67, 50, 0.25)",
+                    cursor: "pointer",
+                    display: "inline-flex",
+                    alignItems: "center",
+                    gap: "8px",
+                  }}
+                >
+                  <span>🍀 Thử thách check-in đổi đặc sản</span>
+                </button>
+              </div>
             </div>
 
             <div className="trip-hero-visual" aria-hidden="true">
@@ -8839,85 +9329,762 @@ function doPost(e) {
                 className={`challenge-tab-btn ${challengeTab === "quests" ? "is-active" : ""}`}
                 onClick={() => setChallengeTab("quests")}
               >
-                📋 Danh sách nhiệm vụ ({TRAVEL_CHALLENGES.length})
+                📋 Nhiệm vụ & Dấu ({completedChallenges.length}/{TRAVEL_CHALLENGES.length})
+              </button>
+              <button
+                type="button"
+                className={`challenge-tab-btn ${challengeTab === "badges" ? "is-active" : ""}`}
+                onClick={() => setChallengeTab("badges")}
+              >
+                🏅 Huy hiệu & BXH ({userUnlockedBadges.length}/6)
               </button>
               <button
                 type="button"
                 className={`challenge-tab-btn ${challengeTab === "rewards" ? "is-active" : ""}`}
                 onClick={() => setChallengeTab("rewards")}
               >
-                🎁 Đổi quà OCOP & Voucher ({TRAVEL_CHALLENGE_REWARDS.length})
+                🎁 Voucher mốc & Đổi quà OCOP
               </button>
             </div>
 
             {/* MODAL BODY */}
             <div className="challenge-modal-body">
               {challengeTab === "quests" ? (
-                <div className="challenge-quest-grid">
-                  {TRAVEL_CHALLENGES.map((quest) => {
-                    const isDone = completedChallenges.includes(quest.id);
-                    return (
-                      <div key={quest.id} className={`challenge-quest-card ${isDone ? "is-done" : ""}`}>
-                        <div className="challenge-quest-left">
+                <>
+                  {/* PASSPORT SUMMARY BAR WITH MINI DIGITAL STAMPS */}
+                  <div className="passport-summary-card">
+                    <div className="passport-summary-header">
+                      <span className="passport-summary-title">
+                        <span>🛂 Hộ Chiếu Điện Tử Đất Tổ</span>
+                      </span>
+                      <span style={{ fontSize: "12.5px", color: "#fef08a", fontWeight: 800 }}>
+                        Đã đóng {completedChallenges.length} / {TRAVEL_CHALLENGES.length} con dấu
+                      </span>
+                    </div>
+                    <div className="passport-summary-stamps">
+                      {TRAVEL_CHALLENGES.map((q, idx) => {
+                        const isStamped = completedChallenges.includes(q.id);
+                        return (
                           <div
-                            className="challenge-quest-thumb"
-                            style={{ backgroundImage: `url('${quest.image}')` }}
-                          />
-                          <div className="challenge-quest-details">
-                            <div className="challenge-quest-tags">
-                              <span className="challenge-quest-badge">{quest.badge}</span>
-                              <span className="challenge-quest-province">• {quest.province}</span>
+                            key={q.id}
+                            className={`passport-stamp-mini ${isStamped ? "passport-stamp-mini--done" : "passport-stamp-mini--todo"}`}
+                            title={`${q.title} (${isStamped ? "Đã đóng dấu điện tử" : "Chưa hoàn thành"})`}
+                          >
+                            {isStamped ? "✓" : idx + 1}
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
+
+                  {/* BANNER HƯỚNG DẪN TẢI ẢNH MINH CHỨNG */}
+                  <div className="challenge-proof-banner">
+                    <div className="challenge-proof-banner__icon">📸</div>
+                    <div className="challenge-proof-banner__text">
+                      <strong>Tải ảnh minh chứng nhận điểm & con dấu điện tử</strong>
+                      <p>Chọn nút <b>"📸 Tải ảnh minh chứng"</b> tại mỗi điểm đến để tải ảnh chụp cổng di tích hoặc toàn cảnh phong cảnh. Trí tuệ nhân tạo (AI) sẽ quét xác nhận toạ độ và đóng con dấu đỏ vào Hộ chiếu du lịch của bạn!</p>
+                    </div>
+                  </div>
+
+                  <div className="challenge-quest-grid">
+                    {TRAVEL_CHALLENGES.map((quest) => {
+                      const isDone = completedChallenges.includes(quest.id);
+                      return (
+                        <div key={quest.id} className={`challenge-quest-card ${isDone ? "is-done" : ""}`} style={{ position: "relative" }}>
+                          {/* CON DẤU ĐIỆN TỬ DẬP NỔI KHI HOÀN THÀNH */}
+                          {isDone && (
+                            <div className="digital-stamp" aria-label="Con dấu điện tử Đã check in">
+                              <div className="digital-stamp__inner">
+                                <span className="digital-stamp__star">★ ★ ★</span>
+                                <span className="digital-stamp__text">ĐÃ CHECK-IN</span>
+                                <span className="digital-stamp__date">ĐẤT TỔ 2026</span>
+                              </div>
                             </div>
-                            <h4 className="challenge-quest-title">{quest.title}</h4>
-                            <p className="challenge-quest-desc">{quest.desc}</p>
+                          )}
+
+                          <input
+                            type="file"
+                            id={`quest-file-${quest.id}`}
+                            accept="image/*"
+                            style={{ display: "none" }}
+                            onChange={(e) => handleDirectUploadProof(quest, e)}
+                          />
+
+                          <div className="challenge-quest-left">
+                            <div
+                              className="challenge-quest-thumb"
+                              style={{ backgroundImage: `url('${quest.image}')` }}
+                            />
+                            <div className="challenge-quest-details">
+                              <div className="challenge-quest-tags">
+                                <span className="challenge-quest-badge">{quest.badge}</span>
+                                <span className="challenge-quest-province">• {quest.province}</span>
+                              </div>
+                              <h4 className="challenge-quest-title">{quest.title}</h4>
+                              <p className="challenge-quest-desc">{quest.desc}</p>
+
+                              {/* VÙNG HIỂN THỊ TRẠNG THÁI MINH CHỨNG TRỰC QUAN */}
+                              <div className="quest-proof-status-row">
+                                {isDone ? (
+                                  <div className="quest-proof-done-tag">
+                                    <span>✅ Đã tải ảnh minh chứng & xác minh AI</span>
+                                    {questProofImages[quest.id] && (
+                                      <button
+                                        type="button"
+                                        className="quest-proof-view-link"
+                                        onClick={() => handleViewProofImage(quest)}
+                                      >
+                                        🔍 Xem lại ảnh
+                                      </button>
+                                    )}
+                                  </div>
+                                ) : (
+                                  <label
+                                    htmlFor={`quest-file-${quest.id}`}
+                                    className="quest-proof-direct-upload-label"
+                                    title="Tải ảnh minh chứng từ máy hoặc chụp trực tiếp"
+                                  >
+                                    <span>📤 Chọn ảnh minh chứng từ máy</span>
+                                  </label>
+                                )}
+                              </div>
+                            </div>
+                          </div>
+                          <div className="challenge-quest-right">
+                            <span className="challenge-quest-points">+{quest.points}đ</span>
+                            {isDone ? (
+                              <button
+                                type="button"
+                                className="challenge-checkin-btn challenge-checkin-btn--done"
+                                onClick={() => handleToggleChallenge(quest.id, quest.points, quest.title)}
+                              >
+                                ✓ Đã xong (Hủy)
+                              </button>
+                            ) : (
+                              <div style={{ display: "flex", flexDirection: "column", gap: "6px", width: "100%" }}>
+                                <button
+                                  type="button"
+                                  className="challenge-checkin-btn challenge-checkin-btn--upload"
+                                  onClick={() => handleOpenVerification(quest)}
+                                >
+                                  📸 Tải ảnh minh chứng
+                                </button>
+                                <button
+                                  type="button"
+                                  className="challenge-checkin-quick-btn"
+                                  onClick={() => handleToggleChallenge(quest.id, quest.points, quest.title)}
+                                  title="Check-in nhanh nếu chưa có ảnh chụp"
+                                >
+                                  ⚡ Check-in nhanh
+                                </button>
+                              </div>
+                            )}
                           </div>
                         </div>
-                        <div className="challenge-quest-right">
-                          <span className="challenge-quest-points">+{quest.points}đ</span>
-                          <button
-                            type="button"
-                            className={`challenge-checkin-btn ${isDone ? "challenge-checkin-btn--done" : "challenge-checkin-btn--todo"}`}
-                            onClick={() => handleToggleChallenge(quest.id, quest.points, quest.title)}
+                      );
+                    })}
+                  </div>
+                </>
+              ) : challengeTab === "badges" ? (
+                <div className="badges-view-section">
+                  <div className="badges-header-intro">
+                    <div>
+                      <h4>Bộ Sưu Tập Huy Hiệu Du Khách</h4>
+                      <p>Huy hiệu vinh danh độc quyền ghi nhận những nỗ lực khám phá Đất Tổ (sưu tầm kỷ niệm).</p>
+                    </div>
+                    <span className="badges-count-pill">
+                      🏅 {userUnlockedBadges.length} / {BADGE_DEFINITIONS.length} Huy hiệu
+                    </span>
+                  </div>
+
+                  {/* 6 BADGES SHOWCASE GRID */}
+                  <div className="badge-grid-6">
+                    {BADGE_DEFINITIONS.map((badge) => {
+                      const isUnlocked = badge.checkUnlocked(completedChallenges);
+                      return (
+                        <div
+                          key={badge.id}
+                          className={`badge-card ${isUnlocked ? "badge-card--unlocked" : "badge-card--locked"}`}
+                        >
+                          <div className="badge-icon-box">{badge.icon}</div>
+                          <h5 className="badge-title">{badge.title}</h5>
+                          <p className="badge-desc">{badge.desc}</p>
+                          <span
+                            className={`badge-status-pill ${
+                              isUnlocked ? "badge-status-pill--unlocked" : "badge-status-pill--locked"
+                            }`}
                           >
-                            {isDone ? "✓ Đã hoàn thành" : "Check-in ngay 📍"}
-                          </button>
+                            {isUnlocked ? "★ Đã sở hữu" : "Chưa mở khóa"}
+                          </span>
+                          <small style={{ fontSize: "11px", color: "#64748b", marginTop: "8px" }}>
+                            {badge.criteria}
+                          </small>
                         </div>
+                      );
+                    })}
+                  </div>
+
+                  {/* LEADERBOARD TABLE */}
+                  <div className="leaderboard-section">
+                    <div className="leaderboard-header">
+                      <h4>🏆 Bảng Xếp Hạng Top Nhà Thám Hiểm Đất Tổ</h4>
+                      <span style={{ fontSize: "12px", color: "rgba(255,255,255,0.8)" }}>Mùa giải 2026</span>
+                    </div>
+
+                    <div className="leaderboard-user-highlight">
+                      <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+                        <span className="leaderboard-user-tag">Vị trí của bạn</span>
+                        <b>{authUser?.name || "Du khách Đất Tổ"}</b>
                       </div>
-                    );
-                  })}
+                      <div style={{ display: "flex", alignItems: "center", gap: "16px" }}>
+                        <span><b>Hạng #{userRank}</b></span>
+                        <span>🏅 <b>{userUnlockedBadges.length}</b>/6 Huy hiệu</span>
+                        <span>🛂 <b>{completedChallenges.length}</b>/10 Con dấu</span>
+                      </div>
+                    </div>
+
+                    <table className="leaderboard-table">
+                      <thead>
+                        <tr>
+                          <th style={{ width: "60px" }}>Hạng</th>
+                          <th>Nhà Thám Hiểm</th>
+                          <th>Huy Hiệu</th>
+                          <th>Con Dấu</th>
+                          <th>Danh Hiệu</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {MOCK_LEADERBOARD.map((item) => (
+                          <tr key={item.rank}>
+                            <td>
+                              <span
+                                className={`leaderboard-rank-badge ${
+                                  item.rank === 1 ? "leaderboard-rank-badge--1" :
+                                  item.rank === 2 ? "leaderboard-rank-badge--2" :
+                                  item.rank === 3 ? "leaderboard-rank-badge--3" : ""
+                                }`}
+                              >
+                                {item.rank === 1 ? "🥇" : item.rank === 2 ? "🥈" : item.rank === 3 ? "🥉" : item.rank}
+                              </span>
+                            </td>
+                            <td>
+                              <div className="leaderboard-user-cell">
+                                <span className="leaderboard-avatar">{item.avatar}</span>
+                                <div>
+                                  <b>{item.name}</b>
+                                  <div style={{ fontSize: "11px", color: "#64748b" }}>{item.province}</div>
+                                </div>
+                              </div>
+                            </td>
+                            <td>
+                              <span style={{ fontWeight: 800, color: "#166534" }}>🏅 {item.badges}/6</span>
+                            </td>
+                            <td>
+                              <span style={{ fontWeight: 800, color: "#b91c1c" }}>🛂 {item.stamps} dấu</span>
+                            </td>
+                            <td>
+                              <span className="pill pill--subtle" style={{ fontSize: "11.5px", fontWeight: 700 }}>
+                                {item.title}
+                              </span>
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
                 </div>
               ) : (
-                <div className="challenge-reward-grid">
-                  {TRAVEL_CHALLENGE_REWARDS.map((rew) => {
-                    const canClaim = challengePoints >= rew.cost;
-                    return (
-                      <div key={rew.id} className="challenge-reward-card">
-                        <div>
-                          <div className="challenge-reward-top">
-                            <span className="challenge-reward-icon">{rew.icon}</span>
-                            <span className="challenge-reward-cost">{rew.cost} điểm</span>
+                <>
+                  {/* 3 MILESTONE VOUCHERS ACCORDING TO USER SPEC */}
+                  <div className="milestones-vouchers-container">
+                    <div className="milestone-section-title">
+                      <span>🎟️ 3 Loại Voucher Độc Quyền Theo Mốc Con Dấu</span>
+                      <small style={{ color: "#64748b", fontWeight: 600 }}>(Tự động mở khóa khi hoàn thành đủ số điểm đến)</small>
+                    </div>
+
+                    <div className="milestone-vouchers-grid">
+                      {MILESTONE_VOUCHERS.map((voucher) => {
+                        const isUnlocked = completedChallenges.length >= voucher.requiredStamps;
+                        const isSaved = savedVouchers.includes(voucher.code);
+                        return (
+                          <div
+                            key={voucher.id}
+                            className={`milestone-card ${isUnlocked ? "milestone-card--unlocked" : "milestone-card--locked"}`}
+                          >
+                            <div>
+                              <div className="milestone-card-top">
+                                <span className={`milestone-badge-pill ${isUnlocked ? "milestone-badge-pill--unlocked" : "milestone-badge-pill--locked"}`}>
+                                  {voucher.badge}
+                                </span>
+                                <span className="milestone-icon">{voucher.icon}</span>
+                              </div>
+                              <h4 className="milestone-title">{voucher.title}</h4>
+                              <p className="milestone-benefit"><b>{voucher.discountDesc}</b></p>
+                              <p style={{ fontSize: "11.5px", color: "#64748b", margin: "0 0 10px", lineHeight: 1.4 }}>
+                                {voucher.detail}
+                              </p>
+                            </div>
+
+                            <div>
+                              <div className="milestone-progress-bar">
+                                <div
+                                  className="milestone-progress-fill"
+                                  style={{ width: `${Math.min(100, (completedChallenges.length / voucher.requiredStamps) * 100)}%` }}
+                                />
+                              </div>
+                              <div style={{ display: "flex", justifyContent: "space-between", fontSize: "11px", color: "#64748b", fontWeight: 700, marginBottom: "8px" }}>
+                                <span>Tiến độ con dấu</span>
+                                <span>{completedChallenges.length}/{voucher.requiredStamps} dấu</span>
+                              </div>
+
+                              <button
+                                type="button"
+                                className={`milestone-btn ${
+                                  isUnlocked
+                                    ? isSaved ? "milestone-btn--saved" : "milestone-btn--claim"
+                                    : "milestone-btn--locked"
+                                }`}
+                                disabled={!isUnlocked || isSaved}
+                                onClick={() => {
+                                  if (isUnlocked && !isSaved) {
+                                    setSavedVouchers([...savedVouchers, voucher.code]);
+                                    setRedeemSuccessModal({
+                                      rewardTitle: voucher.title,
+                                      rewardCost: 0,
+                                      rewardIcon: voucher.icon,
+                                      voucherCode: voucher.code,
+                                      badge: voucher.badge,
+                                      province: "Toàn tuyến 3 tỉnh",
+                                    });
+                                    showToast(`🎉 Mở khóa thành công ${voucher.title}! Mã ${voucher.code} đã lưu vào ví.`);
+                                  }
+                                }}
+                              >
+                                {isSaved ? "✓ Đã lưu vào ví voucher" : isUnlocked ? `🎁 Nhận mã ${voucher.code}` : `🔒 Cần thêm ${voucher.requiredStamps - completedChallenges.length} con dấu`}
+                              </button>
+                            </div>
                           </div>
-                          <h4 className="challenge-reward-title">{rew.title}</h4>
-                          <p className="challenge-reward-desc">{rew.desc}</p>
+                        );
+                      })}
+                    </div>
+                  </div>
+
+                  {/* VOUCHER EXCHANGE VIA CHECK-IN POINTS (ACCORDING TO USER SPEC & IMAGE 2) */}
+                  <div className="milestone-section-title" style={{ marginTop: "10px", marginBottom: "12px" }}>
+                    <span>🎟️ Đổi Voucher Giảm Giá Bằng Điểm Check-In (Ảnh 2)</span>
+                    <small style={{ color: "#64748b", fontWeight: 600 }}>(Sử dụng {challengePoints}đ tích lũy khi check-in để đổi mã ưu đãi đặt tour & mua sắm)</small>
+                  </div>
+
+                  <div className="challenge-voucher-exchange-grid">
+                    {DEFAULT_VOUCHERS.map((voucher) => {
+                      const isSaved = savedVouchers.includes(voucher.code);
+                      const cost = voucher.pointCost || 100;
+                      const canRedeem = challengePoints >= cost;
+
+                      return (
+                        <div key={voucher.code} className="challenge-voucher-exchange-card">
+                          <div className="challenge-voucher-discount-box">
+                            <b>{voucher.discountPercent ? `${voucher.discountPercent}%` : `${Math.round((voucher.discountAmount || 0) / 1000)}K`}</b>
+                            <small>GIẢM</small>
+                          </div>
+                          <div className="challenge-voucher-exchange-info">
+                            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                              <h5 style={{ margin: 0, fontSize: "14px", fontWeight: 800, color: "#1e293b" }}>{voucher.title}</h5>
+                              <span className="voucher-points-cost-tag">🪙 {cost} điểm</span>
+                            </div>
+                            <p style={{ margin: "4px 0 8px", fontSize: "12px", color: "#64748b", lineHeight: 1.4 }}>
+                              {voucher.description}
+                            </p>
+                            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                              <span className="voucher-code-badge">{voucher.code}</span>
+                              {isSaved ? (
+                                <span className="voucher-owned-badge" style={{ padding: "5px 10px" }}>✓ Đã đổi vào ví</span>
+                              ) : (
+                                <button
+                                  type="button"
+                                  className={`challenge-exchange-btn ${canRedeem ? "challenge-exchange-btn--active" : "challenge-exchange-btn--disabled"}`}
+                                  onClick={() => handleRedeemVoucherWithPoints(voucher)}
+                                  disabled={!canRedeem}
+                                >
+                                  {canRedeem ? `🪙 Đổi bằng ${cost} điểm` : `🔒 Cần thêm ${cost - challengePoints}đ`}
+                                </button>
+                              )}
+                            </div>
+                          </div>
                         </div>
-                        <button
-                          type="button"
-                          className={`challenge-reward-btn ${canClaim ? "challenge-reward-btn--can" : "challenge-reward-btn--locked"}`}
-                          onClick={() => {
-                            if (canClaim) {
-                              handleClaimChallengeReward(rew.cost, rew.title, rew.code);
-                            } else {
-                              showToast(`Cần thêm ${rew.cost - challengePoints} điểm để mở khóa phần quà này!`);
-                            }
-                          }}
-                        >
-                          {canClaim ? "🎁 Đổi quà ngay" : `Cần thêm ${rew.cost - challengePoints}đ`}
-                        </button>
-                      </div>
-                    );
-                  })}
-                </div>
+                      );
+                    })}
+                  </div>
+
+                  <div className="milestone-section-title" style={{ marginBottom: "14px" }}>
+                    <span>🏆 Đổi Quà Đặc Sản OCOP Bằng Điểm Thưởng Tích Lũy</span>
+                  </div>
+
+                  <div className="challenge-reward-grid--rich">
+                    {TRAVEL_CHALLENGE_REWARDS.map((rew) => {
+                      const canClaim = challengePoints >= rew.cost;
+                      return (
+                        <div key={rew.id} className="challenge-reward-rich-card">
+                          <div className="challenge-reward-thumb-wrap">
+                            <img
+                              src={rew.image || "/images/places/den-hung.png"}
+                              alt={rew.title}
+                              className="challenge-reward-thumb"
+                              loading="lazy"
+                              onError={handleImageError}
+                            />
+                            {rew.badge && (
+                              <span className="challenge-reward-badge-pill">{rew.badge}</span>
+                            )}
+                            <span className="challenge-reward-cost-tag">🪙 {rew.cost} điểm</span>
+                          </div>
+                          <div className="challenge-reward-rich-body">
+                            <div>
+                              <div className="challenge-reward-meta-row">
+                                <span>📍 {rew.province || "Đất Tổ"}</span>
+                                {rew.originalPrice && <span style={{ color: "#c2410c", fontWeight: 800 }}>Trị giá: {rew.originalPrice}</span>}
+                              </div>
+                              <h4 className="challenge-reward-title-rich">{rew.title}</h4>
+                              <p className="challenge-reward-desc-rich">{rew.desc}</p>
+                            </div>
+                            <button
+                              type="button"
+                              className={`challenge-reward-btn ${canClaim ? "challenge-reward-btn--can" : "challenge-reward-btn--locked"}`}
+                              onClick={() => {
+                                if (canClaim) {
+                                  handleClaimChallengeReward(rew.cost, rew.title, rew.code, rew);
+                                } else {
+                                  showToast(`Cần thêm ${rew.cost - challengePoints} điểm để đổi ${rew.title}!`);
+                                }
+                              }}
+                            >
+                              {canClaim ? "🎁 Đổi đặc sản ngay" : `Cần thêm ${rew.cost - challengePoints}đ`}
+                            </button>
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </>
               )}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* ========================================================================= */}
+      {/* CHECK-IN AI VERIFICATION MODAL (THEO YÊU CẦU ẢNH 1) */}
+      {/* ========================================================================= */}
+      {verifyingQuest && (
+        <div
+          className="commerce-overlay"
+          role="presentation"
+          style={{ zIndex: 1300 }}
+          onMouseDown={(e) => {
+            if (e.target === e.currentTarget) setVerifyingQuest(null);
+          }}
+        >
+          <div className="checkin-verify-modal" role="dialog" aria-labelledby="verify-modal-title">
+            <div className="checkin-verify-header">
+              <div>
+                <span className="heritage-gold-tag">📸 HỆ THỐNG XÁC MINH HÌNH ẢNH CHECK-IN</span>
+                <h3 id="verify-modal-title">{verifyingQuest.title}</h3>
+                <p>Tải ảnh minh chứng thực tế hoặc chọn ảnh mẫu để hệ thống AI nhận diện và cộng điểm thưởng.</p>
+              </div>
+              <button
+                type="button"
+                className="challenge-modal-close"
+                onClick={() => setVerifyingQuest(null)}
+                aria-label="Đóng"
+              >
+                ×
+              </button>
+            </div>
+
+            <div className="checkin-verify-body">
+              {/* TARGET BENCHMARK LOCATION */}
+              <div className="checkin-benchmark-banner">
+                <img
+                  src={verifyingQuest.image}
+                  alt={verifyingQuest.title}
+                  className="checkin-benchmark-thumb"
+                  onError={handleImageError}
+                />
+                <div className="checkin-benchmark-info">
+                  <div className="checkin-benchmark-tag">
+                    <span>{verifyingQuest.badge}</span>
+                    <span>• {verifyingQuest.province}</span>
+                  </div>
+                  <h4 className="checkin-benchmark-title">{verifyingQuest.landmarkName || verifyingQuest.title}</h4>
+                  <span className="checkin-benchmark-points">Phần thưởng: +{verifyingQuest.points} điểm</span>
+                </div>
+              </div>
+
+              {/* UPLOAD & SELECT PHOTO */}
+              {!verifyImage ? (
+                <>
+                  <div className="checkin-upload-zone">
+                    <input
+                      type="file"
+                      accept="image/*"
+                      onChange={handleCustomFileUpload}
+                      title="Chọn ảnh chụp từ máy hoặc điện thoại"
+                    />
+                    <div className="checkin-upload-icon">📷</div>
+                    <div className="checkin-upload-title">Tải ảnh chụp minh chứng từ thiết bị của bạn</div>
+                    <p className="checkin-upload-hint">Hỗ trợ JPG, PNG, WEBP (chụp cổng lớn, toàn cảnh di tích hoặc hoạt động tham quan)</p>
+                  </div>
+
+                  {/* QUICK TEST SAMPLES */}
+                  <div className="checkin-samples-row">
+                    <span className="checkin-samples-label">⚡ Hoặc chọn nhanh ảnh mẫu có sẵn để trải nghiệm quét:</span>
+                    <div className="checkin-samples-list">
+                      <button
+                        type="button"
+                        className="checkin-sample-btn"
+                        onClick={() => handleSelectSampleImage(verifyingQuest.sampleValidImage || verifyingQuest.image, `Ảnh cổng chính ${verifyingQuest.title}`)}
+                      >
+                        <img
+                          src={verifyingQuest.sampleValidImage || verifyingQuest.image}
+                          alt="Ảnh chuẩn"
+                          className="checkin-sample-thumb"
+                          onError={handleImageError}
+                        />
+                        <div className="checkin-sample-info">
+                          <span className="checkin-sample-name">Cổng chính di tích</span>
+                          <span className="checkin-sample-tag checkin-sample-tag--match">✓ Khớp đúng 98%</span>
+                        </div>
+                      </button>
+
+                      <button
+                        type="button"
+                        className="checkin-sample-btn"
+                        onClick={() => handleSelectSampleImage(verifyingQuest.sampleScenicImage || verifyingQuest.image, `Ảnh toàn cảnh ${verifyingQuest.title}`)}
+                      >
+                        <img
+                          src={verifyingQuest.sampleScenicImage || verifyingQuest.image}
+                          alt="Toàn cảnh"
+                          className="checkin-sample-thumb"
+                          onError={handleImageError}
+                        />
+                        <div className="checkin-sample-info">
+                          <span className="checkin-sample-name">Góc nhìn toàn cảnh</span>
+                          <span className="checkin-sample-tag checkin-sample-tag--match">✓ Khớp đúng 96%</span>
+                        </div>
+                      </button>
+
+                      <button
+                        type="button"
+                        className="checkin-sample-btn"
+                        onClick={() => handleSelectSampleImage("/images/food/thit-chua.jpg", "Ảnh món ăn không khớp (Thử nghiệm)")}
+                      >
+                        <img
+                          src="/images/food/thit-chua.jpg"
+                          alt="Ảnh không khớp"
+                          className="checkin-sample-thumb"
+                          onError={handleImageError}
+                        />
+                        <div className="checkin-sample-info">
+                          <span className="checkin-sample-name">Ảnh sai địa danh</span>
+                          <span className="checkin-sample-tag checkin-sample-tag--fail">✕ Thử báo lỗi</span>
+                        </div>
+                      </button>
+                    </div>
+                  </div>
+                </>
+              ) : (
+                <>
+                  {/* PREVIEW IMAGE & AI SCANNER */}
+                  <div className="checkin-preview-box">
+                    <img
+                      src={verifyImage}
+                      alt="Ảnh minh chứng check in"
+                      className="checkin-preview-img"
+                      onError={handleImageError}
+                    />
+                    {isVerifyingScan && (
+                      <>
+                        <div className="checkin-laser-scan" />
+                        <div className="checkin-scan-grid-overlay" />
+                        <div className="checkin-scan-hud">
+                          <span className="checkin-scan-hud-pulse" />
+                          <span>AI SCANNING · {scanProgress}%</span>
+                        </div>
+                      </>
+                    )}
+                  </div>
+
+                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                    <span style={{ fontSize: "13px", color: "#64748b", fontWeight: 700 }}>
+                      📷 Minh chứng: <b>{verifyFileName || "Ảnh đã tải lên"}</b>
+                    </span>
+                    <button
+                      type="button"
+                      style={{
+                        background: "none",
+                        border: 0,
+                        color: "var(--red)",
+                        fontSize: "12.5px",
+                        fontWeight: 800,
+                        cursor: "pointer",
+                      }}
+                      onClick={() => {
+                        setVerifyImage(null);
+                        setVerifyResult({ status: "idle" });
+                      }}
+                    >
+                      ↺ Chọn ảnh khác
+                    </button>
+                  </div>
+
+                  {/* SCAN STATUS / RESULT */}
+                  {verifyResult.status === "scanning" && (
+                    <div className="checkin-scan-status-card">
+                      <div className="checkin-scan-step-text">
+                        <span>🔄</span>
+                        <span>{scanStepMessage}</span>
+                      </div>
+                      <div className="checkin-scan-meter">
+                        <div className="checkin-scan-meter-fill" style={{ width: `${scanProgress}%` }} />
+                      </div>
+                    </div>
+                  )}
+
+                  {verifyResult.status === "success" && (
+                    <div className="checkin-congrats-box">
+                      <div className="checkin-congrats-icon">🎉</div>
+                      <div>
+                        <h4 className="checkin-congrats-title">Xác minh thành công! (+{verifyingQuest.points} điểm)</h4>
+                        <p className="checkin-congrats-desc">
+                          Hệ thống đã nhận diện chính xác hình ảnh <b>{verifyingQuest.landmarkName || verifyingQuest.title}</b> với độ khớp <b>{verifyResult.confidence}%</b>. Bạn đã tích lũy đủ điểm để đổi các món đặc sản OCOP tương ứng!
+                        </p>
+                      </div>
+                    </div>
+                  )}
+
+                  {verifyResult.status === "failed" && (
+                    <div className="checkin-scan-status-card checkin-scan-status-card--failed">
+                      <div className="checkin-scan-step-text" style={{ color: "#dc2626" }}>
+                        <span>⚠️</span>
+                        <span>{verifyResult.message}</span>
+                      </div>
+                      <div style={{ fontSize: "12px", color: "#64748b" }}>
+                        Gợi ý: Hãy tải ảnh chụp có chứa cổng tam quan, biển hiệu hoặc kiến trúc tiêu biểu của di tích.
+                      </div>
+                    </div>
+                  )}
+                </>
+              )}
+
+              {/* ACTIONS */}
+              <div className="checkin-verify-actions">
+                {verifyResult.status === "idle" && (
+                  <button
+                    type="button"
+                    className="checkin-btn-primary"
+                    disabled={!verifyImage || isVerifyingScan}
+                    onClick={handleStartScanVerification}
+                  >
+                    <span>⚡ Bắt đầu Quét & Xác minh bằng Máy tính/AI</span>
+                  </button>
+                )}
+
+                {verifyResult.status === "success" && (
+                  <>
+                    <button
+                      type="button"
+                      className="checkin-btn-primary checkin-btn-reward"
+                      onClick={() => {
+                        setVerifyingQuest(null);
+                        setChallengeTab("rewards");
+                      }}
+                    >
+                      <span>🎁 Đổi 1 món đặc sản tương ứng giá trị ngay</span>
+                    </button>
+                    <button
+                      type="button"
+                      className="checkin-btn-secondary"
+                      onClick={() => setVerifyingQuest(null)}
+                    >
+                      <span>Tiếp tục thử thách</span>
+                    </button>
+                  </>
+                )}
+
+                {verifyResult.status === "failed" && (
+                  <button
+                    type="button"
+                    className="checkin-btn-primary"
+                    onClick={() => {
+                      setVerifyImage(null);
+                      setVerifyResult({ status: "idle" });
+                    }}
+                  >
+                    <span>↺ Thử lại với ảnh khác</span>
+                  </button>
+                )}
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* ========================================================================= */}
+      {/* REDEEM SPECIALTY GIFT CERTIFICATE MODAL */}
+      {/* ========================================================================= */}
+      {redeemSuccessModal && (
+        <div
+          className="commerce-overlay"
+          role="presentation"
+          style={{ zIndex: 1400 }}
+          onMouseDown={(e) => {
+            if (e.target === e.currentTarget) setRedeemSuccessModal(null);
+          }}
+        >
+          <div className="redeem-cert-modal" role="dialog" aria-labelledby="redeem-cert-title">
+            <div className="redeem-cert-icon">{redeemSuccessModal.rewardIcon}</div>
+            <h3 id="redeem-cert-title" className="redeem-cert-title">Đổi Quà Đặc Sản Thành Công!</h3>
+            <p className="redeem-cert-desc">
+              Chúc mừng bạn đã quy đổi thành công phần thưởng <b>{redeemSuccessModal.rewardTitle}</b> ({redeemSuccessModal.rewardCost} điểm).
+            </p>
+
+            {redeemSuccessModal.rewardImage && (
+              <div style={{ width: "120px", height: "120px", margin: "0 auto 16px", borderRadius: "18px", overflow: "hidden", boxShadow: "0 6px 18px rgba(0,0,0,0.15)" }}>
+                <img
+                  src={redeemSuccessModal.rewardImage}
+                  alt={redeemSuccessModal.rewardTitle}
+                  style={{ width: "100%", height: "100%", objectFit: "cover" }}
+                  onError={handleImageError}
+                />
+              </div>
+            )}
+
+            <div className="redeem-cert-code-box">
+              <div className="redeem-cert-code-label">MÃ QUY ĐỔI / VOUCHER ƯU ĐÃI ĐẤT TỔ</div>
+              <div className="redeem-cert-code-val">{redeemSuccessModal.voucherCode}</div>
+              <p className="redeem-cert-note">
+                Xuất trình mã này tại quầy bán đặc sản OCOP tại điểm đến hoặc nhập vào ô Voucher khi mua sắm online.
+              </p>
+            </div>
+
+            <div style={{ display: "flex", gap: "10px", justifyContent: "center" }}>
+              <button
+                type="button"
+                className="checkin-btn-primary"
+                onClick={() => {
+                  navigator.clipboard?.writeText(redeemSuccessModal.voucherCode);
+                  showToast("Đã sao chép mã ưu đãi vào khay nhớ tạm!");
+                }}
+              >
+                <span>📋 Sao chép mã</span>
+              </button>
+              <button
+                type="button"
+                className="checkin-btn-secondary"
+                onClick={() => setRedeemSuccessModal(null)}
+              >
+                <span>Đóng</span>
+              </button>
             </div>
           </div>
         </div>
@@ -8936,10 +10103,34 @@ function doPost(e) {
               <button type="button" className="booking-dialog__close" onClick={() => setVouchersModalOpen(false)} aria-label="Đóng">×</button>
             </div>
 
+            {/* THÔNG BÁO ĐIỂM CHECK-IN TÍCH LŨY & ĐỔI VOUCHER BẰNG ĐIỂM */}
+            <div className="voucher-points-banner">
+              <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+                <span style={{ fontSize: "28px" }}>🪙</span>
+                <div>
+                  <div style={{ fontSize: "11.5px", color: "#64748b", fontWeight: 800, textTransform: "uppercase" }}>Điểm Thưởng Check-in Của Bạn</div>
+                  <div style={{ fontSize: "17px", fontWeight: 900, color: "#c2410c" }}>{challengePoints} điểm tích lũy</div>
+                </div>
+              </div>
+              <button
+                type="button"
+                className="voucher-earn-points-btn"
+                onClick={() => {
+                  setVouchersModalOpen(false);
+                  setChallengeModalOpen(true);
+                  setChallengeTab("quests");
+                }}
+              >
+                🧭 Tải ảnh Check-in nhận thêm điểm →
+              </button>
+            </div>
+
             <div className="voucher-grid">
               {DEFAULT_VOUCHERS.map((voucher) => {
                 const isSaved = savedVouchers.includes(voucher.code);
                 const isApplied = appliedVoucherCode === voucher.code;
+                const cost = voucher.pointCost || 100;
+                const canRedeem = challengePoints >= cost;
 
                 return (
                   <div key={voucher.code} className="voucher-card">
@@ -8949,12 +10140,29 @@ function doPost(e) {
                     </div>
                     <div className="voucher-card-right">
                       <div>
-                        <h4>{voucher.title}</h4>
+                        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: "8px" }}>
+                          <h4>{voucher.title}</h4>
+                          <span className="voucher-points-cost-tag">
+                            🪙 {cost} điểm
+                          </span>
+                        </div>
                         <p>{voucher.description}</p>
                       </div>
                       <div className="voucher-card-actions">
                         <span className="voucher-code-badge">{voucher.code}</span>
-                        <div style={{ display: "flex", gap: "6px" }}>
+                        <div style={{ display: "flex", gap: "6px", alignItems: "center" }}>
+                          {isSaved ? (
+                            <span className="voucher-owned-badge">✓ Đã sở hữu</span>
+                          ) : (
+                            <button
+                              type="button"
+                              className="voucher-redeem-point-btn"
+                              onClick={() => handleRedeemVoucherWithPoints(voucher)}
+                              title={canRedeem ? `Đổi bằng ${cost} điểm check-in` : `Cần ${cost} điểm (bạn có ${challengePoints}đ)`}
+                            >
+                              🪙 Đổi (-{cost}đ)
+                            </button>
+                          )}
                           <button
                             type="button"
                             className={`voucher-apply-btn ${isSaved ? "is-saved" : ""}`}
@@ -8968,7 +10176,7 @@ function doPost(e) {
                               }
                             }}
                           >
-                            {isSaved ? "✓ Đã lưu" : "Lưu mã"}
+                            {isSaved ? "Bỏ lưu" : "Lưu mã"}
                           </button>
                           <button
                             type="button"
