@@ -7497,10 +7497,10 @@ h3,
 
 .hero-panoramic__title {
   font-family: var(--font-apple), -apple-system, sans-serif;
-  font-size: clamp(38px, 5.4vw, 68px);
-  font-weight: 900;
-  line-height: 1.12;
-  letter-spacing: 0.015em;
+  font-size: clamp(20px, 2.2vw, 30px);
+  font-weight: 800;
+  line-height: 1.22;
+  letter-spacing: 0.02em;
   color: #ffffff;
   text-shadow: 0 3px 18px rgba(0, 0, 0, 0.65), 0 1px 4px rgba(0, 0, 0, 0.9);
   margin: 0;

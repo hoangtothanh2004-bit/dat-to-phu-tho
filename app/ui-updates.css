@@ -2964,8 +2964,9 @@ body {
 
 /* Hero Banner & Ô Tìm kiếm */
 .hero-panoramic__title {
-  font-size: clamp(26px, 3.2vw, 38px) !important;
-  line-height: 1.2 !important;
+  font-size: clamp(20px, 2.2vw, 30px) !important;
+  font-weight: 800 !important;
+  line-height: 1.22 !important;
   letter-spacing: 0.02em !important;
 }
 
