@@ -1,42 +1,56 @@
-# Đất Tổ — Du lịch Phú Thọ
+# Travel Portal — Next.js & Tailwind CSS Starter Template
 
-Ứng dụng du lịch Phú Thọ chạy trên máy chủ Next.js độc lập. Dự án không cần tài khoản ChatGPT, không dùng xác thực ChatGPT và có thể triển khai trên bất kỳ VPS hoặc nền tảng Docker nào.
+Mã nguồn khung giao diện (Starter Template) cho cổng thông tin & ứng dụng du lịch hiện đại, được xây dựng bằng **Next.js 16 (App Router)**, **React 19**, **TypeScript** và **Tailwind CSS v4**.
 
-## Chạy trên máy phát triển
+> 💡 **Lưu ý:** Đây là bản **Starter Template** cung cấp sẵn kiến trúc hệ thống, bố cục giao diện, bộ lọc đa năng, bản đồ và các thành phần UI. Dữ liệu trong thư mục `data/` là dữ liệu mẫu demo. Bạn có thể dễ dàng thay thế, bổ sung dữ liệu các địa danh, ẩm thực và dịch vụ theo địa phương hoặc đề tài của mình.
 
-Yêu cầu Node.js 22 và pnpm 11.
+---
 
+## 🚀 Công nghệ sử dụng
+
+- **Framework:** [Next.js 16](https://nextjs.org/) (App Router, Turbopack)
+- **UI Library:** [React 19](https://react.dev/)
+- **Ngôn ngữ:** [TypeScript](https://www.typescriptlang.org/)
+- **Styling:** [Tailwind CSS v4](https://tailwindcss.com/)
+- **Tính năng nổi bật:**
+  - Giao diện Responsive chuẩn di động và máy tính.
+  - Tích hợp Text-To-Speech (TTS) đọc thuyết minh du lịch tự động.
+  - Bản đồ địa điểm, tra cứu quận huyện, ẩm thực & lịch trình.
+  - Tối ưu hóa SEO và trải nghiệm người dùng (UX/UI).
+
+---
+
+## 🛠️ Hướng dẫn cài đặt & chạy trên máy cục bộ
+
+Yêu cầu môi trường: **Node.js >= 20** và `npm` hoặc `pnpm`.
+
+### 1. Cài đặt các gói phụ thuộc (Dependencies)
 ```bash
+npm install
+# hoặc nếu dùng pnpm:
 pnpm install
+```
+
+### 2. Khởi chạy máy chủ phát triển (Dev Server)
+```bash
+npm run dev
+# hoặc
 pnpm dev
 ```
 
-Mở `http://localhost:3000`.
+Mở trình duyệt truy cập: `http://localhost:3000`
 
-## API của máy chủ
+### 3. Build kiểm tra sản phẩm
+```bash
+npm run build
+```
 
-- `GET /api/health`: kiểm tra trạng thái máy chủ.
-- `GET /api/places?q=den+hung&category=Tâm+linh`: tìm kiếm địa điểm.
-- `GET /api/places?limit=20`: lấy danh sách địa điểm.
+---
 
-## Đưa lên Internet
+## 📁 Cấu trúc thư mục dữ liệu (`data/`)
 
-Xem hướng dẫn trong `DEPLOYMENT.md`. Cách khuyến nghị là một VPS Linux, Docker Compose, tên miền riêng và Caddy tự cấp HTTPS.
-
-## Demo miễn phí bằng GitHub Pages
-
-Workflow `.github/workflows/pages.yml` tự tạo bản website tĩnh mỗi khi có thay đổi được đẩy lên nhánh `main`.
-
-1. Tạo một repository GitHub công khai và đẩy mã nguồn này lên nhánh `main`.
-2. Mở **Settings → Pages → Build and deployment**.
-3. Chọn **Source: GitHub Actions**.
-4. Mở tab **Actions** để theo dõi lần phát hành đầu tiên.
-
-Bản GitHub Pages sử dụng tìm kiếm cục bộ vì GitHub Pages không chạy máy chủ Node.js. Bản VPS vẫn giữ đầy đủ API `/api/health` và `/api/places`.
-
-## Kiểu chữ
-
-- **Be Vietnam Pro** dùng cho nội dung để các dấu tiếng Việt rõ ràng, dễ đọc.
-- **Lora** dùng cho tiêu đề và điểm nhấn để tạo cảm giác mềm mại, giàu bản sắc.
-
-Các tệp font được đóng gói trong `app/fonts` theo giấy phép SIL Open Font License 1.1; bản sao giấy phép đi kèm ngay trong thư mục này.
+Bạn có thể chỉnh sửa và cập nhật dữ liệu của mình tại:
+- `data/travel.ts`: Cấu hình danh sách địa điểm, danh mục, ẩm thực đặc sản và dịch vụ.
+- `data/districtDirectory.ts`: Danh mục quận/huyện, điểm tham quan và tìm kiếm.
+- `data/itineraryTemplates.ts`: Lịch trình tour gợi ý.
+- `data/events.ts`: Lễ hội văn hóa và sự kiện thường niên.

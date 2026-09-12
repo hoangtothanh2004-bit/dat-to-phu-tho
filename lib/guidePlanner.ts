@@ -359,16 +359,28 @@ export function buildItinerary(options: PlannerOptions): GeneratedItinerary {
     const afternoonMinutes = Math.max(15, Math.round(distBetween * 1.6));
     totalMinutes += morningMinutes + afternoonMinutes;
 
+    // Fallback nếu thiếu dữ liệu nhà hàng/khách sạn
+    const defaultRestaurant: NearbyItem = {
+      name: "Nhà hàng ẩm thực địa phương",
+      type: "Đặc sản",
+      distance: "1 km",
+      travelTime: "5 phút",
+      note: "Món ngon đặc sản địa phương",
+      address: "Khu vực trung tâm",
+      hours: "09:00 – 21:30",
+      image: "",
+    };
+
     // Chọn nhà hàng
     const lunchRestaurant =
-      morningPlace.restaurants[0] || afternoonPlace.restaurants[0] || places[0].restaurants[0];
+      morningPlace.restaurants?.[0] || afternoonPlace.restaurants?.[0] || places[0]?.restaurants?.[0] || defaultRestaurant;
     const dinnerRestaurant =
-      afternoonPlace.restaurants[1] || afternoonPlace.restaurants[0] || places[0].restaurants[1];
+      afternoonPlace.restaurants?.[1] || afternoonPlace.restaurants?.[0] || morningPlace.restaurants?.[1] || morningPlace.restaurants?.[0] || places[0]?.restaurants?.[1] || places[0]?.restaurants?.[0] || defaultRestaurant;
 
     // Chọn nơi nghỉ đêm (nếu không phải ngày cuối)
     const nightStay = isLastDay
       ? undefined
-      : afternoonPlace.stays[0] || morningPlace.stays[0] || places[0].stays[0];
+      : afternoonPlace.stays?.[0] || morningPlace.stays?.[0] || places[0]?.stays?.[0];
 
     const slot1Title = (() => {
       if (lang === "en") return `Depart & Discover ${morningPlace.shortName}`;
