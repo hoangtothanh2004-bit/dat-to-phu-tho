@@ -6189,22 +6189,6 @@ export default function Home() {
               <button className="text-link" onClick={() => { setCategory("Tất cả"); setSelectedRegion("Tất cả"); setSeasonFilter("Tất cả"); setQuery(""); }}>{t.viewAllBtn}</button>
             </div>
             
-            {/* PROVINCE SELECTOR: PHÚ THỌ - VĨNH PHÚC - HÒA BÌNH */}
-            <div className="region-filter-bar" role="group" aria-label={t.nearAreaLabel}>
-              <span className="region-filter-label">{t.selectProvinceLabel}</span>
-              {[
-                { id: "Tất cả", label: t.provAll },
-                { id: "Phú Thọ", label: t.provPhuTho },
-              ].map((reg) => (
-                <button
-                  key={reg.id}
-                  className={`region-pill ${selectedRegion === reg.id ? "is-active" : ""}`}
-                  onClick={() => { setSelectedRegion(reg.id as Region); setVisibleCount(8); }}
-                >
-                  {reg.label}
-                </button>
-              ))}
-            </div>
 
             <div className="category-row" role="group" aria-label={t.section01Title}>
               {categories.map((item) => (
