@@ -554,25 +554,6 @@ export default function VisualItineraryV2(props: VisualItineraryV2Props) {
                         <span title={getSlotLocationText(slot)}>{getSlotLocationText(slot)}</span>
                       </div>
 
-                      {/* 5-PILLARS COMPACT STRIP */}
-                      <div className="v2-card-pillars">
-                        <div className="v2-card-pillar-row">
-                          <span className="v2-pillar-badge-label">📍 Đi đâu:</span>
-                          <span className="v2-pillar-badge-val">{pillars.where.title}</span>
-                        </div>
-                        <div className="v2-card-pillar-row">
-                          <span className="v2-pillar-badge-label">🍽️ Ăn gì:</span>
-                          <span className="v2-pillar-badge-val">{pillars.dine.title}</span>
-                        </div>
-                        <div className="v2-card-pillar-row">
-                          <span className="v2-pillar-badge-label">🏨 Ở đâu:</span>
-                          <span className="v2-pillar-badge-val">{pillars.stay.title}</span>
-                        </div>
-                        <div className="v2-card-pillar-row v2-card-pillar-row--meta">
-                          <span>🚗 {pillars.transport.title}</span>
-                          <span>⏱️ {slot.timeSlot}</span>
-                        </div>
-                      </div>
 
                       <div className="v2-card__foot">
                         <button
@@ -929,7 +910,7 @@ export default function VisualItineraryV2(props: VisualItineraryV2Props) {
                     onClick={() => setIsDetailAccordionOpen(!isDetailAccordionOpen)}
                     aria-expanded={isDetailAccordionOpen}
                   >
-                    <span>Mẹo du lịch & Lời dẫn thuyết minh</span>
+                    <span>{currentLang === "en" ? "Travel Tips & AI Guide Script" : "Mẹo du lịch & Lời dẫn thuyết minh"}</span>
                     <b className="v2-accordion-arrow">{isDetailAccordionOpen ? "⌃" : "⌄"}</b>
                   </button>
 
@@ -938,7 +919,7 @@ export default function VisualItineraryV2(props: VisualItineraryV2Props) {
                       {/* Lời khuyên của hướng dẫn viên */}
                       {activeDetailSlot.highlightNote && (
                         <div className="v2-detail-info-block">
-                          <label>💡 Lời khuyên du lịch</label>
+                          <label>{currentLang === "en" ? "💡 Travel Tips" : "💡 Lời khuyên du lịch"}</label>
                           <p className="v2-detail-tip-text">
                             {activeDetailSlot.highlightNote}
                           </p>
@@ -947,7 +928,7 @@ export default function VisualItineraryV2(props: VisualItineraryV2Props) {
 
                       {/* Lời dẫn thuyết minh */}
                       <div className="v2-detail-info-block">
-                        <label>🎙️ Lời dẫn hướng dẫn viên AI</label>
+                        <label>{currentLang === "en" ? "🎙️ AI Guide Script" : "🎙️ Lời dẫn hướng dẫn viên AI"}</label>
                         <div className="v2-detail-quote">
                           “
                           {activeDetailSlot.place?.audioScript
@@ -968,8 +949,8 @@ export default function VisualItineraryV2(props: VisualItineraryV2Props) {
                           }}
                         >
                           {speechPlaceId === activeDetailSlot.place?.id && audioState === "playing"
-                            ? "⏸ Tạm dừng thuyết minh"
-                            : "▶ Nghe thuyết minh điểm này"}
+                            ? (currentLang === "en" ? "⏸ Pause audio guide" : "⏸ Tạm dừng thuyết minh")
+                            : (currentLang === "en" ? "▶ Play audio guide for this place" : "▶ Nghe thuyết minh điểm này")}
                         </button>
                       </div>
                     </div>
@@ -991,7 +972,7 @@ export default function VisualItineraryV2(props: VisualItineraryV2Props) {
                   rel="noreferrer"
                   className="v2-detail-btn v2-detail-btn--primary"
                 >
-                  ↗ Chỉ đường Google Maps
+                  {currentLang === "en" ? "↗ Google Maps Directions" : "↗ Chỉ đường Google Maps"}
                 </a>
 
                 <button
@@ -1002,18 +983,18 @@ export default function VisualItineraryV2(props: VisualItineraryV2Props) {
                       toggleFavorite(activeDetailSlot.place.id);
                       showToast(
                         favorites.includes(activeDetailSlot.place.id)
-                          ? "Đã bỏ lưu điểm"
-                          : "Đã lưu điểm vào Sổ tay du lịch!"
+                          ? (currentLang === "en" ? "Removed from Notebook" : "Đã bỏ lưu điểm")
+                          : (currentLang === "en" ? "Saved to Notebook!" : "Đã lưu điểm vào Sổ tay du lịch!")
                       );
                     } else {
-                      showToast("Đã lưu điểm dừng vào hành trình!");
+                      showToast(currentLang === "en" ? "Saved stop to itinerary!" : "Đã lưu điểm dừng vào hành trình!");
                     }
                   }}
                 >
                   🔖{" "}
                   {activeDetailSlot.place && favorites.includes(activeDetailSlot.place.id)
-                    ? "Đã lưu"
-                    : "Lưu sổ tay"}
+                    ? (currentLang === "en" ? "Saved" : "Đã lưu")
+                    : (currentLang === "en" ? "Save to Notebook" : "Lưu sổ tay")}
                 </button>
               </div>
             </aside>
@@ -1026,8 +1007,10 @@ export default function VisualItineraryV2(props: VisualItineraryV2Props) {
               <path d="M 5 18 L 10 10 L 18 14" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
             <p>
-              Đầy đủ 5 câu hỏi cốt lõi: <b>Đi đâu – Ăn gì – Ở đâu – Phương tiện – Thời gian</b>.<br />
-              Bấm vào từng điểm dừng để xem chi tiết từng chặng.
+              {currentLang === "en"
+                ? <><b style={{fontWeight: 600}}>Smart Itinerary Detail</b>. Click each stop to view details.</>
+                : <>Đầy đủ 5 câu hỏi cốt lõi: <b>Đi đâu – Ăn gì – Ở đâu – Phương tiện – Thời gian</b>.<br />
+              Bấm vào từng điểm dừng để xem chi tiết từng chặng.</>}
             </p>
           </div>
         </div>

@@ -101,14 +101,14 @@ export default function AiChatbotWidget({
         sender: "ai",
         text: isEn
           ? `Hello **${userName}**! 👋 I am **Dat To AI Assistant**.\n\nI can intelligently understand your travel needs and generate an optimized itinerary for **Phu Tho, Tam Dao, Mai Chau**!\n\nYou can chat naturally, for example:\n- *"Plan a 3 days 2 nights trip to Tam Dao for 2 people"*\n- *"1-day Hung Temple tour by motorbike"*\n- *"What are the best local specialties?"*`
-          : `Xin chào **${userName}**! 👋 Em là **Trợ lý AI Đất Tổ**.\n\nRất vui được đồng hành cùng bạn! Em có thể tự động hiểu yêu cầu và thiết kế lịch trình du lịch tối ưu cho **Phú Thọ và các tuyến liên kết (Tam Đảo, Tây Thiên, Mai Châu)**.\n\nBạn có thể nhắn tự nhiên cho em bất kỳ câu nào, ví dụ:\n- *"Lên lịch trình Tam Đảo 3 ngày 2 đêm cho 2 người"*\n- *"Đi Đền Hùng 1 ngày bằng xe máy"*\n- *"Đặc sản Phú Thọ có những món gì ngon?"*`,
+          : `Xin chào **${userName}**! 👋 Em là **Trợ lý du lịch Đất Tổ**.\n\nRất vui được đồng hành cùng bạn! Em có thể tự động hiểu yêu cầu và thiết kế lịch trình du lịch tối ưu cho **Phú Thọ và các tuyến liên kết (Tam Đảo, Tây Thiên, Mai Châu)**.\n\nBạn có thể nhắn tự nhiên cho em bất kỳ câu nào, ví dụ:\n- *"Lên lịch trình Tam Đảo 3 ngày 2 đêm cho 2 người"*\n- *"Đi Đền Hùng 1 ngày bằng xe máy"*\n- *"Đặc sản Phú Thọ có những món gì ngon?"*`,
         timestamp: time,
         options: [
-          { label: "🌫️ Lên lịch trình Tam Đảo (2N1Đ / 3N2Đ)", value: "plan_tam_dao", icon: "🏔️" },
-          { label: "🏛️ Tour cội nguồn Đền Hùng", value: "plan_den_hung", icon: "🏛️" },
-          { label: "🍃 Săn mây Đồi chè Long Cốc", value: "plan_long_coc", icon: "📸" },
-          { label: "♨️ Nghỉ dưỡng khoáng nóng Thanh Thủy", value: "plan_thanh_thuy", icon: "💆" },
-          { label: "🍲 Gợi ý đặc sản OCOP", value: "ask_foods", icon: "🥢" },
+          { label: isEn ? "🌫️ Plan Tam Dao Trip (2D1N / 3D2N)" : "🌫️ Lên lịch trình Tam Đảo (2N1Đ / 3N2Đ)", value: "plan_tam_dao", icon: "🏔️" },
+          { label: isEn ? "🏛️ Hung Temple Origin Tour" : "🏛️ Tour cội nguồn Đền Hùng", value: "plan_den_hung", icon: "🏛️" },
+          { label: isEn ? "🍃 Long Coc Tea Hill" : "🍃 Săn mây Đồi chè Long Cốc", value: "plan_long_coc", icon: "📸" },
+          { label: isEn ? "♨️ Thanh Thuy Hot Spring" : "♨️ Nghỉ dưỡng khoáng nóng Thanh Thủy", value: "plan_thanh_thuy", icon: "💆" },
+          { label: isEn ? "🍲 Recommend OCOP Foods" : "🍲 Gợi ý đặc sản OCOP", value: "ask_foods", icon: "🥢" },
         ],
       };
     } else {
@@ -117,26 +117,39 @@ export default function AiChatbotWidget({
         sender: "ai",
         text: isEn
           ? `Hello! 👋 I am **Dat To AI Assistant** — your smart travel companion in Phu Tho & connected destinations.\n\nTell me where you want to go, how many days, and how many people. I will build an accurate itinerary instantly!`
-          : `Xin chào bạn! 👋 Em là **Trợ lý AI Đất Tổ** — bạn đồng hành du lịch thông minh tại Phú Thọ & các tuyến liên kết.\n\nBạn chỉ cần cho em biết bạn muốn đi đâu, mấy ngày, mấy người (Ví dụ: *"Lên lịch trình Tam Đảo 3 ngày 2 đêm cho 2 người"*). Em sẽ tự động phân tích và tạo lịch trình trực quan ngay cho bạn!`,
+          : `Xin chào bạn! 👋 Em là **Trợ lý du lịch Đất Tổ** — bạn đồng hành du lịch thông minh tại Phú Thọ & các tuyến liên kết.\n\nBạn chỉ cần cho em biết bạn muốn đi đâu, mấy ngày, mấy người (Ví dụ: *"Lên lịch trình Tam Đảo 3 ngày 2 đêm cho 2 người"*). Em sẽ tự động phân tích và tạo lịch trình trực quan ngay cho bạn!`,
         timestamp: time,
         options: [
-          { label: "🌫️ Lên lịch trình Tam Đảo", value: "plan_tam_dao", icon: "🏔️" },
-          { label: "🏛️ Khám phá Đền Hùng & Việt Trì", value: "plan_den_hung", icon: "🏛️" },
-          { label: "🍃 Đồi chè Long Cốc & Xuân Sơn", value: "plan_long_coc", icon: "📸" },
-          { label: "♨️ Khoáng nóng Thanh Thủy", value: "plan_thanh_thuy", icon: "💆" },
-          { label: "👤 Đăng nhập tài khoản để lưu lịch trình", value: "open_login", icon: "🔑" },
+          { label: isEn ? "🌫️ Plan Tam Dao Trip" : "🌫️ Lên lịch trình Tam Đảo", value: "plan_tam_dao", icon: "🏔️" },
+          { label: isEn ? "🏛️ Explore Hung Temple" : "🏛️ Khám phá Đền Hùng & Việt Trì", value: "plan_den_hung", icon: "🏛️" },
+          { label: isEn ? "🍃 Long Coc Tea Hill" : "🍃 Đồi chè Long Cốc & Xuân Sơn", value: "plan_long_coc", icon: "📸" },
+          { label: isEn ? "♨️ Thanh Thuy Hot Spring" : "♨️ Khoáng nóng Thanh Thủy", value: "plan_thanh_thuy", icon: "💆" },
+          { label: isEn ? "👤 Login to save trips" : "👤 Đăng nhập tài khoản để lưu lịch trình", value: "open_login", icon: "🔑" },
         ],
       };
     }
   };
 
   // Re-greet if authUser changes
+  // Re-greet if authUser changes or language changes
   useEffect(() => {
     const currentUserId = authUser?.id || null;
-    if (messages.length === 0 || prevAuthUserIdRef.current !== currentUserId) {
-      prevAuthUserIdRef.current = currentUserId;
-      const welcome = buildWelcomeMessage(authUser?.name);
-      setMessages([welcome]);
+    let shouldResetSurvey = false;
+    
+    setMessages((prev) => {
+      if (prev.length === 0 || prevAuthUserIdRef.current !== currentUserId) {
+        prevAuthUserIdRef.current = currentUserId;
+        shouldResetSurvey = true;
+        return [buildWelcomeMessage(authUser?.name)];
+      } else if (prev.length > 0 && prev[0].id === "msg-welcome") {
+        const newMessages = [...prev];
+        newMessages[0] = buildWelcomeMessage(authUser?.name);
+        return newMessages;
+      }
+      return prev;
+    });
+    
+    if (shouldResetSurvey) {
       setSurvey(initialSurveyState);
     }
   }, [authUser?.id, authUser?.name, isEn]);
@@ -386,7 +399,7 @@ export default function AiChatbotWidget({
               ×
             </button>
             <div className="ai-launcher-tooltip__content" onClick={() => setIsOpen(true)}>
-              <div className="ai-launcher-tooltip__tag">✦ Trợ lý AI Đất Tổ</div>
+              <div className="ai-launcher-tooltip__tag">✦ Trợ lý du lịch Đất Tổ</div>
               <div className="ai-launcher-tooltip__msg">
                 {authUser ? (
                   <span>
@@ -410,14 +423,14 @@ export default function AiChatbotWidget({
             setIsOpen(!isOpen);
             setShowTooltip(false);
           }}
-          aria-label={isOpen ? "Thu nhỏ Trợ lý AI" : "Mở Trợ lý AI Đất Tổ"}
-          title="Trợ lý AI Đất Tổ — Lên lịch trình thông minh"
+          aria-label={isOpen ? "Thu nhỏ Trợ lý AI" : "Mở Trợ lý du lịch Đất Tổ"}
+          title="Trợ lý du lịch Đất Tổ — Lên lịch trình thông minh"
         >
           {/* MASCOT ROBOT AVATAR */}
           <div className="ai-mascot-avatar-wrapper">
             <img
               src={`${basePath}/images/ai-mascot-avatar.png`}
-              alt="Linh vật Trợ lý AI Đất Tổ"
+              alt="Linh vật Trợ lý du lịch Đất Tổ"
               className="ai-mascot-img"
               width={56}
               height={56}
@@ -431,22 +444,22 @@ export default function AiChatbotWidget({
 
           {/* Mini label on desktop */}
           <div className="ai-mascot-launcher-btn__text">
-            <span className="ai-launcher-title">Trợ lý AI</span>
-            <span className="ai-launcher-sub">Lên lịch trình</span>
+            <span className="ai-launcher-title">{isEn ? "I am Dat To Travel Assistant" : "Tôi là trợ lý du lịch Đất Tổ"}</span>
+            <span className="ai-launcher-sub">{isEn ? "Plan your trip" : "Lên lịch trình"}</span>
           </div>
         </button>
       </div>
 
       {/* FLOATING CHAT WINDOW (MODAL / FLYOUT GLASSMORPHISM) */}
       {isOpen && (
-        <aside className="ai-chat-window" aria-label="Khung trò chuyện Trợ lý AI Đất Tổ">
+        <aside className="ai-chat-window" aria-label="Khung trò chuyện Trợ lý du lịch Đất Tổ">
           {/* HEADER */}
           <div className="ai-chat-header">
             <div className="ai-chat-header__info">
               <div className="ai-header-avatar">
                 <img
                   src={`${basePath}/images/ai-mascot-avatar.png`}
-                  alt="Trợ lý AI Đất Tổ"
+                  alt="Trợ lý du lịch Đất Tổ"
                   width={42}
                   height={42}
                   onError={(e) => {
@@ -457,10 +470,10 @@ export default function AiChatbotWidget({
               </div>
               <div className="ai-header-titles">
                 <div className="ai-header-name">
-                  Trợ lý AI Đất Tổ <span className="ai-header-badge">AI 2.0</span>
+                  {isEn ? "Dat To Travel Assistant" : "Trợ lý du lịch Đất Tổ"} <span className="ai-header-badge">AI 2.0</span>
                 </div>
                 <div className="ai-header-role">
-                  {authUser ? `Đang hỗ trợ: ${authUser.name}` : "Tư vấn & Lên lịch trình Đất Tổ"}
+                  {authUser ? (isEn ? `Assisting: ${authUser.name}` : `Đang hỗ trợ: ${authUser.name}`) : (isEn ? "Trip Planner & Advisor" : "Tư vấn & Lên lịch trình Đất Tổ")}
                 </div>
               </div>
             </div>
@@ -507,8 +520,8 @@ export default function AiChatbotWidget({
             <div className="ai-intro-card">
               <div className="ai-intro-card__icon">✦</div>
               <div className="ai-intro-card__content">
-                <strong>Đất Tổ Smart AI Assistant</strong>
-                <p>Hiểu ngôn ngữ tự nhiên, tự động lên lịch trình tối ưu theo điểm đến (Phú Thọ, Tam Đảo, Mai Châu), số người, số ngày và phương tiện.</p>
+                <strong>{isEn ? "Dat To Smart AI Assistant" : "Đất Tổ Smart AI Assistant"}</strong>
+                <p>{isEn ? "Understands natural language, automatically plans optimal trips based on destinations (Phu Tho, Tam Dao, Mai Chau), travelers, duration, and transport." : "Hiểu ngôn ngữ tự nhiên, tự động lên lịch trình tối ưu theo điểm đến (Phú Thọ, Tam Đảo, Mai Châu), số người, số ngày và phương tiện."}</p>
               </div>
             </div>
 

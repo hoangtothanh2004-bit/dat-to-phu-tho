@@ -1207,7 +1207,7 @@ export function processAiMessage(
   if (checkOutOfScope(trimmed)) {
     return {
       text:
-        "Dạ, em là **Trợ lý AI Đất Tổ** chuyên hỗ trợ thông tin và lịch trình du lịch trong phạm vi **Phú Thọ và các tuyến liên kết** (Tam Đảo, Tây Thiên, Mai Châu, Hòa Bình).\n\n" +
+        "Dạ, em là **Trợ lý du lịch Đất Tổ** chuyên hỗ trợ thông tin và lịch trình du lịch trong phạm vi **Phú Thọ và các tuyến liên kết** (Tam Đảo, Tây Thiên, Mai Châu, Hòa Bình).\n\n" +
         "Yêu cầu của bạn hiện nằm ngoài phạm vi hoạt động của website. Để đảm bảo dữ liệu du lịch chính xác nhất và tránh quá tải hệ thống, em xin phép chỉ hỗ trợ các câu hỏi liên quan đến điểm đến, ẩm thực OCOP và lên lịch trình du lịch Đất Tổ & vùng phụ cận.\n\n" +
         "Bạn có muốn em tư vấn hoặc lên lịch trình cho các điểm đến nổi tiếng như **Đền Hùng, Tam Đảo, Đồi chè Long Cốc, Thanh Sơn hay Suối khoáng nóng Thanh Thủy** không ạ? 🌿",
       options: [
@@ -1684,7 +1684,7 @@ export function processAiMessage(
   // 7. DEFAULT FRIENDLY RESPONSE: Prompt with smart suggestions
   return {
     text:
-      `Xin chào bạn! Em là **Trợ lý AI Đất Tổ**.\n\n` +
+      `Xin chào bạn! Em là **Trợ lý du lịch Đất Tổ**.\n\n` +
       `Em có thể giúp bạn tự động thiết kế lịch trình du lịch thông minh, tối ưu cung đường và ngân sách tại **Phú Thọ** cùng các điểm đến liên kết như **Tam Đảo, Tây Thiên, Mai Châu**.\n\n` +
       `Bạn chỉ cần cho em biết bạn muốn đi đâu, mấy người và trong mấy ngày (Ví dụ: *"Lên lịch trình Tam Đảo 3 ngày 2 đêm cho 2 người"* hoặc *"Đi Đền Hùng 1 ngày bằng xe máy"*). Hãy chọn gợi ý hoặc gõ yêu cầu của bạn nhé!`,
     options: [

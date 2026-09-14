@@ -2519,6 +2519,78 @@ export const foodRegions: FoodRegion[] = [
     subtitle: "Hương vị cội nguồn: Cá sông Lô, thịt chua Thanh Sơn, bánh tai, bưởi Đoan Hùng",
     dishes: [
       {
+        id: 'buoi-doan-hung',
+        name: 'Bưởi Đoan Hùng',
+        image: '/images/food/buoi-doan-hung.jpg',
+        description: 'Đặc sản bưởi trứ danh của vùng đất Đoan Hùng, tép nhỏ, mọng nước, vị ngọt thanh mát và hương thơm đặc trưng.',
+        price: 'Từ 30.000đ/quả',
+        season: 'Mùa thu (tháng 8 - 10 âm lịch)',
+        region: 'Phú Thọ',
+        sellers: [
+          {
+            id: 'nha-vuon-doan-hung',
+            name: 'Nhà vườn bưởi Đoan Hùng',
+            address: 'Huyện Đoan Hùng, Phú Thọ',
+            phone: '0981234567',
+            hours: '07:00 – 18:00',
+            rating: 4.8,
+            reviewCount: 200,
+            pickupNote: 'Mua tại vườn, có đóng thùng mang về',
+            price: 35000,
+            unit: 'quả',
+            verified: true,
+          }
+        ]
+      },
+      {
+        id: 'mi-gao-hung-lo',
+        name: 'Mì gạo Hùng Lô',
+        image: '/images/food/mi-gao.jpg',
+        description: 'Sản phẩm OCOP 4 sao, sợi mì dai, thơm mùi gạo mới, không sử dụng hóa chất tẩy trắng.',
+        price: 'Từ 20.000đ/gói',
+        season: 'Quanh năm',
+        region: 'Phú Thọ',
+        sellers: [
+          {
+            id: 'htx-hung-lo',
+            name: 'HTX Mì gạo Hùng Lô',
+            address: 'Phường Vân Phú, tỉnh Phú Thọ',
+            phone: '0987654321',
+            hours: '08:00 – 17:00',
+            rating: 4.7,
+            reviewCount: 150,
+            pickupNote: 'Đóng gói đẹp, thích hợp làm quà',
+            price: 25000,
+            unit: 'gói 500g',
+            verified: true,
+          }
+        ]
+      },
+      {
+        id: 'thit-chua-truong-food',
+        name: 'Thịt chua Trường Food',
+        image: '/images/food/thit-chua-tf.jpg',
+        description: 'Thương hiệu thịt chua số 1 Phú Thọ, lên men tự nhiên, đạt chuẩn OCOP 4 sao.',
+        price: 'Từ 50.000đ/hộp',
+        season: 'Quanh năm',
+        region: 'Phú Thọ',
+        sellers: [
+          {
+            id: 'truong-food-store',
+            name: 'Cửa hàng chính hãng Trường Food',
+            address: 'Khu Ba Mỏ, thị trấn Thanh Sơn, Phú Thọ',
+            phone: '19001234',
+            hours: '07:00 – 21:00',
+            rating: 4.9,
+            reviewCount: 500,
+            pickupNote: 'Sản phẩm OCOP 4 sao chính hãng',
+            price: 55000,
+            unit: 'hộp',
+            verified: true,
+          }
+        ]
+      },
+      {
         id: "thit-chua-thanh-son",
         name: "Thịt chua Thanh Sơn",
         image: "/images/food/thit-chua.jpg",
@@ -2598,6 +2670,30 @@ export const foodRegions: FoodRegion[] = [
     subtitle: "Sản vật mây ngàn & Làng nghề: Ngọn su su Tam Đảo, thịt trâu Đại Lải, tép Đầm Vạc",
     dishes: [
       {
+        id: 'ca-thinh-lap-thach',
+        name: 'Cá thính Lập Thạch',
+        image: '/images/food/ca-thinh.jpg',
+        description: 'Đặc sản cá lên men chua chua, mặn mặn thơm lùi mùi thính ngô, nướng hoặc rán đều ngon.',
+        price: 'Từ 150.000đ/hũ',
+        season: 'Quanh năm',
+        region: 'Vĩnh Phúc',
+        sellers: [
+          {
+            id: 'ca-thinh-vp',
+            name: 'Đặc sản cá thính Lập Thạch',
+            address: 'Huyện Lập Thạch, Vĩnh Phúc',
+            phone: '0912345678',
+            hours: '08:00 – 18:00',
+            rating: 4.6,
+            reviewCount: 120,
+            pickupNote: 'Đóng hũ kín đáo, gửi đi xa được',
+            price: 150000,
+            unit: 'hũ',
+            verified: true,
+          }
+        ]
+      },
+      {
         id: "ngon-su-su-tam-dao",
         name: "Ngọn su su Tam Đảo xào tỏi",
         image: "/images/food/su-su-tam-dao.jpg",
@@ -2652,6 +2748,30 @@ export const foodRegions: FoodRegion[] = [
     label: "Hòa Bình",
     subtitle: "Ẩm thực Mường & Thung lũng: Cỗ lá lợn mán, cơm lam Mai Châu, cá sông Đà nướng que",
     dishes: [
+      {
+        id: 'cam-cao-phong',
+        name: 'Cam Cao Phong',
+        image: '/images/food/cam.jpg',
+        description: 'Đặc sản mọng nước, vị ngọt thanh, giàu vitamin C của vùng đất Cao Phong.',
+        price: 'Từ 25.000đ/kg',
+        season: 'Mùa đông',
+        region: 'Hòa Bình',
+        sellers: [
+          {
+            id: 'vuon-cam-cao-phong',
+            name: 'Vườn cam Cao Phong',
+            address: 'Huyện Cao Phong, Hòa Bình',
+            phone: '0966778899',
+            hours: '07:00 – 17:00',
+            rating: 4.8,
+            reviewCount: 300,
+            pickupNote: 'Hái trực tiếp tại vườn',
+            price: 30000,
+            unit: 'kg',
+            verified: true,
+          }
+        ]
+      },
       {
         id: "co-la-lon-man-muong",
         name: "Cỗ lá lợn mán hạt dổi xứ Mường",

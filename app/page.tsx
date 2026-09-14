@@ -229,7 +229,7 @@ export const UI_TEXT = {
     audioResume: "▶ Nghe tiếp",
     modalGoodSeason: "Thời điểm tuyệt đẹp để đi trong tháng",
     modalCautionSeason: "Cần lưu ý thời tiết trong tháng",
-    brandSubtitle: "PHÚ THỌ · VĨNH PHÚC · HÒA BÌNH",
+    brandSubtitle: "TỈNH PHÚ THỌ",
     explore: "Khám phá",
     trip: "Lịch trình",
     near: "Gần tôi",
@@ -241,7 +241,7 @@ export const UI_TEXT = {
     heroKicker: "VỀ MIỀN DI SẢN CỘI NGUỒN",
     heroTitle1: "Đi để khám phá.",
     heroTitle2: "Về để nhớ.",
-    heroDesc: "Khám phá trọn vẹn danh lam thắng cảnh, di sản văn hóa và ẩm thực nức tiếng của 3 tỉnh Phú Thọ – Vĩnh Phúc – Hòa Bình.",
+    heroDesc: "Khám phá trọn vẹn danh lam thắng cảnh, di sản văn hóa và ẩm thực nức tiếng của tỉnh Phú Thọ.",
     featuredDestCaption: "ĐIỂM ĐẾN NỔI BẬT",
     openGuideBtn: "Mở cẩm nang →",
     stampOriginTitle: "CỘI NGUỒN",
@@ -249,7 +249,7 @@ export const UI_TEXT = {
     heritageTag1: "✦ CHƯƠNG TRÌNH ĐẶC BIỆT 2026",
     heritageTag2: "✦ DU LỊCH DI SẢN & TÍCH ĐIỂM ĐỔI QUÀ",
     heritageTitle: "KHÁM PHÁ ĐẤT TỔ – GOM QUÀ YÊU THƯƠNG",
-    heritageDesc: "Tham gia hành trình di sản 3 tỉnh Phú Thọ – Vĩnh Phúc – Hòa Bình, check-in các điểm đến biểu tượng để tích lũy điểm thưởng và nhận ngay các voucher quà tặng đặc sản độc quyền.",
+    heritageDesc: "Tham gia hành trình di sản tỉnh Phú Thọ, check-in các điểm đến biểu tượng để tích lũy điểm thưởng và nhận ngay các voucher quà tặng đặc sản độc quyền.",
     perk1Title: "🏛️ Check-in Đền Hùng",
     perk1Desc: "Tặng ngay voucher 30.000đ khi lưu điểm đến và kích hoạt thuyết minh AI di sản.",
     perk2Title: "🎁 Thưởng Nhóm & Gia Đình",
@@ -262,7 +262,7 @@ export const UI_TEXT = {
     section01Title: "Khám phá theo địa phương & sở thích",
     viewAllBtn: "Xem tất cả →",
     selectProvinceLabel: "CHỌN TỈNH:",
-    provAll: "Tất cả 3 tỉnh",
+    provAll: "Tất cả",
     provPhuTho: "Phú Thọ",
     provVinhPhuc: "Vĩnh Phúc",
     provHoaBinh: "Hòa Bình",
@@ -284,7 +284,7 @@ export const UI_TEXT = {
     section03Kicker: "TRỢ LÝ LỊCH TRÌNH THÔNG MINH",
     section03Title1: "Hai ngày trọn vẹn,",
     section03Title2: "hướng dẫn viên lo hết.",
-    section03Desc: "Tự động tối ưu 4 yếu tố: Tham quan · Ăn uống · Lưu trú · Di chuyển & thời gian trên toàn địa bàn 3 tỉnh Phú Thọ, Vĩnh Phúc, Hòa Bình.",
+    section03Desc: "Tự động tối ưu 4 yếu tố: Tham quan · Ăn uống · Lưu trú · Di chuyển & thời gian trên toàn địa bàn tỉnh Phú Thọ.",
     planTripSmartBtn: "Lập lịch trình thông minh ngay →",
     suggestedTourTitle: "LỊCH TRÌNH GỢI Ý",
     routeSummary1: "⌁ Tuyến liên kết thuận tiện đường sá",
@@ -359,7 +359,7 @@ export const UI_TEXT = {
     tripControllerTitle: "BỘ ĐIỀU KHIỂN LỊCH TRÌNH",
     tripCustomize: "Tùy biến chuyến đi của bạn",
     tripStep1: "1. Chọn Tỉnh / Vùng du lịch",
-    tripCombine3: "Tất cả 3 tỉnh",
+    tripCombine3: "Tất cả",
     tripStep2: "2. Chọn Huyện / Thị xã muốn tới",
     tripAllDistricts: "Toàn bộ các huyện (Lập tuyến tự do)",
     tripDirectionGuide: "🧭 HƯỚNG DẪN ĐƯỜNG ĐI:",
@@ -3129,6 +3129,7 @@ export default function Home() {
     if (audioLang === "vi") {
       const aiVoices = [
         { id: "ai-female-north", label: "🌸 Giọng AI Nữ Hà Nội (Chuẩn Studio - Êm ái)" },
+        { id: "ai-male-north", label: "👔 Giọng AI Nam Hà Nội (Chuẩn Studio - Trầm ấm)" },
       ];
       const browserVoices = availableVoices
         .filter((v) => v.lang.toLowerCase().startsWith("vi"))
@@ -4345,11 +4346,9 @@ export default function Home() {
           matchedVoice =
             targetVoices.find(
               (v) =>
-                v.name.toLowerCase().includes("nữ") ||
-                v.name.toLowerCase().includes("nu") ||
-                v.name.toLowerCase().includes("female") ||
-                v.name.toLowerCase().includes("hoaimy") ||
-                v.name.toLowerCase().includes("linh")
+                !v.name.toLowerCase().includes("nam") &&
+                !v.name.toLowerCase().includes("male") &&
+                !v.name.toLowerCase().includes("b")
             ) || targetVoices[0];
         }
       }
@@ -4375,10 +4374,10 @@ export default function Home() {
         utterance.volume = audioVolume;
 
         if (isMaleAi) {
-          utterance.rate = audioRate * 0.92;
-          utterance.pitch = 0.72; // Trầm ấm nam tính
+          utterance.rate = audioRate * 0.82;
+          utterance.pitch = 0.85; // Trầm ấm nam tính
         } else {
-          utterance.rate = audioRate * 0.95;
+          utterance.rate = audioRate * 0.85;
           utterance.pitch = 1.05; // Truyền cảm nữ tính
         }
 
@@ -6368,7 +6367,7 @@ export default function Home() {
                 <span className="trip-pillar-chip"><i className="trip-pillar-chip__icon">🛏️</i> Điểm nghỉ dưỡng</span>
                 <span className="trip-pillar-chip"><i className="trip-pillar-chip__icon">🚗</i> Phương tiện & thời gian</span>
               </div>
-              <p className="trip-hero-desc">{t.tripPageDesc}</p>
+
               <div className="trip-hero-actions" style={{ display: "flex", gap: "12px", marginTop: "18px", flexWrap: "wrap" }}>
                 <button
                   type="button"
@@ -6917,7 +6916,7 @@ export default function Home() {
               Mã Giảm Giá & Voucher Đất Tổ
             </h1>
             <p style={{ color: "#475569", fontSize: "14px", maxWidth: "680px", lineHeight: 1.5 }}>
-              Lưu mã và áp dụng trực tiếp khi đặt vé tour hoặc mua sắm đặc sản OCOP trên địa bàn 3 tỉnh Phú Thọ – Vĩnh Phúc – Hòa Bình.
+              Lưu mã và áp dụng trực tiếp khi đặt vé tour hoặc mua sắm đặc sản OCOP trên địa bàn tỉnh Phú Thọ.
             </p>
           </div>
 
@@ -7384,32 +7383,7 @@ export default function Home() {
           </div>
 
           <div className="profile-grid">
-            <article className="passport-card">
-              <span className="kicker kicker--light">{t.passportKicker}</span>
-              <h2>{t.passportTitle1}<br />{t.passportTitle2}</h2>
-              <div className="stamp-row">
-                <span className="stamp is-earned">ĐH<small>Đền Hùng</small></span>
-                <span className="stamp is-earned">TĐ<small>Tam Đảo</small></span>
-                <span className="stamp">MC<small>Mai Châu</small></span>
-                <span className="stamp">TT<small>Thanh Thủy</small></span>
-              </div>
-              <p><b>2 / 4</b> {t.passportProgress}</p>
-            </article>
-            <article className="booking-card">
-              <span>{t.quickBookKicker}</span>
-              <h2>{t.quickBookTitle}</h2>
-              <button onClick={() => { setActiveTab("trip"); showToast(t.openTripAssistant); }}>
-                <i>▣</i><b>{t.btnTourDesignTitle}</b><small>{t.btnTourDesignSub}</small><em>→</em>
-              </button>
-              <button onClick={() => { setCategory("Nghỉ dưỡng & chữa lành"); setSelectedRegion("Tất cả"); setActiveTab("explore"); showToast(t.selectResortToast); }}>
-                <i>⌂</i><b>{t.btnHotelsTitle}</b><small>{t.btnHotelsSub}</small><em>→</em>
-              </button>
-              <button onClick={() => { setVouchersModalOpen(true); }}>
-                <i>🎁</i><b>{t.btnVouchersTitle}</b><small>{t.btnVouchersSub}</small><em>→</em>
-              </button>
-              <button onClick={() => { setCartOpen(true); setCartDrawerTab("cart"); }}>
-                <i>◇</i><b>{t.btnOcopTitle}</b><small>{t.btnOcopSub} ({cartQuantity} {t.profileItems})</small><em>→</em>
-              </button>
+            <article className="booking-card" style={{ gridColumn: "1 / -1" }}>
 
               {/* ROLE-BASED ORDER MANAGEMENT VISIBILITY */}
               {authUser && (authUser.role === "admin" || authUser.role === "merchant") ? (
@@ -9254,7 +9228,7 @@ function doPost(e) {
                 <div>
                   <span className="heritage-gold-tag">🍀 CHƯƠNG TRÌNH ĐẶC BIỆT 2026</span>
                   <h2 id="challenge-modal-title" className="challenge-modal-title">Thử Thách Du Lịch Đất Tổ</h2>
-                  <p className="challenge-modal-desc">Khám phá 32 huyện thị 3 tỉnh Phú Thọ – Vĩnh Phúc – Hòa Bình, tích lũy điểm thưởng đổi voucher OCOP giá trị!</p>
+                  <p className="challenge-modal-desc">Khám phá 32 huyện thị tỉnh Phú Thọ, tích lũy điểm thưởng đổi voucher OCOP giá trị!</p>
                 </div>
                 <button
                   type="button"
