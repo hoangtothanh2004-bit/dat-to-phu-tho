@@ -399,15 +399,19 @@ export default function AiChatbotWidget({
               ×
             </button>
             <div className="ai-launcher-tooltip__content" onClick={() => setIsOpen(true)}>
-              <div className="ai-launcher-tooltip__tag">✦ Trợ lý du lịch Đất Tổ</div>
+              <div className="ai-launcher-tooltip__tag">{isEn ? "✦ Dat To AI Assistant" : "✦ Trợ lý du lịch Đất Tổ"}</div>
               <div className="ai-launcher-tooltip__msg">
                 {authUser ? (
                   <span>
-                    Xin chào <strong>{authUser.name}</strong>! Cần em tự động lên lịch trình du lịch bấm đây nhé! 💬
+                    {isEn ? (
+                      <>Hello <strong>{authUser.name}</strong>! Need an automated itinerary? Click here! 💬</>
+                    ) : (
+                      <>Xin chào <strong>{authUser.name}</strong>! Cần em tự động lên lịch trình du lịch bấm đây nhé! 💬</>
+                    )}
                   </span>
                 ) : (
                   <span>
-                    Chào bạn! Cần trợ lý AI tự động lên lịch trình du lịch bấm đây nhé! 💬
+                    {isEn ? "Hello! Need an AI assistant to plan your trip? Click here! 💬" : "Chào bạn! Cần trợ lý AI tự động lên lịch trình du lịch bấm đây nhé! 💬"}
                   </span>
                 )}
               </div>

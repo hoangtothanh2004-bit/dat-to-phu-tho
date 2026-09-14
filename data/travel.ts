@@ -44,11 +44,13 @@ export type TransportTip = {
 export type Place = {
   id: string;
   name: string;
+  nameEn?: string;
   shortName: string;
   category: PlaceCategory;
   region: PlaceRegion;
   district: string;
   location: string;
+  locationEn?: string;
   image: string;
   imageCredit: string;
   rating: number;
@@ -58,6 +60,7 @@ export type Place = {
   description: string;
   tags: string[];
   highlights: string[];
+  highlightsEn?: string[];
   bestTime: string;
   season: string;
   seasonMonths: number[];
@@ -105,6 +108,7 @@ export const places: Place[] = [
     region: "Phú Thọ",
     district: "Việt Trì",
     location: "xã Hy Cương, thành phố Việt Trì, tỉnh Phú Thọ",
+    locationEn: "Hy Cương, Viet Tri, Phu Tho",
     image: "/images/places/den-hung.png",
     imageCredit: "Khu di tích lịch sử Đền Hùng",
     rating: 4.9,
@@ -114,6 +118,7 @@ export const places: Place[] = [
     description: "Quần thể đền thờ các Vua Hùng trên núi Nghĩa Lĩnh, trung tâm thực hành Tín ngưỡng thờ cúng Hùng Vương - Di sản văn hóa phi vật thể đại diện của nhân loại.",
     tags: ["Di sản", "Tín ngưỡng", "Gia đình", "Lịch sử"],
     highlights: ["Đền Hạ – Trung – Thượng", "Lăng Hùng Vương", "Bảo tàng Hùng Vương", "Đền Quốc Tổ Lạc Long Quân"],
+    highlightsEn: ["Ha - Trung - Thuong Temples", "Hung King Mausoleum", "Hung King Museum", "Lac Long Quan Temple"],
     bestTime: "06:30 – 09:30 hoặc sau 15:30",
     season: "Đẹp quanh năm; cao điểm Giỗ Tổ 10/3 âm lịch",
     seasonMonths: [1, 2, 3, 4, 9, 10, 11, 12],
@@ -198,11 +203,13 @@ export const places: Place[] = [
   {
     id: "xuan-son",
     name: "Vườn quốc gia Xuân Sơn",
+    nameEn: "Xuan Son National Park",
     shortName: "Xuân Sơn",
     category: "Núi rừng & sinh thái",
     region: "Phú Thọ",
     district: "Tân Sơn",
     location: "xã Xuân Đài, tỉnh Phú Thọ",
+    locationEn: "Xuan Dai, Phu Tho",
     image: "/images/places/xuan-son.png",
     imageCredit: "Trung tâm TTXT Du lịch Phú Thọ",
     rating: 4.8,
@@ -212,6 +219,7 @@ export const places: Place[] = [
     description: "Rừng nguyên sinh trên núi đá vôi, hang Lạng, hang Thổ Thần, suối trong vắt và văn hóa đặc sắc của đồng bào Dao Tiền, Mường ở Bản Cỏi và Bản Dù.",
     tags: ["Trekking", "Bản Cỏi", "Hang động", "Dao – Mường"],
     highlights: ["Rừng nguyên sinh núi đá vôi", "Bản Cỏi – bản Dù", "Hang Lạng – Hang Na", "Tắm suối và cỗ lá người Dao"],
+    highlightsEn: ["Limestone primary forest", "Coi & Du Villages", "Lang Cave - Na Cave", "Stream bathing & Dao ethnic cuisine"],
     bestTime: "07:00 – 16:30; bắt đầu trekking trước 14:00",
     season: "Tháng 3 – 5 và 9 – 11 thời tiết mát mẻ khô ráo",
     seasonMonths: [3, 4, 5, 9, 10, 11],
@@ -272,6 +280,7 @@ export const places: Place[] = [
     region: "Phú Thọ",
     district: "Tân Sơn",
     location: "xã Long Cốc, tỉnh Phú Thọ",
+    locationEn: "Long Cốc, Phu Tho",
     image: "/images/places/long-coc.jpg",
     imageCredit: "Trung tâm TTXT Du lịch Phú Thọ",
     rating: 4.9,
@@ -341,6 +350,7 @@ export const places: Place[] = [
     region: "Phú Thọ",
     district: "Thanh Thủy",
     location: "Thị trấn Thanh Thủy & Xã Bảo Yên, huyện Thanh Thủy",
+    locationEn: "Thanh Thuy & Bảo Yên, Thanh Thuy",
     image: "/images/places/thanh-thuy.jpg",
     imageCredit: "Khu nghỉ dưỡng khoáng nóng Thanh Thủy",
     rating: 4.8,
@@ -424,6 +434,7 @@ export const places: Place[] = [
     region: "Phú Thọ",
     district: "Việt Trì",
     location: "phường Vân Phú, tỉnh Phú Thọ",
+    locationEn: "Vân Phú, Phu Tho",
     image: "/images/places/hung-lo.jpg",
     imageCredit: "Cổng thông tin du lịch Phú Thọ",
     rating: 4.7,
@@ -492,6 +503,7 @@ export const places: Place[] = [
     region: "Phú Thọ",
     district: "Hạ Hòa",
     location: "Xã Hiền Lương, huyện Hạ Hòa",
+    locationEn: "Hiền Lương, Ha Hoa",
     image: "/images/places/den-mau-au-co.jpg",
     imageCredit: "Trung tâm TTXT Du lịch Phú Thọ",
     rating: 4.8,
@@ -559,6 +571,7 @@ export const places: Place[] = [
     region: "Phú Thọ",
     district: "Hạ Hòa",
     location: "xã Hạ Hòa, tỉnh Phú Thọ",
+    locationEn: "Ha Hoa, Phu Tho",
     image: "/images/places/dam-ao-chau.jpg",
     imageCredit: "Cổng thông tin du lịch Phú Thọ",
     rating: 4.7,
@@ -628,6 +641,7 @@ export const places: Place[] = [
     region: "Vĩnh Phúc",
     district: "Tam Đảo",
     location: "xã Tam Đảo, tỉnh Phú Thọ",
+    locationEn: "Tam Dao, Phu Tho",
     image: "/images/places/tam-dao.jpg",
     imageCredit: "Cổng thông tin du lịch Tam Đảo",
     rating: 4.8,
@@ -726,6 +740,7 @@ export const places: Place[] = [
     region: "Vĩnh Phúc",
     district: "Tam Đảo",
     location: "xã Đại Đình, tỉnh Phú Thọ",
+    locationEn: "Đại Đình, Phu Tho",
     image: "/images/places/tay-thien.jpg",
     imageCredit: "Ban Quản lý Di tích Quốc gia đặc biệt Tây Thiên",
     rating: 4.9,
@@ -735,6 +750,7 @@ export const places: Place[] = [
     description: "Trung tâm Phật giáo và tín ngưỡng thờ Mẫu lớn bậc nhất miền Bắc. Nơi giao hòa giữa đạo Mẫu Tam Phủ (Quốc Mẫu Tây Thiên Lăng Thị Tiêu) và Phật giáo Trúc Lâm với Thiền viện Trúc Lâm Tây Thiên và Đại Bảo tháp Mandala.",
     tags: ["Di tích Quốc gia đặc biệt", "Tâm linh", "Thiền viện", "Cáp treo", "Quốc Mẫu"],
     highlights: ["Đền Thỏng & Cây đa trăm tuổi", "Thiền viện Trúc Lâm Tây Thiên", "Đại Bảo tháp Mandala Tây Thiên", "Hệ thống cáp treo băng qua thung lũng rừng sâu"],
+    highlightsEn: ["Truc Lam Zen Monastery", "Silver Waterfall", "Tay Thien Cable Car", "Quoc Mau Tay Thien Temple"],
     bestTime: "07:00 – 11:30 sáng",
     season: "Lễ hội xuân từ Rằm tháng Giêng đến hết tháng Ba âm lịch",
     seasonMonths: [1, 2, 3, 4, 9, 10, 11, 12],
@@ -795,6 +811,7 @@ export const places: Place[] = [
     region: "Vĩnh Phúc",
     district: "Phúc Yên",
     location: "Phường Xuân Hòa, tỉnh Phú Thọ",
+    locationEn: "Xuân Hòa, Phu Tho",
     image: "/images/places/ho-dai-lai.jpg",
     imageCredit: "Cổng thông tin xúc tiến du lịch Vĩnh Phúc",
     rating: 4.7,
@@ -876,6 +893,7 @@ export const places: Place[] = [
     region: "Vĩnh Phúc",
     district: "Vĩnh Yên",
     location: "Phường Vĩnh Yên, tỉnh Phú Thọ",
+    locationEn: "Vĩnh Yên, Phu Tho",
     image: "/images/places/chua-ha-tien.jpg",
     imageCredit: "Cổng thông tin Phật giáo Vĩnh Phúc",
     rating: 4.8,
@@ -943,6 +961,7 @@ export const places: Place[] = [
     region: "Vĩnh Phúc",
     district: "Bình Xuyên",
     location: "xã Bình Nguyên, tỉnh Phú Thọ",
+    locationEn: "Bình Nguyên, Phu Tho",
     image: "/images/places/lang-gom-huong-canh.jpg",
     imageCredit: "Hội Làng nghề truyền thống gốm Hương Canh",
     rating: 4.7,
@@ -1012,6 +1031,7 @@ export const places: Place[] = [
     region: "Hòa Bình",
     district: "Mai Châu",
     location: "xã Mai Châu, tỉnh Phú Thọ",
+    locationEn: "Mai Châu, Phu Tho",
     image: "/images/places/ban-lac-mai-chau.jpg",
     imageCredit: "Du lịch cộng đồng thung lũng Mai Châu",
     rating: 4.9,
@@ -1095,6 +1115,7 @@ export const places: Place[] = [
     region: "Hòa Bình",
     district: "Kim Bôi",
     location: "Xóm Mớ Đá, thị trấn Bo, huyện Kim Bôi ",
+    locationEn: "Xóm Mớ Đá, Bo, Kim Bôi ",
     image: "/images/places/khoang-nong-kim-boi.jpg",
     imageCredit: "Khu du lịch sinh thái suối khoáng Kim Bôi",
     rating: 4.8,
@@ -1178,6 +1199,7 @@ export const places: Place[] = [
     region: "Hòa Bình",
     district: "Cao Phong",
     location: "Xã Thung Nai, tỉnh Phú Thọ",
+    locationEn: "Thung Nai, Phu Tho",
     image: "/images/places/thung-nai-song-da.jpg",
     imageCredit: "Cổng thông tin xúc tiến du lịch lòng hồ Hòa Bình",
     rating: 4.8,
@@ -1247,6 +1269,7 @@ export const places: Place[] = [
     region: "Hòa Bình",
     district: "Mai Châu",
     location: "Xã Pà Cò, tỉnh Phú Thọ",
+    locationEn: "Pà Cò, Phu Tho",
     image: "/images/places/pa-co-san-may.jpg",
     imageCredit: "Cổng thông tin du lịch Pà Cò",
     rating: 4.8,
@@ -1315,6 +1338,7 @@ export const places: Place[] = [
     region: "Hòa Bình",
     district: "TP. Hòa Bình cũ",
     location: "Số 202 đường Tây Tiến, phường Thái Bình, tỉnh Phú Thọ",
+    locationEn: "Số 202 đường Tây Tiến, Thái Bình, Phu Tho",
     image: "/images/places/bao-tang-muong.jpg",
     imageCredit: "Bảo tàng Không gian Văn hóa Mường",
     rating: 4.8,

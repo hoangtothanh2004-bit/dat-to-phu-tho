@@ -3415,6 +3415,7 @@ export default function Home() {
   // Multi-Currency & Multi-Language States
   const [currentCurrency, setCurrentCurrency] = useState<CurrencyCode>("VND");
   const [currentLang, setCurrentLang] = useState<LanguageCode>("vi");
+  const isEn = currentLang === "en";
   const [currencyDropdownOpen, setCurrencyDropdownOpen] = useState(false);
   const [langDropdownOpen, setLangDropdownOpen] = useState(false);
 
@@ -5587,8 +5588,8 @@ export default function Home() {
 
   const renderPlaceCard = (place: Place, compact = false) => (
     <article className={`place-card ${compact ? "place-card--compact" : ""}`} key={place.id}>
-      <button className="place-card__image-button" onClick={() => openPlace(place)} aria-label={`Xem ${place.name}`}>
-        <img className="place-card__image" src={place.image} alt={place.name} loading="lazy" onError={handleImageError} />
+      <button className="place-card__image-button" onClick={() => openPlace(place)} aria-label={`Xem ${isEn && place.nameEn ? place.nameEn : place.name}`}>
+        <img className="place-card__image" src={place.image} alt={isEn && place.nameEn ? place.nameEn : place.name} loading="lazy" onError={handleImageError} />
         <span className="place-card__category">{getCategoryLabel(place.category, t)}</span>
         <span className="place-card__region-badge">{getRegionLabel(place.region, t)}</span>
         {distanceFromUser(place) && <span className="place-card__distance">⌖ {distanceFromUser(place)}</span>}
@@ -5599,15 +5600,15 @@ export default function Home() {
           e.stopPropagation();
           toggleFavorite(place.id);
         }}
-        aria-label={favorites.includes(place.id) ? `Bỏ lưu ${place.name}` : `Lưu ${place.name}`}
+        aria-label={favorites.includes(place.id) ? `Bỏ lưu ${isEn && place.nameEn ? place.nameEn : place.name}` : `Lưu ${isEn && place.nameEn ? place.nameEn : place.name}`}
       >
         {favorites.includes(place.id) ? "♥" : "♡"}
       </button>
       <div className="place-card__body" onClick={() => openPlace(place)}>
-        <span className="eyebrow">{place.location}</span>
+        <span className="eyebrow">{isEn && place.locationEn ? place.locationEn : place.location}</span>
         <strong>{place.shortName}</strong>
         <span className="place-card__meta"><b>★ {place.rating}</b> ({place.reviews.toLocaleString("vi-VN")}) · {place.bestTime}</span>
-        {!compact && <span className="place-card__highlight">✦ {place.highlights[0]}</span>}
+        {!compact && <span className="place-card__highlight">✦ {isEn && place.highlightsEn ? place.highlightsEn[0] : place.highlights[0]}</span>}
         {!compact && (
           <div className="place-card__footer">
             <div className="place-card__actions-row">
