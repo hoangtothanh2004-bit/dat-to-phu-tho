@@ -416,7 +416,7 @@ export function createPlaceFromDistrict(
         : "Khách sạn du lịch tiện nghi",
       distance: "2,0 km",
       travelTime: "6 phút",
-      note: `Không gian nghỉ ngơi yên bình, phục vụ khách du lịch tại ${district.name}, chu đáo và đầy đủ tiện nghi.`,
+      note: `Không gian nghỉ ngơi tiện nghi, chu đáo.`,
       address: stayAddr || `${district.name}, tỉnh ${district.province}`,
       hours: "Lễ tân 24/7 (Nhận phòng 14:00 – Trả phòng 12:00)",
       phone: "0977 123 888",

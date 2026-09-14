@@ -49,7 +49,7 @@ export const DISTRICT_DATABASE: Record<string, DistrictInfo> = {
     ],
     culinary: [
       { dish: "Cá lăng & Cá ngạnh sông Lô (nướng than, lẩu om chuối đậu)", desc: "Cá da trơn săn chắc béo ngậy được đánh bắt tại ngã ba sông, ướp riềng mẻ nướng than hoa hoặc om chuối đậu thơm lừng.", places: "Quán Cá Hạc Trì (398 Lạc Long Quân), Nhà hàng Cá Lăng Sông Lô (Bến Gót)" },
-      { dish: "Bánh tai Phú Thọ (Bánh Hòn)", desc: "Bánh bột gạo tẻ dẻo thơm hình cánh tai heo bọc nhân thịt nạc mỡ xào hành tiêu thơm phức, ăn lúc vừa hấp nóng hổi.", places: "Bánh tai Bà Định Gia Cẩm (Đường Hàn Thuyên, P. Tân Dân), Chợ Trung tâm Việt Trì" },
+      { dish: "Bánh tai Phú Thọ", desc: "Bánh bột gạo tẻ dẻo thơm nặn hình cong vành tai bọc nhân thịt nạc mỡ xào hành tiêu thơm phức, ăn lúc vừa hấp nóng hổi.", places: "Bánh tai Bà Định Gia Cẩm (Đường Hàn Thuyên, P. Tân Dân), Chợ Trung tâm Việt Trì" },
       { dish: "Bún riêu cua đồng phố cổ Việt Trì", desc: "Nước dùng cua đồng ngọt thanh đậm đà kèm riêu cua béo ngậy, đậu phụ rán giòn và rau sống tươi mát.", places: "Phố ẩm thực Nguyễn Du, P. Nông Trang" },
     ],
     recommendedStay: "Khách sạn Mường Thanh Luxury Phú Thọ (5 sao), Khách sạn Sài Gòn - Phú Thọ (4 sao)",

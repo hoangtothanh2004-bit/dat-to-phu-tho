@@ -6323,7 +6323,7 @@ export default function Home() {
             <div className="trip-hero-left">
               <div className="trip-hero-badge">
                 <span className="trip-hero-badge__dot" />
-                <span>{isEn ? "✨ SMART ITINERARY PLANNER · ANCESTRAL LAND EXPLORATION" : "✨ TRỢ LÝ THIẾT KẾ LỊCH TRÌNH THÔNG MINH · ĐẤT TỔ PHÚ THỌ"}</span>
+                <span>{isEn ? "✨ SMART ITINERARY PLANNER" : "✨ TRỢ LÝ THIẾT KẾ LỊCH TRÌNH THÔNG MINH"}</span>
               </div>
               <h1 className="trip-hero-title">
                 <span className="trip-hero-title__primary">{t.tripPageTitle1}</span>

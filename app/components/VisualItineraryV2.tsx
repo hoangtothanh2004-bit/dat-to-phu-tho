@@ -114,48 +114,46 @@ function getSlotPillars(slot: ItinerarySlot, dayPlan?: ItineraryDay): SlotFivePi
   // 1. Đi đâu
   const whereTitle = slot.place?.name || (slot.type === "meal" ? (slot.restaurant?.name || "Điểm dừng ẩm thực") : slot.title);
   const whereDetail = slot.place
-    ? `${slot.place.location} (${slot.place.district}, ${slot.place.region})`
-    : slot.activity;
-  const whereHighlights = slot.place?.highlights || [];
+    ? slot.place.location
+    : (slot.activity ? slot.activity.split(".")[0].trim() : "Điểm đến tiêu biểu");
+  const whereHighlights = (slot.place?.highlights || []).slice(0, 3);
 
-  // 2. Ăn gì
+  // 2. Ăn gì - Rút gọn súc tích, tránh lan man nhiều chữ
   const dineTitle = slot.restaurant
     ? slot.restaurant.name
     : slot.place?.restaurants?.[0]?.name
     ? slot.place.restaurants[0].name
-    : "Đặc sản bản địa theo vùng";
-  const dineDetail = slot.restaurant
-    ? `${slot.restaurant.note || slot.restaurant.taste || "Món ngon nổi bật"} – ${slot.restaurant.address}`
-    : slot.place?.restaurants?.[0]
-    ? `${slot.place.restaurants[0].note || slot.place.restaurants[0].taste || "Món ngon địa phương"} – ${slot.place.restaurants[0].address}`
-    : "Gà đồi nướng, cá lăng om chuối đậu, rau su su, thịt chua Thanh Sơn";
+    : "Đặc sản địa phương";
+  const rawDineDish = slot.restaurant?.taste || slot.restaurant?.note || slot.place?.restaurants?.[0]?.taste || slot.place?.restaurants?.[0]?.note || "Món ngon đặc sản nổi bật";
+  const shortDish = rawDineDish.split(/[.,;]/)[0].trim().slice(0, 45);
+  const rawDineAddr = slot.restaurant?.address || slot.place?.restaurants?.[0]?.address || "";
+  const shortAddr = rawDineAddr ? rawDineAddr.split(",")[0].trim() : "";
+  const dineDetail = shortAddr ? `${shortDish} – ${shortAddr}` : shortDish;
   const dineDistance = slot.restaurant?.distance || slot.place?.restaurants?.[0]?.distance || "Khu vực lân cận (~1-3 km)";
 
-  // 3. Ở đâu
+  // 3. Ở đâu - Tối giản, trực diện
   const hasDirectStay = !!slot.stay;
   const stayTitle = slot.stay
     ? slot.stay.name
     : dayPlan?.stayForNight
     ? dayPlan.stayForNight.name
     : "Khách sạn / Homestay trung tâm";
-  const stayDetail = slot.stay
-    ? `${slot.stay.note || "Tiêu chuẩn lưu trú chất lượng"} – ${slot.stay.address}`
-    : dayPlan?.stayForNight
-    ? `${dayPlan.stayForNight.note || "Resort / Homestay nghỉ đêm lý tưởng"} – ${dayPlan.stayForNight.address}`
-    : "Nghỉ ngơi linh hoạt gần trung tâm các điểm tham quan";
+  const targetStay = slot.stay || dayPlan?.stayForNight;
+  const stayAddrShort = targetStay?.address ? targetStay.address.split(",")[0].trim() : "Trung tâm";
+  const stayDetail = `Tiêu chuẩn tiện nghi, chu đáo – ${stayAddrShort}`;
 
-  // 4. Phương tiện
-  const transportTitle = slot.transportAdvice
-    ? slot.transportAdvice.split(".")[0].slice(0, 48)
-    : "Ô tô riêng / Xe máy du lịch";
-  const transportDetail = slot.transportAdvice || "Di chuyển trên các trục đường nhựa chính, giao thông kết nối thông suốt";
+  // 4. Phương tiện - Gọn gàng, dễ hiểu
+  const transportTitle = "Ô tô / Xe máy thuận tiện";
+  const transportDetail = slot.travelMinutes
+    ? `Thời gian di chuyển ~${slot.travelMinutes} phút qua đường chính thông thoáng.`
+    : "Tuyến đường chính thông thoáng, thuận lợi di chuyển.";
   const distanceKm = slot.place ? Math.max(1, Math.round(slot.place.distanceFromVietTri * 0.4 || 12)) : 12;
 
   // 5. Thời gian
   const timeSlot = slot.timeSlot;
   const durationText = slot.travelMinutes
-    ? `Dừng trải nghiệm ~${Math.max(60, 180 - slot.travelMinutes)} phút (di chuyển ~${slot.travelMinutes}p)`
-    : "Thời gian thư thái: 90 – 120 phút";
+    ? `Tham quan ~${Math.max(60, 180 - slot.travelMinutes)} phút (di chuyển ~${slot.travelMinutes}p)`
+    : "Thời gian trải nghiệm: 90 – 120 phút";
 
   return {
     where: { label: "Đi đâu", title: whereTitle, detail: whereDetail, highlights: whereHighlights },
@@ -837,7 +835,7 @@ export default function VisualItineraryV2(props: VisualItineraryV2Props) {
                     <span className="v2-pillars-spark">✦</span>
                     <div>
                       <h4>5 YẾU TỐ HÀNH TRÌNH TIÊU CHUẨN</h4>
-                      <small>Thông tin cốt lõi trả lời trọn vẹn thắc mắc của bạn</small>
+                      <small>Thông tin cốt lõi cho điểm dừng chân</small>
                     </div>
                   </div>
 
