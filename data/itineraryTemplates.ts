@@ -16,6 +16,28 @@ export type TourTemplate = {
 
 export const tourTemplates: TourTemplate[] = [
   {
+    id: "tour-viet-tri-den-hung-thanh-thuy-tam-dao-2n1d",
+    title: "Việt Trì – Đền Hùng – Thanh Thủy – Tam Đảo (2N1Đ)",
+    durationDays: 2,
+    durationLabel: "2 ngày 1 đêm",
+    region: "Phú Thọ",
+    badge: "Lịch trình chuẩn hồ sơ",
+    theme: "Di sản & Nghỉ dưỡng",
+    recommendedTransport: "Ô tô riêng / Xe du lịch",
+    anchorPlaceId: "den-hung",
+    image: "/images/places/den-hung.png",
+    summary: "Hành trình chuẩn xác theo tài liệu 'lịch trình du lịch': Xuất phát từ Việt Trì, ăn sáng Mai Anh, dâng hương Đền Hùng, ăn trưa Giang Lan, nhận phòng 5 sao Lynn Times Thanh Thủy tắm Onsen khoáng Radon, ăn tối chả cá sông Đà; ngày 2 vượt đèo mây Tam Đảo, check-in Nhà thờ đá, ăn trưa Tam Đảo Núi và cà phê Cổng Trời.",
+    estimatedBudgetPerPerson: "1.400.000 – 1.850.000đ",
+    highlights: [
+      "Ăn sáng Mai Anh & Đại lễ chiêm bái Đền Hùng",
+      "Ăn trưa cá sông Lô nhà hàng Giang Lan Đền Hùng",
+      "Nghỉ dưỡng Shoptel 5 sao & Tắm Onsen khoáng Radon Lynn Times",
+      "Thưởng thức Chả cá sông Đà & Tinh hoa Bắc Bộ",
+      "Check-in Nhà thờ đá cổ & Quảng trường mây Tam Đảo",
+      "Ăn trưa rau su su Tam Đảo Núi & Café Cổng Trời ngắm biển mây"
+    ]
+  },
+  {
     id: "tour-den-hung-1n",
     title: "Về Cội Nguồn Đất Tổ: Đền Hùng – Làng Cổ Hùng Lô",
     durationDays: 1,

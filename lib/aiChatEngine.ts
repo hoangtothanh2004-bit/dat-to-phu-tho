@@ -1,6 +1,6 @@
 import { places, type Place, foodRegions } from "@/data/travel";
 import { DISTRICT_DATABASE, findDistrictByQuery, type DistrictInfo } from "@/data/districtDirectory";
-import { buildItinerary, type GeneratedItinerary } from "./guidePlanner";
+import { buildItinerary, getOfficialDocxItinerary, type GeneratedItinerary } from "./guidePlanner";
 
 export const DISTRICT_TO_ANCHOR_MAP: Record<string, string> = {
   // Phú Thọ (13 huyện/thị/thành)
@@ -1222,6 +1222,56 @@ export function processAiMessage(
 
   // 2. Entity Extraction
   const { survey, destinationMatched } = extractEntitiesFromText(trimmed, currentSurvey);
+
+  // 2.1. Check if user is asking for the official docx itinerary
+  const isAskingDocxTour =
+    lower.includes("lịch trình du lịch") ||
+    lower.includes("theo file") ||
+    lower.includes("theo tài liệu") ||
+    (lower.includes("đền hùng") && lower.includes("thanh thủy") && lower.includes("tam đảo")) ||
+    (lower.includes("việt trì") && lower.includes("đền hùng") && lower.includes("thanh thủy"));
+
+  if (isAskingDocxTour) {
+    const officialItinerary = getOfficialDocxItinerary();
+    return {
+      text:
+        `Dạ, em đã tải **Lịch trình chuẩn 2N1Đ (Việt Trì – Đền Hùng – Thanh Thủy – Tam Đảo)** theo đúng tài liệu hồ sơ du lịch chi tiết cho bạn rồi ạ!\n\n` +
+        `📋 **Tóm tắt hành trình 2 ngày 1 đêm:**\n` +
+        `• **Ngày 1 (Việt Trì – Đền Hùng – Thanh Thủy):**\n` +
+        `   - 07:30: Xuất phát từ trung tâm Việt Trì\n` +
+        `   - 07:30 – 08:00: Ăn sáng tại Nhà hàng Mai Anh (Hy Cương)\n` +
+        `   - 08:00 – 10:30: Chiêm bái Đền Hùng (Đền Hạ → Đền Trung → Đền Thượng → Đền Giếng → Bảo tàng Hùng Vương)\n` +
+        `   - 11:00 – 12:15: Ăn trưa tại Nhà Hàng Giang Lan Đền Hùng\n` +
+        `   - 12:15 – 13:30: Di chuyển Đền Hùng → Thanh Thủy\n` +
+        `   - 13:30 – 14:30: Nhận phòng Shoptel nghỉ dưỡng tại Lynn Times Thanh Thủy\n` +
+        `   - 14:30 – 16:00: Tắm khoáng nóng Radon tại Ohayo Onsen & Spa\n` +
+        `   - 16:00 – 17:30: Dạo phố đi bộ sinh thái, hồ cá Koi, check-in café\n` +
+        `   - 18:30 – 19:45: Ăn tối Nhà hàng Tinh Hoa Bắc Bộ & Chả Cá Sông Đà\n` +
+        `   - 19:45 – 21:15: Dạo quảng trường Sakura & Hokkaido, café & nghỉ đêm\n\n` +
+        `• **Ngày 2 (Thanh Thủy – Tam Đảo – Việt Trì):**\n` +
+        `   - 07:30 – 08:15: Buffet sáng tại Lynn Times Thanh Thủy\n` +
+        `   - 09:00 – 10:30: Di chuyển Thanh Thủy → Tam Đảo qua đèo mây\n` +
+        `   - 10:30 – 11:30: Check-in Quảng trường Tam Đảo & Nhà thờ đá cổ\n` +
+        `   - 11:30 – 12:45: Ăn trưa tại Nhà Hàng TAM ĐẢO NÚI (ngọn su su & gà đồi)\n` +
+        `   - 12:45 – 14:00: Thưởng thức café ngắm biển mây tại Cổng Trời\n` +
+        `   - 14:00 – 15:45: Dạo chợ mua quà đặc sản & check-in phố núi\n` +
+        `   - 16:00 – 17:30: Di chuyển về TP. Việt Trì, kết thúc chuyến đi an toàn!\n\n` +
+        `Thẻ lịch trình chi tiết và bảng chi phí từng chặng đã được cập nhật ngay trên màn hình để bạn dễ dàng theo dõi:`,
+      itinerary: officialItinerary,
+      options: [
+        { label: "⭐ Xem chi tiết ngày 1", value: "xem_ngay_1", icon: "🏛️" },
+        { label: "🌫️ Xem chi tiết ngày 2", value: "xem_ngay_2", icon: "📍" },
+        { label: "🚗 Xem lộ trình Google Maps", value: "xem_ban_do", icon: "🗺️" },
+      ],
+      updatedSurvey: {
+        ...currentSurvey,
+        durationDays: 2,
+        transport: "Ô tô riêng",
+        anchorPlaceId: "den-hung",
+      },
+    };
+  }
+
 
   // =========================================================================
   // 2.5. ROUTE & JOURNEY INTENT: User asks for a route from Place A to Place B

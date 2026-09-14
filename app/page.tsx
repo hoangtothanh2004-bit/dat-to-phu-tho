@@ -21,7 +21,7 @@ import {
 } from "@/data/travel";
 import { culturalEvents } from "@/data/events";
 import { tourTemplates, type TourTemplate } from "@/data/itineraryTemplates";
-import { buildItinerary, DISTRICT_TRAVEL_GUIDES, type GeneratedItinerary } from "@/lib/guidePlanner";
+import { buildItinerary, getOfficialDocxItinerary, DISTRICT_TRAVEL_GUIDES, type GeneratedItinerary } from "@/lib/guidePlanner";
 import { getAllDistrictPlaces, getDistrictTravelGuide } from "@/lib/districtPlaceGenerator";
 import VisualItineraryV2 from "./components/VisualItineraryV2";
 import AiChatbotWidget from "./components/AiChatbotWidget";
@@ -3054,15 +3054,7 @@ export default function Home() {
   const [interest, setInterest] = useState("Văn hóa & cội nguồn");
   const [isBuilderCollapsed, setIsBuilderCollapsed] = useState<boolean>(true);
   const [generatedItinerary, setGeneratedItinerary] = useState<GeneratedItinerary>(() =>
-    buildItinerary({
-      anchorPlaceId: places[0]?.id || "den-hung",
-      selectedPlaceIds: [places[0]?.id || "den-hung"],
-      durationDays: 2,
-      transport: "Ô tô riêng",
-      budget: "Tiêu chuẩn",
-      style: "Văn hóa & cội nguồn",
-      travelers: 2,
-    })
+    getOfficialDocxItinerary()
   );
 
   // Audio guide controls & voice customization (AI TTS + Browser Speech)
@@ -4546,6 +4538,15 @@ export default function Home() {
 
   const handleApplyTourTemplate = (tmpl: TourTemplate) => {
     stopAllAudio();
+    if (tmpl.id === "tour-viet-tri-den-hung-thanh-thuy-tam-dao-2n1d") {
+      setTargetPlaceId("den-hung");
+      setDays(2);
+      setTransport("Ô tô riêng");
+      setInterest("Di sản & Nghỉ dưỡng");
+      setGeneratedItinerary(getOfficialDocxItinerary());
+      showToast(`✦ Đã áp dụng: ${tmpl.title}`);
+      return;
+    }
     setTargetPlaceId(tmpl.anchorPlaceId);
     setDays(tmpl.durationDays);
     const tVehicle = tmpl.recommendedTransport.includes("Xe máy")
@@ -6409,6 +6410,34 @@ export default function Home() {
                   }}
                 >
                   <span>🍀 Thử thách check-in đổi đặc sản</span>
+                </button>
+                <button
+                  type="button"
+                  onClick={() => {
+                    stopAllAudio();
+                    setDays(2);
+                    setTransport("Ô tô riêng");
+                    setInterest("Di sản & Nghỉ dưỡng");
+                    setGeneratedItinerary(getOfficialDocxItinerary());
+                    showToast("⭐ Đã tải Lịch trình chuẩn 2N1Đ (Việt Trì – Đền Hùng – Thanh Thủy – Tam Đảo) theo tài liệu!");
+                  }}
+                  style={{
+                    background: "linear-gradient(135deg, #b8860b 0%, #d4af37 100%)",
+                    color: "#ffffff",
+                    fontWeight: 800,
+                    fontSize: "13.5px",
+                    padding: "10px 20px",
+                    borderRadius: "999px",
+                    border: 0,
+                    cursor: "pointer",
+                    boxShadow: "0 4px 14px rgba(184, 134, 11, 0.35)",
+                    display: "inline-flex",
+                    alignItems: "center",
+                    gap: "8px",
+                  }}
+                  title="Tải ngay lịch trình 2N1Đ chi tiết từ file 'lịch trình du lịch.docx'"
+                >
+                  <span>⭐ Lịch trình chuẩn 2N1Đ (theo tài liệu)</span>
                 </button>
               </div>
             </div>
