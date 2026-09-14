@@ -188,7 +188,7 @@ export const DEFAULT_VOUCHERS: Voucher[] = [
     title: "Combo Gia Đình Giảm 15%",
     discountPercent: 15,
     minSpend: 800000,
-    description: "Ưu đãi cho tour gia đình du lịch trải nghiệm 3 tỉnh Phú Thọ - Vĩnh Phúc - Hòa Bình.",
+    description: "Ưu đãi cho tour gia đình du lịch trải nghiệm Đất Tổ Phú Thọ.",
     badge: "FAMILY",
     expiry: "31/12/2026",
     pointCost: 150,
@@ -322,7 +322,7 @@ export const UI_TEXT = {
     totalPayment: "Tổng thanh toán",
     floatingCartLabel: "Giỏ hàng",
     floatingCartSubDefault: "Đặc sản OCOP",
-    passportKicker: "HỘ CHIẾU DU LỊCH 3 TỈNH",
+    passportKicker: "HỘ CHIẾU DU LỊCH ĐẤT TỔ",
     passportTitle1: "Sưu tập dấu chân,",
     passportTitle2: "mở khóa đặc quyền.",
     passportProgress: "điểm đã check-in · Thêm dấu để nhận quà tặng lưu niệm Đất Tổ",
@@ -636,7 +636,7 @@ export const UI_TEXT = {
     comboTour1: "Đền Hùng + Khoáng nóng Thanh Thủy",
     comboTour2: "Tam Đảo + Thung lũng Mai Châu",
     comboTour3: "Khoáng nóng Thanh Thủy + Kim Bôi",
-    comboTour4: "Trọn Vẹn 3 Tỉnh (Phú Thọ – Vĩnh Phúc – Hòa Bình)",
+    comboTour4: "Trọn Vẹn Đất Tổ Phú Thọ",
     periodMorning: "SÁNG",
     periodNoon: "TRƯA",
     periodAfternoon: "CHIỀU",
@@ -2704,7 +2704,7 @@ export const BADGE_DEFINITIONS: BadgeItem[] = [
     id: "dat-to-explorer",
     title: "Phượt thủ Đất Tổ",
     icon: "🎒",
-    desc: "Hành trình vĩ đại chinh phục trọn vẹn bản đồ du lịch liên kết 3 tỉnh Đất Tổ.",
+    desc: "Hành trình vĩ đại chinh phục trọn vẹn bản đồ du lịch Đất Tổ Phú Thọ.",
     criteria: "Hoàn thành toàn bộ 10/10 địa điểm trong thử thách",
     checkUnlocked: (completed) => completed.length >= 10,
   },
@@ -2994,25 +2994,25 @@ export const TRAVEL_CHALLENGE_REWARDS: TravelReward[] = [
   {
     id: "rew-voucher-tour",
     title: "Voucher Ưu Đãi Đặt Tour Du Lịch 20%",
-    desc: "Giảm ngay 20% khi đặt tour du lịch trọn gói trải nghiệm liên tuyến 3 tỉnh Phú Thọ - Vĩnh Phúc - Hòa Bình.",
+    desc: "Giảm ngay 20% khi đặt tour du lịch trọn gói trải nghiệm Đất Tổ Phú Thọ với hướng dẫn viên bản địa.",
     cost: 250,
     icon: "🎁",
     badge: "TOUR VIP",
     code: "TOURDATTO20",
     image: "/images/itinerary-teaser-bg.png",
-    province: "Liên tuyến 3 tỉnh",
+    province: "Đất Tổ Phú Thọ",
     originalPrice: "20% Tour",
   },
   {
     id: "rew-gift-vip",
     title: "Hộp Quà Tinh Hoa Đất Tổ OCOP 5 Sao",
-    desc: "Bộ quà tặng VIP đại sứ kết tinh đặc sản cao cấp nhất của 3 vùng miền, trao tận tay du khách tích cực.",
+    desc: "Bộ quà tặng VIP đại sứ kết tinh đặc sản cao cấp nhất vùng Đất Tổ, trao tận tay du khách tích cực.",
     cost: 350,
     icon: "🏆",
     badge: "VIP 5★",
     code: "VIP-TINHOA-DATTO",
     image: "/images/places/den-hung.png",
-    province: "3 Tỉnh Liên Kết",
+    province: "Đất Tổ Phú Thọ",
     originalPrice: "450.000đ",
   },
 ];
@@ -3040,6 +3040,7 @@ export default function Home() {
   
   const [selected, setSelected] = useState<Place | null>(null);
   const [detailMode, setDetailMode] = useState<"eat" | "stay">("eat");
+  const [modalSidebarTab, setModalSidebarTab] = useState<"photo" | "map">("photo");
   const [targetPlaceId, setTargetPlaceId] = useState<string>(places[0]?.id || "den-hung");
   
   // Trip planner states
@@ -6411,36 +6412,6 @@ export default function Home() {
                 </button>
               </div>
             </div>
-
-            <div className="trip-hero-visual" aria-hidden="true">
-              <div className="trip-hero-visual__media">
-                <img
-                  src="/images/itinerary-teaser-bg.png"
-                  alt="Du lịch liên kết Phú Thọ - Vĩnh Phúc - Hòa Bình"
-                  className="trip-hero-visual__img"
-                  loading="lazy"
-                  onError={handleImageError}
-                />
-                <div className="trip-hero-visual__overlay" />
-                <span className="trip-hero-visual__pill">🌟 TUYẾN DU LỊCH 3 TỈNH ĐẤT TỔ</span>
-                <div className="trip-hero-visual__badge-card">
-                  <div className="trip-hero-visual__provinces">
-                    <span className="trip-badge-province">Phú Thọ</span>
-                    <span className="trip-badge-sep">•</span>
-                    <span className="trip-badge-province">Vĩnh Phúc</span>
-                    <span className="trip-badge-sep">•</span>
-                    <span className="trip-badge-province">Hòa Bình</span>
-                  </div>
-                  <div className="trip-hero-visual__details">
-                    <span><b>32</b> Huyện thị</span>
-                    <span>·</span>
-                    <span><b>100+</b> Điểm đến</span>
-                    <span>·</span>
-                    <span><b>AI</b> Tối ưu lộ trình</span>
-                  </div>
-                </div>
-              </div>
-            </div>
           </div>
 
           <div className="builder-toggle-strip">
@@ -7726,9 +7697,74 @@ export default function Home() {
                   </div>
                 </section>
               </div>
-              <aside className="modal-map">
-                <iframe title={`Bản đồ ${selected.name}`} src={`https://www.openstreetmap.org/export/embed.html?bbox=${selected.lng - 0.035}%2C${selected.lat - 0.025}%2C${selected.lng + 0.035}%2C${selected.lat + 0.025}&layer=mapnik&marker=${selected.lat}%2C${selected.lng}`} loading="lazy" />
-                <div><span>⌖</span><p><b>{isEn && selected.locationEn ? selected.locationEn : selected.location}</b><small>{position ? `${formatDistance(haversine(position.lat, position.lng, selected.lat, selected.lng))} · ${estimateTravel(haversine(position.lat, position.lng, selected.lat, selected.lng))} ${t.fromYou}` : `${selected.distanceFromVietTri} km · ${selected.travelFromVietTri} ${t.fromVietTri}`}</small></p></div>
+              <aside className="modal-map" style={{ display: "flex", flexDirection: "column", overflow: "hidden" }}>
+                <div className="modal-sidebar-switch" style={{ display: "flex", gap: "6px", padding: "10px 14px", background: "#f8f9fa", borderBottom: "1px solid var(--line)" }}>
+                  <button
+                    type="button"
+                    className={`button ${modalSidebarTab === "photo" ? "button--dark" : "button--outline"}`}
+                    style={{ flex: 1, padding: "7px 12px", fontSize: "12px", borderRadius: "999px" }}
+                    onClick={() => setModalSidebarTab("photo")}
+                  >
+                    🖼️ {isEn ? "Photos" : "Hình ảnh địa danh"}
+                  </button>
+                  <button
+                    type="button"
+                    className={`button ${modalSidebarTab === "map" ? "button--dark" : "button--outline"}`}
+                    style={{ flex: 1, padding: "7px 12px", fontSize: "12px", borderRadius: "999px" }}
+                    onClick={() => setModalSidebarTab("map")}
+                  >
+                    🗺️ {isEn ? "Map View" : "Bản đồ vệ tinh"}
+                  </button>
+                </div>
+
+                <div style={{ position: "relative", flex: 1, minHeight: "360px", background: "#f1f3f4", overflow: "hidden" }}>
+                  {modalSidebarTab === "photo" ? (
+                    <div style={{ position: "relative", width: "100%", height: "100%", minHeight: "360px" }}>
+                      <img
+                        src={selected.image}
+                        alt={selected.name}
+                        style={{ width: "100%", height: "100%", minHeight: "360px", objectFit: "cover" }}
+                        onError={handleImageError}
+                      />
+                      <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(0,0,0,0.7) 0%, transparent 60%)" }} />
+                      <div style={{ position: "absolute", bottom: "16px", left: "16px", right: "16px", color: "#ffffff" }}>
+                        <span style={{ fontSize: "11px", fontWeight: 700, background: "rgba(0,0,0,0.6)", padding: "3px 8px", borderRadius: "4px" }}>
+                          📸 {selected.imageCredit || "Ảnh danh lam thắng cảnh Đất Tổ"}
+                        </span>
+                        <h4 style={{ margin: "6px 0 2px", fontSize: "16px", fontWeight: 800 }}>{isEn && selected.nameEn ? selected.nameEn : selected.name}</h4>
+                        <p style={{ margin: 0, fontSize: "12px", opacity: 0.9 }}>{isEn && selected.locationEn ? selected.locationEn : selected.location}</p>
+                      </div>
+                    </div>
+                  ) : (
+                    <iframe
+                      title={`Bản đồ ${selected.name}`}
+                      src={`https://www.openstreetmap.org/export/embed.html?bbox=${selected.lng - 0.035}%2C${selected.lat - 0.025}%2C${selected.lng + 0.035}%2C${selected.lat + 0.025}&layer=mapnik&marker=${selected.lat}%2C${selected.lng}`}
+                      style={{ width: "100%", height: "100%", minHeight: "360px", border: 0 }}
+                      loading="lazy"
+                    />
+                  )}
+                </div>
+
+                <div style={{ padding: "14px 16px", background: "#ffffff", borderTop: "1px solid var(--line)" }}>
+                  <div style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "8px" }}>
+                    <span style={{ fontSize: "20px", color: "var(--red)" }}>📍</span>
+                    <div>
+                      <b style={{ display: "block", fontSize: "13.5px", color: "var(--ink)" }}>{isEn && selected.locationEn ? selected.locationEn : selected.location}</b>
+                      <small style={{ fontSize: "11px", color: "var(--muted)" }}>
+                        {position ? `${formatDistance(haversine(position.lat, position.lng, selected.lat, selected.lng))} · ${estimateTravel(haversine(position.lat, position.lng, selected.lat, selected.lng))} ${t.fromYou}` : `${selected.distanceFromVietTri} km · ${selected.travelFromVietTri} ${t.fromVietTri}`}
+                      </small>
+                    </div>
+                  </div>
+                  <a
+                    className="button button--dark"
+                    style={{ width: "100%", textAlign: "center", display: "block", fontSize: "12.5px", padding: "8px 12px", borderRadius: "var(--radius-sm)" }}
+                    target="_blank"
+                    rel="noreferrer"
+                    href={`https://www.google.com/maps/dir/?api=1&destination=${selected.lat},${selected.lng}`}
+                  >
+                    🚀 {isEn ? "Open Google Maps Directions" : "Mở Google Maps chỉ đường trực tiếp"}
+                  </a>
+                </div>
               </aside>
             </div>
           </section>
