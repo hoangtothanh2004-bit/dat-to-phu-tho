@@ -313,6 +313,14 @@ function getDistrictSpotImage(districtId: string, idx: number): string {
     if (idx === 1) return "/images/places/tay-thien.png"; // Thiền viện Tuệ Đức
     return "/images/places/dam-ao-chau.png";
   }
+  if (districtId === "doan-hung" || districtId === "doan-hung-cu") {
+    if (idx === 0) return "/images/places/den-hung.png"; // Tượng đài
+    if (idx === 1) return "/images/places/xuan-son.png"; // Sông Lô
+    if (idx === 2) return "/images/food/buoi-doan-hung.jpg"; // Bưởi 1
+    if (idx === 3) return "/images/food/buoi-doan-hung.jpg"; // Bưởi 2
+    if (idx === 4) return "/images/food/buoi-doan-hung.jpg"; // Bưởi 3
+    return "/images/food/buoi-doan-hung.jpg";
+  }
 
   // General fallbacks
   const photos = [

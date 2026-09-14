@@ -416,13 +416,13 @@ export const UI_TEXT = {
     // Near Me
     nearKicker: "TIỆN ÍCH VÀ DỊCH VỤ DU LỊCH",
     nearTitle1: "Tiện ích quanh bạn",
-    nearTitle2: "trên cả 3 tỉnh.",
+    nearTitle2: "tại Phú Thọ.",
     nearLocationNotEnabled: "Chưa bật định vị",
     nearAllowLocation: "Cho phép vị trí để tính khoảng cách thực",
     nearUpdateGPS: "Cập nhật GPS",
     nearEnableGPS: "Bật định vị GPS",
     nearAreaLabel: "KHU VỰC:",
-    nearAll3Provinces: "Toàn bộ 3 tỉnh",
+    nearAll3Provinces: "Toàn bộ Phú Thọ",
     nearServiceGasStation: "Trạm xăng",
     nearServiceParking: "Bãi đỗ xe",
     nearServiceMedical: "Y tế",
@@ -5610,22 +5610,7 @@ export default function Home() {
         {!compact && <span className="place-card__highlight">✦ {place.highlights[0]}</span>}
         {!compact && (
           <div className="place-card__footer">
-            <span className="place-card__distance-info">
-              {distanceFromUser(place)
-                ? `${distanceFromUser(place)} · ${estimateTravel(haversine(position!.lat, position!.lng, place.lat, place.lng))}`
-                : `${place.distanceFromVietTri} km ${t.fromVietTri}`}
-            </span>
             <div className="place-card__actions-row">
-              <a
-                className="place-card__quick-map-btn"
-                target="_blank"
-                rel="noreferrer"
-                href={`https://www.google.com/maps/dir/?api=1&destination=${place.lat},${place.lng}`}
-                onClick={(e) => e.stopPropagation()}
-                aria-label={`${t.getDirectionsBtn}: ${place.name}`}
-              >
-                {t.getDirectionsBtn}
-              </a>
               <span className="place-card__detail-link">{t.detailsBtn}</span>
             </div>
           </div>
@@ -6048,8 +6033,8 @@ export default function Home() {
                 <div className="hero-feature-item" onClick={() => { setSelectedRegion("Tất cả"); document.getElementById("destinations-section")?.scrollIntoView({ behavior: "smooth" }); }}>
                   <span className="hero-feat-icon">📍</span>
                   <div className="hero-feat-content">
-                    <strong>3 TỈNH – MUÔN TRẢI NGHIỆM</strong>
-                    <small>Phú Thọ – Vĩnh Phúc – Hòa Bình</small>
+                    <strong>TỈNH PHÚ THỌ – MUÔN TRẢI NGHIỆM</strong>
+                    <small>Hành trình khám phá Đất Tổ</small>
                   </div>
                 </div>
 
@@ -6210,8 +6195,6 @@ export default function Home() {
               {[
                 { id: "Tất cả", label: t.provAll },
                 { id: "Phú Thọ", label: t.provPhuTho },
-                { id: "Vĩnh Phúc", label: t.provVinhPhuc },
-                { id: "Hòa Bình", label: t.provHoaBinh },
               ].map((reg) => (
                 <button
                   key={reg.id}
@@ -7049,13 +7032,13 @@ export default function Home() {
           <div className="service-filters-wrapper">
             <div className="service-province-tabs">
               <span>{t.nearAreaLabel}</span>
-              {["Tất cả", "Phú Thọ", "Vĩnh Phúc", "Hòa Bình"].map((prov) => (
+              {["Tất cả", "Phú Thọ"].map((prov) => (
                 <button
                   key={prov}
                   className={`province-tab ${serviceProvinceFilter === prov ? "is-active" : ""}`}
                   onClick={() => setServiceProvinceFilter(prov)}
                 >
-                  {prov === "Tất cả" ? t.nearAll3Provinces : prov === "Phú Thọ" ? t.provPhuTho : prov === "Vĩnh Phúc" ? t.provVinhPhuc : t.provHoaBinh}
+                  {prov === "Tất cả" ? t.nearAll3Provinces : t.provPhuTho}
                 </button>
               ))}
             </div>
@@ -8105,9 +8088,10 @@ export default function Home() {
                       </label>
 
                       <label className="commerce-field">
-                        {t.shippingAddressLabel}
+                        {t.shippingAddressLabel} <span style={{ color: "red" }}>*</span>
                         <input
                           type="text"
+                          required
                           value={checkoutAddress}
                           onChange={(event) => setCheckoutAddress(event.target.value)}
                           placeholder="Ví dụ: Khách sạn Mường Thanh Phú Thọ, Phòng 502"

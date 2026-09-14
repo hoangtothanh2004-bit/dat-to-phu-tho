@@ -2519,6 +2519,54 @@ export const foodRegions: FoodRegion[] = [
     subtitle: "Hương vị cội nguồn: Cá sông Lô, thịt chua Thanh Sơn, bánh tai, bưởi Đoan Hùng",
     dishes: [
       {
+        id: 'banh-tai-phu-tho',
+        name: 'Bánh tai Phú Thọ',
+        image: '/images/food/banh-tai.jpg',
+        description: 'Bánh tai (hay còn gọi là bánh hòn tai) có hình dáng giống cái tai, làm từ gạo tẻ, nhân thịt lợn, mộc nhĩ thơm ngon, dẻo mềm.',
+        price: 'Từ 3.000đ/chiếc',
+        season: 'Quanh năm',
+        region: 'Phú Thọ',
+        sellers: [
+          {
+            id: 'banh-tai-ba-tuyet',
+            name: 'Bánh tai Bà Tuyết',
+            address: 'Hà Thạch, TX Phú Thọ, Phú Thọ',
+            phone: '0981234567',
+            hours: '06:00 – 18:00',
+            rating: 4.8,
+            reviewCount: 210,
+            pickupNote: 'Mua tại cửa hàng hoặc đặt giao tận nơi',
+            price: 50000,
+            unit: 'chục',
+            verified: true,
+          }
+        ]
+      },
+      {
+        id: 'banh-chung-banh-day',
+        name: 'Bánh chưng, bánh dầy Đất Tổ',
+        image: '/images/food/banh-chung.jpg',
+        description: 'Món bánh truyền thống dâng Vua Hùng, mang ý nghĩa trời tròn đất vuông, dẻo thơm hương vị cội nguồn.',
+        price: 'Từ 50.000đ/chiếc',
+        season: 'Đặc biệt vào dịp Giỗ Tổ và lễ Tết',
+        region: 'Phú Thọ',
+        sellers: [
+          {
+            id: 'htx-banh-chung-hung-lo',
+            name: 'HTX Bánh chưng Hùng Lô',
+            address: 'Xã Hùng Lô, TP Việt Trì, Phú Thọ',
+            phone: '0912345678',
+            hours: '07:00 – 17:00',
+            rating: 4.9,
+            reviewCount: 300,
+            pickupNote: 'Đóng gói hút chân không, thích hợp làm quà',
+            price: 60000,
+            unit: 'chiếc',
+            verified: true,
+          }
+        ]
+      },
+      {
         id: 'buoi-doan-hung',
         name: 'Bưởi Đoan Hùng',
         image: '/images/food/buoi-doan-hung.jpg',
