@@ -3909,13 +3909,23 @@ export default function Home() {
     setLocationStatus("locating");
     navigator.geolocation.getCurrentPosition(
       ({ coords }) => {
-        setPosition({ lat: coords.latitude, lng: coords.longitude });
+        const userPos = { lat: coords.latitude, lng: coords.longitude };
+        setPosition(userPos);
         setLocationStatus("success");
-        showToast("Đã sắp xếp gợi ý theo vị trí của bạn");
+        if (userPos.lat >= 21.20 && userPos.lat <= 21.65 && userPos.lng >= 105.48 && userPos.lng <= 105.80) {
+          setServiceProvinceFilter("Vĩnh Phúc");
+          showToast(isEn ? "Located in Vinh Phuc: updated nearby amenities" : "Đã định vị tại Vĩnh Phúc: hiển thị tiện ích gần bạn");
+        } else if (userPos.lat >= 20.45 && userPos.lat <= 21.05 && userPos.lng >= 104.85 && userPos.lng <= 105.70) {
+          setServiceProvinceFilter("Hòa Bình");
+          showToast(isEn ? "Located in Hoa Binh: updated nearby amenities" : "Đã định vị tại Hòa Bình: hiển thị tiện ích gần bạn");
+        } else {
+          setServiceProvinceFilter("Phú Thọ");
+          showToast(isEn ? "Located in Phu Tho: updated nearby amenities" : "Đã định vị tại Phú Thọ: hiển thị tiện ích gần bạn");
+        }
       },
       () => {
         setLocationStatus("denied");
-        showToast("Bạn có thể bật quyền Vị trí trong cài đặt trình duyệt");
+        showToast(isEn ? "Please allow Location permission in your browser" : "Bạn có thể bật quyền Vị trí trong cài đặt trình duyệt");
       },
       { enableHighAccuracy: true, timeout: 10000 },
     );
@@ -4231,13 +4241,22 @@ export default function Home() {
     return [...destinationItems, ...restaurantItems, ...stayItems, ...serviceItems];
   }, []);
 
-  const filteredNearItems = useMemo(() => nearItems
-    .filter((item) => serviceFilter === "Tất cả" || item.type === serviceFilter)
-    .filter((item) => serviceProvinceFilter === "Tất cả" || !item.province || item.province === serviceProvinceFilter)
-    .slice()
-    .sort((a, b) => position
-      ? haversine(position.lat, position.lng, a.lat, a.lng) - haversine(position.lat, position.lng, b.lat, b.lng)
-      : a.name.localeCompare(b.name, "vi")), [nearItems, position, serviceFilter, serviceProvinceFilter]);
+  const PROV_CENTERS: Record<string, { lat: number; lng: number }> = {
+    "Phú Thọ": { lat: 21.3215, lng: 105.3926 }, // TP. Việt Trì
+    "Vĩnh Phúc": { lat: 21.3150, lng: 105.5890 }, // TP. Vĩnh Yên
+    "Hòa Bình": { lat: 20.8140, lng: 105.3380 },  // TP. Hòa Bình
+  };
+
+  const filteredNearItems = useMemo(() => {
+    const refPos = position || PROV_CENTERS[serviceProvinceFilter] || PROV_CENTERS["Phú Thọ"];
+    return nearItems
+      .filter((item) => serviceFilter === "Tất cả" || item.type === serviceFilter)
+      .filter((item) => serviceProvinceFilter === "Tất cả" || !item.province || item.province === serviceProvinceFilter)
+      .slice()
+      .sort((a, b) => {
+        return haversine(refPos.lat, refPos.lng, a.lat, a.lng) - haversine(refPos.lat, refPos.lng, b.lat, b.lng);
+      });
+  }, [nearItems, position, serviceFilter, serviceProvinceFilter]);
   
   const selectedNearItem = filteredNearItems.find((item) => item.id === selectedNearItemId) ?? filteredNearItems[0] ?? null;
 
@@ -6187,7 +6206,21 @@ export default function Home() {
           <section className="content-section category-section" id="destinations-section">
             <div className="section-heading section-heading--inline">
               <div><span className="section-number">{t.section01Num}</span><h2>{t.section01Title}</h2></div>
-              <button className="text-link" onClick={() => { setCategory("Tất cả"); setSelectedRegion("Tất cả"); setSeasonFilter("Tất cả"); setQuery(""); }}>{t.viewAllBtn}</button>
+              <button
+                className="text-link"
+                type="button"
+                onClick={() => {
+                  setCategory("Tất cả");
+                  setSelectedRegion("Tất cả");
+                  setSeasonFilter("Tất cả");
+                  setQuery("");
+                  setVisibleCount(places.length || 36);
+                  const el = document.querySelector('.places-section');
+                  if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }}
+              >
+                {t.viewAllBtn}
+              </button>
             </div>
             
 
@@ -6995,7 +7028,7 @@ export default function Home() {
           <div className="near-header">
             <div>
               <span className="kicker">{t.nearKicker}</span>
-              <h1>{t.nearTitle1}<br /><em className="near-title-highlight">{t.nearTitle2}</em></h1>
+              <h1>{t.nearTitle1}<br /><em className="near-title-highlight">{serviceProvinceFilter === "Tất cả" ? (isEn ? "across all 3 provinces." : "tại Đất Tổ & các tỉnh liên kết.") : (isEn ? `in ${serviceProvinceFilter}.` : `tại ${serviceProvinceFilter}.`)}</em></h1>
             </div>
             <div className="near-location-card">
               <div className="location-pin-icon-wrap" aria-hidden="true">
@@ -7010,6 +7043,45 @@ export default function Home() {
                 <small>{position ? `${position.lat.toFixed(4)}, ${position.lng.toFixed(4)}` : t.nearAllowLocation}</small>
               </p>
               <button onClick={locate}>{position ? t.nearUpdateGPS : t.nearEnableGPS}</button>
+              <div className="near-quick-locations">
+                <span className="near-quick-label">{isEn ? "Quick view:" : "Chọn nhanh:"}</span>
+                <button
+                  type="button"
+                  className={`near-quick-btn ${serviceProvinceFilter === "Phú Thọ" ? "is-active" : ""}`}
+                  onClick={() => {
+                    setPosition({ lat: 21.3215, lng: 105.3926 });
+                    setServiceProvinceFilter("Phú Thọ");
+                    setLocationStatus("success");
+                    showToast(isEn ? "Set location: Viet Tri (Phu Tho)" : "Đã chọn vị trí: TP. Việt Trì (Phú Thọ)");
+                  }}
+                >
+                  📍 Việt Trì
+                </button>
+                <button
+                  type="button"
+                  className={`near-quick-btn ${serviceProvinceFilter === "Vĩnh Phúc" ? "is-active" : ""}`}
+                  onClick={() => {
+                    setPosition({ lat: 21.3150, lng: 105.5890 });
+                    setServiceProvinceFilter("Vĩnh Phúc");
+                    setLocationStatus("success");
+                    showToast(isEn ? "Set location: Vinh Yen (Vinh Phuc)" : "Đã chọn vị trí: TP. Vĩnh Yên (Vĩnh Phúc)");
+                  }}
+                >
+                  📍 Vĩnh Yên (Vĩnh Phúc)
+                </button>
+                <button
+                  type="button"
+                  className={`near-quick-btn ${serviceProvinceFilter === "Hòa Bình" ? "is-active" : ""}`}
+                  onClick={() => {
+                    setPosition({ lat: 20.8140, lng: 105.3380 });
+                    setServiceProvinceFilter("Hòa Bình");
+                    setLocationStatus("success");
+                    showToast(isEn ? "Set location: Hoa Binh City" : "Đã chọn vị trí: TP. Hòa Bình");
+                  }}
+                >
+                  📍 TP. Hòa Bình
+                </button>
+              </div>
             </div>
           </div>
 
@@ -7017,13 +7089,28 @@ export default function Home() {
           <div className="service-filters-wrapper">
             <div className="service-province-tabs">
               <span>{t.nearAreaLabel}</span>
-              {["Tất cả", "Phú Thọ"].map((prov) => (
+              {["Tất cả", "Phú Thọ", "Vĩnh Phúc", "Hòa Bình"].map((prov) => (
                 <button
                   key={prov}
                   className={`province-tab ${serviceProvinceFilter === prov ? "is-active" : ""}`}
-                  onClick={() => setServiceProvinceFilter(prov)}
+                  onClick={() => {
+                    setServiceProvinceFilter(prov);
+                    if (prov === "Vĩnh Phúc" && !position) {
+                      setPosition({ lat: 21.3150, lng: 105.5890 });
+                    } else if (prov === "Hòa Bình" && !position) {
+                      setPosition({ lat: 20.8140, lng: 105.3380 });
+                    } else if (prov === "Phú Thọ" && !position) {
+                      setPosition({ lat: 21.3215, lng: 105.3926 });
+                    }
+                  }}
                 >
-                  {prov === "Tất cả" ? t.nearAll3Provinces : t.provPhuTho}
+                  {prov === "Tất cả"
+                    ? (isEn ? "All 3 Provinces" : "Tất cả 3 tỉnh")
+                    : prov === "Phú Thọ"
+                    ? t.provPhuTho
+                    : prov === "Vĩnh Phúc"
+                    ? t.provVinhPhuc
+                    : t.provHoaBinh}
                 </button>
               ))}
             </div>
@@ -7114,7 +7201,8 @@ export default function Home() {
                 <small>{t.serviceListSub}</small>
               </div>
               {filteredNearItems.slice(0, 15).map((item) => {
-                const distance = position ? formatDistance(haversine(position.lat, position.lng, item.lat, item.lng)) : "—";
+                const activeRef = position || PROV_CENTERS[serviceProvinceFilter] || PROV_CENTERS["Phú Thọ"];
+                const distance = formatDistance(haversine(activeRef.lat, activeRef.lng, item.lat, item.lng));
                 return (
                   <article key={item.id} className={selectedNearItem?.id === item.id ? "is-active" : ""}>
                     <div className="service-thumb-wrap">

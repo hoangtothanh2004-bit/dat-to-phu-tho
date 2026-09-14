@@ -200,7 +200,7 @@ export default function VisualItineraryV2(props: VisualItineraryV2Props) {
 
   const [activeItineraryDay, setActiveItineraryDay] = useState<number>(1);
   const [selectedDetailSlot, setSelectedDetailSlot] = useState<ItinerarySlot | null>(null);
-  const [isDetailAccordionOpen, setIsDetailAccordionOpen] = useState<boolean>(true);
+  const [isDetailAccordionOpen, setIsDetailAccordionOpen] = useState<boolean>(false);
   const [expandedDayStops, setExpandedDayStops] = useState<Record<number, boolean>>({});
   const [expandedCardSlots, setExpandedCardSlots] = useState<Record<string, boolean>>({});
   const [showAudioSettings, setShowAudioSettings] = useState<boolean>(false);
