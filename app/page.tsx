@@ -5606,7 +5606,7 @@ export default function Home() {
       </button>
       <div className="place-card__body" onClick={() => openPlace(place)}>
         <span className="eyebrow">{isEn && place.locationEn ? place.locationEn : place.location}</span>
-        <strong>{place.shortName}</strong>
+        <strong>{isEn && place.nameEn ? place.nameEn : place.shortName}</strong>
         <span className="place-card__meta"><b>★ {place.rating}</b> ({place.reviews.toLocaleString("vi-VN")}) · {place.bestTime}</span>
         {!compact && <span className="place-card__highlight">✦ {isEn && place.highlightsEn ? place.highlightsEn[0] : place.highlights[0]}</span>}
         {!compact && (
@@ -5636,8 +5636,8 @@ export default function Home() {
               {savedDishes.includes(dish.id) ? t.foodSavedBtn : t.foodSaveBtn}
             </button>
           </div>
-          <h3>{dish.name}</h3>
-          <p>{dish.description}</p>
+          <h3>{isEn && dish.nameEn ? dish.nameEn : dish.name}</h3>
+          <p>{isEn && dish.descriptionEn ? dish.descriptionEn : dish.description}</p>
         </div>
       </div>
       <div className="seller-grid">
@@ -5793,7 +5793,7 @@ export default function Home() {
                 <span>{authUser.name.split(" ").slice(-1)[0] || "Tài khoản"}</span>
               </span>
             ) : (
-              <span>Đăng nhập</span>
+              <span>{isEn ? "Sign in" : "Đăng nhập"}</span>
             )}
           </button>
         </div>
@@ -5809,11 +5809,11 @@ export default function Home() {
               {/* HERO HEADINGS */}
               <div className="hero-panoramic__headings">
                 <h1 className="hero-panoramic__title">
-                  <span>ĐI ĐỂ KHÁM PHÁ</span>
-                  <span>VỀ ĐỂ NHỚ</span>
+                  <span>{isEn ? "TRAVEL TO DISCOVER" : "ĐI ĐỂ KHÁM PHÁ"}</span>
+                  <span>{isEn ? "RETURN TO REMEMBER" : "VỀ ĐỂ NHỚ"}</span>
                 </h1>
                 <p className="hero-panoramic__subtitle">
-                  Khám phá Đất Tổ theo cách của bạn
+                  {isEn ? "Discover the Ancestral Land your way" : "Khám phá Đất Tổ theo cách của bạn"}
                 </p>
               </div>
 
@@ -5843,8 +5843,8 @@ export default function Home() {
                         document.getElementById("destinations-section")?.scrollIntoView({ behavior: "smooth" });
                       }
                     }}
-                    placeholder="Bạn muốn đi đâu?"
-                    aria-label="Bạn muốn đi đâu?"
+                    placeholder={isEn ? "Where do you want to go?" : "Bạn muốn đi đâu?"}
+                    aria-label={isEn ? "Where do you want to go?" : "Bạn muốn đi đâu?"}
                   />
                 </div>
 
@@ -5917,7 +5917,7 @@ export default function Home() {
                     <circle cx="11" cy="11" r="8"></circle>
                     <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
                   </svg>
-                  <span>Tìm kiếm</span>
+                  <span>{isEn ? "Search" : "Tìm kiếm"}</span>
                 </button>
 
                 {/* Autocomplete Suggestions Dropdown */}
@@ -6034,32 +6034,32 @@ export default function Home() {
                 <div className="hero-feature-item" onClick={() => { setSelectedRegion("Tất cả"); document.getElementById("destinations-section")?.scrollIntoView({ behavior: "smooth" }); }}>
                   <span className="hero-feat-icon">📍</span>
                   <div className="hero-feat-content">
-                    <strong>TỈNH PHÚ THỌ – MUÔN TRẢI NGHIỆM</strong>
-                    <small>Hành trình khám phá Đất Tổ</small>
+                    <strong>{isEn ? "PHU THO PROVINCE" : "TỈNH PHÚ THỌ"}</strong>
+                    <small>{isEn ? "Journey to the Ancestral Land" : "Hành trình khám phá Đất Tổ"}</small>
                   </div>
                 </div>
 
                 <div className="hero-feature-item" onClick={() => { setVouchersModalOpen(true); }}>
                   <span className="hero-feat-icon">🧭</span>
                   <div className="hero-feat-content">
-                    <strong>ĐI ĐÚNG MÙA</strong>
-                    <small>Gợi ý theo thời tiết & lễ hội</small>
+                    <strong>{isEn ? "BEST SEASONS" : "ĐI ĐÚNG MÙA"}</strong>
+                    <small>{isEn ? "Weather & Festival Tips" : "Gợi ý theo thời tiết & lễ hội"}</small>
                   </div>
                 </div>
 
                 <div className="hero-feature-item" onClick={() => { setActiveTab("trip"); }}>
                   <span className="hero-feat-icon">📋</span>
                   <div className="hero-feat-content">
-                    <strong>LÊN LỊCH TRÌNH DỄ DÀNG</strong>
-                    <small>Tối ưu thời gian & chi phí</small>
+                    <strong>{isEn ? "EASY ITINERARY" : "LÊN LỊCH TRÌNH DỄ DÀNG"}</strong>
+                    <small>{isEn ? "Optimize time & budget" : "Tối ưu thời gian & chi phí"}</small>
                   </div>
                 </div>
 
                 <div className="hero-feature-item" onClick={() => { document.getElementById("food-browser-section")?.scrollIntoView({ behavior: "smooth" }); }}>
                   <span className="hero-feat-icon">❤️</span>
                   <div className="hero-feat-content">
-                    <strong>TRẢI NGHIỆM TRỌN VẸN</strong>
-                    <small>Ăn ngon – Chơi đã – Nghỉ tốt</small>
+                    <strong>{isEn ? "FULFILLING TRIP" : "TRẢI NGHIỆM TRỌN VẸN"}</strong>
+                    <small>{isEn ? "Eat well – Play hard – Rest well" : "Ăn ngon – Chơi đã – Nghỉ tốt"}</small>
                   </div>
                 </div>
               </div>
@@ -6072,7 +6072,7 @@ export default function Home() {
                   document.getElementById("destinations-section")?.scrollIntoView({ behavior: "smooth" });
                 }}
               >
-                <span>Cuộn để khám phá</span>
+                <span>{isEn ? "Scroll to explore" : "Cuộn để khám phá"}</span>
                 <span className="hero-scroll-arrow">⌄</span>
               </button>
             </div>
@@ -6091,23 +6091,23 @@ export default function Home() {
                   <span className="travel-challenge-subtag">Chương trình tương tác 2026</span>
                 </div>
                 <h2 className="travel-challenge-title">
-                  Thử thách du lịch <span>🍀</span>
+                  {isEn ? "Travel Challenge" : "Thử thách du lịch"} <span>🍀</span>
                 </h2>
                 <p className="travel-challenge-subtitle">
-                  Khám phá Phú Thọ – Tích điểm – Nhận quà
+                  {isEn ? "Explore Phu Tho – Earn Points – Win Rewards" : "Khám phá Phú Thọ – Tích điểm – Nhận quà"}
                 </p>
                 <div className="travel-challenge-features">
                   <span className="travel-challenge-feat-pill">
                     <span className="travel-challenge-feat-icon">🎯</span>
-                    <span>Hoàn thành nhiệm vụ thú vị</span>
+                    <span>{isEn ? "Complete fun travel quests" : "Hoàn thành nhiệm vụ thú vị"}</span>
                   </span>
                   <span className="travel-challenge-feat-pill">
                     <span className="travel-challenge-feat-icon">🪙</span>
-                    <span>Tích điểm đổi quà hấp dẫn</span>
+                    <span>{isEn ? "Earn points for gifts" : "Tích điểm đổi quà hấp dẫn"}</span>
                   </span>
                   <span className="travel-challenge-feat-pill">
                     <span className="travel-challenge-feat-icon">🧭</span>
-                    <span>Khám phá nhiều địa điểm độc đáo</span>
+                    <span>{isEn ? "Explore unique destinations" : "Khám phá nhiều địa điểm độc đáo"}</span>
                   </span>
                 </div>
                 <div className="travel-challenge-btn-row">
@@ -6116,7 +6116,7 @@ export default function Home() {
                     className="travel-challenge-cta-btn"
                     onClick={() => setChallengeModalOpen(true)}
                   >
-                    <span>Tham gia ngay</span>
+                    <span>{isEn ? "Join Now" : "Tham gia ngay"}</span>
                     <span className="travel-challenge-arrow">➔</span>
                   </button>
                 </div>
@@ -6296,12 +6296,12 @@ export default function Home() {
                         <img className="food-row__thumb" src={food.image} alt={food.name} loading="lazy" onError={handleImageError} />
                         <div className="food-row__main">
                           <div className="food-row__header">
-                            <b className="food-row__title">{food.name}</b>
+                            <b className="food-row__title">{isEn && food.nameEn ? food.nameEn : food.name}</b>
                             <span className="food-row__price">{food.price}</span>
                           </div>
-                          <p className="food-row__desc">{food.description}</p>
+                          <p className="food-row__desc">{isEn && food.descriptionEn ? food.descriptionEn : food.description}</p>
                           <div className="food-row__footer">
-                            <span className="food-row__season">🗓️ {food.season}</span>
+                            <span className="food-row__season">🗓️ {isEn && food.seasonEn ? food.seasonEn : food.season}</span>
                             <span className="food-row__toggle">{activeFoodId === food.id ? t.foodToggleHide : t.foodToggleView}</span>
                           </div>
                         </div>
@@ -6323,17 +6323,17 @@ export default function Home() {
             <div className="trip-hero-left">
               <div className="trip-hero-badge">
                 <span className="trip-hero-badge__dot" />
-                <span>✨ TRỢ LÝ THIẾT KẾ LỊCH TRÌNH THÔNG MINH · LIÊN KẾT 3 TỈNH</span>
+                <span>{isEn ? "✨ SMART ITINERARY PLANNER · ANCESTRAL LAND EXPLORATION" : "✨ TRỢ LÝ THIẾT KẾ LỊCH TRÌNH THÔNG MINH · ĐẤT TỔ PHÚ THỌ"}</span>
               </div>
               <h1 className="trip-hero-title">
                 <span className="trip-hero-title__primary">{t.tripPageTitle1}</span>
                 <span className="trip-hero-title__accent">{t.tripPageTitle2}</span>
               </h1>
               <div className="trip-hero-pillars">
-                <span className="trip-pillar-chip"><i className="trip-pillar-chip__icon">🏛️</i> Lộ trình tham quan</span>
-                <span className="trip-pillar-chip"><i className="trip-pillar-chip__icon">🍲</i> Món ngon đặc sản</span>
-                <span className="trip-pillar-chip"><i className="trip-pillar-chip__icon">🛏️</i> Điểm nghỉ dưỡng</span>
-                <span className="trip-pillar-chip"><i className="trip-pillar-chip__icon">🚗</i> Phương tiện & thời gian</span>
+                <span className="trip-pillar-chip"><i className="trip-pillar-chip__icon">🏛️</i> {isEn ? "Sightseeing Route" : "Lộ trình tham quan"}</span>
+                <span className="trip-pillar-chip"><i className="trip-pillar-chip__icon">🍲</i> {isEn ? "Local Specialties" : "Món ngon đặc sản"}</span>
+                <span className="trip-pillar-chip"><i className="trip-pillar-chip__icon">🛏️</i> {isEn ? "Accommodations" : "Điểm nghỉ dưỡng"}</span>
+                <span className="trip-pillar-chip"><i className="trip-pillar-chip__icon">🚗</i> {isEn ? "Transport & Timing" : "Phương tiện & thời gian"}</span>
               </div>
 
               <div className="trip-hero-actions" style={{ display: "flex", gap: "12px", marginTop: "18px", flexWrap: "wrap" }}>
@@ -7431,8 +7431,8 @@ export default function Home() {
               <img src={selected.image} alt={selected.name} onError={handleImageError} />
               <span className="modal-hero__shade" />
               <div>
-                <span>{selected.category} · {selected.region} · {selected.location}</span>
-                <h2 id="place-modal-title">{selected.name}</h2>
+                <span>{getCategoryLabel(selected.category, t)} · {getRegionLabel(selected.region, t)} · {isEn && selected.locationEn ? selected.locationEn : selected.location}</span>
+                <h2 id="place-modal-title">{isEn && selected.nameEn ? selected.nameEn : selected.name}</h2>
                 <p><b>★ {selected.rating}</b> ({selected.reviews.toLocaleString(currentLang === "vi" ? "vi-VN" : "en-US")} {t.modalReviews}) · {t.modalPhoto} {selected.imageCredit}</p>
               </div>
               <button className={`heart-button modal-heart ${favorites.includes(selected.id) ? "is-saved" : ""}`} onClick={() => toggleFavorite(selected.id)}>
@@ -7633,7 +7633,7 @@ export default function Home() {
               </div>
               <aside className="modal-map">
                 <iframe title={`Bản đồ ${selected.name}`} src={`https://www.openstreetmap.org/export/embed.html?bbox=${selected.lng - 0.035}%2C${selected.lat - 0.025}%2C${selected.lng + 0.035}%2C${selected.lat + 0.025}&layer=mapnik&marker=${selected.lat}%2C${selected.lng}`} loading="lazy" />
-                <div><span>⌖</span><p><b>{selected.location}</b><small>{position ? `${formatDistance(haversine(position.lat, position.lng, selected.lat, selected.lng))} · ${estimateTravel(haversine(position.lat, position.lng, selected.lat, selected.lng))} ${t.fromYou}` : `${selected.distanceFromVietTri} km · ${selected.travelFromVietTri} ${t.fromVietTri}`}</small></p></div>
+                <div><span>⌖</span><p><b>{isEn && selected.locationEn ? selected.locationEn : selected.location}</b><small>{position ? `${formatDistance(haversine(position.lat, position.lng, selected.lat, selected.lng))} · ${estimateTravel(haversine(position.lat, position.lng, selected.lat, selected.lng))} ${t.fromYou}` : `${selected.distanceFromVietTri} km · ${selected.travelFromVietTri} ${t.fromVietTri}`}</small></p></div>
               </aside>
             </div>
           </section>

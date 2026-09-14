@@ -2507,10 +2507,13 @@ export const phuTho100Directory: DirectoryPlace[] = [
 export type FoodDish = {
   id: string;
   name: string;
+  nameEn?: string;
   image: string;
   description: string;
+  descriptionEn?: string;
   price: string;
   season: string;
+  seasonEn?: string;
   region: PlaceRegion;
   sellers: FoodSeller[];
 };
@@ -2545,8 +2548,10 @@ export const foodRegions: FoodRegion[] = [
       {
         id: 'banh-tai-phu-tho',
         name: 'Bánh tai Phú Thọ',
+        nameEn: 'Phu Tho Ear-shaped Rice Cake (Banh Tai)',
         image: '/images/food/banh-tai.jpg',
-        description: 'Bánh tai (hay còn gọi là bánh hòn tai) có hình dáng giống cái tai, làm từ gạo tẻ, nhân thịt lợn, mộc nhĩ thơm ngon, dẻo mềm.',
+        description: 'Đặc sản truyền thống Phú Thọ, làm từ gạo tẻ dẻo trắng nặn hình cong vành tai, nhân thịt lợn mán băm nhỏ ướp tiêu hành thơm ngậy, ăn lúc vừa hấp nóng hổi dẻo mềm.',
+        descriptionEn: 'Traditional specialty of Phu Tho, made from soft white rice dough shaped like an ear lobe, filled with seasoned minced pork and pepper, steamed hot and fragrant.',
         price: 'Từ 3.000đ/chiếc',
         season: 'Quanh năm',
         region: 'Phú Thọ',
@@ -2569,6 +2574,8 @@ export const foodRegions: FoodRegion[] = [
       {
         id: 'banh-chung-banh-day',
         name: 'Bánh chưng, bánh dầy Đất Tổ',
+        nameEn: 'Banh Chung & Banh Day of Ancestral Land',
+        descriptionEn: 'Traditional cakes offered to Hung Kings, symbolizing round heaven and square earth, rich in ancestral flavors.',
         image: '/images/food/banh-chung.jpg',
         description: 'Món bánh truyền thống dâng Vua Hùng, mang ý nghĩa trời tròn đất vuông, dẻo thơm hương vị cội nguồn.',
         price: 'Từ 50.000đ/chiếc',
@@ -2593,6 +2600,8 @@ export const foodRegions: FoodRegion[] = [
       {
         id: 'buoi-doan-hung',
         name: 'Bưởi Đoan Hùng',
+        nameEn: 'Doan Hung Pomelo',
+        descriptionEn: 'Renowned sweet pomelo of Doan Hung district, with juicy translucent golden segments and distinctive fragrance.',
         image: '/images/food/buoi-doan-hung.jpg',
         description: 'Đặc sản bưởi trứ danh của vùng đất Đoan Hùng, tép nhỏ, mọng nước, vị ngọt thanh mát và hương thơm đặc trưng.',
         price: 'Từ 30.000đ/quả',
@@ -2617,6 +2626,8 @@ export const foodRegions: FoodRegion[] = [
       {
         id: 'mi-gao-hung-lo',
         name: 'Mì gạo Hùng Lô',
+        nameEn: 'Hung Lo Artisanal Rice Noodles',
+        descriptionEn: 'OCOP 4-star artisanal dry rice noodles, chewy, fragrant with fresh rice aroma, without chemical whiteners.',
         image: '/images/food/mi-gao.jpg',
         description: 'Sản phẩm OCOP 4 sao, sợi mì dai, thơm mùi gạo mới, không sử dụng hóa chất tẩy trắng.',
         price: 'Từ 20.000đ/gói',
@@ -2641,6 +2652,8 @@ export const foodRegions: FoodRegion[] = [
       {
         id: 'thit-chua-truong-food',
         name: 'Thịt chua Trường Food',
+        nameEn: 'Truong Food Fermented Sour Pork',
+        descriptionEn: 'No.1 fermented sour pork brand in Phu Tho, naturally fermented with roasted corn thinh powder, OCOP 4-star standard.',
         image: '/images/food/thit-chua-tf.jpg',
         description: 'Thương hiệu thịt chua số 1 Phú Thọ, lên men tự nhiên, đạt chuẩn OCOP 4 sao.',
         price: 'Từ 50.000đ/hộp',
@@ -2665,6 +2678,8 @@ export const foodRegions: FoodRegion[] = [
       {
         id: "thit-chua-thanh-son",
         name: "Thịt chua Thanh Sơn",
+        nameEn: "Thanh Son Fermented Sour Pork",
+        descriptionEn: "Traditional Muong ethnic sour pork fermented naturally with roasted corn powder, rolled in fresh fig leaves with chili dip.",
         image: "/images/food/thit-chua.jpg",
         description: "Đặc sản người Mường Thanh Sơn lên men tự nhiên từ thịt lợn mán tươi ủ thính ngô rang thơm lừng, cuốn lá sung chấm tương ớt.",
         price: "Từ 45.000đ/hộp",
@@ -2689,6 +2704,8 @@ export const foodRegions: FoodRegion[] = [
       {
         id: "ca-lang-song-da",
         name: "Cá lăng nướng than & Om chuối đậu",
+        nameEn: "Charcoal-Grilled Lang Catfish",
+        descriptionEn: "Fresh river catfish from Lo & Da rivers, firm sweet fish meat marinated in turmeric and galangal, grilled on hot coals.",
         image: "/images/food/ca-song-lo.jpg",
         description: "Cá lăng tự nhiên bắt từ ngã ba sông Hạc Trì và sông Đà, thịt giòn ngọt ít xương dăm, nướng riềng mẻ vàng ruộm hoặc om mầm măng cay.",
         price: "Từ 250.000đ/phần",
@@ -2706,30 +2723,6 @@ export const foodRegions: FoodRegion[] = [
             pickupNote: "Ăn tại quán hoặc giao nóng hộp xốp",
             price: 280000,
             unit: "nồi/mẹt",
-            verified: true,
-          }
-        ]
-      },
-      {
-        id: "banh-tai-phu-tho",
-        name: "Bánh tai Phú Thọ",
-        image: "/images/food/banh-tai.jpg",
-        description: "Món quà sáng bình dị hình tai heo từ bột gạo tẻ dẻo thơm bọc nhân thịt nạc mỡ hành tiêu thơm phức, ăn lúc vừa hấp nóng hổi.",
-        price: "Từ 5.000đ/chiếc",
-        season: "Quanh năm",
-        region: "Phú Thọ",
-        sellers: [
-          {
-            id: "banh-tai-ba-dinh",
-            name: "Bánh tai Bà Định Gia Cẩm",
-            address: "Đường Hàn Thuyên, P. Tân Dân, TP. Việt Trì",
-            phone: "0912444555",
-            hours: "06:00 – 11:00",
-            rating: 4.9,
-            reviewCount: 180,
-            pickupNote: "Ngon nhất ăn trong ngày khi còn nóng",
-            price: 35000,
-            unit: "hộp 5 chiếc",
             verified: true,
           }
         ]
