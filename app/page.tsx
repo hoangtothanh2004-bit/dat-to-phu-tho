@@ -7031,56 +7031,63 @@ export default function Home() {
               <h1>{t.nearTitle1}<br /><em className="near-title-highlight">{serviceProvinceFilter === "Tất cả" ? (isEn ? "across all 3 provinces." : "tại Đất Tổ & các tỉnh liên kết.") : (isEn ? `in ${serviceProvinceFilter}.` : `tại ${serviceProvinceFilter}.`)}</em></h1>
             </div>
             <div className="near-location-card">
-              <div className="location-pin-icon-wrap" aria-hidden="true">
-                <svg className="location-pin-svg" viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" fill="#cf4d38" stroke="#cf4d38" />
-                  <circle cx="12" cy="10" r="3" fill="#ffffff" stroke="#ffffff" />
-                </svg>
-                <span className="pulse-radar-ring" />
+              <div className="near-location-card__row">
+                <div className="location-pin-icon-wrap" aria-hidden="true">
+                  <svg className="location-pin-svg" viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" fill="#cf4d38" stroke="#cf4d38" />
+                    <circle cx="12" cy="10" r="3" fill="#ffffff" stroke="#ffffff" />
+                  </svg>
+                  <span className="pulse-radar-ring" />
+                </div>
+                <div className="near-location-card__info">
+                  <b>{locationMessage}</b>
+                  <small>{position ? `${position.lat.toFixed(4)}, ${position.lng.toFixed(4)}` : t.nearAllowLocation}</small>
+                </div>
+                <button type="button" className="near-gps-btn" onClick={locate}>
+                  {position ? t.nearUpdateGPS : t.nearEnableGPS}
+                </button>
               </div>
-              <p>
-                <b>{locationMessage}</b>
-                <small>{position ? `${position.lat.toFixed(4)}, ${position.lng.toFixed(4)}` : t.nearAllowLocation}</small>
-              </p>
-              <button onClick={locate}>{position ? t.nearUpdateGPS : t.nearEnableGPS}</button>
+
               <div className="near-quick-locations">
-                <span className="near-quick-label">{isEn ? "Quick view:" : "Chọn nhanh:"}</span>
-                <button
-                  type="button"
-                  className={`near-quick-btn ${serviceProvinceFilter === "Phú Thọ" ? "is-active" : ""}`}
-                  onClick={() => {
-                    setPosition({ lat: 21.3215, lng: 105.3926 });
-                    setServiceProvinceFilter("Phú Thọ");
-                    setLocationStatus("success");
-                    showToast(isEn ? "Set location: Viet Tri (Phu Tho)" : "Đã chọn vị trí: TP. Việt Trì (Phú Thọ)");
-                  }}
-                >
-                  📍 Việt Trì
-                </button>
-                <button
-                  type="button"
-                  className={`near-quick-btn ${serviceProvinceFilter === "Vĩnh Phúc" ? "is-active" : ""}`}
-                  onClick={() => {
-                    setPosition({ lat: 21.3150, lng: 105.5890 });
-                    setServiceProvinceFilter("Vĩnh Phúc");
-                    setLocationStatus("success");
-                    showToast(isEn ? "Set location: Vinh Yen (Vinh Phuc)" : "Đã chọn vị trí: TP. Vĩnh Yên (Vĩnh Phúc)");
-                  }}
-                >
-                  📍 Vĩnh Yên (Vĩnh Phúc)
-                </button>
-                <button
-                  type="button"
-                  className={`near-quick-btn ${serviceProvinceFilter === "Hòa Bình" ? "is-active" : ""}`}
-                  onClick={() => {
-                    setPosition({ lat: 20.8140, lng: 105.3380 });
-                    setServiceProvinceFilter("Hòa Bình");
-                    setLocationStatus("success");
-                    showToast(isEn ? "Set location: Hoa Binh City" : "Đã chọn vị trí: TP. Hòa Bình");
-                  }}
-                >
-                  📍 TP. Hòa Bình
-                </button>
+                <span className="near-quick-label">{isEn ? "Quick set:" : "Chọn nhanh vị trí:"}</span>
+                <div className="near-quick-buttons">
+                  <button
+                    type="button"
+                    className={`near-quick-btn ${serviceProvinceFilter === "Phú Thọ" ? "is-active" : ""}`}
+                    onClick={() => {
+                      setPosition({ lat: 21.3215, lng: 105.3926 });
+                      setServiceProvinceFilter("Phú Thọ");
+                      setLocationStatus("success");
+                      showToast(isEn ? "Set location: Viet Tri (Phu Tho)" : "Đã chọn vị trí: TP. Việt Trì (Phú Thọ)");
+                    }}
+                  >
+                    📍 Việt Trì
+                  </button>
+                  <button
+                    type="button"
+                    className={`near-quick-btn ${serviceProvinceFilter === "Vĩnh Phúc" ? "is-active" : ""}`}
+                    onClick={() => {
+                      setPosition({ lat: 21.3150, lng: 105.5890 });
+                      setServiceProvinceFilter("Vĩnh Phúc");
+                      setLocationStatus("success");
+                      showToast(isEn ? "Set location: Vinh Yen (Vinh Phuc)" : "Đã chọn vị trí: TP. Vĩnh Yên (Vĩnh Phúc)");
+                    }}
+                  >
+                    📍 Vĩnh Yên
+                  </button>
+                  <button
+                    type="button"
+                    className={`near-quick-btn ${serviceProvinceFilter === "Hòa Bình" ? "is-active" : ""}`}
+                    onClick={() => {
+                      setPosition({ lat: 20.8140, lng: 105.3380 });
+                      setServiceProvinceFilter("Hòa Bình");
+                      setLocationStatus("success");
+                      showToast(isEn ? "Set location: Hoa Binh City" : "Đã chọn vị trí: TP. Hòa Bình");
+                    }}
+                  >
+                    📍 TP. Hòa Bình
+                  </button>
+                </div>
               </div>
             </div>
           </div>

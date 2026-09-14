@@ -8770,3 +8770,284 @@ h3,
   color: #ffffff;
   border-color: #12382b;
 }
+
+/* ==========================================================================
+   COMPREHENSIVE RESPONSIVE & UI OPTIMIZATION (ALL DEVICES)
+   ========================================================================== */
+
+/* Near Location Card Clean Layout */
+.near-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 28px;
+  margin-bottom: 24px;
+}
+
+.near-header h1 {
+  font-size: clamp(26px, 3.2vw, 42px);
+  line-height: 1.24;
+  margin-bottom: 0;
+}
+
+.near-location-card {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 12px !important;
+  background: #ffffff !important;
+  border: 1.5px solid rgba(24, 51, 44, 0.12) !important;
+  border-radius: 18px !important;
+  padding: 16px 20px !important;
+  box-shadow: 0 6px 24px rgba(24, 51, 44, 0.06) !important;
+  min-width: 320px !important;
+  max-width: 500px !important;
+  width: 100% !important;
+}
+
+.near-location-card__row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  width: 100%;
+}
+
+.near-location-card__info {
+  flex: 1;
+  min-width: 150px;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.near-location-card__info b {
+  font-size: 14px;
+  font-weight: 800;
+  color: #12382b;
+  line-height: 1.35;
+  white-space: normal;
+}
+
+.near-location-card__info small {
+  color: #5c7066;
+  font-size: 12px;
+  line-height: 1.4;
+  white-space: normal;
+}
+
+.near-location-card .near-gps-btn {
+  border: 0;
+  background: rgba(207, 77, 56, 0.1);
+  color: #cf4d38;
+  padding: 9px 18px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 800;
+  cursor: pointer;
+  white-space: nowrap;
+  flex-shrink: 0;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.near-location-card .near-gps-btn:hover {
+  background: #cf4d38;
+  color: #ffffff;
+  box-shadow: 0 4px 14px rgba(207, 77, 56, 0.3);
+  transform: translateY(-1px);
+}
+
+.near-quick-locations {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border-top: 1px solid rgba(24, 51, 44, 0.08);
+  padding-top: 10px;
+  flex-wrap: wrap;
+}
+
+.near-quick-label {
+  font-size: 11.5px;
+  font-weight: 750;
+  color: #52675d;
+  white-space: nowrap;
+}
+
+.near-quick-buttons {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.near-quick-btn {
+  border: 1px solid rgba(24, 51, 44, 0.14);
+  background: #f8fbf9;
+  color: #1a4235;
+  font-size: 11.5px;
+  font-weight: 700;
+  padding: 4px 12px;
+  border-radius: 999px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.15s ease;
+}
+
+.near-quick-btn:hover {
+  background: #eef5f1;
+  border-color: #0d5c46;
+}
+
+.near-quick-btn.is-active {
+  background: #0d5c46 !important;
+  color: #ffffff !important;
+  border-color: #0d5c46 !important;
+  box-shadow: 0 2px 8px rgba(13, 92, 70, 0.25);
+}
+
+/* Service Province Tabs Styling */
+.service-province-tabs {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 6px;
+}
+
+.service-province-tabs span {
+  font-size: 12px;
+  font-weight: 800;
+  color: #4b6358;
+  letter-spacing: 0.04em;
+}
+
+.province-tab {
+  background: #ffffff;
+  border: 1.5px solid rgba(24, 51, 44, 0.15);
+  padding: 6px 14px;
+  border-radius: 999px;
+  font-size: 12.5px;
+  font-weight: 750;
+  color: #12382b;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.province-tab:hover {
+  background: #f0f7f3;
+  border-color: #0d5c46;
+}
+
+.province-tab.is-active {
+  background: #0d5c46;
+  color: #ffffff;
+  border-color: #0d5c46;
+  box-shadow: 0 3px 10px rgba(13, 92, 70, 0.25);
+}
+
+/* Service Categories Scrollable Strip */
+.service-tabs {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding-bottom: 6px;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+
+.service-tabs::-webkit-scrollbar {
+  display: none;
+}
+
+.service-tabs button {
+  white-space: nowrap;
+  flex-shrink: 0;
+  padding: 8px 16px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 700;
+  border: 1.5px solid rgba(24, 51, 44, 0.1);
+  background: #ffffff;
+  color: #2c453b;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  transition: all 0.18s ease;
+}
+
+.service-tabs button:hover {
+  background: #f4f8f5;
+  border-color: #0d5c46;
+}
+
+.service-tabs button.is-active {
+  background: #0d5c46;
+  color: #ffffff;
+  border-color: #0d5c46;
+  box-shadow: 0 3px 10px rgba(13, 92, 70, 0.2);
+}
+
+/* Food List Responsive Excellence */
+.food-row {
+  transition: background 0.15s ease, transform 0.15s ease;
+  border-radius: 14px;
+}
+
+.food-row:hover {
+  background: #f7faf8;
+}
+
+.food-row__thumb {
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.food-row__title {
+  font-weight: 800;
+  color: #12382b;
+}
+
+.food-row__toggle {
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.food-row__toggle:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);
+}
+
+/* AI Floating Chatbot Safe Positioning */
+@media (max-width: 768px) {
+  .ai-mascot-launcher-container {
+    bottom: calc(76px + env(safe-area-inset-bottom, 0px)) !important;
+    right: 14px !important;
+  }
+  .near-header {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 16px !important;
+  }
+  .near-location-card {
+    max-width: 100% !important;
+    min-width: 0 !important;
+    padding: 14px 16px !important;
+  }
+  .near-location-card__row {
+    flex-wrap: wrap !important;
+    gap: 10px !important;
+  }
+  .near-location-card__info {
+    min-width: 120px !important;
+  }
+  .near-quick-locations {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 6px !important;
+  }
+  .near-quick-buttons {
+    width: 100% !important;
+    overflow-x: auto !important;
+    padding-bottom: 4px !important;
+    flex-wrap: nowrap !important;
+  }
+}
