@@ -6441,6 +6441,29 @@ export default function Home() {
                 </button>
               </div>
             </div>
+
+            <div className="trip-hero-visual" aria-hidden="true">
+              <div className="trip-hero-visual__media">
+                <img
+                  src="/images/itinerary-teaser-bg.png"
+                  alt="Du lịch Đất Tổ Phú Thọ"
+                  className="trip-hero-visual__img"
+                  loading="lazy"
+                  onError={handleImageError}
+                />
+                <div className="trip-hero-visual__overlay" />
+                <span className="trip-hero-visual__pill">🌟 DU LỊCH ĐẤT TỔ PHÚ THỌ</span>
+                <div className="trip-hero-visual__badge-card">
+                  <div className="trip-hero-visual__details">
+                    <span><b>32</b> Huyện thị</span>
+                    <span>·</span>
+                    <span><b>100+</b> Điểm đến</span>
+                    <span>·</span>
+                    <span><b>AI</b> Tối ưu lộ trình</span>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
 
           <div className="builder-toggle-strip">
