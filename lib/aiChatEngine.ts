@@ -480,7 +480,7 @@ export const AREA_RECOMMENDATIONS: Record<string, AreaRecommendation> = {
       {
         name: "Khu nghỉ dưỡng Suối khoáng nóng Radon (Wyndham Lynn Times / Bamboo / Tre Nguồn)",
         icon: "♨️",
-        desc: "Ngâm khoáng nóng tự nhiên chuẩn Onsen Nhật Bản, thư giãn xông hơi đá muối Himalaya, phục hồi sức khỏe và làm đẹp da.",
+        desc: "Ngâm khoáng nóng tự nhiên chuẩn Nhật Bản tự nhiên, thư giãn xông hơi đá muối Himalaya, phục hồi sức khỏe và làm đẹp da.",
         actionValue: "choose_spot_thanh_thuy_onsen",
         actionLabel: "♨️ Tắm khoáng nóng Onsen Thanh Thủy",
       },
@@ -650,7 +650,7 @@ export const AREA_RECOMMENDATIONS: Record<string, AreaRecommendation> = {
       {
         name: "Suối khoáng nóng Thanh Thủy & Đảo Ngọc Xanh",
         icon: "♨️",
-        desc: "Nghỉ dưỡng tắm Onsen khoáng nóng Radon Nhật Bản, công viên nước Đảo Ngọc Xanh, Đền Lăng Sương.",
+        desc: "Nghỉ dưỡng tắm khoáng nóng Radon tự nhiên quý hiếm, công viên nước Đảo Ngọc Xanh, Đền Lăng Sương.",
         actionValue: "plan_thanh_thuy",
         actionLabel: "♨️ Cụm Khoáng nóng Thanh Thủy",
       },

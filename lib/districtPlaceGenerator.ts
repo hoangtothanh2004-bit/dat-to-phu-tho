@@ -382,7 +382,7 @@ export function createPlaceFromDistrict(
   const restaurants: NearbyItem[] = district.culinary.map((c, i) => {
     const rawPlace = c.places || "";
     const namePart = rawPlace.includes(",") ? rawPlace.split(",")[0].trim() : rawPlace || `Nhà hàng ẩm thực ${district.name}`;
-    const addrPart = rawPlace.includes(",") ? rawPlace.split(",").slice(1).join(",").trim() : `Trung tâm ${district.name}, tỉnh ${district.province}`;
+    const addrPart = rawPlace.includes(",") ? rawPlace.split(",").slice(1).join(",").trim() : `Trung tâm ${district.name}, tỉnh Phú Thọ`;
 
     return {
       name: namePart.length > 3 ? namePart : `Đặc sản ${c.dish.split("(")[0].trim()}`,
@@ -417,7 +417,7 @@ export function createPlaceFromDistrict(
       distance: "2,0 km",
       travelTime: "6 phút",
       note: `Không gian nghỉ ngơi tiện nghi, chu đáo.`,
-      address: stayAddr || `${district.name}, tỉnh ${district.province}`,
+      address: stayAddr || `${district.name}, tỉnh Phú Thọ`,
       hours: "Lễ tân 24/7 (Nhận phòng 14:00 – Trả phòng 12:00)",
       phone: "0977 123 888",
       rating: 4.8,
@@ -448,7 +448,7 @@ export function createPlaceFromDistrict(
     category: placeCategory,
     region: district.province,
     district: district.name,
-    location: `${attraction.name}, ${district.name}, tỉnh ${district.province}`,
+    location: attraction.location || `${attraction.name}, ${district.name}, tỉnh Phú Thọ`,
     image: getDistrictSpotImage(district.id, attractionIndex),
     imageCredit: `Du lịch ${district.name}`,
     rating: 4.8,
@@ -473,7 +473,7 @@ export function createPlaceFromDistrict(
     lat: coords.lat + attractionIndex * 0.007,
     lng: coords.lng + attractionIndex * 0.007,
     featured: true,
-    audioScript: `Chào mừng quý khách đến với ${attraction.name} tại ${district.name}, tỉnh ${district.province}. ${attraction.desc} Tại ${district.name}, quý khách đừng quên thưởng thức các món ăn nức tiếng như ${district.culinary.map((c) => c.dish.split("(")[0].trim()).join(", ")}. Chúc quý khách có một chuyến đi trọn vẹn và an toàn!`,
+    audioScript: `Chào mừng quý khách đến với ${attraction.name} tại ${district.name}, tỉnh Phú Thọ. ${attraction.desc} Tại ${district.name}, quý khách đừng quên thưởng thức các món ăn nức tiếng như ${district.culinary.map((c) => c.dish.split("(")[0].trim()).join(", ")}. Chúc quý khách có một chuyến đi trọn vẹn và an toàn!`,
     audioScriptEn: `Welcome to ${attraction.name} in ${district.name}, ${district.province}. ${attraction.desc}`,
     restaurants,
     stays,

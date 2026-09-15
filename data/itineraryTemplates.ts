@@ -3,7 +3,7 @@ export type TourTemplate = {
   title: string;
   durationDays: number;
   durationLabel: string;
-  region: "Phú Thọ" | "Vĩnh Phúc" | "Hòa Bình" | "Liên thông 3 tỉnh";
+  region: "Phú Thọ" | "Vĩnh Phúc" | "Hòa Bình" | "Liên thông 3 tỉnh" | "Tỉnh Phú Thọ mở rộng";
   badge: string;
   theme: string;
   recommendedTransport: string;
@@ -26,7 +26,7 @@ export const tourTemplates: TourTemplate[] = [
     recommendedTransport: "Ô tô riêng / Xe du lịch",
     anchorPlaceId: "den-hung",
     image: "/images/places/den-hung.png",
-    summary: "Hành trình chuẩn xác theo tài liệu 'lịch trình du lịch': Xuất phát từ Việt Trì, ăn sáng Mai Anh, dâng hương Đền Hùng, ăn trưa Giang Lan, nhận phòng 5 sao Lynn Times Thanh Thủy tắm Onsen khoáng Radon, ăn tối chả cá sông Đà; ngày 2 vượt đèo mây Tam Đảo, check-in Nhà thờ đá, ăn trưa Tam Đảo Núi và cà phê Cổng Trời.",
+    summary: "Hành trình chuẩn xác theo tài liệu 'lịch trình du lịch': Xuất phát từ Việt Trì, ăn sáng Mai Anh, dâng hương Đền Hùng, ăn trưa Giang Lan, nhận phòng 5 sao Lynn Times Thanh Thủy tắm khoáng nóng Radon tự nhiên, ăn tối chả cá sông Đà; ngày 2 vượt đèo mây Tam Đảo, check-in Nhà thờ đá, ăn trưa Tam Đảo Núi và cà phê Cổng Trời.",
     estimatedBudgetPerPerson: "1.400.000 – 1.850.000đ",
     highlights: [
       "Ăn sáng Mai Anh & Đại lễ chiêm bái Đền Hùng",
@@ -93,7 +93,7 @@ export const tourTemplates: TourTemplate[] = [
     recommendedTransport: "Ô tô gầm cao / Xe máy phượt",
     anchorPlaceId: "long-coc",
     image: "/images/places/long-coc.jpg",
-    summary: "Bình minh săn biển mây trên đồi chè bát úp Long Cốc, khám phá rừng nguyên sinh hang động VQG Xuân Sơn và kết thúc bằng buổi ngâm khoáng nóng Nhật Bản phục hồi thể lực tại Thanh Thủy.",
+    summary: "Bình minh săn biển mây trên đồi chè bát úp Long Cốc, khám phá rừng nguyên sinh hang động VQG Xuân Sơn và kết thúc bằng buổi ngâm khoáng nóng thiên nhiên phục hồi thể lực tại Thanh Thủy.",
     estimatedBudgetPerPerson: "1.100.000 – 2.200.000đ",
     highlights: ["Săn sương sớm vịnh Hạ Long vùng trung du Long Cốc", "Trekking bản Cỏi & Hang Lạng Xuân Sơn", "Mâm cỗ lá người Dao gà nhiều cựa", "Tắm khoáng Onsen chuẩn Nhật Wyndham Thanh Thủy"]
   },
@@ -117,14 +117,14 @@ export const tourTemplates: TourTemplate[] = [
     title: "Đại Hành Trình Di Sản: Đất Tổ – Mây Ngàn Tam Đảo – Thung Lũng Mai Châu",
     durationDays: 3,
     durationLabel: "3 ngày 2 đêm",
-    region: "Liên thông 3 tỉnh",
-    badge: "Siêu tour 3 tỉnh",
+    region: "Tỉnh Phú Thọ mở rộng",
+    badge: "Siêu tour Đất Tổ",
     theme: "Khám phá toàn diện",
     recommendedTransport: "Ô tô riêng / Xe du lịch hợp đồng",
     anchorPlaceId: "den-hung",
     image: "/images/itinerary-teaser-bg.png",
     summary: "Hành trình trọn vẹn kết nối 3 không gian di sản tiêu biểu: Ngày 1 dâng hương Đền Hùng & tắm khoáng Thanh Thủy; Ngày 2 vượt núi săn mây Tam Đảo; Ngày 3 xuôi về thung lũng Bản Lác Mai Châu.",
     estimatedBudgetPerPerson: "2.400.000 – 4.500.000đ",
-    highlights: ["Khám phá trọn vẹn 3 tỉnh Phú Thọ - Vĩnh Phúc - Hòa Bình", "Hội tụ đủ: Tâm linh, Nghỉ dưỡng mây núi, Suối khoáng Onsen, Du lịch cộng đồng", "Thưởng thức thực đơn tinh hoa: Cá sông Lô, Ngọn su su Tam Đảo, Cơm lam Mai Châu"]
+    highlights: ["Khám phá trọn vẹn không gian văn hóa Đất Tổ Phú Thọ mở rộng", "Hội tụ đủ: Tâm linh cội nguồn, Nghỉ dưỡng mây núi, Suối khoáng thiên nhiên, Du lịch cộng đồng", "Thưởng thức thực đơn tinh hoa: Cá sông Lô, Ngọn su su Tam Đảo, Cơm lam Mai Châu"]
   }
 ];
