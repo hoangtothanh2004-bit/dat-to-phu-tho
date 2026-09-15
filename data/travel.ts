@@ -2612,7 +2612,7 @@ export type FoodRegion = {
 export const foodRegions: FoodRegion[] = [
   {
     id: "phu-tho-dac-san",
-    label: "Đất Tổ Phú Thọ",
+    label: "Khu vực Phú Thọ cũ",
     subtitle: "Hương vị cội nguồn: Bánh tai, thịt chua Thanh Sơn, xáo chuối Lâm Thao, cọ ỏm, bưởi Đoan Hùng, canh rau sắn",
     dishes: [
       {
@@ -2827,7 +2827,7 @@ export const foodRegions: FoodRegion[] = [
   },
   {
     id: "vinh-phuc-dac-san",
-    label: "Đặc sản Vĩnh Phúc",
+    label: "Khu vực Vĩnh Phúc cũ",
     subtitle: "Mỹ vị đồng quê & non cao: Cá thính Lập Thạch, bò tái kiến đốt, chè kho Tứ Yên, dứa Tam Dương, tép Đầm Vạc, rau su su",
     dishes: [
       {
@@ -3016,7 +3016,7 @@ export const foodRegions: FoodRegion[] = [
   },
   {
     id: "hoa-binh-dac-san",
-    label: "Đặc sản Hòa Bình",
+    label: "Khu vực Hòa Bình cũ",
     subtitle: "Mỹ vị đại ngàn Tây Bắc: Cơm lam nếp nương, thịt lợn muối chua, gà đồi nấu măng, chả cuốn lá bưởi, cá nướng sông Đà, thịt trâu lá lồm, rượu cần Mường",
     dishes: [
       {

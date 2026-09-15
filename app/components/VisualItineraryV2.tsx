@@ -71,97 +71,28 @@ function getSlotCategoryTag(slot: ItinerarySlot): { label: string; modifier: str
 }
 
 function getSlotLocationText(slot: ItinerarySlot): string {
+  if (slot.place?.highlights && slot.place.highlights.length > 0) {
+    return slot.place.highlights.slice(0, 3).join(" · ");
+  }
   if (slot.place?.location) return slot.place.location;
-  if (slot.restaurant?.address) return slot.restaurant.address;
-  if (slot.stay?.address) return slot.stay.address;
+  if (slot.restaurant?.address) return slot.restaurant.address.split(",")[0].trim();
+  if (slot.stay?.address) return slot.stay.address.split(",")[0].trim();
   if (slot.place?.district) return `${slot.place.district}, ${slot.place.region}`;
   return "Điểm đến trong lịch trình";
 }
 
-export type SlotFivePillars = {
-  where: {
-    label: string;
-    title: string;
-    detail: string;
-    highlights: string[];
-  };
-  dine: {
-    label: string;
-    title: string;
-    detail: string;
-    distance: string;
-  };
-  stay: {
-    label: string;
-    title: string;
-    detail: string;
-    isNightStay: boolean;
-  };
-  transport: {
-    label: string;
-    title: string;
-    detail: string;
-    distanceKm: number;
-  };
-  duration: {
-    label: string;
-    timeSlot: string;
-    durationText: string;
-  };
-};
-
-function getSlotPillars(slot: ItinerarySlot, dayPlan?: ItineraryDay): SlotFivePillars {
-  // 1. Đi đâu
-  const whereTitle = slot.place?.name || (slot.type === "meal" ? (slot.restaurant?.name || "Điểm dừng ẩm thực") : slot.title);
-  const whereDetail = slot.place
-    ? slot.place.location
-    : (slot.activity ? slot.activity.split(".")[0].trim() : "Điểm đến tiêu biểu");
-  const whereHighlights = (slot.place?.highlights || []).slice(0, 3);
-
-  // 2. Ăn gì - Rút gọn súc tích, tránh lan man nhiều chữ
-  const dineTitle = slot.restaurant
-    ? slot.restaurant.name
-    : slot.place?.restaurants?.[0]?.name
-    ? slot.place.restaurants[0].name
-    : "Đặc sản địa phương";
-  const rawDineDish = slot.restaurant?.taste || slot.restaurant?.note || slot.place?.restaurants?.[0]?.taste || slot.place?.restaurants?.[0]?.note || "Món ngon đặc sản nổi bật";
-  const shortDish = rawDineDish.split(/[.,;]/)[0].trim().slice(0, 45);
-  const rawDineAddr = slot.restaurant?.address || slot.place?.restaurants?.[0]?.address || "";
-  const shortAddr = rawDineAddr ? rawDineAddr.split(",")[0].trim() : "";
-  const dineDetail = shortAddr ? `${shortDish} – ${shortAddr}` : shortDish;
-  const dineDistance = slot.restaurant?.distance || slot.place?.restaurants?.[0]?.distance || "Khu vực lân cận (~1-3 km)";
-
-  // 3. Ở đâu - Tối giản, trực diện
-  const hasDirectStay = !!slot.stay;
-  const stayTitle = slot.stay
-    ? slot.stay.name
-    : dayPlan?.stayForNight
-    ? dayPlan.stayForNight.name
-    : "Khách sạn / Homestay trung tâm";
-  const targetStay = slot.stay || dayPlan?.stayForNight;
-  const stayAddrShort = targetStay?.address ? targetStay.address.split(",")[0].trim() : "Trung tâm";
-  const stayDetail = `Tiêu chuẩn tiện nghi, chu đáo – ${stayAddrShort}`;
-
-  // 4. Phương tiện - Gọn gàng, dễ hiểu
-  const transportTitle = "Ô tô / Xe máy thuận tiện";
-  const transportDetail = slot.travelMinutes
-    ? `Thời gian di chuyển ~${slot.travelMinutes} phút qua đường chính thông thoáng.`
-    : "Tuyến đường chính thông thoáng, thuận lợi di chuyển.";
-  const distanceKm = slot.place ? Math.max(1, Math.round(slot.place.distanceFromVietTri * 0.4 || 12)) : 12;
-
-  // 5. Thời gian
-  const timeSlot = slot.timeSlot;
-  const durationText = slot.travelMinutes
-    ? `Tham quan ~${Math.max(60, 180 - slot.travelMinutes)} phút (di chuyển ~${slot.travelMinutes}p)`
-    : "Thời gian trải nghiệm: 90 – 120 phút";
-
-  return {
-    where: { label: "Đi đâu", title: whereTitle, detail: whereDetail, highlights: whereHighlights },
-    dine: { label: "Ăn gì", title: dineTitle, detail: dineDetail, distance: dineDistance },
-    stay: { label: "Ở đâu", title: stayTitle, detail: stayDetail, isNightStay: !hasDirectStay && !!dayPlan?.stayForNight },
-    transport: { label: "Phương tiện", title: transportTitle, detail: transportDetail, distanceKm },
-    duration: { label: "Thời gian", timeSlot, durationText },
-  };
+function getSlotHighlightsLine(slot: ItinerarySlot): string {
+  if (slot.type === "meal") {
+    const dish = slot.restaurant?.taste || slot.restaurant?.note || slot.place?.restaurants?.[0]?.taste || "Gà đồi, rau su su, đặc sản bản địa...";
+    return `Gợi ý món: ${dish.split(/[.;]/)[0].trim()}`;
+  }
+  if (slot.place?.highlights && slot.place.highlights.length > 0) {
+    return `Check-in ${slot.place.highlights.slice(0, 3).join(", ")}.`;
+  }
+  if (slot.highlightNote) {
+    return slot.highlightNote;
+  }
+  return "Trải nghiệm văn hóa & danh lam thắng cảnh bản địa.";
 }
 
 export default function VisualItineraryV2(props: VisualItineraryV2Props) {
@@ -200,9 +131,7 @@ export default function VisualItineraryV2(props: VisualItineraryV2Props) {
 
   const [activeItineraryDay, setActiveItineraryDay] = useState<number>(1);
   const [selectedDetailSlot, setSelectedDetailSlot] = useState<ItinerarySlot | null>(null);
-  const [isDetailAccordionOpen, setIsDetailAccordionOpen] = useState<boolean>(false);
   const [expandedDayStops, setExpandedDayStops] = useState<Record<number, boolean>>({});
-  const [expandedCardSlots, setExpandedCardSlots] = useState<Record<string, boolean>>({});
   const [showAudioSettings, setShowAudioSettings] = useState<boolean>(false);
 
   const detailPanelRef = useRef<HTMLDivElement>(null);
@@ -212,7 +141,6 @@ export default function VisualItineraryV2(props: VisualItineraryV2Props) {
   useEffect(() => {
     setActiveItineraryDay(1);
     setSelectedDetailSlot(null);
-    setExpandedCardSlots({});
   }, [generatedItinerary.id]);
 
   const currentDayPlan =
@@ -242,19 +170,34 @@ export default function VisualItineraryV2(props: VisualItineraryV2Props) {
     }
   };
 
-  const toggleCardExpanded = (slotKey: string, slot: ItinerarySlot) => {
-    setExpandedCardSlots((prev) => ({
-      ...prev,
-      [slotKey]: !prev[slotKey],
-    }));
-    setSelectedDetailSlot(slot);
-  };
-
   const scrollToTimeline = () => {
     timelineRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
   };
 
-  const activePillars = activeDetailSlot ? getSlotPillars(activeDetailSlot, currentDayPlan) : null;
+  // Bullets for detail panel
+  const detailBullets: string[] = activeDetailSlot?.place?.highlights && activeDetailSlot.place.highlights.length > 0
+    ? activeDetailSlot.place.highlights
+    : activeDetailSlot?.activity
+    ? [activeDetailSlot.activity]
+    : ["Khám phá không gian văn hóa & danh lam bản địa", "Trải nghiệm ẩm thực và ngắm cảnh thiên nhiên"];
+
+  // Suggest restaurant
+  const suggestDineName = activeDetailSlot?.restaurant?.name || activeDetailSlot?.place?.restaurants?.[0]?.name || "Nhà hàng đặc sản bản địa";
+  const suggestDineDist = activeDetailSlot?.restaurant?.distance || activeDetailSlot?.place?.restaurants?.[0]?.distance || "cách 0,3 km (2 phút)";
+  const suggestDineDishes = activeDetailSlot?.restaurant?.taste || activeDetailSlot?.place?.restaurants?.[0]?.taste || activeDetailSlot?.place?.restaurants?.[0]?.note || "Gà đồi, rau su su, cá suối, cơm lam...";
+
+  // Script text for active detail slot
+  const activeQuoteScript = activeDetailSlot?.place?.audioScript
+    ? activeDetailSlot.place.audioScript.slice(0, 260) + "..."
+    : activeDetailSlot?.highlightNote
+    ? activeDetailSlot.highlightNote
+    : `Chào mừng bạn đến với ${activeDetailSlot?.title}. Không gian thiên nhiên tươi đẹp và di sản cội nguồn sẽ mang lại trải nghiệm đáng nhớ cho hành trình.`;
+
+  const isDetailPlacePlaying = !!(activeDetailSlot?.place && speechPlaceId === activeDetailSlot.place.id && audioState === "playing");
+
+  const googleMapsSearchUrl = activeDetailSlot?.place
+    ? `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${activeDetailSlot.place.name} ${activeDetailSlot.place.location}`)}`
+    : generatedItinerary.googleMapsUrl;
 
   return (
     <div className="v2-itinerary-workspace">
@@ -386,12 +329,15 @@ export default function VisualItineraryV2(props: VisualItineraryV2Props) {
             <div className="v2-audio-control-item v2-audio-control-item--speed">
               <label>Tốc độ đọc</label>
               <div className="v2-rate-pills">
-                {[0.75, 0.9, 1.0, 1.25, 1.5].map((r) => (
+                {[0.75, 1.0, 1.25, 1.5, 2.0].map((r) => (
                   <button
                     type="button"
                     key={r}
                     className={`v2-rate-pill ${audioRate === r ? "is-active" : ""}`}
-                    onClick={() => setAudioRate(r)}
+                    onClick={() => {
+                      setAudioRate(r);
+                      showToast(`✓ Đã chỉnh tốc độ đọc: ${r}x`);
+                    }}
                   >
                     {r}x
                   </button>
@@ -462,7 +408,7 @@ export default function VisualItineraryV2(props: VisualItineraryV2Props) {
               </div>
             </div>
 
-            {/* 4 Metrics Strip */}
+            {/* 4 Metrics Strip - Căn đều 4 ô chuẩn xác */}
             <div className="v2-day-metrics-strip">
               <div className="v2-metric-item">
                 <div className="v2-metric-icon">🕒</div>
@@ -498,15 +444,14 @@ export default function VisualItineraryV2(props: VisualItineraryV2Props) {
             </div>
           </div>
 
-          {/* Timeline Flow */}
+          {/* Timeline Flow - Tối giản theo đúng thiết kế mẫu image23.png */}
           <div className="v2-timeline-flow">
             {visibleSlots.map((slot, sIdx) => {
               const isSelected = activeDetailSlot === slot;
               const tag = getSlotCategoryTag(slot);
-              const pillars = getSlotPillars(slot, currentDayPlan);
               const startTime = slot.timeSlot.split("–")[0]?.trim() || "07:30";
-              const slotKey = `${activeItineraryDay}-${sIdx}-${slot.title}`;
-              const isCardExpanded = !!expandedCardSlots[slotKey];
+              const driveKm = slot.place ? Math.max(1, Math.round(slot.place.distanceFromVietTri * 0.4 || 12)) : 12;
+              const driveMinutes = slot.travelMinutes || 45;
 
               return (
                 <div className="v2-timeline-item" key={sIdx}>
@@ -538,6 +483,7 @@ export default function VisualItineraryV2(props: VisualItineraryV2Props) {
                     </div>
 
                     <div className="v2-card__content">
+                      {/* Dòng 1: Tag phân loại & Giá tiền */}
                       <div className="v2-card__head">
                         <span className={`v2-tag v2-tag--${tag.modifier}`}>{tag.label}</span>
                         <span className="v2-card__cost">
@@ -545,93 +491,48 @@ export default function VisualItineraryV2(props: VisualItineraryV2Props) {
                         </span>
                       </div>
 
+                      {/* Dòng 2: Tiêu đề chặng */}
                       <h4 className="v2-card__title">{slot.title}</h4>
                       
+                      {/* Dòng 3: Địa điểm tóm tắt */}
                       <div className="v2-card__location">
-                        <span>📍</span>
-                        <span title={getSlotLocationText(slot)}>{getSlotLocationText(slot)}</span>
+                        <span className="v2-loc-pin">📍</span>
+                        <span className="v2-loc-text">{getSlotLocationText(slot)}</span>
                       </div>
 
+                      {/* Dòng 4: Thời gian di chuyển & thể loại */}
+                      <div className="v2-card__meta-strip">
+                        <span className="v2-meta-drive">
+                          🚗 {driveMinutes} phút · {driveKm} km
+                        </span>
+                        <span className="v2-meta-sep">·</span>
+                        <span className="v2-meta-type">
+                          {slot.type === "meal" ? "🍜 Đặc sản địa phương" : `🎟️ ${tag.label}`}
+                        </span>
+                      </div>
 
+                      {/* Dòng 5: Điểm nổi bật / Gợi ý món */}
+                      <div className="v2-card__highlight-line">
+                        <span className="v2-hl-star">⭐</span>
+                        <span className="v2-hl-text">
+                          <b>Điểm nổi bật:</b> {getSlotHighlightsLine(slot)}
+                        </span>
+                      </div>
+
+                      {/* Dòng 6: Nút Xem chi tiết */}
                       <div className="v2-card__foot">
                         <button
                           type="button"
-                          className={`v2-expand-btn ${isCardExpanded ? "is-expanded" : ""}`}
+                          className="v2-expand-btn"
                           onClick={(e) => {
                             e.stopPropagation();
-                            toggleCardExpanded(slotKey, slot);
+                            handleCardClick(slot);
                           }}
                         >
-                          <span>{isCardExpanded ? "Thu gọn chi tiết 5 yếu tố" : "Xem chi tiết 5 yếu tố"}</span>
-                          <span className="v2-expand-arrow">{isCardExpanded ? "▴" : "⌵"}</span>
+                          <span>Xem chi tiết</span>
+                          <span className="v2-expand-arrow">⌵</span>
                         </button>
                       </div>
-
-                      {/* IN-PLACE ACCORDION: EXPANDED 5 PILLARS */}
-                      {isCardExpanded && (
-                        <div className="v2-card-expanded-pillars" onClick={(e) => e.stopPropagation()}>
-                          <div className="v2-expanded-pillar-item">
-                            <div className="v2-expanded-pillar-head">
-                              <span className="v2-expanded-pillar-icon">📍</span>
-                              <b>1. Đi đâu: {pillars.where.title}</b>
-                            </div>
-                            <p className="v2-expanded-pillar-body">{pillars.where.detail}</p>
-                            {pillars.where.highlights && pillars.where.highlights.length > 0 && (
-                              <div className="v2-expanded-highlights">
-                                {pillars.where.highlights.map((h, i) => (
-                                  <span key={i} className="v2-expanded-badge">✨ {h}</span>
-                                ))}
-                              </div>
-                            )}
-                          </div>
-
-                          <div className="v2-expanded-pillar-item">
-                            <div className="v2-expanded-pillar-head">
-                              <span className="v2-expanded-pillar-icon">🍽️</span>
-                              <b>2. Ăn gì: {pillars.dine.title}</b>
-                              {pillars.dine.distance && (
-                                <span className="v2-expanded-tag">Cách ~{pillars.dine.distance}</span>
-                              )}
-                            </div>
-                            <p className="v2-expanded-pillar-body">{pillars.dine.detail}</p>
-                          </div>
-
-                          <div className="v2-expanded-pillar-item">
-                            <div className="v2-expanded-pillar-head">
-                              <span className="v2-expanded-pillar-icon">🏨</span>
-                              <b>3. Ở đâu: {pillars.stay.title}</b>
-                            </div>
-                            <p className="v2-expanded-pillar-body">{pillars.stay.detail}</p>
-                          </div>
-
-                          <div className="v2-expanded-pillar-item">
-                            <div className="v2-expanded-pillar-head">
-                              <span className="v2-expanded-pillar-icon">🚗</span>
-                              <b>4. Phương tiện: {pillars.transport.title} (~{pillars.transport.distanceKm} km)</b>
-                            </div>
-                            <p className="v2-expanded-pillar-body">{pillars.transport.detail}</p>
-                          </div>
-
-                          <div className="v2-expanded-pillar-item v2-expanded-pillar-item--meta">
-                            <div className="v2-expanded-meta-col">
-                              <span className="v2-expanded-meta-label">⏱️ Khung giờ & Thời lượng:</span>
-                              <span className="v2-expanded-meta-val">{slot.timeSlot} – {pillars.duration.durationText}</span>
-                            </div>
-                            <div className="v2-expanded-meta-col">
-                              <span className="v2-expanded-meta-label">💵 Chi phí ước tính:</span>
-                              <span className="v2-expanded-meta-val text-emerald">
-                                {formatMoney(slot.estimatedCostPerPerson)} / người
-                              </span>
-                            </div>
-                          </div>
-
-                          {slot.highlightNote && (
-                            <div className="v2-expanded-tip">
-                              <span>💡 <b>Lưu ý trải nghiệm:</b> {slot.highlightNote}</span>
-                            </div>
-                          )}
-                        </div>
-                      )}
                     </div>
                   </article>
                 </div>
@@ -681,7 +582,7 @@ export default function VisualItineraryV2(props: VisualItineraryV2Props) {
                   </div>
                   <h4 className="v2-night-title">{currentDayPlan.stayForNight.name}</h4>
                   <p className="v2-night-desc">
-                    <b>Tiện ích & trải nghiệm:</b> {currentDayPlan.stayForNight.note || "Phòng nghỉ tiện nghi, ẩm thực bản địa"}
+                    <b>Tiện ích & trải nghiệm:</b> {currentDayPlan.stayForNight.note || "Phòng nghỉ tiện nghi, ẩm thực bản địa chu đáo"}
                   </p>
                   <div className="v2-night-foot">
                     <span className="v2-night-addr">📍 {currentDayPlan.stayForNight.address}</span>
@@ -700,7 +601,7 @@ export default function VisualItineraryV2(props: VisualItineraryV2Props) {
               </div>
             )}
 
-            {/* Audio Guide Player */}
+            {/* Audio Guide Player - Lời dẫn hướng dẫn viên toàn chặng */}
             <div className="v2-timeline-item v2-timeline-item--audio">
               <div className="v2-timeline-node">
                 <span className="v2-timeline-dot"></span>
@@ -710,9 +611,9 @@ export default function VisualItineraryV2(props: VisualItineraryV2Props) {
                   <span>🔊</span>
                 </div>
                 <div className="v2-audio-info">
-                  <b>Lời dẫn hướng dẫn viên toàn chặng</b>
+                  <b>Lời dẫn hướng dẫn viên</b>
                   <small>
-                    {currentDayPlan?.dayTitle || generatedItinerary.title} – câu chuyện văn hóa bản địa
+                    {currentDayPlan?.dayTitle || generatedItinerary.title} – câu chuyện 2 phút
                   </small>
                 </div>
                 <button
@@ -736,7 +637,7 @@ export default function VisualItineraryV2(props: VisualItineraryV2Props) {
               </div>
             </div>
 
-            {/* 4 Value Badges Under Timeline */}
+            {/* 4 Value Badges Under Timeline theo mẫu image23.png */}
             <div className="v2-features-strip">
               <div className="v2-feature-pill">
                 <span className="v2-feature-icon">🍃</span>
@@ -749,8 +650,8 @@ export default function VisualItineraryV2(props: VisualItineraryV2Props) {
               <div className="v2-feature-pill">
                 <span className="v2-feature-icon">✨</span>
                 <div className="v2-feature-text">
-                  <b>Đủ 5 yếu tố</b>
-                  <small>Đi đâu · Ăn gì · Ở đâu</small>
+                  <b>Giữ đủ thông tin</b>
+                  <small>nhưng không rối</small>
                 </div>
               </div>
 
@@ -758,25 +659,25 @@ export default function VisualItineraryV2(props: VisualItineraryV2Props) {
                 <span className="v2-feature-icon">📱</span>
                 <div className="v2-feature-text">
                   <b>Thân thiện</b>
-                  <small>chuẩn máy tính & điện thoại</small>
+                  <small>trên cả máy tính & điện thoại</small>
                 </div>
               </div>
 
               <div className="v2-feature-pill">
                 <span className="v2-feature-icon">💚</span>
                 <div className="v2-feature-text">
-                  <b>Tối ưu trải nghiệm</b>
-                  <small>chuyến đi thảnh thơi</small>
+                  <b>Tăng trải nghiệm</b>
+                  <small>và tỷ lệ sử dụng</small>
                 </div>
               </div>
             </div>
           </div>
         </div>
 
-        {/* RIGHT COLUMN: DETAIL PANEL */}
+        {/* RIGHT COLUMN: DETAIL PANEL THEO MẪU CHUẨN IMAGE23.PNG */}
         <div className="v2-right-column" ref={detailPanelRef}>
-          {activeDetailSlot && activePillars && (
-            <aside className="v2-detail-panel" aria-label="Chi tiết điểm tham quan và 5 yếu tố">
+          {activeDetailSlot && (
+            <aside className="v2-detail-panel" aria-label="Thông tin chi tiết điểm đến">
               {/* Mobile Back-to-Timeline Button */}
               <div className="v2-mobile-back-bar">
                 <button
@@ -788,6 +689,7 @@ export default function VisualItineraryV2(props: VisualItineraryV2Props) {
                 </button>
               </div>
 
+              {/* 1. HERO PHOTO + TIME BADGE */}
               <div className="v2-detail-hero">
                 <img
                   src={getSlotImage(activeDetailSlot)}
@@ -800,14 +702,16 @@ export default function VisualItineraryV2(props: VisualItineraryV2Props) {
                   type="button"
                   className="v2-detail-hero__close"
                   onClick={() => setSelectedDetailSlot(currentDayPlan?.slots[0] || null)}
-                  title="Điểm đầu tiên"
-                  aria-label="Điểm đầu tiên"
+                  title="Đóng"
+                  aria-label="Đóng"
                 >
                   ✕
                 </button>
               </div>
 
+              {/* 2. BODY CONTENT */}
               <div className="v2-detail-body">
+                {/* Header chặng: Icon + Tiêu đề + Giá */}
                 <div className="v2-detail-header-row">
                   <h3 className="v2-detail-title">
                     <span className="v2-detail-type-icon">
@@ -815,7 +719,7 @@ export default function VisualItineraryV2(props: VisualItineraryV2Props) {
                         ? "🍽️"
                         : activeDetailSlot.type === "stay"
                         ? "🏨"
-                        : "📍"}
+                        : "🚗"}
                     </span>{" "}
                     {activeDetailSlot.title}
                   </h3>
@@ -824,193 +728,147 @@ export default function VisualItineraryV2(props: VisualItineraryV2Props) {
                   </span>
                 </div>
 
+                {/* 📍 Địa điểm */}
                 <div className="v2-detail-location">
-                  <span>📍</span>
+                  <span className="v2-loc-pin">📍</span>
                   <span>{getSlotLocationText(activeDetailSlot)}</span>
                 </div>
 
-                {/* HIGHLIGHTED 5 PILLARS SYSTEM CARD */}
-                <div className="v2-detail-pillars-box">
-                  <div className="v2-detail-pillars-head">
-                    <span className="v2-pillars-spark">✦</span>
-                    <div>
-                      <h4>5 YẾU TỐ HÀNH TRÌNH TIÊU CHUẨN</h4>
-                      <small>Thông tin cốt lõi cho điểm dừng chân</small>
-                    </div>
+                {/* 🚗 Di chuyển & thể loại */}
+                <div className="v2-detail-meta-row">
+                  <span>🚗 {activeDetailSlot.travelMinutes || 45} phút · {activeDetailSlot.place ? Math.max(1, Math.round(activeDetailSlot.place.distanceFromVietTri * 0.4 || 12)) : 12} km</span>
+                  <span className="v2-meta-badge">
+                    {activeDetailSlot.type === "meal" ? "🍜 Ăn uống" : "🎟️ Tham quan"}
+                  </span>
+                </div>
+
+                {/* ⭐ Điểm nổi bật */}
+                <div className="v2-detail-highlight-card">
+                  <div className="v2-hl-head">
+                    <span className="v2-hl-star">⭐</span>
+                    <b>Điểm nổi bật</b>
                   </div>
+                  <p className="v2-hl-desc">{getSlotHighlightsLine(activeDetailSlot)}</p>
+                </div>
 
-                  <div className="v2-pillar-grid">
-                    {/* 1. Đi đâu */}
-                    <div className="v2-pillar-block v2-pillar-block--where">
-                      <div className="v2-pillar-block__head">
-                        <span className="v2-pillar-badge">📍 ĐI ĐÂU</span>
-                        <b>{activePillars.where.title}</b>
-                      </div>
-                      <p>{activePillars.where.detail}</p>
-                      {activePillars.where.highlights.length > 0 && (
-                        <div className="v2-pillar-sub-chips">
-                          {activePillars.where.highlights.slice(0, 3).map((h, i) => (
-                            <span key={i} className="v2-sub-chip">✓ {h}</span>
-                          ))}
-                        </div>
-                      )}
-                    </div>
+                {/* 3. KHỐI "THÔNG TIN CHI TIẾT" CHUẨN IMAGE23.PNG */}
+                <div className="v2-detail-section-title">
+                  <h4>Thông tin chi tiết</h4>
+                </div>
 
-                    {/* 2. Ăn gì */}
-                    <div className="v2-pillar-block v2-pillar-block--dine">
-                      <div className="v2-pillar-block__head">
-                        <span className="v2-pillar-badge">🍽️ ĂN GÌ</span>
-                        <b>{activePillars.dine.title}</b>
-                      </div>
-                      <p>{activePillars.dine.detail}</p>
-                      <small className="v2-pillar-note">Khoảng cách: {activePillars.dine.distance}</small>
-                    </div>
+                {/* Mục 1: Điểm đến */}
+                <div className="v2-info-item">
+                  <div className="v2-info-item__label">
+                    <span>📍</span>
+                    <b>Điểm đến</b>
+                  </div>
+                  <p className="v2-info-item__val">
+                    {activeDetailSlot.place
+                      ? `${activeDetailSlot.place.name} (${activeDetailSlot.place.location})`
+                      : activeDetailSlot.title}
+                  </p>
+                </div>
 
-                    {/* 3. Ở đâu */}
-                    <div className="v2-pillar-block v2-pillar-block--stay">
-                      <div className="v2-pillar-block__head">
-                        <span className="v2-pillar-badge">🏨 Ở ĐÂU</span>
-                        <b>{activePillars.stay.title}</b>
-                      </div>
-                      <p>{activePillars.stay.detail}</p>
-                      {activePillars.stay.isNightStay && (
-                        <span className="v2-night-tag-small">🌙 Điểm lưu trú nghỉ đêm của ngày</span>
-                      )}
-                    </div>
+                {/* Mục 2: Điểm tham quan (danh sách bullet) */}
+                <div className="v2-info-item">
+                  <div className="v2-info-item__label">
+                    <span>⭐</span>
+                    <b>Điểm tham quan</b>
+                  </div>
+                  <ul className="v2-info-bullets">
+                    {detailBullets.map((bullet, bIdx) => (
+                      <li key={bIdx}>
+                        <span className="v2-bullet-dot">•</span>
+                        <span>{bullet}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
 
-                    {/* 4. Phương tiện */}
-                    <div className="v2-pillar-block v2-pillar-block--transport">
-                      <div className="v2-pillar-block__head">
-                        <span className="v2-pillar-badge">🚗 PHƯƠNG TIỆN</span>
-                        <b>{activePillars.transport.title}</b>
-                      </div>
-                      <p>{activePillars.transport.detail}</p>
-                      <small className="v2-pillar-note">Cự ly chặng: ~{activePillars.transport.distanceKm} km</small>
-                    </div>
-
-                    {/* 5. Thời gian */}
-                    <div className="v2-pillar-block v2-pillar-block--duration">
-                      <div className="v2-pillar-block__head">
-                        <span className="v2-pillar-badge">⏱️ THỜI GIAN</span>
-                        <b>{activePillars.duration.timeSlot}</b>
-                      </div>
-                      <p>{activePillars.duration.durationText}</p>
-                      <small className="v2-pillar-note">Khung giờ trải nghiệm lý tưởng</small>
-                    </div>
+                {/* Mục 3: Ăn uống (gợi ý) */}
+                <div className="v2-info-item">
+                  <div className="v2-info-item__label">
+                    <span>🍽️</span>
+                    <b>Ăn uống (gợi ý)</b>
+                  </div>
+                  <div className="v2-info-dine-box">
+                    <p className="v2-dine-name">
+                      <b>{suggestDineName}</b> <small>({suggestDineDist})</small>
+                    </p>
+                    <p className="v2-dine-dishes">
+                      <span>Món ngon:</span> {suggestDineDishes}
+                    </p>
                   </div>
                 </div>
 
-                {/* Collapsible Accordion "Mẹo & Thuyết minh mở rộng" */}
-                <div className="v2-accordion">
+                {/* Mục 4: Lời dẫn hướng dẫn viên + Nút Nghe thuyết minh */}
+                <div className="v2-info-item v2-info-item--audio">
+                  <div className="v2-info-item__label">
+                    <span>🔊</span>
+                    <b>Lời dẫn hướng dẫn viên</b>
+                  </div>
+                  <div className="v2-quote-card">
+                    <p className="v2-quote-text">
+                      “{activeQuoteScript}”
+                    </p>
+
+                    <button
+                      type="button"
+                      className={`v2-listen-guide-btn ${isDetailPlacePlaying ? "is-playing" : ""}`}
+                      onClick={() => {
+                        if (activeDetailSlot.place) {
+                          togglePlaceAudio(activeDetailSlot.place);
+                        } else {
+                          toggleItineraryAudio();
+                        }
+                      }}
+                    >
+                      <span>{isDetailPlacePlaying ? "⏸ Tạm dừng nghe (2:15)" : "▶ Nghe thuyết minh (2:15)"}</span>
+                    </button>
+                  </div>
+                </div>
+
+                {/* 4. CHÂN BẢNG: 2 NÚT HÀNH ĐỘNG "CHỈ ĐƯỜNG" & "LƯU" */}
+                <div className="v2-detail-action-footer">
+                  <a
+                    href={googleMapsSearchUrl}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="v2-action-cta v2-action-cta--map"
+                  >
+                    <span>↗</span>
+                    <b>Chỉ đường</b>
+                  </a>
+
                   <button
                     type="button"
-                    className="v2-accordion-head"
-                    onClick={() => setIsDetailAccordionOpen(!isDetailAccordionOpen)}
-                    aria-expanded={isDetailAccordionOpen}
+                    className={`v2-action-cta v2-action-cta--save ${
+                      activeDetailSlot.place && favorites.includes(activeDetailSlot.place.id) ? "is-saved" : ""
+                    }`}
+                    onClick={() => {
+                      if (activeDetailSlot.place) {
+                        toggleFavorite(activeDetailSlot.place.id);
+                        showToast(
+                          favorites.includes(activeDetailSlot.place.id)
+                            ? "Đã xóa khỏi sổ tay yêu thích"
+                            : "Đã lưu vào sổ tay yêu thích! ✦"
+                        );
+                      } else {
+                        savePlan();
+                      }
+                    }}
                   >
-                    <span>{currentLang === "en" ? "Travel Tips & AI Guide Script" : "Mẹo du lịch & Lời dẫn thuyết minh"}</span>
-                    <b className="v2-accordion-arrow">{isDetailAccordionOpen ? "⌃" : "⌄"}</b>
+                    <span>🔖</span>
+                    <b>
+                      {activeDetailSlot.place && favorites.includes(activeDetailSlot.place.id)
+                        ? "Đã lưu"
+                        : "Lưu"}
+                    </b>
                   </button>
-
-                  {isDetailAccordionOpen && (
-                    <div className="v2-accordion-content">
-                      {/* Lời khuyên của hướng dẫn viên */}
-                      {activeDetailSlot.highlightNote && (
-                        <div className="v2-detail-info-block">
-                          <label>{currentLang === "en" ? "💡 Travel Tips" : "💡 Lời khuyên du lịch"}</label>
-                          <p className="v2-detail-tip-text">
-                            {activeDetailSlot.highlightNote}
-                          </p>
-                        </div>
-                      )}
-
-                      {/* Lời dẫn thuyết minh */}
-                      <div className="v2-detail-info-block">
-                        <label>{currentLang === "en" ? "🎙️ AI Guide Script" : "🎙️ Lời dẫn hướng dẫn viên AI"}</label>
-                        <div className="v2-detail-quote">
-                          “
-                          {activeDetailSlot.place?.audioScript
-                            ? activeDetailSlot.place.audioScript.slice(0, 190) + "..."
-                            : activeDetailSlot.activity}
-                          ”
-                        </div>
-
-                        <button
-                          type="button"
-                          className="v2-detail-audio-btn"
-                          onClick={() => {
-                            if (activeDetailSlot.place) {
-                              togglePlaceAudio(activeDetailSlot.place);
-                            } else {
-                              toggleItineraryAudio();
-                            }
-                          }}
-                        >
-                          {speechPlaceId === activeDetailSlot.place?.id && audioState === "playing"
-                            ? (currentLang === "en" ? "⏸ Pause audio guide" : "⏸ Tạm dừng thuyết minh")
-                            : (currentLang === "en" ? "▶ Play audio guide for this place" : "▶ Nghe thuyết minh điểm này")}
-                        </button>
-                      </div>
-                    </div>
-                  )}
                 </div>
-              </div>
-
-              {/* Sticky Action Footer */}
-              <div className="v2-detail-footer">
-                <a
-                  href={
-                    activeDetailSlot.place
-                      ? `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
-                          activeDetailSlot.place.name + " " + activeDetailSlot.place.location
-                        )}`
-                      : generatedItinerary.googleMapsUrl
-                  }
-                  target="_blank"
-                  rel="noreferrer"
-                  className="v2-detail-btn v2-detail-btn--primary"
-                >
-                  {currentLang === "en" ? "↗ Google Maps Directions" : "↗ Chỉ đường Google Maps"}
-                </a>
-
-                <button
-                  type="button"
-                  className="v2-detail-btn v2-detail-btn--outline"
-                  onClick={() => {
-                    if (activeDetailSlot.place) {
-                      toggleFavorite(activeDetailSlot.place.id);
-                      showToast(
-                        favorites.includes(activeDetailSlot.place.id)
-                          ? (currentLang === "en" ? "Removed from Notebook" : "Đã bỏ lưu điểm")
-                          : (currentLang === "en" ? "Saved to Notebook!" : "Đã lưu điểm vào Sổ tay du lịch!")
-                      );
-                    } else {
-                      showToast(currentLang === "en" ? "Saved stop to itinerary!" : "Đã lưu điểm dừng vào hành trình!");
-                    }
-                  }}
-                >
-                  🔖{" "}
-                  {activeDetailSlot.place && favorites.includes(activeDetailSlot.place.id)
-                    ? (currentLang === "en" ? "Saved" : "Đã lưu")
-                    : (currentLang === "en" ? "Save to Notebook" : "Lưu sổ tay")}
-                </button>
               </div>
             </aside>
           )}
-
-          {/* Handwritten annotation */}
-          <div className="v2-handwritten-note">
-            <svg className="v2-handwritten-arrow" viewBox="0 0 44 44" fill="none" stroke="currentColor">
-              <path d="M 38 38 C 22 42 12 28 10 10" strokeWidth="2.2" strokeLinecap="round" />
-              <path d="M 5 18 L 10 10 L 18 14" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
-            </svg>
-            <p>
-              {currentLang === "en"
-                ? <><b style={{fontWeight: 600}}>Smart Itinerary Detail</b>. Click each stop to view details.</>
-                : <>Đầy đủ 5 câu hỏi cốt lõi: <b>Đi đâu – Ăn gì – Ở đâu – Phương tiện – Thời gian</b>.<br />
-              Bấm vào từng điểm dừng để xem chi tiết từng chặng.</>}
-            </p>
-          </div>
         </div>
       </div>
     </div>

@@ -261,11 +261,11 @@ export const UI_TEXT = {
     section01Num: "01",
     section01Title: "Khám phá theo địa phương & sở thích",
     viewAllBtn: "Xem tất cả →",
-    selectProvinceLabel: "CHỌN TỈNH:",
-    provAll: "Tất cả",
-    provPhuTho: "Phú Thọ",
-    provVinhPhuc: "Vĩnh Phúc",
-    provHoaBinh: "Hòa Bình",
+    selectProvinceLabel: "CHỌN KHU VỰC:",
+    provAll: "Tất cả khu vực",
+    provPhuTho: "Khu vực Phú Thọ cũ",
+    provVinhPhuc: "Khu vực Vĩnh Phúc cũ",
+    provHoaBinh: "Khu vực Hòa Bình cũ",
     seasonLabel: "ĐI THEO MÙA",
     seasonAll: "Tất cả",
     seasonInSeason: "Đang hợp mùa",
@@ -359,7 +359,7 @@ export const UI_TEXT = {
     tripControllerTitle: "BỘ ĐIỀU KHIỂN LỊCH TRÌNH",
     tripCustomize: "Tùy biến chuyến đi của bạn",
     tripStep1: "1. Chọn Tỉnh / Vùng du lịch",
-    tripCombine3: "Tất cả",
+    tripCombine3: "Tất cả khu vực",
     tripStep2: "2. Chọn Huyện / Thị xã muốn tới",
     tripAllDistricts: "Toàn bộ các huyện (Lập tuyến tự do)",
     tripDirectionGuide: "🧭 HƯỚNG DẪN ĐƯỜNG ĐI:",
@@ -732,11 +732,11 @@ export const UI_TEXT = {
     section01Num: "01",
     section01Title: "Explore by region & interest",
     viewAllBtn: "View all →",
-    selectProvinceLabel: "SELECT PROVINCE:",
-    provAll: "All 3 Provinces",
-    provPhuTho: "Phu Tho",
-    provVinhPhuc: "Vinh Phuc",
-    provHoaBinh: "Hoa Binh",
+    selectProvinceLabel: "SELECT AREA:",
+    provAll: "All Areas",
+    provPhuTho: "Khu vực Phú Thọ cũ (Phu Tho Area)",
+    provVinhPhuc: "Khu vực Vĩnh Phúc cũ (Vinh Phuc Area)",
+    provHoaBinh: "Khu vực Hòa Bình cũ (Hoa Binh Area)",
     seasonLabel: "SEASONAL TRAVEL",
     seasonAll: "All",
     seasonInSeason: "Best this season",
@@ -828,7 +828,7 @@ export const UI_TEXT = {
     tripControllerTitle: "TRIP CONTROLLER",
     tripCustomize: "Customize your journey",
     tripStep1: "1. Select Province / Region",
-    tripCombine3: "All 3 Provinces",
+    tripCombine3: "All Areas",
     tripStep2: "2. Select District / Town",
     tripAllDistricts: "All districts (Free routing)",
     tripDirectionGuide: "🧭 TRAVEL DIRECTIONS:",
@@ -1192,11 +1192,11 @@ export const UI_TEXT = {
     section01Num: "01",
     section01Title: "按地区与偏好探索",
     viewAllBtn: "查看全部 →",
-    selectProvinceLabel: "选择省份:",
-    provAll: "全部3省",
-    provPhuTho: "富寿省",
-    provVinhPhuc: "永福省",
-    provHoaBinh: "和平省",
+    selectProvinceLabel: "选择区域:",
+    provAll: "所有区域",
+    provPhuTho: "原富寿地区",
+    provVinhPhuc: "原永福地区",
+    provHoaBinh: "原和平地区",
     seasonLabel: "按季节旅行",
     seasonAll: "全部",
     seasonInSeason: "当季最佳",
@@ -1283,7 +1283,7 @@ export const UI_TEXT = {
     tripPageTitle1: "智能行程规划", tripPageTitle2: "当地专家全程指导。",
     tripPageDesc: "自动优化4大核心：🏛️观光·🍲美食·🛏️住宿·🚗交通，覆盖富寿、永福、和平三省。",
     tripControllerTitle: "行程控制面板", tripCustomize: "自定义您的旅程",
-    tripStep1: "1. 选择省份/区域", tripCombine3: "全部3省",
+    tripStep1: "1. 选择省份/区域", tripCombine3: "所有区域",
     tripStep2: "2. 选择县/区", tripAllDistricts: "全部县区（自由规划）",
     tripDirectionGuide: "🧭 出行指南：", tripRecommendedRoute: "推荐路线：",
     tripSignatureFoods: "特色美食：",
@@ -1567,10 +1567,10 @@ export const UI_TEXT = {
     section01Title: "지역 및 테마별 탐색",
     viewAllBtn: "전체 보기 →",
     selectProvinceLabel: "지역 선택:",
-    provAll: "3개 지역 전체",
-    provPhuTho: "푸토성",
-    provVinhPhuc: "빈푹성",
-    provHoaBinh: "호아빈성",
+    provAll: "전체 지역",
+    provPhuTho: "구 푸토 지역",
+    provVinhPhuc: "구 빈푹 지역",
+    provHoaBinh: "구 호아빈 지역",
     seasonLabel: "계절별 추천",
     seasonAll: "전체",
     seasonInSeason: "지금 가기 좋은 곳",
@@ -1657,7 +1657,7 @@ export const UI_TEXT = {
     tripPageTitle1: "스마트 일정 만들기", tripPageTitle2: "현지 가이드가 함께합니다.",
     tripPageDesc: "🏛️관광·🍲맛집·🛏️숙소·🚗교통 4대 요소를 자동 최적화, 푸토·빈푹·호아빈 3개 지역 전역.",
     tripControllerTitle: "일정 컨트롤러", tripCustomize: "나만의 여행 커스터마이즈",
-    tripStep1: "1. 지역/도 선택", tripCombine3: "3개 지역 전체",
+    tripStep1: "1. 지역/도 선택", tripCombine3: "전체 지역",
     tripStep2: "2. 군/구 선택", tripAllDistricts: "전체 군구 (자유 루트)",
     tripDirectionGuide: "🧭 이동 안내:", tripRecommendedRoute: "추천 경로:",
     tripSignatureFoods: "대표 맛집:",
@@ -1940,11 +1940,11 @@ export const UI_TEXT = {
     section01Num: "01",
     section01Title: "地域・テーマ別で探す",
     viewAllBtn: "すべて見る →",
-    selectProvinceLabel: "省を選択:",
-    provAll: "全3省",
-    provPhuTho: "フート省",
-    provVinhPhuc: "ヴィンフック省",
-    provHoaBinh: "ホアビン省",
+    selectProvinceLabel: "エリア選択:",
+    provAll: "すべての地域",
+    provPhuTho: "旧フート地域",
+    provVinhPhuc: "旧ヴィンフック地域",
+    provHoaBinh: "旧ホアビン地域",
     seasonLabel: "季節ごとの旅",
     seasonAll: "すべて",
     seasonInSeason: "今が旬",
@@ -2031,7 +2031,7 @@ export const UI_TEXT = {
     tripPageTitle1: "スマート旅程を作成", tripPageTitle2: "現地ガイドがサポート。",
     tripPageDesc: "🏛️観光·🍲グルメ·🛏️宿泊·🚗移動の4要素を自動最適化、フート・ビンフック・ホアビン3省全域。",
     tripControllerTitle: "旅程コントローラー", tripCustomize: "旅をカスタマイズ",
-    tripStep1: "1. 省/地域を選択", tripCombine3: "全3省",
+    tripStep1: "1. 省/地域を選択", tripCombine3: "すべての地域",
     tripStep2: "2. 郡/市を選択", tripAllDistricts: "全郡区（自由ルート）",
     tripDirectionGuide: "🧭 アクセス案内：", tripRecommendedRoute: "おすすめルート：",
     tripSignatureFoods: "名物料理：",
@@ -3065,7 +3065,7 @@ export default function Home() {
   const [audioState, setAudioState] = useState<AudioState>("idle");
   const [speechPlaceId, setSpeechPlaceId] = useState<string | null>(null);
   const [audioVolume, setAudioVolume] = useState(0.75);
-  const [audioRate, setAudioRate] = useState(0.9);
+  const [audioRate, setAudioRate] = useState(1.0);
   const speechRef = useRef<SpeechSynthesisUtterance | null>(null);
   const htmlAudioRef = useRef<HTMLAudioElement | null>(null);
 
@@ -4346,6 +4346,17 @@ export default function Home() {
       const targetVoices = audioLang === "en" ? enVoices : viVoices;
 
       let matchedVoice = targetVoices.find((v) => v.voiceURI === selectedVoiceURI);
+      const hasRealFemaleVoice = targetVoices.some(
+        (v) =>
+          v.name.toLowerCase().includes("hoaimy") ||
+          v.name.toLowerCase().includes("female") ||
+          v.name.toLowerCase().includes("nữ") ||
+          v.name.toLowerCase().includes("nu") ||
+          v.name.toLowerCase().includes("mai") ||
+          v.name.toLowerCase().includes("linh") ||
+          v.name.toLowerCase().includes("google")
+      );
+
       if (!matchedVoice && targetVoices.length > 0) {
         if (isMaleAi) {
           matchedVoice =
@@ -4353,15 +4364,22 @@ export default function Home() {
               (v) =>
                 v.name.toLowerCase().includes("nam") ||
                 v.name.toLowerCase().includes("male") ||
-                v.name.toLowerCase().includes("b")
+                v.name.toLowerCase().includes("an")
             ) || targetVoices[0];
         } else {
           matchedVoice =
             targetVoices.find(
               (v) =>
-                !v.name.toLowerCase().includes("nam") &&
-                !v.name.toLowerCase().includes("male") &&
-                !v.name.toLowerCase().includes("b")
+                v.name.toLowerCase().includes("hoaimy") ||
+                v.name.toLowerCase().includes("female") ||
+                v.name.toLowerCase().includes("nữ") ||
+                v.name.toLowerCase().includes("nu") ||
+                v.name.toLowerCase().includes("mai") ||
+                v.name.toLowerCase().includes("linh") ||
+                v.name.toLowerCase().includes("google") ||
+                (!v.name.toLowerCase().includes("nam") &&
+                  !v.name.toLowerCase().includes("male") &&
+                  !v.name.toLowerCase().includes("an"))
             ) || targetVoices[0];
         }
       }
@@ -4386,12 +4404,14 @@ export default function Home() {
         utterance.lang = audioLang === "en" ? "en-US" : "vi-VN";
         utterance.volume = audioVolume;
 
+        // Tốc độ chuẩn tự nhiên (1.0x mặc định), không nhân giảm quá chậm
         if (isMaleAi) {
-          utterance.rate = audioRate * 0.82;
-          utterance.pitch = 0.85; // Trầm ấm nam tính
+          utterance.rate = audioRate * 0.98;
+          utterance.pitch = 0.88; // Trầm ấm nam tính
         } else {
-          utterance.rate = audioRate * 0.85;
-          utterance.pitch = 1.05; // Truyền cảm nữ tính
+          // Nếu hệ thống chỉ có giọng nam (ví dụ Windows Microsoft An), tăng pitch 1.35 để tạo âm sắc giọng nữ trong trẻo
+          utterance.pitch = hasRealFemaleVoice ? 1.05 : 1.35;
+          utterance.rate = audioRate * 1.02; // Tươi vui, tự nhiên của giọng nữ
         }
 
         utterance.onstart = () => {
@@ -5196,6 +5216,10 @@ export default function Home() {
     }
     if (checkoutPhone.replace(/\D/g, "").length < 9 || !cartDetails.length) {
       showToast("Hãy nhập số điện thoại hợp lệ để xác nhận đơn hàng");
+      return;
+    }
+    if (!checkoutAddress.trim()) {
+      showToast("Vui lòng nhập địa chỉ giao hàng hoặc tên khách sạn / số phòng để nhận hàng");
       return;
     }
 
@@ -8256,7 +8280,7 @@ export default function Home() {
                       </label>
 
                       <label className="commerce-field">
-                        {t.shippingAddressLabel} <span style={{ color: "red" }}>*</span>
+                        {t.shippingAddressLabel} <span style={{ color: "#dc2626", fontWeight: 700 }}>* (Bắt buộc)</span>
                         <input
                           type="text"
                           required
