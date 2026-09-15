@@ -2809,7 +2809,7 @@ export const TRAVEL_CHALLENGES: TravelQuest[] = [
   {
     id: "quest-tam-dao",
     title: "Săn mây Cổng trời & Tam Đảo",
-    desc: "Dạo bước giữa biển mây ngàn bồng bềnh, check-in Nhà thờ đá cổ và ngắm toàn cảnh thị trấn trong sương.",
+    desc: "Dạo bước giữa biển mây ngàn bồng bềnh, check-in Nhà thờ đá cổ và ngắm toàn cảnh xã Tam Đảo trong sương.",
     points: 150,
     province: "Vĩnh Phúc",
     badge: "⛰️ Mây ngàn",
@@ -3255,7 +3255,7 @@ export default function Home() {
       merchantName: "Thịt chua Nghị Thịnh",
       password: "123",
       phone: "0987 654 321",
-      address: "Thị trấn Thanh Sơn, Phú Thọ",
+      address: "Xã Thanh Sơn, Phú Thọ",
       createdAt: "01/01/2026",
     },
     {
@@ -3263,7 +3263,7 @@ export default function Home() {
       merchantName: "Thịt chua Nghị Thịnh",
       password: "123",
       phone: "0987 654 321",
-      address: "Thị trấn Thanh Sơn, Phú Thọ",
+      address: "Xã Thanh Sơn, Phú Thọ",
       createdAt: "01/01/2026",
     },
     {
@@ -3319,7 +3319,7 @@ export default function Home() {
       createdAt: "10:55:09 03/09/2026",
       customerName: "Thanh Hoàng",
       phone: "031325462",
-      address: "Khu 2, thị trấn Thanh Sơn, Phú Thọ",
+      address: "Khu 2, xã Thanh Sơn, Phú Thọ",
       note: "Đóng gói kỹ kèm lá ổi",
       paymentMethod: "Chuyển khoản QR ngân hàng",
       status: "Chờ lấy hàng",
@@ -6336,9 +6336,27 @@ export default function Home() {
             </div>
             <div className="food-browser">
               <div className="food-region-tabs" role="tablist" aria-label="Chọn tỉnh ẩm thực">
-                {foodRegions.map((region) => (
-                  <button key={region.id} role="tab" aria-selected={foodRegionId === region.id} className={foodRegionId === region.id ? "is-active" : ""} onClick={() => setFoodRegionId(region.id)}>{region.label}</button>
-                ))}
+                {foodRegions.map((region) => {
+                  const label =
+                    region.id === "phu-tho-dac-san"
+                      ? t.provPhuTho
+                      : region.id === "vinh-phuc-dac-san"
+                      ? t.provVinhPhuc
+                      : region.id === "hoa-binh-dac-san"
+                      ? t.provHoaBinh
+                      : region.label;
+                  return (
+                    <button
+                      key={region.id}
+                      role="tab"
+                      aria-selected={foodRegionId === region.id}
+                      className={foodRegionId === region.id ? "is-active" : ""}
+                      onClick={() => setFoodRegionId(region.id)}
+                    >
+                      {label}
+                    </button>
+                  );
+                })}
               </div>
               {foodRegions.filter((region) => region.id === foodRegionId).map((region) => (
                 <div key={region.id} className="food-list">

@@ -94,7 +94,7 @@ export const DISTRICT_COORDINATES: Record<
     distVietTri: 55,
     distHanoi: "85 km",
     timeHanoi: "1 giờ 35 phút",
-    bestRoute: "Quốc lộ 32 qua Cầu Trung Hà chạy thẳng thị trấn Thanh Sơn (thủ phủ Thịt chua).",
+    bestRoute: "Quốc lộ 32 qua Cầu Trung Hà chạy thẳng xã Thanh Sơn (thủ phủ Thịt chua).",
   },
   "tan-son": {
     lat: 21.12,
@@ -110,7 +110,7 @@ export const DISTRICT_COORDINATES: Record<
     distVietTri: 50,
     distHanoi: "100 km",
     timeHanoi: "1 giờ 45 phút",
-    bestRoute: "Từ Việt Trì qua Cẩm Khê hoặc theo QL32 rẽ đường tỉnh DT313 vào hồ Ly và thị trấn Yên Lập.",
+    bestRoute: "Từ Việt Trì qua Cẩm Khê hoặc theo QL32 rẽ đường tỉnh DT313 vào hồ Ly và xã Yên Lập.",
   },
 
   // 2. Vĩnh Phúc
@@ -176,7 +176,7 @@ export const DISTRICT_COORDINATES: Record<
     distVietTri: 35,
     distHanoi: "85 km",
     timeHanoi: "1 giờ 25 phút",
-    bestRoute: "Cao tốc Nội Bài – Lào Cai (IC6) qua Lập Thạch theo ĐT307 lên núi Sáng và thị trấn Tam Sơn.",
+    bestRoute: "Cao tốc Nội Bài – Lào Cai (IC6) qua Lập Thạch theo ĐT307 lên núi Sáng và xã Tam Sơn.",
   },
   "tam-duong": {
     lat: 21.38,
@@ -210,7 +210,7 @@ export const DISTRICT_COORDINATES: Record<
     distVietTri: 85,
     distHanoi: "75 km",
     timeHanoi: "1 giờ 45 phút",
-    bestRoute: "Từ Hà Nội theo QL6 qua thị trấn Xuân Mai tới Bãi Chạo rẽ vào thung lũng khoáng nóng Serena.",
+    bestRoute: "Từ Hà Nội theo QL6 qua xã Xuân Mai tới Bãi Chạo rẽ vào thung lũng khoáng nóng Serena.",
   },
   "cao-phong": {
     lat: 20.72,
@@ -226,7 +226,7 @@ export const DISTRICT_COORDINATES: Record<
     distVietTri: 75,
     distHanoi: "45 km",
     timeHanoi: "50 phút",
-    bestRoute: "Quốc lộ 6 qua thị trấn Xuân Mai chạy thẳng thị trấn Lương Sơn & Ivory Resort.",
+    bestRoute: "Quốc lộ 6 qua xã Xuân Mai chạy thẳng xã Lương Sơn & Ivory Resort.",
   },
   "da-bac": {
     lat: 20.88,

@@ -63,7 +63,7 @@ export const tourTemplates: TourTemplate[] = [
     recommendedTransport: "Ô tô riêng / Xe Limousine / Xe máy",
     anchorPlaceId: "tam-dao",
     image: "/images/places/tam-dao.jpg",
-    summary: "Trốn khói bụi về thị trấn mây Tam Đảo tận hưởng 4 mùa trong 1 ngày, ngắm hoàng hôn Quán Gió, thưởng thức ngọn su su giòn ngọt và cáp treo chiêm bái Đại Bảo tháp Tây Thiên mây ngàn.",
+    summary: "Trốn khói bụi về vùng mây Tam Đảo tận hưởng 4 mùa trong 1 ngày, ngắm hoàng hôn Quán Gió, thưởng thức ngọn su su giòn ngọt và cáp treo chiêm bái Đại Bảo tháp Tây Thiên mây ngàn.",
     estimatedBudgetPerPerson: "1.300.000 – 2.400.000đ",
     highlights: ["Săn biển mây Cầu Mây & Nhà thờ đá", "Cáp treo Tây Thiên viếng Đền Thượng", "Ngọn su su xào tỏi & Gà đồi nướng", "Nghỉ đêm khách sạn view thung lũng"]
   },

@@ -248,7 +248,7 @@ const DESTINATION_MAPPINGS: Array<{
     name: "Khu du lịch Quốc gia Tam Đảo",
     region: "Vĩnh Phúc",
     district: "Tam Đảo",
-    desc: "Thị trấn bồng bềnh mây ngàn trên độ cao 900m, khí hậu 4 mùa trong một ngày, nổi tiếng với Nhà thờ Đá, Thác Bạc, Cầu Mây và đặc sản ngọn su su xào tỏi.",
+    desc: "Vùng đất bồng bềnh mây ngàn trên độ cao 900m, khí hậu 4 mùa trong một ngày, nổi tiếng với Nhà thờ Đá, Thác Bạc, Cầu Mây và đặc sản ngọn su su xào tỏi.",
   },
   {
     keywords: ["tây thiên", "tay thien", "thiền viện trúc lâm", "đại bảo tháp"],
@@ -604,7 +604,7 @@ export const AREA_RECOMMENDATIONS: Record<string, AreaRecommendation> = {
       {
         name: "Nhà thờ Đá cổ & Quảng trường trung tâm Tam Đảo",
         icon: "🏰",
-        desc: "Công trình kiến trúc Gothic bằng đá từ thời Pháp, điểm ngắm mây và biểu tượng check-in số 1 của thị trấn.",
+        desc: "Công trình kiến trúc Gothic bằng đá từ thời Pháp, điểm ngắm mây và biểu tượng check-in số 1 của Tam Đảo.",
         actionValue: "choose_spot_tam_dao_church",
         actionLabel: "🏰 Nhà thờ Đá & Quảng trường",
       },
@@ -1107,7 +1107,7 @@ function handleRouteJourneyInquiry(
       `  - Thưởng thức món **Bánh tai Phú Thọ** dẻo thơm ngậy nhân thịt mỡ hành tiêu nóng hổi (Quán Bà Định, P. Tân Dân) hoặc Bún riêu cua sông Lô đậm đà.\n` +
       `- 🥤 **Giải khát dọc đường (Ngã ba Cổ Tiết / Tam Nông)**:\n` +
       `  - Dừng chân uống nước mía cốt dừa, nước chè xanh nương cọ mát lành giải nhiệt.\n` +
-      `- 🥩 **Bữa trưa tại Thị trấn Thanh Sơn (Thủ phủ Thịt chua Đất Tổ)**:\n` +
+      `- 🥩 **Bữa trưa tại Xã Thanh Sơn (Thủ phủ Thịt chua Đất Tổ)**:\n` +
       `  - **Trải nghiệm & Mua sắm Thịt chua:** Ghé 2 cơ sở OCOP trứ danh **Thịt chua Nghị Thịnh (Khu Ba Mỏ)** hoặc **Thịt chua Điệp Đào** (xem nghệ nhân Mường đóng ống nứa và ủ thính ngô truyền thống).\n` +
       `  - **Thực đơn trưa đặc sản:** Thịt chua cuốn lá sung chấm tương ớt cay nồng, Gà đồi nấu măng chua, Cá suối nguồn chiên giòn rụm, Rêu đá suối nướng hạt dổi mắc khén, Cơm lam nếp nương.\n` +
       `- 🍖 **Bữa tối & Tiệc nướng bản Mường (Long Cốc / Cự Thắng)**:\n` +
