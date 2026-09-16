@@ -8244,12 +8244,22 @@ export default function Home() {
 
       {/* SITE FOOTER */}
       <footer className="site-footer">
-        <div className="brand brand--footer" style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", margin: "0 auto 14px", textDecoration: "none" }}>
+        <div className="brand brand--footer" style={{ display: "inline-flex", alignItems: "center", gap: "14px", justifyContent: "center", margin: "0 auto 14px", textDecoration: "none" }}>
           <img
-            src="/images/logo-dat-to.png"
-            alt="Đất Tổ - Trợ lý du lịch thông minh"
-            style={{ height: "54px", width: "auto", objectFit: "contain", display: "block" }}
+            src="/images/logo-emblem.png"
+            alt="Đất Tổ"
+            style={{ height: "46px", width: "46px", borderRadius: "10px", objectFit: "contain", flexShrink: 0, boxShadow: "0 2px 10px rgba(0,0,0,0.35)" }}
           />
+          <div style={{ display: "flex", flexDirection: "column", textAlign: "left" }}>
+            <div style={{ fontSize: "22px", fontWeight: 900, lineHeight: 1.05, letterSpacing: "0.5px" }}>
+              <span style={{ color: "#ffffff" }}>ĐẤT </span>
+              <span style={{ color: "#f59e0b" }}>TỔ</span>
+            </div>
+            <div style={{ height: "2px", background: "#f59e0b", margin: "4px 0 3px", width: "100%", borderRadius: "1px" }} />
+            <span style={{ fontSize: "9.5px", fontWeight: 800, color: "#cbd5e1", letterSpacing: "1.2px", textTransform: "uppercase" }}>
+              TRỢ LÝ DU LỊCH THÔNG MINH
+            </span>
+          </div>
         </div>
         <p>{t.footerDesc}</p>
         <span>{t.footerLink}</span>
