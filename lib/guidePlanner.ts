@@ -11,6 +11,7 @@ export type ItinerarySlot = {
   timeSlot: string;
   title: string;
   type: "visit" | "meal" | "stay" | "travel";
+  image?: string;
   place?: Place;
   restaurant?: NearbyItem;
   stay?: NearbyItem;
@@ -665,8 +666,9 @@ export function getOfficialDocxItinerary(lang: string = "vi"): GeneratedItinerar
     {
       period: "Sáng",
       timeSlot: "07:30",
-      title: "Xuất phát từ trung tâm TP. Việt Trì",
+      title: "Trung tâm Việt Trì",
       type: "travel",
+      image: "/images/places/viet-tri.jpg",
       activity: "Đoàn tập trung tại trung tâm thành phố Việt Trì, khởi hành hướng về Khu di tích lịch sử Quốc gia đặc biệt Đền Hùng.",
       transportAdvice: "Di chuyển theo Đại lộ Hùng Vương / Quốc lộ 2 thẳng tới xã Hy Cương (~10 km, thời gian lái xe khoảng 15 phút). Đường đô thị rộng thoáng, biển chỉ dẫn rõ ràng.",
       travelMinutes: 15,

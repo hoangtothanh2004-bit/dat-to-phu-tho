@@ -333,9 +333,13 @@ function formatDayBadge(dayNum: number, lang: LanguageCode): string {
 }
 
 function getSlotImage(slot: ItinerarySlot): string {
+  if (slot.image) return slot.image;
   if (slot.place?.image) return slot.place.image;
   if (slot.restaurant?.image) return slot.restaurant.image;
   if (slot.stay?.image) return slot.stay.image;
+  if (slot.title.toLowerCase().includes("việt trì")) {
+    return "/images/places/viet-tri.jpg";
+  }
   if (slot.type === "meal") return "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800&auto=format&fit=crop&q=80";
   if (slot.type === "stay") return "https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800&auto=format&fit=crop&q=80";
   return "https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=800&auto=format&fit=crop&q=80";
