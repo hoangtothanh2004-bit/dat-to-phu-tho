@@ -28,7 +28,7 @@ import AiChatbotWidget from "./components/AiChatbotWidget";
 
 const isStaticDemo = process.env.NEXT_PUBLIC_STATIC_DEMO === "true";
 
-type Tab = "explore" | "trip" | "near" | "saved" | "profile" | "vouchers";
+type Tab = "explore" | "food" | "trip" | "near" | "saved" | "profile" | "vouchers";
 type SavedSubTab = "places" | "foods" | "itinerary";
 type AudioState = "idle" | "playing" | "paused";
 
@@ -87,6 +87,7 @@ const mapBounds = { minLat: 20.55, maxLat: 21.65, minLng: 104.85, maxLng: 105.75
 
 const navigation: { id: Tab; label: string; icon: string }[] = [
   { id: "explore", label: "Khám phá", icon: "⌕" },
+  { id: "food", label: "Ẩm thực", icon: "🍲" },
   { id: "trip", label: "Lịch trình", icon: "▤" },
   { id: "vouchers", label: "Ưu đãi", icon: "🎟️" },
   { id: "near", label: "Gần tôi", icon: "⌖" },
@@ -231,6 +232,7 @@ export const UI_TEXT = {
     modalCautionSeason: "Cần lưu ý thời tiết trong tháng",
     brandSubtitle: "TỈNH PHÚ THỌ",
     explore: "Khám phá",
+    food: "Ẩm thực",
     trip: "Lịch trình",
     near: "Gần tôi",
     saved: "Đã lưu",
@@ -702,6 +704,7 @@ export const UI_TEXT = {
     modalCautionSeason: "Note weather conditions in month",
     brandSubtitle: "PHU THO · VINH PHUC · HOA BINH",
     explore: "Explore",
+    food: "Gastronomy",
     trip: "Itinerary",
     near: "Near Me",
     saved: "Saved",
@@ -1162,6 +1165,7 @@ export const UI_TEXT = {
     modalCautionSeason: "当月出行需注意天气情况：",
     brandSubtitle: "富寿 · 永福 · 和平",
     explore: "探索",
+    food: "美食",
     trip: "行程",
     near: "附近",
     saved: "收藏",
@@ -1536,6 +1540,7 @@ export const UI_TEXT = {
     modalCautionSeason: "해당 월 날씨에 유의하세요:",
     brandSubtitle: "푸토 · 빈푹 · 호아빈",
     explore: "탐색",
+    food: "음식",
     trip: "일정",
     near: "내 주변",
     saved: "저장됨",
@@ -1910,6 +1915,7 @@ export const UI_TEXT = {
     modalCautionSeason: "今月の天候にご注意ください：",
     brandSubtitle: "フート省 · ビンフック省 · ホアビン省",
     explore: "探索",
+    food: "グルメ",
     trip: "旅程",
     near: "周辺",
     saved: "保存済み",
@@ -3068,6 +3074,39 @@ export default function Home() {
   const [audioRate, setAudioRate] = useState(1.0);
   const speechRef = useRef<SpeechSynthesisUtterance | null>(null);
   const htmlAudioRef = useRef<HTMLAudioElement | null>(null);
+  const audioRateRef = useRef(audioRate);
+  const audioVolumeRef = useRef(audioVolume);
+  const isSpeechSpeakingRef = useRef(false);
+  const speakSentenceRef = useRef<((idx: number) => void) | null>(null);
+  const currentSentenceIdxRef = useRef(0);
+
+  // Synchronize playback speed immediately across HTML5 Audio and active SpeechSynthesis
+  useEffect(() => {
+    audioRateRef.current = audioRate;
+    if (htmlAudioRef.current) {
+      htmlAudioRef.current.playbackRate = audioRate;
+      htmlAudioRef.current.defaultPlaybackRate = audioRate;
+    }
+    if (
+      typeof window !== "undefined" &&
+      "speechSynthesis" in window &&
+      window.speechSynthesis.speaking &&
+      isSpeechSpeakingRef.current &&
+      speakSentenceRef.current
+    ) {
+      // Re-trigger from the current sentence with new rate
+      window.speechSynthesis.cancel();
+      speakSentenceRef.current(currentSentenceIdxRef.current);
+    }
+  }, [audioRate]);
+
+  // Synchronize volume across HTML5 Audio and SpeechSynthesis
+  useEffect(() => {
+    audioVolumeRef.current = audioVolume;
+    if (htmlAudioRef.current) {
+      htmlAudioRef.current.volume = audioVolume;
+    }
+  }, [audioVolume]);
 
   useEffect(() => {
     if (typeof window === "undefined" || !("speechSynthesis" in window)) return;
@@ -3092,13 +3131,15 @@ export default function Home() {
     try {
       const urlParams = new URLSearchParams(window.location.search);
       const tabParam = urlParams.get("tab");
-      if (tabParam && ["explore", "trip", "near", "saved", "profile"].includes(tabParam)) {
+      if (tabParam && ["explore", "food", "trip", "near", "saved", "profile", "vouchers"].includes(tabParam)) {
         setActiveTab(tabParam as Tab);
       } else if (window.location.hash === "#trip") {
         setActiveTab("trip");
+      } else if (window.location.hash === "#food") {
+        setActiveTab("food");
       } else {
         const savedTab = localStorage.getItem("last_active_tab");
-        if (savedTab && ["explore", "trip", "near", "saved", "profile"].includes(savedTab)) {
+        if (savedTab && ["explore", "food", "trip", "near", "saved", "profile", "vouchers"].includes(savedTab)) {
           setActiveTab(savedTab as Tab);
         }
       }
@@ -4309,6 +4350,9 @@ export default function Home() {
       window.speechSynthesis.cancel();
     }
     speechRef.current = null;
+    speakSentenceRef.current = null;
+    isSpeechSpeakingRef.current = false;
+    currentSentenceIdxRef.current = 0;
     setAudioGuidePlaying(false);
     setAudioState("idle");
     setSpeechPlaceId(null);
@@ -4326,75 +4370,14 @@ export default function Home() {
     if (!textToSpeak || typeof window === "undefined") return;
 
     const lang = audioLang === "en" ? "en" : "vi";
-    const hasBrowserLangVoice =
-      "speechSynthesis" in window &&
-      availableVoices.some((v) => v.lang.toLowerCase().startsWith(lang));
-    const isAiVoice = selectedVoiceURI.startsWith("ai-");
-    const shouldUseAiTts = isAiVoice || !hasBrowserLangVoice;
+    const allVoices = typeof window !== "undefined" && "speechSynthesis" in window
+      ? window.speechSynthesis.getVoices()
+      : availableVoices;
+    const targetVoices = allVoices.filter((v) => v.lang.toLowerCase().startsWith(lang));
+    const hasBrowserLangVoice = "speechSynthesis" in window && targetVoices.length > 0;
 
-    // Use high-quality natural server-side AI TTS (Google TTS) whenever AI voice is selected or no local browser voice for this language exists
-    if (shouldUseAiTts) {
-      try {
-        if (placeId) {
-          setSpeechPlaceId(placeId);
-        }
-        setAudioState("playing");
-        onStateChange?.(true);
-
-        const res = await fetch("/api/tts", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ text: textToSpeak, lang }),
-        });
-
-        if (!res.ok) throw new Error("TTS fetch failed");
-
-        const blob = await res.blob();
-        const audioUrl = URL.createObjectURL(blob);
-        const audio = new Audio(audioUrl);
-        audio.playbackRate = audioRate;
-        audio.volume = audioVolume;
-
-        audio.onplay = () => {
-          if (placeId) setSpeechPlaceId(placeId);
-          setAudioState("playing");
-          onStateChange?.(true);
-        };
-
-        audio.onended = () => {
-          if (audio.src && audio.src.startsWith("blob:")) {
-            URL.revokeObjectURL(audio.src);
-          }
-          if (htmlAudioRef.current === audio) {
-            htmlAudioRef.current = null;
-          }
-          setSpeechPlaceId(null);
-          setAudioState("idle");
-          onStateChange?.(false);
-        };
-
-        audio.onerror = () => {
-          if (audio.src && audio.src.startsWith("blob:")) {
-            URL.revokeObjectURL(audio.src);
-          }
-          if (htmlAudioRef.current === audio) {
-            htmlAudioRef.current = null;
-          }
-          setSpeechPlaceId(null);
-          setAudioState("idle");
-          onStateChange?.(false);
-        };
-
-        htmlAudioRef.current = audio;
-        await audio.play();
-        return;
-      } catch (error) {
-        console.warn("AI TTS playback failed, falling back to browser speech:", error);
-      }
-    }
-
-    // Standard W3C Web Speech API fallback for local browser voices
-    if ("speechSynthesis" in window) {
+    // Prioritize natural browser SpeechSynthesis with authentic female voice & real-time pitch/speed control
+    if (hasBrowserLangVoice) {
       window.speechSynthesis.cancel();
 
       // Split text into natural sentences
@@ -4406,16 +4389,26 @@ export default function Home() {
 
       const sentences = rawSentences.length > 0 ? rawSentences : [textToSpeak];
 
-      const allVoices = window.speechSynthesis.getVoices();
-      const targetVoices = allVoices.filter((v) => v.lang.toLowerCase().startsWith(lang));
-      let matchedVoice = targetVoices.find((v) => v.voiceURI === selectedVoiceURI) || targetVoices[0];
-
       const isMaleAi =
         selectedVoiceURI === "ai-male-north" ||
         selectedVoiceURI.toLowerCase().includes("nam") ||
         selectedVoiceURI.toLowerCase().includes("male");
 
-      let currentIdx = 0;
+      let matchedVoice: SpeechSynthesisVoice | undefined;
+      if (selectedVoiceURI === "ai-female-north" || (!isMaleAi && selectedVoiceURI.startsWith("ai-"))) {
+        // Specifically match natural female Vietnamese voices (HoaiMy, Linh, Mai, Chi, Google Tiếng Việt)
+        matchedVoice =
+          targetVoices.find((v) => /hoaimy|linh|mai|chi|female|nữ|tiếng việt/i.test(v.name)) ||
+          targetVoices.find((v) => !/nam|minh|male|an/i.test(v.name)) ||
+          targetVoices[0];
+      } else if (isMaleAi) {
+        matchedVoice =
+          targetVoices.find((v) => /nam|minh|male|an/i.test(v.name)) ||
+          targetVoices[0];
+      } else {
+        matchedVoice = targetVoices.find((v) => v.voiceURI === selectedVoiceURI) || targetVoices[0];
+      }
+
       let isCancelled = false;
 
       const speakSentence = (idx: number) => {
@@ -4424,9 +4417,12 @@ export default function Home() {
           setAudioGuidePlaying(false);
           setAudioState("idle");
           setSpeechPlaceId(null);
+          isSpeechSpeakingRef.current = false;
+          speakSentenceRef.current = null;
           return;
         }
 
+        currentSentenceIdxRef.current = idx;
         const sentenceText = sentences[idx];
         const utterance = new SpeechSynthesisUtterance(sentenceText);
 
@@ -4434,17 +4430,18 @@ export default function Home() {
           utterance.voice = matchedVoice;
         }
         utterance.lang = audioLang === "en" ? "en-US" : "vi-VN";
-        utterance.volume = audioVolume;
+        utterance.volume = audioVolumeRef.current;
 
         if (isMaleAi) {
-          utterance.rate = audioRate * 0.98;
-          utterance.pitch = 0.88;
+          utterance.rate = audioRateRef.current * 0.96;
+          utterance.pitch = 0.85;
         } else {
-          utterance.pitch = 1.05;
-          utterance.rate = audioRate * 1.02;
+          utterance.pitch = 1.15;
+          utterance.rate = audioRateRef.current * 1.0;
         }
 
         utterance.onstart = () => {
+          isSpeechSpeakingRef.current = true;
           if (idx === 0) {
             onStateChange?.(true);
             setAudioState("playing");
@@ -4454,10 +4451,12 @@ export default function Home() {
 
         utterance.onend = () => {
           if (!isCancelled) {
-            currentIdx++;
-            if (currentIdx < sentences.length) {
-              speakSentence(currentIdx);
+            const nextIdx = idx + 1;
+            if (nextIdx < sentences.length) {
+              speakSentence(nextIdx);
             } else {
+              isSpeechSpeakingRef.current = false;
+              speakSentenceRef.current = null;
               onStateChange?.(false);
               setAudioGuidePlaying(false);
               setAudioState("idle");
@@ -4469,6 +4468,8 @@ export default function Home() {
         utterance.onerror = (e: any) => {
           if (e.error === "canceled" || e.error === "interrupted") return;
           console.warn("SpeechSynthesis error:", e);
+          isSpeechSpeakingRef.current = false;
+          speakSentenceRef.current = null;
           onStateChange?.(false);
           setAudioGuidePlaying(false);
           setAudioState("idle");
@@ -4479,6 +4480,7 @@ export default function Home() {
         window.speechSynthesis.speak(utterance);
       };
 
+      speakSentenceRef.current = speakSentence;
       if (placeId) setSpeechPlaceId(placeId);
       setAudioState("playing");
       onStateChange?.(true);
@@ -4486,7 +4488,73 @@ export default function Home() {
       return;
     }
 
-    showToast("Thiết bị chưa hỗ trợ phát giọng đọc");
+    // Fallback: If browser lacks Vietnamese synthesis voices, use server-side AI TTS (/api/tts)
+    try {
+      if (placeId) {
+        setSpeechPlaceId(placeId);
+      }
+      setAudioState("playing");
+      onStateChange?.(true);
+
+      const res = await fetch("/api/tts", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ text: textToSpeak, lang, rate: audioRateRef.current }),
+      });
+
+      if (!res.ok) throw new Error("TTS fetch failed");
+
+      const blob = await res.blob();
+      const audioUrl = URL.createObjectURL(blob);
+      const audio = new Audio(audioUrl);
+      audio.defaultPlaybackRate = audioRateRef.current;
+      audio.playbackRate = audioRateRef.current;
+      audio.volume = audioVolumeRef.current;
+
+      audio.onloadedmetadata = () => {
+        audio.playbackRate = audioRateRef.current;
+        audio.defaultPlaybackRate = audioRateRef.current;
+      };
+
+      audio.onplay = () => {
+        audio.playbackRate = audioRateRef.current;
+        if (placeId) setSpeechPlaceId(placeId);
+        setAudioState("playing");
+        onStateChange?.(true);
+      };
+
+      audio.onended = () => {
+        if (audio.src && audio.src.startsWith("blob:")) {
+          URL.revokeObjectURL(audio.src);
+        }
+        if (htmlAudioRef.current === audio) {
+          htmlAudioRef.current = null;
+        }
+        setSpeechPlaceId(null);
+        setAudioState("idle");
+        onStateChange?.(false);
+      };
+
+      audio.onerror = () => {
+        if (audio.src && audio.src.startsWith("blob:")) {
+          URL.revokeObjectURL(audio.src);
+        }
+        if (htmlAudioRef.current === audio) {
+          htmlAudioRef.current = null;
+        }
+        setSpeechPlaceId(null);
+        setAudioState("idle");
+        onStateChange?.(false);
+      };
+
+      htmlAudioRef.current = audio;
+      await audio.play();
+      return;
+    } catch (error) {
+      console.warn("AI TTS playback failed:", error);
+      setAudioState("idle");
+      onStateChange?.(false);
+    }
   };
 
   const toggleItineraryAudio = () => {
@@ -4661,13 +4729,8 @@ export default function Home() {
 
   const goToFoodSection = () => {
     setCartOpen(false);
-    setActiveTab("explore");
-    window.setTimeout(() => {
-      const el = document.getElementById("food-browser-section");
-      if (el) {
-        el.scrollIntoView({ behavior: "smooth", block: "start" });
-      }
-    }, 120);
+    setActiveTab("food");
+    window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   const changeCartQuantity = (dishId: string, sellerId: string, change: number) => {
@@ -5730,23 +5793,14 @@ export default function Home() {
           <button className={activeTab === "explore" ? "is-active" : ""} onClick={() => setActiveTab("explore")}>
             {t.explore}
           </button>
+          <button className={activeTab === "food" ? "is-active" : ""} onClick={() => setActiveTab("food")}>
+            {t.food || "Ẩm thực"}
+          </button>
           <button className={activeTab === "trip" ? "is-active" : ""} onClick={() => setActiveTab("trip")}>
             {t.trip}
           </button>
-          <button
-            type="button"
-            className="nav-link-food"
-            onClick={() => {
-              if (activeTab !== "explore") setActiveTab("explore");
-              setTimeout(() => {
-                document.getElementById("food-browser-section")?.scrollIntoView({ behavior: "smooth" });
-              }, 80);
-            }}
-          >
-            Ẩm thực
-          </button>
           <button className={activeTab === "vouchers" ? "is-active" : ""} onClick={() => setActiveTab("vouchers")}>
-            Ưu đãi
+            {t.vouchers || "Ưu đãi"}
           </button>
           <button className={activeTab === "near" ? "is-active" : ""} onClick={() => setActiveTab("near")}>
             {t.near}
@@ -6069,7 +6123,8 @@ export default function Home() {
                     icon: "🍜",
                     label: "Ẩm thực",
                     action: () => {
-                      document.getElementById("food-browser-section")?.scrollIntoView({ behavior: "smooth" });
+                      setActiveTab("food");
+                      window.scrollTo({ top: 0, behavior: "smooth" });
                     },
                     active: false,
                   },
@@ -6124,7 +6179,7 @@ export default function Home() {
                   </div>
                 </div>
 
-                <div className="hero-feature-item" onClick={() => { document.getElementById("food-browser-section")?.scrollIntoView({ behavior: "smooth" }); }}>
+                <div className="hero-feature-item" onClick={() => { setActiveTab("food"); window.scrollTo({ top: 0, behavior: "smooth" }); }}>
                   <span className="hero-feat-icon">❤️</span>
                   <div className="hero-feat-content">
                     <strong>{isEn ? "FULFILLING TRIP" : "TRẢI NGHIỆM TRỌN VẸN"}</strong>
@@ -6351,13 +6406,91 @@ export default function Home() {
             </div>
           </section>
 
-          {/* LOCAL GASTRONOMY (BẢN ĐỒ VỊ GIÁC) */}
-          <section className="content-section local-guide" id="food-browser-section">
-            <div className="local-guide__intro">
-              <span className="kicker">{t.foodKicker}</span>
-              <h2>{t.foodTitle1}<br />{t.foodTitle2}</h2>
-              <p>{t.foodDesc}</p>
+          {/* LOCAL GASTRONOMY TEASER (BẢN ĐỒ VỊ GIÁC LINK TO DEDICATED TAB) */}
+          <section className="content-section local-guide-teaser-banner" id="food-teaser-section">
+            <div className="food-teaser-card">
+              <div className="food-teaser-head">
+                <div className="food-teaser-badge">
+                  <span>🍲</span> {isEn ? "GASTRONOMY & OCOP SPECIALTIES" : "BẢN ĐỒ VỊ GIÁC ĐẤT TỔ & OCOP"}
+                </div>
+                <button
+                  type="button"
+                  className="food-teaser-action-btn"
+                  onClick={() => {
+                    setActiveTab("food");
+                    window.scrollTo({ top: 0, behavior: "smooth" });
+                  }}
+                >
+                  {isEn ? "Open Dedicated Food Page →" : "Khám phá Trang Ẩm Thực Riêng →"}
+                </button>
+              </div>
+              <div className="food-teaser-body">
+                <div className="food-teaser-info">
+                  <h3>{isEn ? "Authentic Local Delicacies of 3 Heritage Regions" : "Thưởng Thức Trọn Vẹn Tinh Hoa Ẩm Thực Đất Tổ & 3 Vùng Di Sản"}</h3>
+                  <p>
+                    {isEn
+                      ? "From Thanh Son fermented pork and Phu Tho ear cakes to Tam Dao chayote greens and Hoa Binh bamboo-tube sticky rice. Certified OCOP delicacies ready to order."
+                      : "Trọn bộ đặc sản trứ danh: Thịt chua Thanh Sơn, Bánh tai Phú Thọ, Chè búp tím Long Cốc, Xáo chuối Lâm Thao, Rau su su Tam Đảo, Cơm lam Mường Động. Đặt mua OCOP chính gốc giao tận nơi."}
+                  </p>
+                </div>
+                <div className="food-teaser-preview-grid">
+                  <div className="food-teaser-item" onClick={() => { setActiveTab("food"); setFoodRegionId("phu-tho-dac-san"); window.scrollTo({ top: 0, behavior: "smooth" }); }}>
+                    <div className="food-teaser-img-wrap">
+                      <img src="/images/food/thit-chua.png" alt="Thịt chua Thanh Sơn" onError={handleImageError} />
+                      <span className="food-teaser-tag">Phú Thọ</span>
+                    </div>
+                    <strong>Thịt chua Thanh Sơn</strong>
+                    <small>Đặc sản người Mường</small>
+                  </div>
+                  <div className="food-teaser-item" onClick={() => { setActiveTab("food"); setFoodRegionId("phu-tho-dac-san"); window.scrollTo({ top: 0, behavior: "smooth" }); }}>
+                    <div className="food-teaser-img-wrap">
+                      <img src="/images/food/banh-tai.png" alt="Bánh tai Phú Thọ" onError={handleImageError} />
+                      <span className="food-teaser-tag">Phú Thọ</span>
+                    </div>
+                    <strong>Bánh tai Đất Tổ</strong>
+                    <small>Dân dã thơm bùi</small>
+                  </div>
+                  <div className="food-teaser-item" onClick={() => { setActiveTab("food"); setFoodRegionId("vinh-phuc-dac-san"); window.scrollTo({ top: 0, behavior: "smooth" }); }}>
+                    <div className="food-teaser-img-wrap">
+                      <img src="/images/food/su-su-tam-dao.png" alt="Rau su su Tam Đảo" onError={handleImageError} />
+                      <span className="food-teaser-tag">Vĩnh Phúc</span>
+                    </div>
+                    <strong>Rau su su Tam Đảo</strong>
+                    <small>Ngọn non tươi giòn</small>
+                  </div>
+                  <div className="food-teaser-item" onClick={() => { setActiveTab("food"); setFoodRegionId("hoa-binh-dac-san"); window.scrollTo({ top: 0, behavior: "smooth" }); }}>
+                    <div className="food-teaser-img-wrap">
+                      <img src="/images/food/com-lam-mai-chau.png" alt="Cơm lam Hòa Bình" onError={handleImageError} />
+                      <span className="food-teaser-tag">Hòa Bình</span>
+                    </div>
+                    <strong>Cơm lam Mai Châu</strong>
+                    <small>Nếp nương dẻo thơm</small>
+                  </div>
+                </div>
+              </div>
             </div>
+          </section>
+        </>
+      )}
+
+      {/* TAB: ẨM THỰC (DEDICATED FOOD & OCOP PAGE) */}
+      {activeTab === "food" && (
+        <section className="inner-page food-page" id="food-browser-section">
+          <div className="inner-page__intro inner-page__intro--compact food-hero-intro">
+            <div className="trip-hero-left">
+              <div className="trip-hero-badge">
+                <span className="trip-hero-badge__dot" />
+                <span>{isEn ? "🍲 TRADITIONAL CUISINE & OCOP" : "🍲 TINH HOA ẨM THỰC ĐẤT TỔ & OCOP"}</span>
+              </div>
+              <h1 className="trip-hero-title">
+                <span className="trip-hero-title__primary">{t.foodTitle1}</span>
+                <span className="trip-hero-title__accent" style={{ display: "block", color: "var(--red)" }}>{t.foodTitle2}</span>
+              </h1>
+              <p className="trip-hero-desc">{t.foodDesc}</p>
+            </div>
+          </div>
+
+          <div className="content-section local-guide" style={{ padding: "0 0 60px", maxWidth: "1280px", margin: "0 auto" }}>
             <div className="food-browser">
               <div className="food-region-tabs" role="tablist" aria-label="Chọn tỉnh ẩm thực">
                 {foodRegions.map((region) => {
@@ -6413,8 +6546,8 @@ export default function Home() {
                 </div>
               ))}
             </div>
-          </section>
-        </>
+          </div>
+        </section>
       )}
 
       {/* TAB 2: LỊCH TRÌNH (TRIP - TOUR GUIDE) */}
@@ -7058,49 +7191,59 @@ export default function Home() {
                       </div>
                       <p>{voucher.description}</p>
                     </div>
-                    <div className="voucher-card-actions">
+<div className="voucher-card-actions">
                       <span className="voucher-code-badge">{voucher.code}</span>
-                      <div style={{ display: "flex", gap: "6px", alignItems: "center" }}>
+                      <div className="voucher-actions-group">
                         {isSaved ? (
-                          <span className="voucher-owned-badge">✓ Đã sở hữu</span>
-                        ) : (
+                          <>
+                            <button
+                              type="button"
+                              className={`voucher-btn ${isApplied ? "voucher-btn--applied" : "voucher-btn--use"}`}
+                              onClick={() => {
+                                if (!isApplied) {
+                                  setAppliedVoucherCode(voucher.code);
+                                  showToast(`✦ Đã áp dụng mã ${voucher.code} (${voucher.title})!`);
+                                }
+                                setCartDrawerTab("cart");
+                                setCartOpen(true);
+                              }}
+                            >
+                              {isApplied ? "✓ Đang dùng" : "Dùng ngay"}
+                            </button>
+                            <button
+                              type="button"
+                              className="voucher-btn-text"
+                              title={`Bỏ lưu mã ${voucher.code}`}
+                              onClick={() => {
+                                setSavedVouchers(savedVouchers.filter((c) => c !== voucher.code));
+                                if (isApplied) setAppliedVoucherCode(null);
+                                showToast(`Đã bỏ lưu mã ${voucher.code}`);
+                              }}
+                            >
+                              Bỏ lưu
+                            </button>
+                          </>
+                        ) : cost > 0 ? (
                           <button
                             type="button"
-                            className="voucher-redeem-point-btn"
+                            className="voucher-btn voucher-btn--redeem"
                             onClick={() => handleRedeemVoucherWithPoints(voucher)}
                             title={canRedeem ? `Đổi bằng ${cost} điểm check-in` : `Cần ${cost} điểm (bạn có ${challengePoints}đ)`}
                           >
-                            🪙 Đổi (-{cost}đ)
+                            🪙 Đổi mã (-{cost}đ)
+                          </button>
+                        ) : (
+                          <button
+                            type="button"
+                            className="voucher-btn voucher-btn--save"
+                            onClick={() => {
+                              setSavedVouchers([...savedVouchers, voucher.code]);
+                              showToast(`✦ Đã lưu mã ${voucher.code} vào ví!`);
+                            }}
+                          >
+                            Lưu mã
                           </button>
                         )}
-                        <button
-                          type="button"
-                          className={`voucher-apply-btn ${isSaved ? "is-saved" : ""}`}
-                          onClick={() => {
-                            if (isSaved) {
-                              setSavedVouchers(savedVouchers.filter((c) => c !== voucher.code));
-                              showToast(`Đã bỏ lưu mã ${voucher.code}`);
-                            } else {
-                              setSavedVouchers([...savedVouchers, voucher.code]);
-                              showToast(`✦ Đã lưu mã ${voucher.code} vào ví voucher!`);
-                            }
-                          }}
-                        >
-                          {isSaved ? "Bỏ lưu" : "Lưu mã"}
-                        </button>
-                        <button
-                          type="button"
-                          className="voucher-apply-btn"
-                          style={{ background: isApplied ? "#24483d" : "var(--red)" }}
-                          onClick={() => {
-                            setAppliedVoucherCode(voucher.code);
-                            setCartDrawerTab("cart");
-                            setCartOpen(true);
-                            showToast(`✦ Đã áp dụng mã ${voucher.code} (${voucher.title})!`);
-                          }}
-                        >
-                          {isApplied ? "Đang dùng" : "Dùng ngay"}
-                        </button>
                       </div>
                     </div>
                   </div>
@@ -10311,50 +10454,60 @@ function doPost(e) {
                         </div>
                         <p>{voucher.description}</p>
                       </div>
-                      <div className="voucher-card-actions">
+<div className="voucher-card-actions">
                         <span className="voucher-code-badge">{voucher.code}</span>
-                        <div style={{ display: "flex", gap: "6px", alignItems: "center" }}>
+                        <div className="voucher-actions-group">
                           {isSaved ? (
-                            <span className="voucher-owned-badge">✓ Đã sở hữu</span>
-                          ) : (
+                            <>
+                              <button
+                                type="button"
+                                className={`voucher-btn ${isApplied ? "voucher-btn--applied" : "voucher-btn--use"}`}
+                                onClick={() => {
+                                  if (!isApplied) {
+                                    setAppliedVoucherCode(voucher.code);
+                                    showToast(`✦ Đã áp dụng mã ${voucher.code} (${voucher.title})!`);
+                                  }
+                                  setCartDrawerTab("cart");
+                                  setVouchersModalOpen(false);
+                                  setCartOpen(true);
+                                }}
+                              >
+                                {isApplied ? "✓ Đang dùng" : "Dùng ngay"}
+                              </button>
+                              <button
+                                type="button"
+                                className="voucher-btn-text"
+                                title={`Bỏ lưu mã ${voucher.code}`}
+                                onClick={() => {
+                                  setSavedVouchers(savedVouchers.filter((c) => c !== voucher.code));
+                                  if (isApplied) setAppliedVoucherCode(null);
+                                  showToast(`Đã bỏ lưu mã ${voucher.code}`);
+                                }}
+                              >
+                                Bỏ lưu
+                              </button>
+                            </>
+                          ) : cost > 0 ? (
                             <button
                               type="button"
-                              className="voucher-redeem-point-btn"
+                              className="voucher-btn voucher-btn--redeem"
                               onClick={() => handleRedeemVoucherWithPoints(voucher)}
                               title={canRedeem ? `Đổi bằng ${cost} điểm check-in` : `Cần ${cost} điểm (bạn có ${challengePoints}đ)`}
                             >
-                              🪙 Đổi (-{cost}đ)
+                              🪙 Đổi mã (-{cost}đ)
+                            </button>
+                          ) : (
+                            <button
+                              type="button"
+                              className="voucher-btn voucher-btn--save"
+                              onClick={() => {
+                                setSavedVouchers([...savedVouchers, voucher.code]);
+                                showToast(`✦ Đã lưu mã ${voucher.code} vào ví!`);
+                              }}
+                            >
+                              Lưu mã
                             </button>
                           )}
-                          <button
-                            type="button"
-                            className={`voucher-apply-btn ${isSaved ? "is-saved" : ""}`}
-                            onClick={() => {
-                              if (isSaved) {
-                                setSavedVouchers(savedVouchers.filter((c) => c !== voucher.code));
-                                showToast(`Đã bỏ lưu mã ${voucher.code}`);
-                              } else {
-                                setSavedVouchers([...savedVouchers, voucher.code]);
-                                showToast(`✦ Đã lưu mã ${voucher.code} vào ví voucher!`);
-                              }
-                            }}
-                          >
-                            {isSaved ? "Bỏ lưu" : "Lưu mã"}
-                          </button>
-                          <button
-                            type="button"
-                            className="voucher-apply-btn"
-                            style={{ background: isApplied ? "#24483d" : "var(--red)" }}
-                            onClick={() => {
-                              setAppliedVoucherCode(voucher.code);
-                              setCartDrawerTab("cart");
-                              setVouchersModalOpen(false);
-                              setCartOpen(true);
-                              showToast(`✦ Đã áp dụng mã ${voucher.code} (${voucher.title})!`);
-                            }}
-                          >
-                            {isApplied ? "Đang dùng" : "Dùng ngay"}
-                          </button>
                         </div>
                       </div>
                     </div>

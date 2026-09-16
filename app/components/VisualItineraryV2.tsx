@@ -271,7 +271,7 @@ export default function VisualItineraryV2(props: VisualItineraryV2Props) {
           <div className="v2-audio-settings-head">
             <div className="v2-audio-settings-label">
               <span>🎙️</span>
-              <b>{t.audioVoiceLabel || "Cài đặt giọng đọc thuyết minh"}:</b>
+              <b>{audioLang === "en" ? "Narration Voice & Speed" : "Cài đặt giọng đọc & tốc độ"}</b>
             </div>
             <div className="v2-audio-lang-switcher" role="group" aria-label="Chọn ngôn ngữ thuyết minh">
               <button
