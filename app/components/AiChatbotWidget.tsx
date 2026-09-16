@@ -78,12 +78,27 @@ export default function AiChatbotWidget({
     }
   }, [messages, isOpen, isThinking]);
 
-  // Show floating tooltip greeting after 1.8s
+  // Show floating tooltip greeting after 1.8s and auto-dismiss after 7.5s
   useEffect(() => {
     const timer = setTimeout(() => {
       setShowTooltip(true);
     }, 1800);
-    return () => clearTimeout(timer);
+    const hideTimer = setTimeout(() => {
+      setShowTooltip(false);
+    }, 8500);
+    return () => {
+      clearTimeout(timer);
+      clearTimeout(hideTimer);
+    };
+  }, []);
+
+  // Dismiss tooltip on scroll so it never blocks content reading
+  useEffect(() => {
+    const handleScroll = () => {
+      setShowTooltip(false);
+    };
+    window.addEventListener("scroll", handleScroll, { passive: true, once: true });
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   // Format current time

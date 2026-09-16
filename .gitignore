@@ -57,3 +57,5 @@ next-env.d.ts
 scratch/
 *.zip
 pololu*/
+*.mp4
+*.docx

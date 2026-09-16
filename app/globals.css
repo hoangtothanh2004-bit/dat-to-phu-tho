@@ -7385,6 +7385,44 @@ h3,
   border: 2px solid white;
 }
 
+.topbar__cart-btn {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1px solid #e2e8f0;
+  background: #ffffff;
+  display: grid;
+  place-items: center;
+  color: #475569;
+  cursor: pointer;
+  position: relative;
+  transition: all 0.2s ease;
+}
+
+.topbar__cart-btn:hover {
+  color: #d97706;
+  border-color: #fde68a;
+  background: #fffbeb;
+  transform: scale(1.06);
+}
+
+.topbar__cart-badge {
+  position: absolute;
+  top: -3px;
+  right: -3px;
+  background: #d97706;
+  color: white;
+  font-size: 10px;
+  font-weight: 700;
+  border-radius: 9999px;
+  min-width: 17px;
+  height: 17px;
+  display: grid;
+  place-items: center;
+  padding: 0 4px;
+  border: 2px solid white;
+}
+
 .topbar__login-pill-btn {
   background: #1b4332;
   color: #ffffff;
@@ -9298,6 +9336,25 @@ h3,
 }
 .v2-listen-guide-btn.is-playing {
   background: #dc2626;
+}
+
+.food-row__footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px 12px;
+  flex-wrap: wrap;
+  min-width: 0;
+  margin-top: 4px;
+}
+.food-row__season {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--muted);
+  line-height: 1.4;
+  word-break: break-word;
+  flex: 1 1 auto;
+  min-width: 0;
 }
 
 .v2-detail-action-footer {

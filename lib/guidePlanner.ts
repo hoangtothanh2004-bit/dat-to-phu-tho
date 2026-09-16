@@ -19,6 +19,8 @@ export type ItinerarySlot = {
   travelMinutes: number;
   highlightNote: string;
   estimatedCostPerPerson: number;
+  audioScript?: string;
+  audioScriptEn?: string;
 };
 
 export type ItineraryDay = {
@@ -670,6 +672,8 @@ export function getOfficialDocxItinerary(): GeneratedItinerary {
       travelMinutes: 15,
       highlightNote: "Khởi hành hành trình Cội Nguồn Đất Tổ",
       estimatedCostPerPerson: 0,
+      audioScript: "Xin chào bạn! Tôi là Trợ lý Du lịch Đất Tổ. Hôm nay, tôi sẽ đồng hành cùng bạn trong hành trình 2 ngày 1 đêm khám phá Đất Tổ. Chuyến đi bắt đầu từ trung tâm Việt Trì, đưa bạn trở về với cội nguồn dân tộc tại Khu di tích lịch sử Đền Hùng, thư giãn tại Thanh Thủy và kết thúc hành trình bằng một ngày khám phá Tam Đảo. Bạn có thể lựa chọn di chuyển bằng ô tô hoặc xe máy. Nếu đi cùng gia đình, người lớn tuổi hoặc trẻ nhỏ, ô tô sẽ thuận tiện và thoải mái hơn. Nếu đi cùng bạn bè hoặc nhóm nhỏ, xe máy sẽ phù hợp với những ai muốn chủ động thời gian và tận hưởng cung đường. Trong hành trình hôm nay, tôi sẽ không chỉ hướng dẫn bạn đi đâu, đi như thế nào, mà còn kể cho bạn nghe những câu chuyện, truyền thuyết và giá trị văn hóa – lịch sử gắn với vùng đất này. Bây giờ, chúng ta cùng bắt đầu nhé!",
+      audioScriptEn: "Hello! I am your Ancestral Land Travel Assistant. Today, I will accompany you on a 2-day, 1-night journey exploring Phu Tho: starting from Viet Tri city center, returning to ancestral roots at Hung Kings Temple, unwinding in Thanh Thuy hot springs, and concluding with a cloud-hunting day in Tam Dao. Let's begin our journey!",
     },
     {
       period: "Sáng",
@@ -682,7 +686,7 @@ export function getOfficialDocxItinerary(): GeneratedItinerary {
         distance: "Gần cổng vào Đền Hùng",
         travelTime: "5 phút",
         note: "Bún bò Huế, phở bò gia truyền tái chín, bánh cuốn chả nóng hổi, cà phê sáng tràn đầy năng lượng",
-        address: "Đường Hùng Vương, xã Hy Cương, TP. Việt Trì, Tỉnh Phú Thọ",
+        address: "Đường Hùng Vương, xã Hy Cương, Tỉnh Phú Thọ",
         hours: "06:00 – 21:00",
         image: "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800&auto=format&fit=crop&q=80",
         taste: "Bún bò, phở cội nguồn thơm ngọt đậm đà",
@@ -692,6 +696,8 @@ export function getOfficialDocxItinerary(): GeneratedItinerary {
       travelMinutes: 5,
       highlightNote: "Nạp năng lượng chuẩn bị leo núi Nghĩa Lĩnh (40.000–60.000đ/người)",
       estimatedCostPerPerson: 50000,
+      audioScript: "Để chuẩn bị thể lực dồi dào cho hành trình leo núi Nghĩa Lĩnh, đoàn dừng chân tại Nhà hàng Mai Anh ngay cửa ngõ Đền Hùng, thưởng thức tô phở bò gia truyền hoặc bún bò Huế nóng sốt đậm đà hương vị.",
+      audioScriptEn: "Energize yourself before the ascent up Mount Nghia Linh with a hot bowl of traditional beef pho or Hue beef noodles at Mai Anh Restaurant right by the entrance.",
     },
     {
       period: "Sáng",
@@ -704,6 +710,8 @@ export function getOfficialDocxItinerary(): GeneratedItinerary {
       travelMinutes: 15,
       highlightNote: "Đền Hạ → Đền Trung → Đền Thượng → Đền Giếng → Bảo tàng Hùng Vương (Miễn phí vào cổng)",
       estimatedCostPerPerson: 0,
+      audioScript: "Bạn hãy bắt đầu hành trình tại Cổng chính Khu di tích lịch sử Đền Hùng dưới chân núi Nghĩa Lĩnh, xây dựng năm 1917 với dòng chữ 'Cao sơn cảnh hành'. Men theo tuyến bậc đá dẫn lên sườn núi, điểm dừng đầu tiên là Đền Hạ – nơi gắn liền với truyền thuyết Mẹ Âu Cơ sinh bọc trăm trứng, cội nguồn của hai tiếng 'đồng bào' và hình ảnh 'Con Rồng, cháu Tiên'. Ngay cạnh Đền Hạ là Chùa Thiên Quang với cây vạn tuế ba nhánh 800 năm tuổi, nơi Bác Hồ về thăm ngày 19 tháng 9 năm 1954. Tiếp tục leo 159 bậc đá, bạn sẽ đến Đền Trung – Hùng Vương Tổ Miếu, nơi các Vua Hùng cùng Lạc hầu, Lạc tướng bàn việc nước và gắn với câu chuyện Lang Liêu làm bánh chưng bánh giầy dâng vua cha. Vượt tiếp 100 bậc đá lên đỉnh núi cao nhất là Đền Thượng – Kính Thiên Lĩnh Điện, nơi diễn ra các nghi lễ Giỗ Tổ trang nghiêm và Cột đá thề linh thiêng. Năm 2012, Tín ngưỡng thờ cúng Hùng Vương đã được UNESCO ghi danh Di sản văn hóa phi vật thể đại diện của nhân loại. Sau khi dâng hương, theo lối phía sau bạn xuống viếng Lăng Hùng Vương thứ sáu trầm mặc, rồi qua Đền Giếng soi bóng giếng cổ Ngọc Tỉnh nơi công chúa Tiên Dung và Ngọc Hoa thường chải tóc. Điểm cuối là Bảo tàng Hùng Vương trên Đồi Công Quán, nơi trưng bày các hiện vật khảo cổ học Phùng Nguyên, Đồng Đậu, Gò Mun và trống đồng Đông Sơn rực rỡ.",
+      audioScriptEn: "Begin at the Main Gate constructed in 1917 inscribed with 'Cao Son Canh Hanh'. Climb stone steps to Ha Temple, commemorating Mother Au Co's hundred-egg sac and the roots of national solidarity. Next door sits Thien Quang Pagoda with an 800-year-old cycad tree marking Ho Chi Minh's 1954 historic visit. Ascend 159 steps to Trung Temple, where Kings deliberated with generals and Lang Liêu crafted square earth and round sky cakes. Continue 100 steps to the summit at Thuong Temple - Kinh Thien Linh Dien, epicenter of the UNESCO-inscribed Ancestral Worship rites. Descend to the 6th King's Mausoleum, Gieng Temple with Princesses Tien Dung and Ngoc Hoa's reflection well, and conclude at Hung Kings Museum examining prehistoric Bronze Age Dong Son drums.",
     },
     {
       period: "Trưa",
@@ -715,6 +723,8 @@ export function getOfficialDocxItinerary(): GeneratedItinerary {
       travelMinutes: 10,
       highlightNote: "Nghỉ chân chuẩn bị bữa trưa đặc sản vùng Đất Tổ",
       estimatedCostPerPerson: 0,
+      audioScript: "Sau khi chiêm bái trọn vẹn các ngôi đền trên núi Nghĩa Lĩnh và Bảo tàng Hùng Vương, chúng ta cùng thong thả xuống núi, nghỉ ngơi lấy lại sức và di chuyển đến nhà hàng thưởng thức bữa trưa đặc sản Đất Tổ.",
+      audioScriptEn: "Descending Mount Nghia Linh, take a relaxing breather before driving over to savor authentic regional specialties.",
     },
     {
       period: "Trưa",
@@ -727,7 +737,7 @@ export function getOfficialDocxItinerary(): GeneratedItinerary {
         distance: "Khu vực Đền Hùng (cách 1.5 km)",
         travelTime: "5 phút",
         note: "Mâm cơm phong vị Đất Tổ: Cá lăng om chuối đậu, gà đồi hấp lá chanh, thịt chua Thanh Sơn ăn kèm lá sung, canh rau sắng, xôi nếp nương",
-        address: "Khu 1, xã Hy Cương, TP. Việt Trì, Tỉnh Phú Thọ",
+        address: "Khu 1, xã Hy Cương, Tỉnh Phú Thọ",
         hours: "09:00 – 22:00",
         phone: "0983 234 567",
         image: "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800&auto=format&fit=crop&q=80",
@@ -738,6 +748,8 @@ export function getOfficialDocxItinerary(): GeneratedItinerary {
       travelMinutes: 5,
       highlightNote: "Ẩm thực truyền thống Đất Tổ (120.000–180.000đ/người)",
       estimatedCostPerPerson: 150000,
+      audioScript: "Nhà hàng Giang Lan Đền Hùng là địa điểm phù hợp để thưởng thức các món đặc sản Phú Thọ sau hành trình tham quan Đền Hùng. Nhà hàng phục vụ những món ăn mang hương vị địa phương, nổi bật với các đặc sản vùng Đất Tổ như cá lăng om chuối đậu, gà đồi hấp lá chanh, thịt chua Thanh Sơn, phù hợp cho cả gia đình và đoàn khách du lịch.",
+      audioScriptEn: "Giang Lan Restaurant is an ideal stop to taste Phu Tho culinary specialties after exploring Hung Temple. It serves authentic local delicacies including Da River fish stewed with green banana, steamed free-range hill chicken, and Thanh Son fermented pork.",
     },
     {
       period: "Chiều",
@@ -749,6 +761,8 @@ export function getOfficialDocxItinerary(): GeneratedItinerary {
       travelMinutes: 50,
       highlightNote: "Cung đường ven sông Đà nối Đất Tổ với thiên đường khoáng nóng",
       estimatedCostPerPerson: 0,
+      audioScript: "Rời Đền Hùng, xe lăn bánh theo đường tỉnh 317 ven đê sông Đà thơ mộng hướng về khu nghỉ dưỡng khoáng nóng Thanh Thủy. Tuyến đường 35 km êm thuận với khung cảnh đồng quê thanh bình, đưa bạn đến với miền khoáng nóng trứ danh của Phú Thọ.",
+      audioScriptEn: "Departing Hung Temple, scenic Provincial Road 317 winds along the romantic Da River dyke for 35 km towards the geothermal mineral springs of Thanh Thuy.",
     },
     {
       period: "Chiều",
@@ -762,6 +776,8 @@ export function getOfficialDocxItinerary(): GeneratedItinerary {
       travelMinutes: 5,
       highlightNote: "Check-in sảnh đón tiếp sang trọng và nhận trà đón tiếp",
       estimatedCostPerPerson: 0,
+      audioScript: "Chào mừng bạn đến với Lynn Times Thanh Thủy! Quý khách dừng chân tại sảnh chính sang trọng, thưởng thức tách trà thảo mộc đón tiếp và gửi hành lý trong thời gian chuẩn bị nhận phòng.",
+      audioScriptEn: "Welcome to Lynn Times Thanh Thuy! Arrive at the 5-star grand reception hall, enjoy welcome herbal tea, and store luggage before room check-in.",
     },
     {
       period: "Chiều",
@@ -774,6 +790,8 @@ export function getOfficialDocxItinerary(): GeneratedItinerary {
       travelMinutes: 5,
       highlightNote: "Căn hộ Shoptel cao cấp có nguồn khoáng nóng dẫn trực tiếp vào phòng (600.000–800.000đ/người)",
       estimatedCostPerPerson: 700000,
+      audioScript: "Quý khách nhận phòng căn hộ Shoptel 5 sao tiện nghi, nơi có nguồn khoáng nóng tự nhiên dẫn trực tiếp vào phòng tắm. Thư giãn ngắm nhìn khung cảnh núi non Ba Vì và sông Đà yên bình phía xa.",
+      audioScriptEn: "Check into your stylish 5-star Shoptel suite featuring an in-room natural mineral tub. Relax and take in peaceful vistas of the Da River and distant Ba Vi peaks.",
     },
     {
       period: "Chiều",
@@ -786,6 +804,8 @@ export function getOfficialDocxItinerary(): GeneratedItinerary {
       travelMinutes: 5,
       highlightNote: "Suối khoáng Radon quý hiếm & xông hơi đá muối Himalaya (Đã bao gồm trong combo phòng)",
       estimatedCostPerPerson: 0,
+      audioScript: "Lynn Times Thanh Thủy là một khu nghỉ dưỡng khoáng nóng mang đậm phong cách Nhật Bản, nơi dịch vụ được xây dựng như một câu chuyện văn hóa tinh tế. Khi bước vào không gian Onsen, du khách sẽ cảm nhận sự thư thái trong từng chi tiết: làn nước khoáng nóng tự nhiên giàu khoáng chất và khí Radon quý hiếm giúp cơ thể phục hồi, cùng phong cách phục vụ nhẹ nhàng, chu đáo. Trải nghiệm tại đây không chỉ dừng lại ở tắm khoáng, mà còn là hành trình chăm sóc sức khỏe toàn diện với bể Jacuzzi thủy lực, bồn thảo dược và xông hơi Sauna đá muối Himalaya giải tỏa mọi căng thẳng.",
+      audioScriptEn: "Lynn Times Thanh Thuy is a Japanese-style hot mineral resort where wellness is crafted like refined cultural storytelling. Step into the Onsen sanctuary to bathe in rare natural radon-infused geothermal waters that rejuvenate muscles and mind, complemented by Himalayan salt sauna and herbal therapy baths.",
     },
     {
       period: "Chiều",
@@ -798,6 +818,8 @@ export function getOfficialDocxItinerary(): GeneratedItinerary {
       travelMinutes: 5,
       highlightNote: "Check-in phố hoa, hồ cá Koi và thư giãn trà chiều (Tùy chi tiêu cá nhân)",
       estimatedCostPerPerson: 50000,
+      audioScript: "Điểm nhấn đặc biệt là khu phố Nhật ngay trong khuôn viên, nơi tái hiện khung cảnh truyền thống với đèn lồng, mái ngói cong, tạo nên không gian check-in độc đáo. Bên cạnh đó, vườn Nhật với bonsai, cầu gỗ, hồ nước trong xanh mang lại cảm giác thiền định, còn hồ cá Koi rực rỡ sắc màu trở thành biểu tượng may mắn và là nơi du khách dừng chân ngắm cảnh. Quán café phong cách Nhật cũng là điểm hẹn lý tưởng để thưởng thức đồ uống, trò chuyện và lưu giữ những bức hình đẹp.",
+      audioScriptEn: "A standout highlight is the on-site Japanese walking street recreating traditional architectures with hanging paper lanterns and curved tiled roofs. Wander through Zen gardens with bonsai and wooden bridges, marvel at colorful lucky Koi carp ponds, and unwind at a Japanese tea cafe.",
     },
     {
       period: "Tối",
@@ -810,6 +832,8 @@ export function getOfficialDocxItinerary(): GeneratedItinerary {
       travelMinutes: 0,
       highlightNote: "Khoảng lặng thư thái tái tạo năng lượng",
       estimatedCostPerPerson: 0,
+      audioScript: "Khoảng lặng êm đềm tại phòng nghỉ Shoptel để du khách tắm tráng nước ấm, ngắm hoàng hôn nhuộm hồng đỉnh núi Ba Vì phía xa và chuẩn bị trang phục cho bữa tối đặc sắc.",
+      audioScriptEn: "Enjoy a tranquil downtime in your room, watching the sunset glow over Mount Ba Vi and freshening up for the upcoming dinner feast.",
     },
     {
       period: "Tối",
@@ -833,6 +857,8 @@ export function getOfficialDocxItinerary(): GeneratedItinerary {
       travelMinutes: 5,
       highlightNote: "Thưởng thức Chả cá sông Đà nóng hổi trứ danh (150.000–250.000đ/người)",
       estimatedCostPerPerson: 200000,
+      audioScript: "Nhà hàng Tinh Hoa Bắc Bộ & Chả Cá Sông Đà tại Lynn Times Thanh Thủy là nơi du khách được thưởng thức ẩm thực mang đậm hương vị vùng miền. Không gian nhà hàng kết hợp nét hiện đại với phong cách Bắc Bộ truyền thống, tạo cảm giác vừa sang trọng vừa gần gũi. Điểm nhấn đặc biệt chính là món Chả Cá Sông Đà, chế biến từ cá tươi đánh bắt ngay dòng sông Đà, thịt chắc, thơm, kết hợp cùng gia vị truyền thống tạo nên hương vị khó quên. Ngoài ra thực đơn còn có nhiều món đặc sản Bắc Bộ tinh tế, mang lại một trải nghiệm văn hóa ẩm thực trọn vẹn.",
+      audioScriptEn: "Tinh Hoa Bac Bo & Cha Ca Song Da Restaurant at Lynn Times celebrates northern culinary identity. The star highlight is grilled Da River fish patties, served sizzling on oil pans with fresh dill, spring onions, rice vermicelli, roasted peanuts, and traditional seasoning sauces.",
     },
     {
       period: "Tối",
@@ -845,6 +871,8 @@ export function getOfficialDocxItinerary(): GeneratedItinerary {
       travelMinutes: 5,
       highlightNote: "Phố đêm lung linh ánh đèn và thưởng thức cà phê ngắm cảnh (Tùy chi tiêu)",
       estimatedCostPerPerson: 50000,
+      audioScript: "Hòa mình vào không khí lung linh về đêm tại quảng trường Sakura & Hokkaido, nhâm nhi tách cà phê ấm nóng, thưởng thức âm nhạc acoustic nhẹ nhàng và check-in bên những dãy phố đèn lồng đỏ rực rỡ.",
+      audioScriptEn: "Soak in the illuminated nighttime charm at Sakura & Hokkaido Squares, sip evening coffee with gentle acoustic tunes, and capture memories along radiant lantern-lit promenades.",
     },
     {
       period: "Tối",
@@ -857,6 +885,8 @@ export function getOfficialDocxItinerary(): GeneratedItinerary {
       travelMinutes: 0,
       highlightNote: "Nghỉ ngơi phục hồi sức khỏe trọn vẹn",
       estimatedCostPerPerson: 0,
+      audioScript: "Ngâm bồn khoáng ấm thư giãn ngay tại phòng, tận hưởng giấc ngủ sâu và êm ái giữa không gian tĩnh lặng, trong lành của miền đất khoáng nóng, chuẩn bị năng lượng cho chuyến khám phá Tam Đảo ngày mai.",
+      audioScriptEn: "Immerse in your private in-room warm mineral tub for deeply restorative sleep amidst the serene countryside atmosphere, getting well-rested for tomorrow's Tam Dao ascent.",
     },
   ];
 
@@ -882,6 +912,8 @@ export function getOfficialDocxItinerary(): GeneratedItinerary {
       travelMinutes: 5,
       highlightNote: "Buffet sáng tiêu chuẩn cao cấp (Đã bao gồm trong combo phòng)",
       estimatedCostPerPerson: 0,
+      audioScript: "Chào ngày mới! Quý khách thưởng thức bữa sáng buffet thơm ngon với hơn 40 món ăn phong phú tại nhà hàng trung tâm Lynn Times Thanh Thủy, ngắm nhìn ánh ban mai chiếu rọi qua rặng cây, nạp năng lượng sẵn sàng cho chặng vượt đèo lên Tam Đảo.",
+      audioScriptEn: "Good morning! Savor a bountiful breakfast buffet with over 40 delicacies at the central restaurant, soaking in the morning sunshine before driving up to misty Tam Dao.",
     },
     {
       period: "Sáng",
@@ -894,6 +926,8 @@ export function getOfficialDocxItinerary(): GeneratedItinerary {
       travelMinutes: 5,
       highlightNote: "Check-in khung cảnh ban mai thư thái (0đ)",
       estimatedCostPerPerson: 0,
+      audioScript: "Tận hưởng bầu không khí trong lành buổi sớm mai, thong thả tản bộ qua các tiểu cảnh vườn Nhật, hồ cá Koi và lưu giữ những bức hình kỷ niệm rạng rỡ trước khi rời khu nghỉ dưỡng.",
+      audioScriptEn: "Enjoy the fresh morning breeze, stroll through Zen gardens and Koi ponds, and capture radiant keepsake photos before departing the resort.",
     },
     {
       period: "Sáng",
@@ -906,6 +940,8 @@ export function getOfficialDocxItinerary(): GeneratedItinerary {
       travelMinutes: 5,
       highlightNote: "Tạm biệt Lynn Times Thanh Thủy, sẵn sàng cho chặng Tam Đảo",
       estimatedCostPerPerson: 0,
+      audioScript: "Quý khách hoàn tất thủ tục trả phòng tại quầy lễ tân, nhân viên hỗ trợ chuyển hành lý lên xe, chuẩn bị cho hành trình khám phá thị xã trên mây Tam Đảo.",
+      audioScriptEn: "Complete check-out formalities at reception, with luggage transferred to your vehicle, ready for the scenic ascent to cloud-kissed Tam Dao.",
     },
     {
       period: "Sáng",
@@ -917,6 +953,8 @@ export function getOfficialDocxItinerary(): GeneratedItinerary {
       travelMinutes: 90,
       highlightNote: "Cung đường đèo mây ngoạn mục dẫn lên vùng mây trong sương",
       estimatedCostPerPerson: 0,
+      audioScript: "Rời Thanh Thủy, xe qua cầu kết nối sang Quốc lộ 2B vượt cung đèo thông reo uốn lượn dài 13 km hướng lên Tam Đảo. Khi xe lên đến độ cao gần 1.000 mét, không khí chuyển sang mát lạnh đặc trưng và mây mù giăng mắc quanh sườn núi kỳ vĩ.",
+      audioScriptEn: "Departing Thanh Thuy across the river, ascend the 13-km pine-clad scenic winding pass along National Route 2B towards Tam Dao, as crisp highland breezes replace valley warmth.",
     },
     {
       period: "Sáng",
@@ -929,6 +967,8 @@ export function getOfficialDocxItinerary(): GeneratedItinerary {
       travelMinutes: 5,
       highlightNote: "Biểu tượng trung tâm du lịch Tam Đảo mây mù bồng bềnh (0đ)",
       estimatedCostPerPerson: 0,
+      audioScript: "Quảng trường Tam Đảo nằm ngay trung tâm xã Tam Đảo, được ví như 'trái tim' của vùng đất nghỉ dưỡng trên mây. Đây là nơi du khách dễ dàng cảm nhận nhịp sống sôi động của Tam Đảo, vừa hiện đại vừa giữ được nét văn hóa vùng núi. Ban ngày, quảng trường rộng rãi, thoáng đãng, là điểm lý tưởng để dạo bộ, chụp ảnh với khung cảnh núi non hùng vĩ bao quanh. Đến Quảng trường Tam Đảo, du khách không chỉ có những bức hình đẹp, mà còn cảm nhận được tinh thần trẻ trung, năng động của thị trấn nghỉ dưỡng, đồng thời thấy rõ sự gắn kết giữa con người và thiên nhiên nơi đây.",
+      audioScriptEn: "Tam Dao Central Square is the beating heart of this misty mountain resort. Spacious and breezy during the day, framed by towering mountains and fairy-tale castle facades, it is the premier spot for strolling and capturing vibrant photos.",
     },
     {
       period: "Trưa",
@@ -941,6 +981,8 @@ export function getOfficialDocxItinerary(): GeneratedItinerary {
       travelMinutes: 5,
       highlightNote: "Kiệt tác Gothic đá xanh cổ kính & góc ngắm thung lũng mây huyền thoại (0đ)",
       estimatedCostPerPerson: 0,
+      audioScript: "Nhà thờ đá Tam Đảo là một công trình mang tính biểu tượng, được người Pháp xây dựng từ đầu thế kỷ XX khi Tam Đảo mới hình thành như một điểm nghỉ dưỡng. Toàn bộ nhà thờ được dựng bằng đá xanh, theo phong cách Gothic cổ điển, tạo nên vẻ đẹp uy nghi, cổ kính giữa khung cảnh núi rừng mờ sương. Điều đặc biệt là nhà thờ đá không chỉ là nơi sinh hoạt tôn giáo, mà còn là minh chứng cho sự giao thoa văn hóa giữa phương Tây và vùng núi Việt Nam. Ngày nay, nhà thờ đá trở thành điểm check-in không thể bỏ qua với các vòm cửa đá cổ kính nhìn xuống thung lũng mây bồng bềnh.",
+      audioScriptEn: "Tam Dao Stone Church is an iconic French Gothic monument built from bluish stones in the early 20th century. Standing majestically amidst swirling mountain mist, its stone arches frame spellbinding panoramas of the cloud-filled valley below.",
     },
     {
       period: "Trưa",
@@ -964,6 +1006,8 @@ export function getOfficialDocxItinerary(): GeneratedItinerary {
       travelMinutes: 5,
       highlightNote: "Ẩm thực ngọn su su xanh non & gà đồi nướng than (150.000–250.000đ/người)",
       estimatedCostPerPerson: 200000,
+      audioScript: "Nhà hàng Tam Đảo Núi là một điểm dừng chân ẩm thực độc đáo, nằm giữa khung cảnh núi rừng hùng vĩ của Tam Đảo. Với thiết kế mở, tận dụng tối đa không gian thoáng đãng và tầm nhìn bao quát, nhà hàng mang đến cho du khách cảm giác vừa gần gũi thiên nhiên, vừa sang trọng tinh tế. Thực đơn tại đây phong phú, kết hợp giữa đặc sản núi rừng Tam Đảo và các món ăn truyền thống Việt Nam: gà đồi bọc đất nướng than hoa, lợn bản, rau rừng tươi ngon và đặc biệt là món ngọn su su xào tỏi xanh mướt giòn ngọt đặc trưng của xứ mây.",
+      audioScriptEn: "Tam Dao Nui Restaurant offers a memorable culinary stop enveloped by grand mountain landscapes. Enjoy flavorful highland dishes like grilled hill chicken, wild boar skewers, and crunchy garlic-sautéed chayote greens harvested fresh from local terraced slopes.",
     },
     {
       period: "Chiều",
@@ -986,6 +1030,8 @@ export function getOfficialDocxItinerary(): GeneratedItinerary {
       travelMinutes: 10,
       highlightNote: "Tọa độ săn mây ngắm trọn thung lũng từ đỉnh trời (60.000–100.000đ/người)",
       estimatedCostPerPerson: 80000,
+      audioScript: "Tam Đảo Café trên Cổng Trời là một điểm dừng chân rất đặc biệt, nằm ngay khu vực Cổng Trời – nơi cao nhất của Tam Đảo. Quán café sở hữu tầm nhìn bao quát toàn cảnh núi rừng và thung lũng phía dưới. Ngồi ở đây, du khách có thể thưởng thức một tách cà phê nóng trong làn sương mờ buổi sáng, ngắm nhìn biển mây bồng bềnh và lâu đài cổ tích phía xa. Đây không chỉ là nơi uống cà phê, mà còn là trải nghiệm văn hóa hòa mình vào thiên nhiên, tìm lại sự cân bằng và an yên giữa núi rừng.",
+      audioScriptEn: "Tam Dao Cafe tren Cong Troi occupies the highest vantage point at Heaven's Gate, boasting 360-degree panorama vistas over mist-covered pine valleys and fairytale stone castles while sipping hot artisanal coffee.",
     },
     {
       period: "Chiều",
@@ -998,6 +1044,8 @@ export function getOfficialDocxItinerary(): GeneratedItinerary {
       travelMinutes: 5,
       highlightNote: "Mua quà đặc sản ngọn su su & nông sản tươi ngon (Tùy chi tiêu cá nhân)",
       estimatedCostPerPerson: 100000,
+      audioScript: "Sau khi tham quan các địa điểm nổi tiếng như Nhà thờ đá hay lên Cổng Trời, du khách quay lại khu trung tâm Tam Đảo để check-in và tận hưởng không khí nhộn nhịp. Khu trung tâm chính là nơi hội tụ nhiều dịch vụ du lịch: quán café, nhà hàng đặc sản núi rừng và chợ truyền thống với những bó ngọn su su tươi non mơn mởn, chuối mật, măng khô làm quà cho người thân, bạn bè.",
+      audioScriptEn: "Return to Tam Dao town center to stroll through bustling local markets, picking up fresh chayote bundles, mountain honey bananas, and dried bamboo shoots as gifts.",
     },
     {
       period: "Chiều",
@@ -1010,6 +1058,8 @@ export function getOfficialDocxItinerary(): GeneratedItinerary {
       travelMinutes: 5,
       highlightNote: "Khoảng thời gian tự do khám phá và chụp ảnh kỷ niệm (Tùy chi tiêu)",
       estimatedCostPerPerson: 50000,
+      audioScript: "Khoảng thời gian tự do khám phá, tản bộ qua những con dốc quanh co ngập tràn sắc hoa và sương mù, lưu lại những bức ảnh kỷ niệm cuối cùng tại thị trấn trong mây.",
+      audioScriptEn: "Enjoy free time wandering through romantic flower slopes and stone steps, taking final memorable snapshots of misty Tam Dao.",
     },
     {
       period: "Chiều",
@@ -1021,6 +1071,8 @@ export function getOfficialDocxItinerary(): GeneratedItinerary {
       travelMinutes: 5,
       highlightNote: "Kiểm tra hành lý và chuẩn bị xuống núi",
       estimatedCostPerPerson: 0,
+      audioScript: "Đoàn tập trung tại xe, sắp xếp hành lý và các phần quà đặc sản vùng cao, kiểm tra tư trang chuẩn bị cho chặng đường về trung tâm thành phố Việt Trì.",
+      audioScriptEn: "Gather at the vehicle, arrange luggage and local gifts, and prepare for the scenic return drive to Viet Tri.",
     },
     {
       period: "Chiều",
@@ -1032,6 +1084,8 @@ export function getOfficialDocxItinerary(): GeneratedItinerary {
       travelMinutes: 90,
       highlightNote: "Hành trình trở về an toàn và ngắm hoàng hôn đồng bằng Bắc Bộ",
       estimatedCostPerPerson: 0,
+      audioScript: "Xe khởi hành xuống đèo Tam Đảo, rẽ vào Quốc lộ 2B nối sang Quốc lộ 2, qua cầu Hạc Trì trở về trung tâm thành phố ngã ba sông Việt Trì. Quý khách thư giãn ngắm hoàng hôn buông xuống đôi bờ sông Hồng và sông Lô thanh bình.",
+      audioScriptEn: "Drive down the winding mountain pass along National Routes 2B and 2 back to Viet Tri city center, admiring the peaceful sunset over the Red and Lo rivers.",
     },
     {
       period: "Chiều",
@@ -1043,6 +1097,8 @@ export function getOfficialDocxItinerary(): GeneratedItinerary {
       travelMinutes: 0,
       highlightNote: "Hoàn thành trọn vẹn hành trình Di Sản – Khoáng Nóng – Mây Núi",
       estimatedCostPerPerson: 0,
+      audioScript: "Như vậy, hành trình du lịch 2 ngày 1 đêm đã khép lại với những trải nghiệm đáng nhớ: từ không gian linh thiêng của Đền Hùng, sự thư giãn tại suối khoáng nóng Thanh Thủy, cho đến vẻ đẹp mờ sương lãng mạn của Tam Đảo với Nhà thờ đá, Quảng trường trung tâm và Cổng Trời. Trợ lý du lịch Phú Thọ rất hân hạnh được đồng hành cùng bạn. Xin chào và hẹn gặp lại ở những chuyến đi tiếp theo!",
+      audioScriptEn: "Our 2-day 1-night journey has concluded with unforgettable memories: from the sacred heritage of Hung Kings Temple, deep relaxation at Thanh Thuy radon mineral springs, to the romantic highland beauty of Tam Dao. It has been an honor accompanying you. Wishing you safe travels and see you again!",
     },
   ];
 
@@ -1085,8 +1141,8 @@ export function getOfficialDocxItinerary(): GeneratedItinerary {
     estimatedCostPerPerson: totalCostPerPerson,
     totalCost: totalCostPerPerson * travelers,
     overviewNarrative: "Hành trình du lịch 2 ngày 1 đêm được thiết kế chuẩn xác theo tài liệu lịch trình: kết nối trọn vẹn di sản linh thiêng Đền Hùng, không gian nghỉ dưỡng khoáng nóng Radon 5 sao Lynn Times Thanh Thủy và vùng săn mây thơ mộng Tam Đảo. Lộ trình tối ưu từng khung giờ từ 07:30 sáng ngày 1 đến 17:30 chiều ngày 2, kết hợp hoàn hảo giữa tâm linh, ẩm thực đặc sản bản địa (cá sông Lô, chả cá sông Đà, ngọn su su Tam Đảo) và chăm sóc sức khỏe phục hồi sinh lực.",
-    audioGuideScript: "Kính chào quý khách! Chào mừng quý khách đến với hành trình du lịch 2 ngày 1 đêm kết nối Đất Tổ Hùng Vương linh thiêng, thiên đường khoáng nóng Thanh Thủy và vùng mây mù Tam Đảo. Ngày đầu tiên, chúng ta khởi hành từ thành phố ngã ba sông Việt Trì, thưởng thức bữa sáng tại nhà hàng Mai Anh trước khi thành kính dâng hương qua Đền Hạ, Đền Trung, Đền Thượng và Đền Giếng trên đỉnh Nghĩa Lĩnh hùng vĩ. Buổi trưa, đoàn thưởng thức ẩm thực sông Lô tại nhà hàng Giang Lan, sau đó xuôi theo dòng sông Đà về nhận phòng nghỉ dưỡng Shoptel 5 sao tại Lynn Times Thanh Thủy. Quý khách sẽ được đắm mình trong dòng khoáng nóng Radon quý hiếm tại Ohayo Onsen, dạo bước ngắm hồ cá Koi và thưởng thức bữa tối Chả cá sông Đà trứ danh. Sang ngày thứ hai, sau bữa sáng buffet phong phú, đoàn sẽ vượt cung đèo mây lên đỉnh Tam Đảo, check-in Nhà thờ đá cổ, Quảng trường trung tâm, thưởng thức mâm cơm ngọn su su xanh giòn tại nhà hàng Tam Đảo Núi và nhâm nhi cà phê ngắm toàn cảnh thung lũng mây tại Cổng Trời trước khi trở về Việt Trì trong sự thư thái trọn vẹn.",
-    audioGuideScriptEn: "Welcome to the official 2-day 1-night journey connecting ancestral heritage, radon hot spring wellness, and cloudy mountain retreat: Viet Tri – Hung Kings Temple – Lynn Times Thanh Thuy – Tam Dao. On Day 1, depart from Viet Tri city center, enjoy breakfast at Mai Anh Restaurant, and ascend Mount Nghia Linh to pay homage at Lower, Middle, Upper, and Well Temples, followed by the Hung Kings Museum. Savor local river fish specialties at Giang Lan Restaurant, then travel along the Da River to check into 5-star Shoptel at Lynn Times Thanh Thuy. Immerse yourself in rare natural radon mineral waters at Ohayo Onsen, stroll along scenic walking streets, and enjoy a dinner of Da River grilled fish patties. On Day 2, savor an international breakfast buffet before driving through pine-clad winding passes up to misty Tam Dao. Capture memories at the Central Square and French Gothic Stone Church, indulge in fresh chayote shoots and hill chicken at Tam Dao Nui Restaurant, and relax with panoramic cloud-view coffee at Cong Troi before a safe scenic return to Viet Tri by late afternoon.",
+    audioGuideScript: "Xin chào bạn! Tôi là Trợ lý Du lịch Đất Tổ. Hôm nay, tôi sẽ đồng hành cùng bạn trong hành trình 2 ngày 1 đêm khám phá Đất Tổ: khởi hành từ trung tâm Việt Trì, trở về cội nguồn dân tộc tại Quần thể di tích Đền Hùng, thư giãn tại khu nghỉ dưỡng khoáng nóng Lynn Times Thanh Thủy và kết thúc bằng một ngày khám phá Tam Đảo trong sương. Tại Đền Hùng, chúng ta bắt đầu từ Cổng chính xây năm 1917 với lời nhắc 'Cao sơn cảnh hành', bước lên Đền Hạ nơi Mẹ Âu Cơ sinh bọc trăm trứng khơi nguồn hai tiếng 'đồng bào', viếng Chùa Thiên Quang với cây vạn tuế 800 năm tuổi gắn dấu mốc ngày 19/9/1954 Bác Hồ về thăm. Vượt 159 bậc đá lên Đền Trung – Hùng Vương Tổ Miếu gắn với sự tích bánh chưng bánh giầy Lang Liêu, leo tiếp 100 bậc lên đỉnh Nghĩa Lĩnh viếng Đền Thượng Kính Thiên Lĩnh Điện – trung tâm Tín ngưỡng thờ cúng Hùng Vương được UNESCO vinh danh Di sản nhân loại, rồi xuống viếng Lăng Hùng Vương thứ sáu, Đền Giếng giếng cổ Ngọc Tỉnh và Bảo tàng Hùng Vương trên Đồi Công Quán. Sau bữa trưa đặc sản cá sông Lô tại Nhà hàng Giang Lan, đoàn xuôi dòng sông Đà về Lynn Times Thanh Thủy tận hưởng làn khoáng nóng Radon quý hiếm, dạo phố Nhật, ngắm hồ cá Koi và thưởng thức bữa tối Chả cá sông Đà trứ danh tại Nhà hàng Tinh Hoa Bắc Bộ. Ngày thứ hai, đoàn vượt cung đèo mây 13 km lên đỉnh Tam Đảo, dạo bước Quảng trường trung tâm, chiêm ngưỡng Nhà thờ đá Gothic xây từ năm 1906, thưởng thức bữa trưa ngọn su su và gà đồi tại Nhà hàng Tam Đảo Núi, nhâm nhi cà phê săn mây tại Tam Đảo Café trên Cổng Trời và dạo chợ mua đặc sản phố núi trước khi trở về Việt Trì trong sự thư thái trọn vẹn. Chúc bạn có một chuyến đi tuyệt vời!",
+    audioGuideScriptEn: "Welcome! I am your Ancestral Land Travel Assistant. Today, I accompany you on our official 2-day 1-night journey: departing Viet Tri, returning to sacred roots at Hung Kings Temple, rejuvenating in radon hot mineral springs at Lynn Times Thanh Thuy, and concluding with a cloud-hunting day in misty Tam Dao. At Mount Nghia Linh, we start from the 1917 Main Gate, visit Ha Temple honoring Mother Au Co's hundred-egg sac, Thien Quang Pagoda with its 800-year-old cycad tree, ascend 159 steps to Trung Temple honoring Lang Liêu's cakes, and 100 steps to Thuong Temple atop the summit for UNESCO Ancestral Worship rites, followed by the 6th King's Mausoleum, Gieng Temple, and the Bronze Age museum. After lunch at Giang Lan Restaurant, we follow the Da River to Lynn Times Thanh Thuy for therapeutic radon Onsen bathing, Zen gardens, Koi ponds, and a dinner of sizzling Da River fish patties. On Day 2, we drive up the 13-km winding pass to misty Tam Dao, exploring the Central Square, French Gothic Stone Church, dining at Tam Dao Nui Restaurant, sipping clouds-view coffee at Cong Troi, and gathering local gifts before our scenic return to Viet Tri.",
     routeAdvice: "Cung đường di chuyển rất thuận lợi: TP. Việt Trì qua Đại lộ Hùng Vương tới Đền Hùng (~10 km) → theo ĐT317 ven sông Đà tới Thanh Thủy (~35 km) → qua cầu Đồng Quang / cầu Văn Lang kết nối Quốc lộ 2B vượt dốc đèo lên Tam Đảo (~65 km) → theo QL2B và QL2 trở về trung tâm Việt Trì (~75 km). Đoạn đèo Tam Đảo dài 13 km uốn lượn có cảnh quan rất đẹp, tài xế lưu ý giữ khoảng cách an toàn và đi số thấp.",
     cautionAdvice: "Khi tham quan Đền Hùng nên đi giày thể thao hoặc giày đế bệt êm chân do có nhiều bậc đá; trang phục lịch sự, kín đáo nơi đền miếu. Tại Lynn Times Thanh Thủy nên mang đồ bơi hoặc đồ tắm phù hợp để trải nghiệm Onsen trọn vẹn. Lên Tam Đảo nên mang theo áo khoác mỏng hoặc khăn choàng vì thời tiết se lạnh vào chiều tối.",
     days,

@@ -1,4 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
+import dns from "node:dns";
+
+try {
+  dns.setDefaultResultOrder("ipv4first");
+} catch {
+  // Ignore in environments where not supported
+}
 
 function splitTextIntoChunks(text: string, maxLen = 180): string[] {
   // Split text by punctuation (. , ! ? ; \n)
@@ -38,24 +45,21 @@ function splitTextIntoChunks(text: string, maxLen = 180): string[] {
   return chunks.length ? chunks : [text.slice(0, maxLen)];
 }
 
-export async function GET(request: NextRequest) {
-  const { searchParams } = new URL(request.url);
-  const text = searchParams.get("text")?.trim();
-  const lang = searchParams.get("lang") || "vi";
-
-  if (!text) {
+async function handleTts(text: string | undefined | null, lang: string | undefined | null) {
+  const cleanText = text?.trim();
+  if (!cleanText) {
     return NextResponse.json({ error: "Missing text parameter" }, { status: 400 });
   }
 
   try {
     let ttsLang = "vi";
-    if (lang.startsWith("en")) ttsLang = "en";
-    else if (lang.startsWith("zh")) ttsLang = "zh-CN";
-    else if (lang.startsWith("ko")) ttsLang = "ko";
-    else if (lang.startsWith("ja")) ttsLang = "ja";
+    const l = (lang || "vi").toLowerCase();
+    if (l.startsWith("en")) ttsLang = "en";
+    else if (l.startsWith("zh")) ttsLang = "zh-CN";
+    else if (l.startsWith("ko")) ttsLang = "ko";
+    else if (l.startsWith("ja")) ttsLang = "ja";
 
-    const chunks = splitTextIntoChunks(text, 180);
-
+    const chunks = splitTextIntoChunks(cleanText, 180);
     const audioBuffers: Buffer[] = [];
 
     for (const chunk of chunks) {
@@ -90,3 +94,20 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({ error: error?.message || "TTS Error" }, { status: 500 });
   }
 }
+
+export async function GET(request: NextRequest) {
+  const { searchParams } = new URL(request.url);
+  const text = searchParams.get("text");
+  const lang = searchParams.get("lang") || "vi";
+  return handleTts(text, lang);
+}
+
+export async function POST(request: NextRequest) {
+  try {
+    const body = await request.json();
+    return handleTts(body.text, body.lang || "vi");
+  } catch (err: any) {
+    return NextResponse.json({ error: err?.message || "Invalid JSON" }, { status: 400 });
+  }
+}
+

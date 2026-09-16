@@ -187,13 +187,23 @@ export default function VisualItineraryV2(props: VisualItineraryV2Props) {
   const suggestDineDishes = activeDetailSlot?.restaurant?.taste || activeDetailSlot?.place?.restaurants?.[0]?.taste || activeDetailSlot?.place?.restaurants?.[0]?.note || "Gà đồi, rau su su, cá suối, cơm lam...";
 
   // Script text for active detail slot
-  const activeQuoteScript = activeDetailSlot?.place?.audioScript
-    ? activeDetailSlot.place.audioScript.slice(0, 260) + "..."
+  const slotAudioVi = activeDetailSlot?.audioScript;
+  const slotAudioEn = activeDetailSlot?.audioScriptEn;
+  const placeAudioVi = activeDetailSlot?.place?.audioScript;
+  const placeAudioEn = activeDetailSlot?.place?.audioScriptEn;
+
+  const currentSlotAudio = audioLang === "en"
+    ? (slotAudioEn || slotAudioVi || placeAudioEn || placeAudioVi)
+    : (slotAudioVi || placeAudioVi);
+
+  const activeQuoteScript = currentSlotAudio
+    ? currentSlotAudio
     : activeDetailSlot?.highlightNote
     ? activeDetailSlot.highlightNote
     : `Chào mừng bạn đến với ${activeDetailSlot?.title}. Không gian thiên nhiên tươi đẹp và di sản cội nguồn sẽ mang lại trải nghiệm đáng nhớ cho hành trình.`;
 
-  const isDetailPlacePlaying = !!(activeDetailSlot?.place && speechPlaceId === activeDetailSlot.place.id && audioState === "playing");
+  const activeSlotAudioId = activeDetailSlot?.place?.id || `slot-${activeDetailSlot?.timeSlot}-${activeDetailSlot?.title}`;
+  const isDetailPlacePlaying = !!((speechPlaceId === activeSlotAudioId || (activeDetailSlot?.place && speechPlaceId === activeDetailSlot.place.id)) && audioState === "playing");
 
   const googleMapsSearchUrl = activeDetailSlot?.place
     ? `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${activeDetailSlot.place.name} ${activeDetailSlot.place.location}`)}`
@@ -816,14 +826,21 @@ export default function VisualItineraryV2(props: VisualItineraryV2Props) {
                       type="button"
                       className={`v2-listen-guide-btn ${isDetailPlacePlaying ? "is-playing" : ""}`}
                       onClick={() => {
-                        if (activeDetailSlot.place) {
+                        if (currentSlotAudio) {
+                          togglePlaceAudio({
+                            id: activeSlotAudioId,
+                            name: activeDetailSlot.title,
+                            audioScript: slotAudioVi || placeAudioVi || currentSlotAudio,
+                            audioScriptEn: slotAudioEn || placeAudioEn || currentSlotAudio,
+                          } as any);
+                        } else if (activeDetailSlot.place) {
                           togglePlaceAudio(activeDetailSlot.place);
                         } else {
                           toggleItineraryAudio();
                         }
                       }}
                     >
-                      <span>{isDetailPlacePlaying ? "⏸ Tạm dừng nghe (2:15)" : "▶ Nghe thuyết minh (2:15)"}</span>
+                      <span>{isDetailPlacePlaying ? "⏸ Tạm dừng nghe" : "▶ Nghe thuyết minh điểm này"}</span>
                     </button>
                   </div>
                 </div>

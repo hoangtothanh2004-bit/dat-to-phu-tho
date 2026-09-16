@@ -4300,6 +4300,9 @@ export default function Home() {
   const stopAllAudio = () => {
     if (htmlAudioRef.current) {
       htmlAudioRef.current.pause();
+      if (htmlAudioRef.current.src && htmlAudioRef.current.src.startsWith("blob:")) {
+        URL.revokeObjectURL(htmlAudioRef.current.src);
+      }
       htmlAudioRef.current = null;
     }
     if (typeof window !== "undefined" && "speechSynthesis" in window) {
@@ -4311,26 +4314,90 @@ export default function Home() {
     setSpeechPlaceId(null);
   };
 
-  const playSpeechText = (
+  const playSpeechText = async (
     textVi: string,
     textEn: string | undefined,
-    onStateChange?: (playing: boolean) => void
+    onStateChange?: (playing: boolean) => void,
+    placeId?: string
   ) => {
     stopAllAudio();
 
-    const textToSpeak = audioLang === "en" ? (textEn || textVi) : textVi;
+    const textToSpeak = (audioLang === "en" ? (textEn || textVi) : textVi)?.trim();
     if (!textToSpeak || typeof window === "undefined") return;
 
-    const isMaleAi =
-      selectedVoiceURI === "ai-male-north" ||
-      selectedVoiceURI.toLowerCase().includes("nam") ||
-      selectedVoiceURI.toLowerCase().includes("male");
+    const lang = audioLang === "en" ? "en" : "vi";
+    const hasBrowserLangVoice =
+      "speechSynthesis" in window &&
+      availableVoices.some((v) => v.lang.toLowerCase().startsWith(lang));
+    const isAiVoice = selectedVoiceURI.startsWith("ai-");
+    const shouldUseAiTts = isAiVoice || !hasBrowserLangVoice;
 
-    // Standard W3C Web Speech API available in all modern browsers
+    // Use high-quality natural server-side AI TTS (Google TTS) whenever AI voice is selected or no local browser voice for this language exists
+    if (shouldUseAiTts) {
+      try {
+        if (placeId) {
+          setSpeechPlaceId(placeId);
+        }
+        setAudioState("playing");
+        onStateChange?.(true);
+
+        const res = await fetch("/api/tts", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ text: textToSpeak, lang }),
+        });
+
+        if (!res.ok) throw new Error("TTS fetch failed");
+
+        const blob = await res.blob();
+        const audioUrl = URL.createObjectURL(blob);
+        const audio = new Audio(audioUrl);
+        audio.playbackRate = audioRate;
+        audio.volume = audioVolume;
+
+        audio.onplay = () => {
+          if (placeId) setSpeechPlaceId(placeId);
+          setAudioState("playing");
+          onStateChange?.(true);
+        };
+
+        audio.onended = () => {
+          if (audio.src && audio.src.startsWith("blob:")) {
+            URL.revokeObjectURL(audio.src);
+          }
+          if (htmlAudioRef.current === audio) {
+            htmlAudioRef.current = null;
+          }
+          setSpeechPlaceId(null);
+          setAudioState("idle");
+          onStateChange?.(false);
+        };
+
+        audio.onerror = () => {
+          if (audio.src && audio.src.startsWith("blob:")) {
+            URL.revokeObjectURL(audio.src);
+          }
+          if (htmlAudioRef.current === audio) {
+            htmlAudioRef.current = null;
+          }
+          setSpeechPlaceId(null);
+          setAudioState("idle");
+          onStateChange?.(false);
+        };
+
+        htmlAudioRef.current = audio;
+        await audio.play();
+        return;
+      } catch (error) {
+        console.warn("AI TTS playback failed, falling back to browser speech:", error);
+      }
+    }
+
+    // Standard W3C Web Speech API fallback for local browser voices
     if ("speechSynthesis" in window) {
       window.speechSynthesis.cancel();
 
-      // Split text into natural sentences to ensure audio doesn't stall on Chrome/Edge/Safari
+      // Split text into natural sentences
       const rawSentences = textToSpeak
         .replace(/\s+/g, " ")
         .split(/(?<=[.,!?;:\n])\s+/)
@@ -4339,50 +4406,14 @@ export default function Home() {
 
       const sentences = rawSentences.length > 0 ? rawSentences : [textToSpeak];
 
-      // Find best matching voice
       const allVoices = window.speechSynthesis.getVoices();
-      const viVoices = allVoices.filter((v) => v.lang.toLowerCase().startsWith("vi"));
-      const enVoices = allVoices.filter((v) => v.lang.toLowerCase().startsWith("en"));
-      const targetVoices = audioLang === "en" ? enVoices : viVoices;
+      const targetVoices = allVoices.filter((v) => v.lang.toLowerCase().startsWith(lang));
+      let matchedVoice = targetVoices.find((v) => v.voiceURI === selectedVoiceURI) || targetVoices[0];
 
-      let matchedVoice = targetVoices.find((v) => v.voiceURI === selectedVoiceURI);
-      const hasRealFemaleVoice = targetVoices.some(
-        (v) =>
-          v.name.toLowerCase().includes("hoaimy") ||
-          v.name.toLowerCase().includes("female") ||
-          v.name.toLowerCase().includes("nữ") ||
-          v.name.toLowerCase().includes("nu") ||
-          v.name.toLowerCase().includes("mai") ||
-          v.name.toLowerCase().includes("linh") ||
-          v.name.toLowerCase().includes("google")
-      );
-
-      if (!matchedVoice && targetVoices.length > 0) {
-        if (isMaleAi) {
-          matchedVoice =
-            targetVoices.find(
-              (v) =>
-                v.name.toLowerCase().includes("nam") ||
-                v.name.toLowerCase().includes("male") ||
-                v.name.toLowerCase().includes("an")
-            ) || targetVoices[0];
-        } else {
-          matchedVoice =
-            targetVoices.find(
-              (v) =>
-                v.name.toLowerCase().includes("hoaimy") ||
-                v.name.toLowerCase().includes("female") ||
-                v.name.toLowerCase().includes("nữ") ||
-                v.name.toLowerCase().includes("nu") ||
-                v.name.toLowerCase().includes("mai") ||
-                v.name.toLowerCase().includes("linh") ||
-                v.name.toLowerCase().includes("google") ||
-                (!v.name.toLowerCase().includes("nam") &&
-                  !v.name.toLowerCase().includes("male") &&
-                  !v.name.toLowerCase().includes("an"))
-            ) || targetVoices[0];
-        }
-      }
+      const isMaleAi =
+        selectedVoiceURI === "ai-male-north" ||
+        selectedVoiceURI.toLowerCase().includes("nam") ||
+        selectedVoiceURI.toLowerCase().includes("male");
 
       let currentIdx = 0;
       let isCancelled = false;
@@ -4392,6 +4423,7 @@ export default function Home() {
           onStateChange?.(false);
           setAudioGuidePlaying(false);
           setAudioState("idle");
+          setSpeechPlaceId(null);
           return;
         }
 
@@ -4404,18 +4436,20 @@ export default function Home() {
         utterance.lang = audioLang === "en" ? "en-US" : "vi-VN";
         utterance.volume = audioVolume;
 
-        // Tốc độ chuẩn tự nhiên (1.0x mặc định), không nhân giảm quá chậm
         if (isMaleAi) {
           utterance.rate = audioRate * 0.98;
-          utterance.pitch = 0.88; // Trầm ấm nam tính
+          utterance.pitch = 0.88;
         } else {
-          // Nếu hệ thống chỉ có giọng nam (ví dụ Windows Microsoft An), tăng pitch 1.35 để tạo âm sắc giọng nữ trong trẻo
-          utterance.pitch = hasRealFemaleVoice ? 1.05 : 1.35;
-          utterance.rate = audioRate * 1.02; // Tươi vui, tự nhiên của giọng nữ
+          utterance.pitch = 1.05;
+          utterance.rate = audioRate * 1.02;
         }
 
         utterance.onstart = () => {
-          if (idx === 0) onStateChange?.(true);
+          if (idx === 0) {
+            onStateChange?.(true);
+            setAudioState("playing");
+            if (placeId) setSpeechPlaceId(placeId);
+          }
         };
 
         utterance.onend = () => {
@@ -4427,6 +4461,7 @@ export default function Home() {
               onStateChange?.(false);
               setAudioGuidePlaying(false);
               setAudioState("idle");
+              setSpeechPlaceId(null);
             }
           }
         };
@@ -4437,12 +4472,15 @@ export default function Home() {
           onStateChange?.(false);
           setAudioGuidePlaying(false);
           setAudioState("idle");
+          setSpeechPlaceId(null);
         };
 
         speechRef.current = utterance;
         window.speechSynthesis.speak(utterance);
       };
 
+      if (placeId) setSpeechPlaceId(placeId);
+      setAudioState("playing");
       onStateChange?.(true);
       speakSentence(0);
       return;
@@ -4453,6 +4491,16 @@ export default function Home() {
 
   const toggleItineraryAudio = () => {
     if (audioGuidePlaying) {
+      if (htmlAudioRef.current && audioState === "playing") {
+        htmlAudioRef.current.pause();
+        setAudioState("paused");
+        return;
+      }
+      if (htmlAudioRef.current && audioState === "paused") {
+        htmlAudioRef.current.play();
+        setAudioState("playing");
+        return;
+      }
       stopAllAudio();
       return;
     }
@@ -4463,7 +4511,7 @@ export default function Home() {
     );
   };
 
-  const togglePlaceAudio = (place: Place) => {
+  const togglePlaceAudio = (place: Place | { id: string; name?: string; audioScript: string; audioScriptEn?: string }) => {
     if (speechPlaceId === place.id && audioState === "playing") {
       if (htmlAudioRef.current) {
         htmlAudioRef.current.pause();
@@ -4485,57 +4533,12 @@ export default function Home() {
     }
 
     stopAllAudio();
-    const textToSpeak = audioLang === "en" ? (place.audioScriptEn || place.audioScript) : place.audioScript;
-    const isAiVoice = selectedVoiceURI.startsWith("ai-");
-
-    if (isAiVoice) {
-      const lang = audioLang === "en" ? "en" : "vi";
-      const audioUrl = `/api/tts?text=${encodeURIComponent(textToSpeak)}&lang=${lang}`;
-      const audio = new Audio(audioUrl);
-      audio.playbackRate = audioRate;
-      audio.volume = audioVolume;
-
-      audio.onplay = () => {
-        setSpeechPlaceId(place.id);
-        setAudioState("playing");
-      };
-      audio.onended = () => {
-        stopAllAudio();
-      };
-      audio.onerror = () => {
-        stopAllAudio();
-      };
-
-      htmlAudioRef.current = audio;
-      setSpeechPlaceId(place.id);
-      audio.play().catch(() => {
-        stopAllAudio();
-      });
-      return;
-    }
-
-    if (typeof window === "undefined" || !("speechSynthesis" in window)) {
-      showToast("Thiết bị chưa hỗ trợ thuyết minh tự động");
-      return;
-    }
-
-    const utterance = new SpeechSynthesisUtterance(textToSpeak);
-    const matchedVoice = availableVoices.find((v) => v.voiceURI === selectedVoiceURI);
-    if (matchedVoice) utterance.voice = matchedVoice;
-
-    utterance.lang = audioLang === "vi" ? "vi-VN" : "en-US";
-    utterance.rate = audioRate;
-    utterance.pitch = 1.0;
-    utterance.volume = audioVolume;
-    utterance.onstart = () => {
-      setSpeechPlaceId(place.id);
-      setAudioState("playing");
-    };
-    utterance.onend = stopAllAudio;
-    utterance.onerror = stopAllAudio;
-    speechRef.current = utterance;
-    setSpeechPlaceId(place.id);
-    window.speechSynthesis.speak(utterance);
+    playSpeechText(
+      place.audioScript,
+      place.audioScriptEn,
+      undefined,
+      place.id
+    );
   };
 
   const handleGenerateItinerary = () => {
@@ -5816,6 +5819,27 @@ export default function Home() {
             </svg>
             {(favorites.length + savedDishes.length + savedItineraryList.length > 0) && (
               <span className="topbar__heart-badge">{favorites.length + savedDishes.length + savedItineraryList.length}</span>
+            )}
+          </button>
+
+          {/* Cart button in header */}
+          <button
+            type="button"
+            className="topbar__cart-btn"
+            onClick={() => {
+              setCartDrawerTab("cart");
+              setCartOpen(true);
+            }}
+            aria-label={t.floatingCartLabel}
+            title={`${t.floatingCartLabel} (${cartQuantity})`}
+          >
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round">
+              <circle cx="9" cy="21" r="1"></circle>
+              <circle cx="20" cy="21" r="1"></circle>
+              <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+            </svg>
+            {cartQuantity > 0 && (
+              <span className="topbar__cart-badge">{cartQuantity}</span>
             )}
           </button>
 
@@ -10776,7 +10800,7 @@ function doPost(e) {
       {/* FLOATING CART BUBBLE (BÓNG CHAT GIỎ HÀNG GÓC TRÁI - ẢNH 1) */}
       <button
         type="button"
-        className="floating-cart-bubble"
+        className={`floating-cart-bubble ${cartQuantity === 0 ? "is-empty" : ""}`}
         onClick={() => {
           setCartDrawerTab("cart");
           setCartOpen(true);
