@@ -655,9 +655,7 @@ export default function VisualItineraryV2(props: VisualItineraryV2Props) {
                       transition: "all 0.2s ease"
                     }}
                     onClick={() => {
-                      if (audioGuidePlaying) stopAllAudio();
                       setSelectedVoiceURI("ai-male-north");
-                      showToast("👔 Đã chọn: Giọng AI Nam Hà Nội (Chuẩn Studio - Trầm ấm)");
                     }}
                   >
                     <span>👔</span> Giọng Nam trầm ấm
@@ -668,7 +666,9 @@ export default function VisualItineraryV2(props: VisualItineraryV2Props) {
                       selectedVoiceURI === "ai-female-north" ||
                       (!selectedVoiceURI.toLowerCase().includes("nam") &&
                         !selectedVoiceURI.toLowerCase().includes("male") &&
-                        selectedVoiceURI !== "ai-male-north")
+                        (selectedVoiceURI.toLowerCase().includes("nữ") ||
+                          selectedVoiceURI.toLowerCase().includes("female") ||
+                          selectedVoiceURI === "ai-female-north"))
                         ? "is-active"
                         : ""
                     }`}
@@ -686,9 +686,7 @@ export default function VisualItineraryV2(props: VisualItineraryV2Props) {
                       transition: "all 0.2s ease"
                     }}
                     onClick={() => {
-                      if (audioGuidePlaying) stopAllAudio();
                       setSelectedVoiceURI("ai-female-north");
-                      showToast("🌸 Đã chọn: Giọng AI Nữ Hà Nội (Chuẩn Studio - Êm ái)");
                     }}
                   >
                     <span>🌸</span> Giọng Nữ êm dịu
@@ -704,11 +702,7 @@ export default function VisualItineraryV2(props: VisualItineraryV2Props) {
                 className="v2-voice-select"
                 value={selectedVoiceURI}
                 onChange={(e) => {
-                  const val = e.target.value;
-                  setSelectedVoiceURI(val);
-                  if (audioGuidePlaying) stopAllAudio();
-                  const found = voiceOptions.find(o => o.id === val);
-                  showToast(`✓ Đã đổi sang: ${found ? found.label : val}`);
+                  setSelectedVoiceURI(e.target.value);
                 }}
               >
                 {voiceOptions.map((opt) => (
