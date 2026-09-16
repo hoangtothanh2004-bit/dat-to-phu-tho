@@ -265,9 +265,9 @@ export const UI_TEXT = {
     viewAllBtn: "Xem tất cả →",
     selectProvinceLabel: "CHỌN KHU VỰC:",
     provAll: "Tất cả khu vực",
-    provPhuTho: "Khu vực Phú Thọ",
-    provVinhPhuc: "Khu vực Vĩnh Phúc",
-    provHoaBinh: "Khu vực Hòa Bình",
+    provPhuTho: "Khu vực Phú Thọ cũ",
+    provVinhPhuc: "Khu vực Vĩnh Phúc cũ",
+    provHoaBinh: "Khu vực Hòa Bình cũ",
     seasonLabel: "ĐI THEO MÙA",
     seasonAll: "Tất cả",
     seasonInSeason: "Đang hợp mùa",
@@ -3086,12 +3086,17 @@ export default function Home() {
     selectedVoiceURI.toLowerCase().includes("nam") ||
     selectedVoiceURI.toLowerCase().includes("male");
 
-  // Load saved voice from localStorage on mount
+  // Load saved voice and language from localStorage on mount
   useEffect(() => {
     try {
       const savedVoice = localStorage.getItem("datto_selected_voice");
       if (savedVoice) {
         setSelectedVoiceURI(savedVoice);
+      }
+      const savedLang = localStorage.getItem("datto_lang") as LanguageCode | null;
+      if (savedLang && LANGUAGES[savedLang]) {
+        setCurrentLang(savedLang);
+        setAudioLang(savedLang === "vi" ? "vi" : "en");
       }
     } catch {}
   }, []);
@@ -5914,6 +5919,43 @@ export default function Home() {
     </article>
   );
 
+  const changeLanguage = (code: LanguageCode) => {
+    stopAllAudio();
+    setCurrentLang(code);
+    const newAudioLang = code === "vi" ? "vi" : "en";
+    setAudioLang(newAudioLang);
+    if (code === "vi") {
+      const savedVoice = typeof window !== "undefined" ? localStorage.getItem("datto_selected_voice") : null;
+      if (savedVoice && savedVoice.startsWith("ai-")) {
+        setSelectedVoiceURI(savedVoice);
+      } else {
+        setSelectedVoiceURI("ai-male-north");
+      }
+    } else {
+      setSelectedVoiceURI("ai-en-us");
+    }
+    setGeneratedItinerary((prev) =>
+      buildItinerary({
+        anchorPlaceId: selectedPlaceIds[0] || targetPlaceId,
+        selectedPlaceIds,
+        district: tripDistrict !== "Tất cả" ? tripDistrict : undefined,
+        region: tripRegion !== "Tất cả" ? tripRegion : undefined,
+        durationDays: days,
+        transport,
+        budget,
+        style: interest,
+        travelers,
+        lang: code,
+      })
+    );
+    try {
+      localStorage.setItem("datto_lang", code);
+    } catch {}
+    const textObj = UI_TEXT[code] || UI_TEXT.vi;
+    const langObj = LANGUAGES[code] || LANGUAGES.vi;
+    showToast(`${textObj.toastLangChanged || "Đã chuyển ngôn ngữ:"} ${langObj.label}`);
+  };
+
   const renderFoodMarket = (dish: FoodDish, context: "search" | "region") => (
     <article className={`food-market food-market--${context}`} key={`${context}-${dish.id}`}>
       <div className="food-market__intro">
@@ -6010,25 +6052,8 @@ export default function Home() {
                     type="button"
                     className={`i18n-dropdown-item ${currentLang === code ? "is-selected" : ""}`}
                     onClick={() => {
-                      setCurrentLang(code);
-                      setAudioLang(code === "vi" ? "vi" : "en");
-                      setSelectedVoiceURI(code === "vi" ? "ai-female-north" : "ai-en-us");
+                      changeLanguage(code);
                       setLangDropdownOpen(false);
-                      setGeneratedItinerary((prev) =>
-                        buildItinerary({
-                          anchorPlaceId: selectedPlaceIds[0] || targetPlaceId,
-                          selectedPlaceIds,
-                          district: tripDistrict !== "Tất cả" ? tripDistrict : undefined,
-                          region: tripRegion !== "Tất cả" ? tripRegion : undefined,
-                          durationDays: days,
-                          transport,
-                          budget,
-                          style: interest,
-                          travelers,
-                          lang: code,
-                        })
-                      );
-                      showToast(`${UI_TEXT[code].toastLangChanged} ${LANGUAGES[code].label}`);
                     }}
                   >
                     <span>{LANGUAGES[code].flag} {LANGUAGES[code].label}</span>
@@ -6765,7 +6790,7 @@ export default function Home() {
             {!queryClean && (
               <div className="food-page-tabs" role="tablist" aria-label="Chọn tỉnh ẩm thực">
                 {foodRegions.map((region) => {
-                  const label = (region.label || "").replace(/\s*cũ\b/gi, "").trim();
+                  const label = region.label;
                   const icon = region.id === "phu-tho-dac-san" ? "🏛️" : region.id === "vinh-phuc-dac-san" ? "🌲" : "🏔️";
                   const isAct = foodRegionId === region.id;
                   return (
@@ -7318,6 +7343,7 @@ export default function Home() {
                 handleImageError={handleImageError}
                 isBuilderCollapsed={isBuilderCollapsed}
                 toggleBuilderCollapse={() => setIsBuilderCollapsed(!isBuilderCollapsed)}
+                onLanguageChange={changeLanguage}
               />
 
               {/* QUICK TOUR TEMPLATES */}
@@ -7595,10 +7621,10 @@ export default function Home() {
                       setPosition({ lat: 21.3215, lng: 105.3926 });
                       setServiceProvinceFilter("Phú Thọ");
                       setLocationStatus("success");
-                      showToast(isEn ? "Set location: Viet Tri (Phu Tho)" : "Đã chọn vị trí: TP. Việt Trì (Phú Thọ)");
+                      showToast(isEn ? "Set location: Viet Tri (Phu Tho)" : "Đã chọn vị trí: TP. Việt Trì (PT cũ)");
                     }}
                   >
-                    📍 Việt Trì
+                    📍 Việt Trì (PT cũ)
                   </button>
                   <button
                     type="button"
@@ -7607,10 +7633,10 @@ export default function Home() {
                       setPosition({ lat: 21.3150, lng: 105.5890 });
                       setServiceProvinceFilter("Vĩnh Phúc");
                       setLocationStatus("success");
-                      showToast(isEn ? "Set location: Vinh Yen (Vinh Phuc)" : "Đã chọn vị trí: TP. Vĩnh Yên (Vĩnh Phúc)");
+                      showToast(isEn ? "Set location: Vinh Yen (Vinh Phuc)" : "Đã chọn vị trí: TP. Vĩnh Yên (VP cũ)");
                     }}
                   >
-                    📍 Vĩnh Yên
+                    📍 Vĩnh Yên (VP cũ)
                   </button>
                   <button
                     type="button"
@@ -7619,10 +7645,10 @@ export default function Home() {
                       setPosition({ lat: 20.8140, lng: 105.3380 });
                       setServiceProvinceFilter("Hòa Bình");
                       setLocationStatus("success");
-                      showToast(isEn ? "Set location: Hoa Binh City" : "Đã chọn vị trí: TP. Hòa Bình");
+                      showToast(isEn ? "Set location: Hoa Binh City" : "Đã chọn vị trí: TP. Hòa Bình (HB cũ)");
                     }}
                   >
-                    📍 TP. Hòa Bình
+                    📍 TP. Hòa Bình (HB cũ)
                   </button>
                 </div>
               </div>
@@ -8031,12 +8057,22 @@ export default function Home() {
 
       {/* SITE FOOTER */}
       <footer className="site-footer">
-        <div className="brand brand--footer" style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+        <div className="brand brand--footer" style={{ display: "inline-flex", alignItems: "center", gap: "12px", justifyContent: "center", margin: "0 auto 12px", textDecoration: "none" }}>
           <img
-            src="/images/logo-dat-to.png"
-            alt="Đất Tổ - Trợ lý du lịch thông minh"
-            style={{ height: "50px", width: "auto", objectFit: "contain" }}
+            src="/images/logo-emblem.png"
+            alt="Đất Tổ"
+            style={{ height: "48px", width: "auto", borderRadius: "12px", boxShadow: "0 2px 8px rgba(0,0,0,0.08)", flexShrink: 0 }}
           />
+          <div style={{ display: "flex", flexDirection: "column", textAlign: "left" }}>
+            <div style={{ fontSize: "24px", fontWeight: 900, lineHeight: 1, letterSpacing: "0.5px" }}>
+              <span style={{ color: "#0d5c3a" }}>ĐẤT </span>
+              <span style={{ color: "#d4960b" }}>TỔ</span>
+            </div>
+            <div style={{ height: "2px", background: "#d4960b", margin: "4px 0 3px", width: "100%", borderRadius: "1px" }} />
+            <span style={{ fontSize: "9.5px", fontWeight: 800, color: "#0d5c3a", letterSpacing: "1.2px", textTransform: "uppercase" }}>
+              TRỢ LÝ DU LỊCH THÔNG MINH
+            </span>
+          </div>
         </div>
         <p>{t.footerDesc}</p>
         <span>{t.footerLink}</span>
@@ -8124,25 +8160,15 @@ export default function Home() {
                     <div className="audio-lang-switcher" role="group" aria-label={t.audioVoiceLabel}>
                       <button
                         type="button"
-                        className={`audio-lang-btn ${audioLang === "vi" ? "is-active" : ""}`}
-                        onClick={() => {
-                          stopAllAudio();
-                          setAudioLang("vi");
-                          if (!selectedVoiceURI.startsWith("ai-")) {
-                            setSelectedVoiceURI("ai-male-north");
-                          }
-                        }}
+                        className={`audio-lang-btn ${currentLang === "vi" ? "is-active" : ""}`}
+                        onClick={() => changeLanguage("vi")}
                       >
                         🇻🇳 Việt
                       </button>
                       <button
                         type="button"
-                        className={`audio-lang-btn ${audioLang === "en" ? "is-active" : ""}`}
-                        onClick={() => {
-                          stopAllAudio();
-                          setAudioLang("en");
-                          setSelectedVoiceURI("ai-en-us");
-                        }}
+                        className={`audio-lang-btn ${currentLang === "en" ? "is-active" : ""}`}
+                        onClick={() => changeLanguage("en")}
                       >
                         🇬🇧 Eng
                       </button>

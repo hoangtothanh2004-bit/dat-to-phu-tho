@@ -40,6 +40,7 @@ export type VisualItineraryV2Props = {
   handleImageError: (e: React.SyntheticEvent<HTMLImageElement, Event>) => void;
   isBuilderCollapsed?: boolean;
   toggleBuilderCollapse?: () => void;
+  onLanguageChange?: (lang: LanguageCode) => void;
 };
 
 function getSlotImage(slot: ItinerarySlot): string {
@@ -71,12 +72,9 @@ function getSlotCategoryTag(slot: ItinerarySlot): { label: string; modifier: str
 }
 
 function getSlotLocationText(slot: ItinerarySlot): string {
-  if (slot.place?.highlights && slot.place.highlights.length > 0) {
-    return slot.place.highlights.slice(0, 3).join(" · ");
-  }
   if (slot.place?.location) return slot.place.location;
-  if (slot.restaurant?.address) return slot.restaurant.address.split(",")[0].trim();
-  if (slot.stay?.address) return slot.stay.address.split(",")[0].trim();
+  if (slot.restaurant?.address) return slot.restaurant.address.split(",").slice(0, 2).join(", ").trim();
+  if (slot.stay?.address) return slot.stay.address.split(",").slice(0, 2).join(", ").trim();
   if (slot.place?.district) return `${slot.place.district}, ${slot.place.region}`;
   return "Điểm đến trong lịch trình";
 }
@@ -127,6 +125,7 @@ export default function VisualItineraryV2(props: VisualItineraryV2Props) {
     handleImageError,
     isBuilderCollapsed = true,
     toggleBuilderCollapse,
+    onLanguageChange,
   } = props;
 
   const [activeItineraryDay, setActiveItineraryDay] = useState<number>(1);
@@ -276,12 +275,13 @@ export default function VisualItineraryV2(props: VisualItineraryV2Props) {
             <div className="v2-audio-lang-switcher" role="group" aria-label="Chọn ngôn ngữ thuyết minh">
               <button
                 type="button"
-                className={`v2-lang-pill ${audioLang === "vi" ? "is-active" : ""}`}
+                className={`v2-lang-pill ${currentLang === "vi" ? "is-active" : ""}`}
                 onClick={() => {
-                  stopAllAudio();
-                  setAudioLang("vi");
-                  if (!selectedVoiceURI.startsWith("ai-")) {
-                    setSelectedVoiceURI("ai-male-north");
+                  if (onLanguageChange) {
+                    onLanguageChange("vi");
+                  } else {
+                    stopAllAudio();
+                    setAudioLang("vi");
                   }
                 }}
               >
@@ -289,11 +289,15 @@ export default function VisualItineraryV2(props: VisualItineraryV2Props) {
               </button>
               <button
                 type="button"
-                className={`v2-lang-pill ${audioLang === "en" ? "is-active" : ""}`}
+                className={`v2-lang-pill ${currentLang === "en" ? "is-active" : ""}`}
                 onClick={() => {
-                  stopAllAudio();
-                  setAudioLang("en");
-                  setSelectedVoiceURI("ai-en-us");
+                  if (onLanguageChange) {
+                    onLanguageChange("en");
+                  } else {
+                    stopAllAudio();
+                    setAudioLang("en");
+                    setSelectedVoiceURI("ai-en-us");
+                  }
                 }}
               >
                 🇬🇧 English

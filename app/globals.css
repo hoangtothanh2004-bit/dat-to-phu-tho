@@ -9115,25 +9115,26 @@ h3,
 
 /* Left Timeline Cards */
 .v2-card__location {
-  font-size: 12.5px;
+  font-size: 13px;
   color: #475569;
   display: flex;
-  align-items: center;
-  gap: 5px;
-  line-height: 1.35;
+  align-items: flex-start;
+  gap: 6px;
+  line-height: 1.45;
   margin-top: 2px;
 }
 .v2-loc-pin {
   color: #0d5c46;
   font-size: 13px;
   flex-shrink: 0;
+  margin-top: 1px;
 }
 .v2-loc-text {
   font-weight: 600;
   color: #334155;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  white-space: normal;
+  word-break: break-word;
+  line-height: 1.4;
 }
 
 .v2-card__meta-strip {
