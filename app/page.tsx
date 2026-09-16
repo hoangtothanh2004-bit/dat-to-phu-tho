@@ -292,8 +292,8 @@ export const UI_TEXT = {
     routeSummary1: "⌁ Tuyến liên kết thuận tiện đường sá",
     routeSummary2: "Chi phí rõ ràng theo từng ngày",
     foodKicker: "BẢN ĐỒ ẨM THỰC ĐẶC SẢN",
-    foodTitle1: "Mỗi vùng đất,",
-    foodTitle2: "một phong vị riêng.",
+    foodTitle1: "Khám phá",
+    foodTitle2: "trọn vẹn hương vị quê hương.",
     foodDesc: "Thưởng thức tinh hoa ẩm thực bản địa theo từng cung đường: cá lăng Đất Tổ, thịt chua Thanh Sơn, ngọn su su Tam Đảo, cỗ lá lợn mán Mai Châu.",
     foodSaveBtn: "♡ Lưu món ăn",
     foodSavedBtn: "♥ Đã lưu món",
@@ -6843,7 +6843,7 @@ export default function Home() {
         const allDishes = foodRegions.flatMap((r) => r.dishes);
         const queryClean = foodSearchQuery.trim().toLowerCase();
 
-        const filteredDishes = (queryClean ? allDishes : currentRegion.dishes).filter((food) => {
+        const filteredDishes = allDishes.filter((food) => {
           // Season filter
           if (foodSeasonFilter === "Đang hợp mùa") {
             const s = food.season.toLowerCase();
@@ -6886,40 +6886,24 @@ export default function Home() {
             <div className="food-hero-card">
               <div className="food-hero-card__content">
                 <div className="food-hero-card__badge">
-                  <span>🍲 {txt({ vi: "TINH HOA ẨM THỰC ĐẤT TỔ & OCOP 3 VÙNG", en: "HERITAGE GASTRONOMY & CERTIFIED OCOP", zh: "祖地风味精粹与三大名区认证特产", ko: "조상의 땅 미식 정수 & 3대 지역 공인 OCOP", ja: "祖先の地の食文化遺産＆公認特産品" })}</span>
+                  <span>🍲 {txt({ vi: "TINH HOA ẨM THỰC ĐẤT TỔ", en: "HERITAGE GASTRONOMY OF ANCESTRAL LAND", zh: "祖地风味精粹", ko: "조상의 땅 미식 정수", ja: "祖先の地の食文化遺産" })}</span>
                 </div>
                 <h1 className="food-hero-card__title">
                   {t.foodTitle1} <em>{t.foodTitle2}</em>
                 </h1>
                 <p className="food-hero-card__desc">{t.foodDesc}</p>
-                <div className="food-hero-card__stats">
-                  <span className="food-stat-chip">🏛️ Phú Thọ</span>
-                  <span className="food-stat-chip">🌲 Vĩnh Phúc</span>
-                  <span className="food-stat-chip">🏔️ Hòa Bình</span>
-                  <span className="food-stat-chip">🛒 Đặt mua OCOP chính gốc giao tận nơi</span>
-                </div>
               </div>
 
               <div className="food-hero-card__media">
                 <div className="food-hero-card__thumb-frame">
                   <img
-                    src={
-                      foodRegionId === "vinh-phuc-dac-san"
-                        ? "/images/food/su-su-tam-dao.jpg"
-                        : foodRegionId === "hoa-binh-dac-san"
-                        ? "/images/food/co-la-lon-man.jpg"
-                        : "/images/food/thit-chua-tf.jpg"
-                    }
+                    src="/images/food/thit-chua-tf.jpg"
                     alt="Đặc sản tinh hoa ẩm thực"
                     onError={handleImageError}
                   />
                 </div>
                 <span className="food-hero-card__caption">
-                  {foodRegionId === "vinh-phuc-dac-san"
-                    ? "🌲 Đặc sản: Ngọn su su Tam Đảo tươi xanh"
-                    : foodRegionId === "hoa-binh-dac-san"
-                    ? "🏔️ Đặc sản: Cỗ lá lợn mán Mai Châu"
-                    : "🏛️ Đặc sản: Thịt chua Thanh Sơn Đất Tổ"}
+                  🏛️ Tinh hoa ẩm thực Đất Tổ trứ danh
                 </span>
               </div>
             </div>
@@ -6973,37 +6957,9 @@ export default function Home() {
               </div>
             </div>
 
-            {/* REGION SELECTION TABS */}
-            {!queryClean && (
-              <div className="food-page-tabs" role="tablist" aria-label="Chọn tỉnh ẩm thực">
-                {foodRegions.map((region) => {
-                  const label = region.label;
-                  const icon = region.id === "phu-tho-dac-san" ? "🏛️" : region.id === "vinh-phuc-dac-san" ? "🌲" : "🏔️";
-                  const isAct = foodRegionId === region.id;
-                  return (
-                    <button
-                      key={region.id}
-                      role="tab"
-                      aria-selected={isAct}
-                      className={`food-page-tab-btn ${isAct ? "is-active" : ""}`}
-                      onClick={() => setFoodRegionId(region.id)}
-                    >
-                      <span>{icon}</span>
-                      <span>{label}</span>
-                      <span className="food-page-tab-count">{region.dishes.length}</span>
-                    </button>
-                  );
-                })}
-              </div>
-            )}
-
             {/* DEDICATED FULL-WIDTH BROWSER */}
             <div className="food-page-browser">
-              {!queryClean && (
-                <div className="food-region-note">
-                  <strong>✦ {currentRegion.label}:</strong> {currentRegion.subtitle}
-                </div>
-              )}
+
 
               {filteredDishes.length === 0 ? (
                 <div className="food-empty-search">
@@ -7153,7 +7109,7 @@ export default function Home() {
                   }}
                   title="Tải ngay lịch trình 2N1Đ chi tiết từ file 'lịch trình du lịch.docx'"
                 >
-                  <span>⭐ Lịch trình chuẩn 2N1Đ (theo tài liệu)</span>
+                  <span>⭐ Lịch trình chuẩn 2N1Đ</span>
                 </button>
               </div>
             </div>

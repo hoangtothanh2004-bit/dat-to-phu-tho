@@ -666,7 +666,7 @@ export function getOfficialDocxItinerary(lang: string = "vi"): GeneratedItinerar
     {
       period: "Sáng",
       timeSlot: "07:30",
-      title: "Trung tâm Việt Trì",
+      title: "Xuất phát từ trung tâm Việt Trì",
       type: "travel",
       image: "/images/places/viet-tri.jpg",
       activity: "Đoàn tập trung tại trung tâm thành phố Việt Trì, khởi hành hướng về Khu di tích lịch sử Quốc gia đặc biệt Đền Hùng.",
@@ -1079,7 +1079,7 @@ export function getOfficialDocxItinerary(lang: string = "vi"): GeneratedItinerar
     {
       period: "Chiều",
       timeSlot: "16:00 – 17:30",
-      title: "Di chuyển Tam Đảo → TP. Việt Trì (~75 km)",
+      title: "Di chuyển Tam Đảo → Việt Trì (~75 km)",
       type: "travel",
       activity: "Xe khởi hành xuống đèo Tam Đảo, rẽ vào Quốc lộ 2B nối sang Quốc lộ 2, qua cầu Hạc Trì / cầu Việt Trì trở về trung tâm thành phố ngã ba sông.",
       transportAdvice: "Cự ly ~75 km (~1 giờ 30 phút). Đi xe êm ái, ngắm hoàng hôn rực rỡ buông xuống đôi bờ sông Hồng, sông Lô.",
@@ -1092,7 +1092,7 @@ export function getOfficialDocxItinerary(lang: string = "vi"): GeneratedItinerar
     {
       period: "Chiều",
       timeSlot: "~17:30",
-      title: "Kết thúc hành trình tại TP. Việt Trì",
+      title: "Kết thúc hành trình tại Việt Trì",
       type: "visit",
       activity: "Đoàn về đến trung tâm thành phố Việt Trì an toàn. Hướng dẫn viên cảm ơn và chia tay quý khách, kết thúc chuyến du lịch 2 ngày 1 đêm 'Việt Trì – Đền Hùng – Thanh Thủy – Tam Đảo' thành công tốt đẹp, đầy ắp kỷ niệm đáng nhớ.",
       transportAdvice: "Kết thúc tour tại điểm đón ban đầu.",
@@ -1138,7 +1138,7 @@ export function getOfficialDocxItinerary(lang: string = "vi"): GeneratedItinerar
     ? "2일차: 땀다오 운해의 낙원 탐방 & 비엣찌 귀환"
     : isJaLang
     ? "2日目：霧の高原タムダオ散策＆ヴィエッチー帰還"
-    : "Thiên đường mây Tam Đảo & Trở về TP. Việt Trì";
+    : "Thiên đường mây Tam Đảo & Trở về Việt Trì";
   const day2Summary = isEnLang
     ? "Morning pass drive to misty Tam Dao, Central Square, French stone church, chayote lunch, mountain cafe above the clouds, local market shopping and scenic drive back to Viet Tri."
     : isZhLang
