@@ -3081,11 +3081,36 @@ export default function Home() {
   const currentSentenceIdxRef = useRef(0);
 
   // Synchronize playback speed immediately across HTML5 Audio and active SpeechSynthesis
+  const isMaleSelected =
+    selectedVoiceURI === "ai-male-north" ||
+    selectedVoiceURI.toLowerCase().includes("nam") ||
+    selectedVoiceURI.toLowerCase().includes("male");
+
+  // Load saved voice from localStorage on mount
+  useEffect(() => {
+    try {
+      const savedVoice = localStorage.getItem("datto_selected_voice");
+      if (savedVoice) {
+        setSelectedVoiceURI(savedVoice);
+      }
+    } catch {}
+  }, []);
+
+  // Save selected voice to localStorage
+  useEffect(() => {
+    try {
+      if (selectedVoiceURI) {
+        localStorage.setItem("datto_selected_voice", selectedVoiceURI);
+      }
+    } catch {}
+  }, [selectedVoiceURI]);
+
   useEffect(() => {
     audioRateRef.current = audioRate;
     if (htmlAudioRef.current) {
-      htmlAudioRef.current.playbackRate = audioRate;
-      htmlAudioRef.current.defaultPlaybackRate = audioRate;
+      const effectiveRate = isMaleSelected ? 0.81 * audioRate : audioRate;
+      htmlAudioRef.current.playbackRate = effectiveRate;
+      htmlAudioRef.current.defaultPlaybackRate = effectiveRate;
     }
     if (
       typeof window !== "undefined" &&
@@ -3098,7 +3123,7 @@ export default function Home() {
       window.speechSynthesis.cancel();
       speakSentenceRef.current(currentSentenceIdxRef.current);
     }
-  }, [audioRate]);
+  }, [audioRate, isMaleSelected]);
 
   // Synchronize volume across HTML5 Audio and SpeechSynthesis
   useEffect(() => {
@@ -4450,10 +4475,31 @@ export default function Home() {
       ? window.speechSynthesis.getVoices()
       : availableVoices;
     const targetVoices = allVoices.filter((v) => v.lang.toLowerCase().startsWith(lang));
-    const hasBrowserLangVoice = "speechSynthesis" in window && targetVoices.length > 0;
 
-    // Prioritize natural browser SpeechSynthesis with authentic female voice & real-time pitch/speed control
-    if (hasBrowserLangVoice) {
+    const isMaleAi =
+      selectedVoiceURI === "ai-male-north" ||
+      selectedVoiceURI.toLowerCase().includes("nam") ||
+      selectedVoiceURI.toLowerCase().includes("male");
+
+    // Check if browser has an authentic native male voice (e.g., NamMinh on Edge, An on iOS/macOS)
+    const hasRealMaleBrowserVoice = targetVoices.some((v) =>
+      /nam|minh|male|an\b/i.test(v.name)
+    );
+
+    // Only use browser SpeechSynthesis if:
+    // 1. Language is Vietnamese and user chose Male AND browser actually has a real male voice
+    // 2. Or language is Vietnamese and user chose Female and browser has Vietnamese voices
+    // 3. Or language is English and browser has English voices
+    const canUseSpeechSynthesis =
+      "speechSynthesis" in window &&
+      (
+        (lang === "vi" && isMaleAi && hasRealMaleBrowserVoice) ||
+        (lang === "vi" && !isMaleAi && targetVoices.length > 0) ||
+        (lang === "en" && targetVoices.length > 0)
+      );
+
+    // If browser has a genuine voice for this selection, synthesize directly with natural pitch
+    if (canUseSpeechSynthesis) {
       window.speechSynthesis.cancel();
 
       // Split text into natural sentences
@@ -4464,11 +4510,6 @@ export default function Home() {
         .filter(Boolean);
 
       const sentences = rawSentences.length > 0 ? rawSentences : [textToSpeak];
-
-      const isMaleAi =
-        selectedVoiceURI === "ai-male-north" ||
-        selectedVoiceURI.toLowerCase().includes("nam") ||
-        selectedVoiceURI.toLowerCase().includes("male");
 
       let matchedVoice: SpeechSynthesisVoice | undefined;
       if (selectedVoiceURI === "ai-female-north" || (!isMaleAi && selectedVoiceURI.startsWith("ai-"))) {
@@ -4509,10 +4550,10 @@ export default function Home() {
         utterance.volume = audioVolumeRef.current;
 
         if (isMaleAi) {
-          utterance.rate = audioRateRef.current * 0.96;
-          utterance.pitch = 0.85;
+          utterance.rate = audioRateRef.current * 0.95;
+          utterance.pitch = 0.88;
         } else {
-          utterance.pitch = 1.15;
+          utterance.pitch = 1.05;
           utterance.rate = audioRateRef.current * 1.0;
         }
 
@@ -4564,7 +4605,7 @@ export default function Home() {
       return;
     }
 
-    // Fallback: If browser lacks Vietnamese synthesis voices, use server-side AI TTS (/api/tts)
+    // High-fidelity AI Audio Player via /api/tts with masculine baritone acoustic processing
     try {
       if (placeId) {
         setSpeechPlaceId(placeId);
@@ -4575,7 +4616,13 @@ export default function Home() {
       const res = await fetch("/api/tts", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ text: textToSpeak, lang, rate: audioRateRef.current }),
+        body: JSON.stringify({
+          text: textToSpeak,
+          lang,
+          gender: isMaleAi ? "male" : "female",
+          voice: selectedVoiceURI,
+          rate: audioRateRef.current,
+        }),
       });
 
       if (!res.ok) throw new Error("TTS fetch failed");
@@ -4583,17 +4630,72 @@ export default function Home() {
       const blob = await res.blob();
       const audioUrl = URL.createObjectURL(blob);
       const audio = new Audio(audioUrl);
-      audio.defaultPlaybackRate = audioRateRef.current;
-      audio.playbackRate = audioRateRef.current;
+      
+      const malePlaybackRate = 0.81 * audioRateRef.current;
+      const effectiveRate = isMaleAi ? malePlaybackRate : audioRateRef.current;
+
+      if (isMaleAi) {
+        // Disabling pitch preservation drops the vocal pitch down ~3.6 semitones into a deep, warm baritone register (~175Hz)
+        (audio as any).preservesPitch = false;
+        (audio as any).mozPreservesPitch = false;
+        (audio as any).webkitPreservesPitch = false;
+      } else {
+        (audio as any).preservesPitch = true;
+      }
+
+      audio.defaultPlaybackRate = effectiveRate;
+      audio.playbackRate = effectiveRate;
       audio.volume = audioVolumeRef.current;
 
       audio.onloadedmetadata = () => {
-        audio.playbackRate = audioRateRef.current;
-        audio.defaultPlaybackRate = audioRateRef.current;
+        if (isMaleAi) {
+          (audio as any).preservesPitch = false;
+          (audio as any).mozPreservesPitch = false;
+          (audio as any).webkitPreservesPitch = false;
+        }
+        audio.playbackRate = effectiveRate;
+        audio.defaultPlaybackRate = effectiveRate;
       };
 
+      // Connect to Web Audio API for warm acoustic resonant filtering for male voice
+      if (isMaleAi && typeof window !== "undefined") {
+        try {
+          const AudioContextClass = window.AudioContext || (window as any).webkitAudioContext;
+          if (AudioContextClass) {
+            const ctx = new AudioContextClass();
+            if (ctx.state === "suspended") {
+              ctx.resume().catch(() => {});
+            }
+            const source = ctx.createMediaElementSource(audio);
+            
+            // Low-shelf bass boost at 250Hz (+6dB) for warm chest resonance
+            const bass = ctx.createBiquadFilter();
+            bass.type = "lowshelf";
+            bass.frequency.value = 250;
+            bass.gain.value = 6.0;
+
+            // High-shelf cut at 3500Hz (-4dB) to soften high female harmonics
+            const treble = ctx.createBiquadFilter();
+            treble.type = "highshelf";
+            treble.frequency.value = 3500;
+            treble.gain.value = -4.0;
+
+            source.connect(bass);
+            bass.connect(treble);
+            treble.connect(ctx.destination);
+          }
+        } catch {
+          // If AudioContext is blocked by browser policy, audio plays normally with preservesPitch=false
+        }
+      }
+
       audio.onplay = () => {
-        audio.playbackRate = audioRateRef.current;
+        if (isMaleAi) {
+          (audio as any).preservesPitch = false;
+          (audio as any).mozPreservesPitch = false;
+          (audio as any).webkitPreservesPitch = false;
+        }
+        audio.playbackRate = effectiveRate;
         if (placeId) setSpeechPlaceId(placeId);
         setAudioState("playing");
         onStateChange?.(true);
@@ -8026,7 +8128,9 @@ export default function Home() {
                         onClick={() => {
                           stopAllAudio();
                           setAudioLang("vi");
-                          setSelectedVoiceURI("ai-female-north");
+                          if (!selectedVoiceURI.startsWith("ai-")) {
+                            setSelectedVoiceURI("ai-male-north");
+                          }
                         }}
                       >
                         🇻🇳 Việt
@@ -8046,6 +8150,74 @@ export default function Home() {
                   </div>
 
                   <div className="audio-settings-strip" style={{ marginTop: "10px", padding: "8px 12px", background: "var(--surface)", borderRadius: "var(--radius-sm)" }}>
+                    {audioLang === "vi" && (
+                      <div style={{ display: "flex", gap: "8px", marginBottom: "8px" }}>
+                        <button
+                          type="button"
+                          style={{
+                            flex: 1,
+                            padding: "6px 10px",
+                            fontSize: "12px",
+                            fontWeight: 600,
+                            borderRadius: "6px",
+                            border: "1px solid currentColor",
+                            cursor: "pointer",
+                            background:
+                              selectedVoiceURI === "ai-male-north" ||
+                              selectedVoiceURI.toLowerCase().includes("nam") ||
+                              selectedVoiceURI.toLowerCase().includes("male")
+                                ? "var(--primary)"
+                                : "transparent",
+                            color:
+                              selectedVoiceURI === "ai-male-north" ||
+                              selectedVoiceURI.toLowerCase().includes("nam") ||
+                              selectedVoiceURI.toLowerCase().includes("male")
+                                ? "#fff"
+                                : "inherit",
+                          }}
+                          onClick={() => {
+                            if (speechPlaceId) stopAllAudio();
+                            setSelectedVoiceURI("ai-male-north");
+                            showToast("👔 Đã chọn: Giọng AI Nam Hà Nội (Chuẩn Studio - Trầm ấm)");
+                          }}
+                        >
+                          👔 Nam trầm ấm
+                        </button>
+                        <button
+                          type="button"
+                          style={{
+                            flex: 1,
+                            padding: "6px 10px",
+                            fontSize: "12px",
+                            fontWeight: 600,
+                            borderRadius: "6px",
+                            border: "1px solid currentColor",
+                            cursor: "pointer",
+                            background:
+                              selectedVoiceURI === "ai-female-north" ||
+                              (!selectedVoiceURI.toLowerCase().includes("nam") &&
+                                !selectedVoiceURI.toLowerCase().includes("male") &&
+                                selectedVoiceURI !== "ai-male-north")
+                                ? "var(--primary)"
+                                : "transparent",
+                            color:
+                              selectedVoiceURI === "ai-female-north" ||
+                              (!selectedVoiceURI.toLowerCase().includes("nam") &&
+                                !selectedVoiceURI.toLowerCase().includes("male") &&
+                                selectedVoiceURI !== "ai-male-north")
+                                ? "#fff"
+                                : "inherit",
+                          }}
+                          onClick={() => {
+                            if (speechPlaceId) stopAllAudio();
+                            setSelectedVoiceURI("ai-female-north");
+                            showToast("🌸 Đã chọn: Giọng AI Nữ Hà Nội (Chuẩn Studio - Êm ái)");
+                          }}
+                        >
+                          🌸 Nữ êm dịu
+                        </button>
+                      </div>
+                    )}
                     <div className="audio-voice-control">
                       <label htmlFor="modal-voice-select">{t.audioVoiceLabel}</label>
                       <select
@@ -8053,8 +8225,11 @@ export default function Home() {
                         className="audio-voice-select"
                         value={selectedVoiceURI}
                         onChange={(e) => {
-                          setSelectedVoiceURI(e.target.value);
+                          const val = e.target.value;
+                          setSelectedVoiceURI(val);
                           if (speechPlaceId) stopAllAudio();
+                          const found = voiceOptions.find(o => o.id === val);
+                          showToast(`✓ Đã đổi sang: ${found ? found.label : val}`);
                         }}
                       >
                         {voiceOptions.map((opt) => (

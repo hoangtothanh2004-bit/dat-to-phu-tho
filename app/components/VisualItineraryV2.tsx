@@ -280,7 +280,9 @@ export default function VisualItineraryV2(props: VisualItineraryV2Props) {
                 onClick={() => {
                   stopAllAudio();
                   setAudioLang("vi");
-                  setSelectedVoiceURI("ai-female-north");
+                  if (!selectedVoiceURI.startsWith("ai-")) {
+                    setSelectedVoiceURI("ai-male-north");
+                  }
                 }}
               >
                 🇻🇳 Tiếng Việt
@@ -300,15 +302,95 @@ export default function VisualItineraryV2(props: VisualItineraryV2Props) {
           </div>
 
           <div className="v2-audio-settings-body">
+            {/* Quick Gender Selection Buttons for Vietnamese */}
+            {audioLang === "vi" && (
+              <div className="v2-audio-control-item" style={{ gridColumn: "1 / -1", marginBottom: "4px" }}>
+                <label style={{ marginBottom: "6px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                  <span>Chọn chất giọng AI:</span>
+                  <span style={{ fontSize: "12px", color: "var(--primary)", fontWeight: 700 }}>
+                    {selectedVoiceURI === "ai-male-north" || selectedVoiceURI.toLowerCase().includes("nam") || selectedVoiceURI.toLowerCase().includes("male")
+                      ? "👔 Đang chọn: Nam trầm ấm"
+                      : "🌸 Đang chọn: Nữ êm dịu"}
+                  </span>
+                </label>
+                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "8px" }}>
+                  <button
+                    type="button"
+                    className={`v2-rate-pill ${
+                      selectedVoiceURI === "ai-male-north" ||
+                      selectedVoiceURI.toLowerCase().includes("nam") ||
+                      selectedVoiceURI.toLowerCase().includes("male")
+                        ? "is-active"
+                        : ""
+                    }`}
+                    style={{
+                      padding: "9px 12px",
+                      borderRadius: "8px",
+                      fontWeight: 600,
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      gap: "6px",
+                      fontSize: "13px",
+                      cursor: "pointer",
+                      border: "1.5px solid currentColor",
+                      transition: "all 0.2s ease"
+                    }}
+                    onClick={() => {
+                      if (audioGuidePlaying) stopAllAudio();
+                      setSelectedVoiceURI("ai-male-north");
+                      showToast("👔 Đã chọn: Giọng AI Nam Hà Nội (Chuẩn Studio - Trầm ấm)");
+                    }}
+                  >
+                    <span>👔</span> Giọng Nam trầm ấm
+                  </button>
+                  <button
+                    type="button"
+                    className={`v2-rate-pill ${
+                      selectedVoiceURI === "ai-female-north" ||
+                      (!selectedVoiceURI.toLowerCase().includes("nam") &&
+                        !selectedVoiceURI.toLowerCase().includes("male") &&
+                        selectedVoiceURI !== "ai-male-north")
+                        ? "is-active"
+                        : ""
+                    }`}
+                    style={{
+                      padding: "9px 12px",
+                      borderRadius: "8px",
+                      fontWeight: 600,
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      gap: "6px",
+                      fontSize: "13px",
+                      cursor: "pointer",
+                      border: "1.5px solid currentColor",
+                      transition: "all 0.2s ease"
+                    }}
+                    onClick={() => {
+                      if (audioGuidePlaying) stopAllAudio();
+                      setSelectedVoiceURI("ai-female-north");
+                      showToast("🌸 Đã chọn: Giọng AI Nữ Hà Nội (Chuẩn Studio - Êm ái)");
+                    }}
+                  >
+                    <span>🌸</span> Giọng Nữ êm dịu
+                  </button>
+                </div>
+              </div>
+            )}
+
             <div className="v2-audio-control-item v2-audio-control-item--voice">
-              <label htmlFor="voice-select">Giọng đọc</label>
+              <label htmlFor="voice-select">Danh sách giọng chi tiết</label>
               <select
                 id="voice-select"
                 className="v2-voice-select"
                 value={selectedVoiceURI}
                 onChange={(e) => {
-                  setSelectedVoiceURI(e.target.value);
+                  const val = e.target.value;
+                  setSelectedVoiceURI(val);
                   if (audioGuidePlaying) stopAllAudio();
+                  const found = voiceOptions.find(o => o.id === val);
+                  showToast(`✓ Đã đổi sang: ${found ? found.label : val}`);
                 }}
               >
                 {voiceOptions.map((opt) => (
