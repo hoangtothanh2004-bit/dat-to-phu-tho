@@ -3118,8 +3118,18 @@ export default function Home() {
 
   useEffect(() => {
     audioRateRef.current = audioRate;
+    const isMale =
+      selectedVoiceURI === "ai-male-north" ||
+      selectedVoiceURI.toLowerCase().includes("nam") ||
+      selectedVoiceURI.toLowerCase().includes("male");
     if (htmlAudioRef.current) {
-      htmlAudioRef.current.playbackRate = audioRate;
+      if (isMale) {
+        htmlAudioRef.current.preservesPitch = false;
+        htmlAudioRef.current.playbackRate = 0.82 * audioRate;
+      } else {
+        htmlAudioRef.current.preservesPitch = true;
+        htmlAudioRef.current.playbackRate = audioRate;
+      }
       htmlAudioRef.current.defaultPlaybackRate = audioRate;
     }
     if (
@@ -3133,7 +3143,7 @@ export default function Home() {
       window.speechSynthesis.cancel();
       speakSentenceRef.current(currentSentenceIdxRef.current);
     }
-  }, [audioRate]);
+  }, [audioRate, selectedVoiceURI]);
 
   // Synchronize volume across HTML5 Audio and SpeechSynthesis
   useEffect(() => {
@@ -4555,22 +4565,15 @@ export default function Home() {
       activeVoiceURI.toLowerCase().includes("nam") ||
       activeVoiceURI.toLowerCase().includes("male");
 
-    // Check if user explicitly picked a browser system voice OR browser has genuine voices
+    // Check if user explicitly picked a browser system voice
     const isExplicitBrowserVoice = !activeVoiceURI.startsWith("ai-");
-    const hasRealMaleBrowserVoice = targetVoices.some((v) =>
-      /nam|minh|male|an\b/i.test(v.name)
-    );
 
     const canUseSpeechSynthesis =
+      typeof window !== "undefined" &&
       "speechSynthesis" in window &&
-      (
-        isExplicitBrowserVoice ||
-        (lang === "vi" && isMaleAi && hasRealMaleBrowserVoice) ||
-        (lang === "vi" && !isMaleAi && targetVoices.length > 0) ||
-        (lang !== "vi" && targetVoices.length > 0)
-      );
+      targetVoices.length > 0;
 
-    // If browser has a genuine voice for this selection, synthesize directly with natural pitch
+    // If browser has voices for this selection, synthesize directly with natural pitch
     if (canUseSpeechSynthesis) {
       window.speechSynthesis.cancel();
 
@@ -4586,14 +4589,14 @@ export default function Home() {
       let matchedVoice: SpeechSynthesisVoice | undefined;
       if (isExplicitBrowserVoice) {
         matchedVoice = targetVoices.find((v) => v.voiceURI === activeVoiceURI) || targetVoices[0];
+      } else if (isMaleAi) {
+        matchedVoice =
+          targetVoices.find((v) => /nam|minh|male|an\b/i.test(v.name)) ||
+          targetVoices[0];
       } else if (activeVoiceURI === "ai-female-north" || (!isMaleAi && activeVoiceURI.startsWith("ai-"))) {
         matchedVoice =
           targetVoices.find((v) => /hoaimy|linh|mai|chi|female|nữ|tiếng việt/i.test(v.name)) ||
-          targetVoices.find((v) => !/nam|minh|male|an/i.test(v.name)) ||
-          targetVoices[0];
-      } else if (isMaleAi) {
-        matchedVoice =
-          targetVoices.find((v) => /nam|minh|male|an/i.test(v.name)) ||
+          targetVoices.find((v) => !/nam|minh|male|an\b/i.test(v.name)) ||
           targetVoices[0];
       } else {
         matchedVoice = targetVoices.find((v) => v.voiceURI === activeVoiceURI) || targetVoices[0];
@@ -4628,12 +4631,14 @@ export default function Home() {
         };
         utterance.lang = langTagMap[audioLang] || "vi-VN";
         utterance.volume = audioVolumeRef.current;
-        utterance.rate = audioRateRef.current;
 
         if (isMaleAi) {
-          utterance.pitch = 0.82;
+          const isRealMale = matchedVoice && /nam|minh|male|an\b/i.test(matchedVoice.name);
+          utterance.pitch = isRealMale ? 0.95 : 0.70;
+          utterance.rate = audioRateRef.current * (isRealMale ? 1.0 : 0.95);
         } else {
           utterance.pitch = 1.08;
+          utterance.rate = audioRateRef.current;
         }
 
         utterance.onstart = () => {
@@ -4710,20 +4715,33 @@ export default function Home() {
       const audioUrl = URL.createObjectURL(blob);
       const audio = new Audio(audioUrl);
 
-      // ALWAYS preserve pitch so speed changes (0.75x -> 2.5x) NEVER distort the speaker voice
-      audio.preservesPitch = true;
-      (audio as any).mozPreservesPitch = true;
-      (audio as any).webkitPreservesPitch = true;
-      audio.defaultPlaybackRate = audioRateRef.current;
-      audio.playbackRate = audioRateRef.current;
-      audio.volume = audioVolumeRef.current;
-
-      audio.onloadedmetadata = () => {
+      if (isMaleAi) {
+        audio.preservesPitch = false;
+        (audio as any).mozPreservesPitch = false;
+        (audio as any).webkitPreservesPitch = false;
+        audio.playbackRate = 0.82 * audioRateRef.current;
+        audio.defaultPlaybackRate = 0.82 * audioRateRef.current;
+      } else {
         audio.preservesPitch = true;
         (audio as any).mozPreservesPitch = true;
         (audio as any).webkitPreservesPitch = true;
         audio.playbackRate = audioRateRef.current;
         audio.defaultPlaybackRate = audioRateRef.current;
+      }
+      audio.volume = audioVolumeRef.current;
+
+      audio.onloadedmetadata = () => {
+        if (isMaleAi) {
+          audio.preservesPitch = false;
+          (audio as any).mozPreservesPitch = false;
+          (audio as any).webkitPreservesPitch = false;
+          audio.playbackRate = 0.82 * audioRateRef.current;
+        } else {
+          audio.preservesPitch = true;
+          (audio as any).mozPreservesPitch = true;
+          (audio as any).webkitPreservesPitch = true;
+          audio.playbackRate = audioRateRef.current;
+        }
       };
 
       // Connect to Web Audio API for warm acoustic resonant filtering for male voice
@@ -6866,18 +6884,43 @@ export default function Home() {
 
             {/* HERO BANNER */}
             <div className="food-hero-card">
-              <div className="food-hero-card__badge">
-                <span>🍲 {txt({ vi: "TINH HOA ẨM THỰC ĐẤT TỔ & OCOP 3 VÙNG", en: "HERITAGE GASTRONOMY & CERTIFIED OCOP", zh: "祖地风味精粹与三大名区认证特产", ko: "조상의 땅 미식 정수 & 3대 지역 공인 OCOP", ja: "祖先の地の食文化遺産＆公認特産品" })}</span>
+              <div className="food-hero-card__content">
+                <div className="food-hero-card__badge">
+                  <span>🍲 {txt({ vi: "TINH HOA ẨM THỰC ĐẤT TỔ & OCOP 3 VÙNG", en: "HERITAGE GASTRONOMY & CERTIFIED OCOP", zh: "祖地风味精粹与三大名区认证特产", ko: "조상의 땅 미식 정수 & 3대 지역 공인 OCOP", ja: "祖先の地の食文化遺産＆公認特産品" })}</span>
+                </div>
+                <h1 className="food-hero-card__title">
+                  {t.foodTitle1} <em>{t.foodTitle2}</em>
+                </h1>
+                <p className="food-hero-card__desc">{t.foodDesc}</p>
+                <div className="food-hero-card__stats">
+                  <span className="food-stat-chip">🏛️ Phú Thọ</span>
+                  <span className="food-stat-chip">🌲 Vĩnh Phúc</span>
+                  <span className="food-stat-chip">🏔️ Hòa Bình</span>
+                  <span className="food-stat-chip">🛒 Đặt mua OCOP chính gốc giao tận nơi</span>
+                </div>
               </div>
-              <h1 className="food-hero-card__title">
-                {t.foodTitle1} <em>{t.foodTitle2}</em>
-              </h1>
-              <p className="food-hero-card__desc">{t.foodDesc}</p>
-              <div className="food-hero-card__stats">
-                <span className="food-stat-chip">🏛️ Phú Thọ</span>
-                <span className="food-stat-chip">🌲 Vĩnh Phúc</span>
-                <span className="food-stat-chip">🏔️ Hòa Bình</span>
-                <span className="food-stat-chip">🛒 Đặt mua OCOP chính gốc giao tận nơi</span>
+
+              <div className="food-hero-card__media">
+                <div className="food-hero-card__thumb-frame">
+                  <img
+                    src={
+                      foodRegionId === "vinh-phuc-dac-san"
+                        ? "/images/food/su-su-tam-dao.jpg"
+                        : foodRegionId === "hoa-binh-dac-san"
+                        ? "/images/food/co-la-lon-man.jpg"
+                        : "/images/food/thit-chua-tf.jpg"
+                    }
+                    alt="Đặc sản tinh hoa ẩm thực"
+                    onError={handleImageError}
+                  />
+                </div>
+                <span className="food-hero-card__caption">
+                  {foodRegionId === "vinh-phuc-dac-san"
+                    ? "🌲 Đặc sản: Ngọn su su Tam Đảo tươi xanh"
+                    : foodRegionId === "hoa-binh-dac-san"
+                    ? "🏔️ Đặc sản: Cỗ lá lợn mán Mai Châu"
+                    : "🏛️ Đặc sản: Thịt chua Thanh Sơn Đất Tổ"}
+                </span>
               </div>
             </div>
 
