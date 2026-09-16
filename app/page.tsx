@@ -3064,7 +3064,7 @@ export default function Home() {
   );
 
   // Audio guide controls & voice customization (AI TTS + Browser Speech)
-  const [audioLang, setAudioLang] = useState<"vi" | "en">("vi");
+  const [audioLang, setAudioLang] = useState<LanguageCode>("vi");
   const [availableVoices, setAvailableVoices] = useState<SpeechSynthesisVoice[]>([]);
   const [selectedVoiceURI, setSelectedVoiceURI] = useState<string>("ai-male-north");
   const [audioGuidePlaying, setAudioGuidePlaying] = useState(false);
@@ -3096,7 +3096,7 @@ export default function Home() {
       const savedLang = localStorage.getItem("datto_lang") as LanguageCode | null;
       if (savedLang && LANGUAGES[savedLang]) {
         setCurrentLang(savedLang);
-        setAudioLang(savedLang === "vi" ? "vi" : "en");
+        setAudioLang(savedLang);
       }
     } catch {}
   }, []);
@@ -3199,6 +3199,30 @@ export default function Home() {
         .filter((v) => v.lang.toLowerCase().startsWith("vi"))
         .map((v) => ({ id: v.voiceURI, label: `🖥️ ${v.name} (Hệ thống)` }));
       return [...aiVoices, ...browserVoices];
+    } else if (audioLang === "zh") {
+      const aiVoices = [
+        { id: "ai-zh-cn", label: "🇨🇳 普通话女声 (Chinese Standard)" },
+      ];
+      const browserVoices = availableVoices
+        .filter((v) => v.lang.toLowerCase().startsWith("zh"))
+        .map((v) => ({ id: v.voiceURI, label: `🖥️ ${v.name} (系统)` }));
+      return [...aiVoices, ...browserVoices];
+    } else if (audioLang === "ko") {
+      const aiVoices = [
+        { id: "ai-ko-kr", label: "🇰🇷 한국어 표준 음성 (Korean Standard)" },
+      ];
+      const browserVoices = availableVoices
+        .filter((v) => v.lang.toLowerCase().startsWith("ko"))
+        .map((v) => ({ id: v.voiceURI, label: `🖥️ ${v.name} (시스템)` }));
+      return [...aiVoices, ...browserVoices];
+    } else if (audioLang === "ja") {
+      const aiVoices = [
+        { id: "ai-ja-jp", label: "🇯🇵 日本語 標準音声 (Japanese Standard)" },
+      ];
+      const browserVoices = availableVoices
+        .filter((v) => v.lang.toLowerCase().startsWith("ja"))
+        .map((v) => ({ id: v.voiceURI, label: `🖥️ ${v.name} (システム)` }));
+      return [...aiVoices, ...browserVoices];
     } else {
       const aiVoices = [
         { id: "ai-en-us", label: "🇺🇸 US Natural Female (American Standard)" },
@@ -3206,7 +3230,7 @@ export default function Home() {
       ];
       const browserVoices = availableVoices
         .filter((v) => v.lang.toLowerCase().startsWith("en"))
-        .map((v) => ({ id: v.voiceURI, label: `🖥️ ${v.name} (Hệ thống)` }));
+        .map((v) => ({ id: v.voiceURI, label: `🖥️ ${v.name} (System)` }));
       return [...aiVoices, ...browserVoices];
     }
   }, [availableVoices, audioLang]);
@@ -3492,6 +3516,10 @@ export default function Home() {
   const isEn = currentLang === "en";
   const [currencyDropdownOpen, setCurrencyDropdownOpen] = useState(false);
   const [langDropdownOpen, setLangDropdownOpen] = useState(false);
+
+  const txt = (translations: { vi: string; en: string; zh?: string; ko?: string; ja?: string }) => {
+    return translations[currentLang] || translations.en || translations.vi;
+  };
 
   // Helper to filter orders by Shopee-style statuses
   const filterOrderByStatus = (order: any, tabId: string) => {
@@ -3988,18 +4016,50 @@ export default function Home() {
         setLocationStatus("success");
         if (userPos.lat >= 21.20 && userPos.lat <= 21.65 && userPos.lng >= 105.48 && userPos.lng <= 105.80) {
           setServiceProvinceFilter("Vĩnh Phúc");
-          showToast(isEn ? "Located in Vinh Phuc: updated nearby amenities" : "Đã định vị tại Vĩnh Phúc: hiển thị tiện ích gần bạn");
+          showToast(
+            txt({
+              vi: "Đã định vị tại Vĩnh Phúc: hiển thị tiện ích gần bạn",
+              en: "Located in Vinh Phuc: updated nearby amenities",
+              zh: "已定位在永福：已更新您身边的便利设施",
+              ko: "빈푹에서 위치 확인: 주변 편의시설 업데이트됨",
+              ja: "ビンフックで位置を特定：周辺の施設を更新しました",
+            })
+          );
         } else if (userPos.lat >= 20.45 && userPos.lat <= 21.05 && userPos.lng >= 104.85 && userPos.lng <= 105.70) {
           setServiceProvinceFilter("Hòa Bình");
-          showToast(isEn ? "Located in Hoa Binh: updated nearby amenities" : "Đã định vị tại Hòa Bình: hiển thị tiện ích gần bạn");
+          showToast(
+            txt({
+              vi: "Đã định vị tại Hòa Bình: hiển thị tiện ích gần bạn",
+              en: "Located in Hoa Binh: updated nearby amenities",
+              zh: "已定位在和平：已更新您身边的便利设施",
+              ko: "호아빈에서 위치 확인: 주변 편의시설 업데이트됨",
+              ja: "ホアビンで位置を特定：周辺の施設を更新しました",
+            })
+          );
         } else {
           setServiceProvinceFilter("Phú Thọ");
-          showToast(isEn ? "Located in Phu Tho: updated nearby amenities" : "Đã định vị tại Phú Thọ: hiển thị tiện ích gần bạn");
+          showToast(
+            txt({
+              vi: "Đã định vị tại Phú Thọ: hiển thị tiện ích gần bạn",
+              en: "Located in Phu Tho: updated nearby amenities",
+              zh: "已定位在富寿：已更新您身边的便利设施",
+              ko: "푸토에서 위치 확인: 주변 편의시설 업데이트됨",
+              ja: "フートで位置を特定：周辺の施設を更新しました",
+            })
+          );
         }
       },
       () => {
         setLocationStatus("denied");
-        showToast(isEn ? "Please allow Location permission in your browser" : "Bạn có thể bật quyền Vị trí trong cài đặt trình duyệt");
+        showToast(
+          txt({
+            vi: "Bạn có thể bật quyền Vị trí trong cài đặt trình duyệt",
+            en: "Please allow Location permission in your browser",
+            zh: "请在浏览器设置中开启位置权限",
+            ko: "브라우저 설정에서 위치 권한을 허용해 주세요",
+            ja: "ブラウザ設定で位置情報の権限を許可してください",
+          })
+        );
       },
       { enableHighAccuracy: true, timeout: 10000 },
     );
@@ -4472,10 +4532,10 @@ export default function Home() {
   ) => {
     stopAllAudio();
 
-    const textToSpeak = (audioLang === "en" ? (textEn || textVi) : textVi)?.trim();
+    const textToSpeak = (audioLang !== "vi" ? (textEn || textVi) : textVi)?.trim();
     if (!textToSpeak || typeof window === "undefined") return;
 
-    const lang = audioLang === "en" ? "en" : "vi";
+    const lang = audioLang;
     const allVoices = typeof window !== "undefined" && "speechSynthesis" in window
       ? window.speechSynthesis.getVoices()
       : availableVoices;
@@ -4494,13 +4554,13 @@ export default function Home() {
     // Only use browser SpeechSynthesis if:
     // 1. Language is Vietnamese and user chose Male AND browser actually has a real male voice
     // 2. Or language is Vietnamese and user chose Female and browser has Vietnamese voices
-    // 3. Or language is English and browser has English voices
+    // 3. Or language is not Vietnamese and browser has voices for that language
     const canUseSpeechSynthesis =
       "speechSynthesis" in window &&
       (
         (lang === "vi" && isMaleAi && hasRealMaleBrowserVoice) ||
         (lang === "vi" && !isMaleAi && targetVoices.length > 0) ||
-        (lang === "en" && targetVoices.length > 0)
+        (lang !== "vi" && targetVoices.length > 0)
       );
 
     // If browser has a genuine voice for this selection, synthesize directly with natural pitch
@@ -4551,7 +4611,14 @@ export default function Home() {
         if (matchedVoice) {
           utterance.voice = matchedVoice;
         }
-        utterance.lang = audioLang === "en" ? "en-US" : "vi-VN";
+        const langTagMap: Record<LanguageCode, string> = {
+          vi: "vi-VN",
+          en: "en-US",
+          zh: "zh-CN",
+          ko: "ko-KR",
+          ja: "ja-JP",
+        };
+        utterance.lang = langTagMap[audioLang] || "vi-VN";
         utterance.volume = audioVolumeRef.current;
 
         if (isMaleAi) {
@@ -5887,8 +5954,8 @@ export default function Home() {
 
   const renderPlaceCard = (place: Place, compact = false) => (
     <article className={`place-card ${compact ? "place-card--compact" : ""}`} key={place.id}>
-      <button className="place-card__image-button" onClick={() => openPlace(place)} aria-label={`Xem ${isEn && place.nameEn ? place.nameEn : place.name}`}>
-        <img className="place-card__image" src={place.image} alt={isEn && place.nameEn ? place.nameEn : place.name} loading="lazy" onError={handleImageError} />
+      <button className="place-card__image-button" onClick={() => openPlace(place)} aria-label={`Xem ${currentLang !== "vi" && place.nameEn ? place.nameEn : place.name}`}>
+        <img className="place-card__image" src={place.image} alt={currentLang !== "vi" && place.nameEn ? place.nameEn : place.name} loading="lazy" onError={handleImageError} />
         <span className="place-card__category">{getCategoryLabel(place.category, t)}</span>
         <span className="place-card__region-badge">{getRegionLabel(place.region, t)}</span>
         {distanceFromUser(place) && <span className="place-card__distance">⌖ {distanceFromUser(place)}</span>}
@@ -5899,15 +5966,15 @@ export default function Home() {
           e.stopPropagation();
           toggleFavorite(place.id);
         }}
-        aria-label={favorites.includes(place.id) ? `Bỏ lưu ${isEn && place.nameEn ? place.nameEn : place.name}` : `Lưu ${isEn && place.nameEn ? place.nameEn : place.name}`}
+        aria-label={favorites.includes(place.id) ? `Bỏ lưu ${currentLang !== "vi" && place.nameEn ? place.nameEn : place.name}` : `Lưu ${currentLang !== "vi" && place.nameEn ? place.nameEn : place.name}`}
       >
         {favorites.includes(place.id) ? "♥" : "♡"}
       </button>
       <div className="place-card__body" onClick={() => openPlace(place)}>
-        <span className="eyebrow">{isEn && place.locationEn ? place.locationEn : place.location}</span>
-        <strong>{isEn && place.nameEn ? place.nameEn : place.shortName}</strong>
+        <span className="eyebrow">{currentLang !== "vi" && place.locationEn ? place.locationEn : place.location}</span>
+        <strong>{currentLang !== "vi" && place.nameEn ? place.nameEn : place.shortName}</strong>
         <span className="place-card__meta"><b>★ {place.rating}</b> ({place.reviews.toLocaleString("vi-VN")}) · {place.bestTime}</span>
-        {!compact && <span className="place-card__highlight">✦ {isEn && place.highlightsEn ? place.highlightsEn[0] : place.highlights[0]}</span>}
+        {!compact && <span className="place-card__highlight">✦ {currentLang !== "vi" && place.highlightsEn ? place.highlightsEn[0] : place.highlights[0]}</span>}
         {!compact && (
           <div className="place-card__footer">
             <div className="place-card__actions-row">
@@ -5922,8 +5989,7 @@ export default function Home() {
   const changeLanguage = (code: LanguageCode) => {
     stopAllAudio();
     setCurrentLang(code);
-    const newAudioLang = code === "vi" ? "vi" : "en";
-    setAudioLang(newAudioLang);
+    setAudioLang(code);
     if (code === "vi") {
       const savedVoice = typeof window !== "undefined" ? localStorage.getItem("datto_selected_voice") : null;
       if (savedVoice && savedVoice.startsWith("ai-")) {
@@ -5931,6 +5997,12 @@ export default function Home() {
       } else {
         setSelectedVoiceURI("ai-male-north");
       }
+    } else if (code === "zh") {
+      setSelectedVoiceURI("ai-zh-cn");
+    } else if (code === "ko") {
+      setSelectedVoiceURI("ai-ko-kr");
+    } else if (code === "ja") {
+      setSelectedVoiceURI("ai-ja-jp");
     } else {
       setSelectedVoiceURI("ai-en-us");
     }
@@ -5972,8 +6044,8 @@ export default function Home() {
               {savedDishes.includes(dish.id) ? t.foodSavedBtn : t.foodSaveBtn}
             </button>
           </div>
-          <h3>{isEn && dish.nameEn ? dish.nameEn : dish.name}</h3>
-          <p>{isEn && dish.descriptionEn ? dish.descriptionEn : dish.description}</p>
+          <h3>{currentLang !== "vi" && dish.nameEn ? dish.nameEn : dish.name}</h3>
+          <p>{currentLang !== "vi" && dish.descriptionEn ? dish.descriptionEn : dish.description}</p>
         </div>
       </div>
       <div className="seller-grid">
@@ -6124,7 +6196,7 @@ export default function Home() {
                 <span>{authUser.name.split(" ").slice(-1)[0] || "Tài khoản"}</span>
               </span>
             ) : (
-              <span>{isEn ? "Sign in" : "Đăng nhập"}</span>
+              <span>{t.authLoginBtn || "Đăng nhập"}</span>
             )}
           </button>
         </div>
@@ -6140,11 +6212,33 @@ export default function Home() {
               {/* HERO HEADINGS */}
               <div className="hero-panoramic__headings">
                 <h1 className="hero-panoramic__title">
-                  <span>{isEn ? "TRAVEL TO DISCOVER" : "ĐI ĐỂ KHÁM PHÁ"}</span>
-                  <span>{isEn ? "RETURN TO REMEMBER" : "VỀ ĐỂ NHỚ"}</span>
+                  <span>
+                    {txt({
+                      vi: "ĐI ĐỂ KHÁM PHÁ",
+                      en: "TRAVEL TO DISCOVER",
+                      zh: "探索之旅",
+                      ko: "탐험을 위한 여행",
+                      ja: "発見の旅へ",
+                    })}
+                  </span>
+                  <span>
+                    {txt({
+                      vi: "VỀ ĐỂ NHỚ",
+                      en: "RETURN TO REMEMBER",
+                      zh: "归来难以忘怀",
+                      ko: "기억에 남는 귀환",
+                      ja: "心に残る帰郷",
+                    })}
+                  </span>
                 </h1>
                 <p className="hero-panoramic__subtitle">
-                  {isEn ? "Discover the Ancestral Land your way" : "Khám phá Đất Tổ theo cách của bạn"}
+                  {txt({
+                    vi: "Khám phá Đất Tổ theo cách của bạn",
+                    en: "Discover the Ancestral Land your way",
+                    zh: "以您的专属方式探索祖地",
+                    ko: "당신만의 방식으로 웅왕 조상의 땅을 탐험하세요",
+                    ja: "あなたらしいスタイルで祖先の地を巡る",
+                  })}
                 </p>
               </div>
 
@@ -6174,8 +6268,20 @@ export default function Home() {
                         document.getElementById("destinations-section")?.scrollIntoView({ behavior: "smooth" });
                       }
                     }}
-                    placeholder={isEn ? "Where do you want to go?" : "Bạn muốn đi đâu?"}
-                    aria-label={isEn ? "Where do you want to go?" : "Bạn muốn đi đâu?"}
+                    placeholder={txt({
+                      vi: "Bạn muốn đi đâu?",
+                      en: "Where do you want to go?",
+                      zh: "您想去哪里？",
+                      ko: "어디로 가고 싶으신가요?",
+                      ja: "どこへ行きたいですか？",
+                    })}
+                    aria-label={txt({
+                      vi: "Bạn muốn đi đâu?",
+                      en: "Where do you want to go?",
+                      zh: "您想去哪里？",
+                      ko: "어디로 가고 싶으신가요?",
+                      ja: "どこへ行きたいですか？",
+                    })}
                   />
                 </div>
 
@@ -6248,7 +6354,7 @@ export default function Home() {
                     <circle cx="11" cy="11" r="8"></circle>
                     <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
                   </svg>
-                  <span>{isEn ? "Search" : "Tìm kiếm"}</span>
+                  <span>{txt({ vi: "Tìm kiếm", en: "Search", zh: "搜索", ko: "검색", ja: "検索" })}</span>
                 </button>
 
                 {/* Autocomplete Suggestions Dropdown */}
@@ -6366,32 +6472,32 @@ export default function Home() {
                 <div className="hero-feature-item" onClick={() => { setSelectedRegion("Tất cả"); document.getElementById("destinations-section")?.scrollIntoView({ behavior: "smooth" }); }}>
                   <span className="hero-feat-icon">📍</span>
                   <div className="hero-feat-content">
-                    <strong>{isEn ? "PHU THO PROVINCE" : "TỈNH PHÚ THỌ"}</strong>
-                    <small>{isEn ? "Journey to the Ancestral Land" : "Hành trình khám phá Đất Tổ"}</small>
+                    <strong>{txt({ vi: "TỈNH PHÚ THỌ", en: "PHU THO PROVINCE", zh: "富寿省", ko: "푸토성", ja: "フート省" })}</strong>
+                    <small>{txt({ vi: "Hành trình khám phá Đất Tổ", en: "Journey to the Ancestral Land", zh: "华夏祖地探索之旅", ko: "조상의 땅 탐험 여정", ja: "祖先の地を巡る旅" })}</small>
                   </div>
                 </div>
 
                 <div className="hero-feature-item" onClick={() => { setVouchersModalOpen(true); }}>
                   <span className="hero-feat-icon">🧭</span>
                   <div className="hero-feat-content">
-                    <strong>{isEn ? "BEST SEASONS" : "ĐI ĐÚNG MÙA"}</strong>
-                    <small>{isEn ? "Weather & Festival Tips" : "Gợi ý theo thời tiết & lễ hội"}</small>
+                    <strong>{txt({ vi: "ĐI ĐÚNG MÙA", en: "BEST SEASONS", zh: "顺应时节", ko: "제철 여행", ja: "ベストシーズン" })}</strong>
+                    <small>{txt({ vi: "Gợi ý theo thời tiết & lễ hội", en: "Weather & Festival Tips", zh: "气象与节庆贴士", ko: "날씨 및 축제 팁", ja: "気候と祭りのアドバイス" })}</small>
                   </div>
                 </div>
 
                 <div className="hero-feature-item" onClick={() => { setActiveTab("trip"); }}>
                   <span className="hero-feat-icon">📋</span>
                   <div className="hero-feat-content">
-                    <strong>{isEn ? "EASY ITINERARY" : "LÊN LỊCH TRÌNH DỄ DÀNG"}</strong>
-                    <small>{isEn ? "Optimize time & budget" : "Tối ưu thời gian & chi phí"}</small>
+                    <strong>{txt({ vi: "LÊN LỊCH TRÌNH DỄ DÀNG", en: "EASY ITINERARY", zh: "轻松定制行程", ko: "손쉬운 일정 계획", ja: "らくらく旅程作成" })}</strong>
+                    <small>{txt({ vi: "Tối ưu thời gian & chi phí", en: "Optimize time & budget", zh: "省时省钱高效出游", ko: "시간 및 경비 최적화", ja: "時間と費用を最適化" })}</small>
                   </div>
                 </div>
 
                 <div className="hero-feature-item" onClick={() => { setActiveTab("food"); window.scrollTo({ top: 0, behavior: "smooth" }); }}>
                   <span className="hero-feat-icon">❤️</span>
                   <div className="hero-feat-content">
-                    <strong>{isEn ? "FULFILLING TRIP" : "TRẢI NGHIỆM TRỌN VẸN"}</strong>
-                    <small>{isEn ? "Eat well – Play hard – Rest well" : "Ăn ngon – Chơi đã – Nghỉ tốt"}</small>
+                    <strong>{txt({ vi: "TRẢI NGHIỆM TRỌN VẸN", en: "FULFILLING TRIP", zh: "圆满尽兴体验", ko: "완벽하고 알찬 경험", ja: "充実した体験" })}</strong>
+                    <small>{txt({ vi: "Ăn ngon – Chơi đã – Nghỉ tốt", en: "Eat well – Play hard – Rest well", zh: "吃得好·玩得欢·住得舒心", ko: "맛있게 먹고·신나게 놀고·푹 쉬기", ja: "美食・満喫・快適な休息" })}</small>
                   </div>
                 </div>
               </div>
@@ -6404,7 +6510,7 @@ export default function Home() {
                   document.getElementById("destinations-section")?.scrollIntoView({ behavior: "smooth" });
                 }}
               >
-                <span>{isEn ? "Scroll to explore" : "Cuộn để khám phá"}</span>
+                <span>{txt({ vi: "Cuộn để khám phá", en: "Scroll to explore", zh: "向下滚动探索", ko: "스크롤하여 탐색", ja: "スクロールして探索" })}</span>
                 <span className="hero-scroll-arrow">⌄</span>
               </button>
             </div>
@@ -6420,26 +6526,26 @@ export default function Home() {
               <div className="travel-challenge-banner__left">
                 <div className="travel-challenge-badge-row">
                   <span className="travel-challenge-hot-badge">🔥 HOT</span>
-                  <span className="travel-challenge-subtag">Chương trình tương tác 2026</span>
+                  <span className="travel-challenge-subtag">{txt({ vi: "Chương trình tương tác 2026", en: "Interactive Program 2026", zh: "2026互动旅游计划", ko: "2026 인터랙티브 프로그램", ja: "2026年インタラクティブ企画" })}</span>
                 </div>
                 <h2 className="travel-challenge-title">
-                  {isEn ? "Travel Challenge" : "Thử thách du lịch"} <span>🍀</span>
+                  {txt({ vi: "Thử thách du lịch", en: "Travel Challenge", zh: "旅游挑战", ko: "여행 챌린지", ja: "旅行チャレンジ" })} <span>🍀</span>
                 </h2>
                 <p className="travel-challenge-subtitle">
-                  {isEn ? "Explore Phu Tho – Earn Points – Win Rewards" : "Khám phá Phú Thọ – Tích điểm – Nhận quà"}
+                  {txt({ vi: "Khám phá Phú Thọ – Tích điểm – Nhận quà", en: "Explore Phu Tho – Earn Points – Win Rewards", zh: "探索富寿·积分赢好礼", ko: "푸토 탐험 – 포인트 적립 – 리워드 획득", ja: "フートを探索・ポイント獲得・特典ゲット" })}
                 </p>
                 <div className="travel-challenge-features">
                   <span className="travel-challenge-feat-pill">
                     <span className="travel-challenge-feat-icon">🎯</span>
-                    <span>{isEn ? "Complete fun travel quests" : "Hoàn thành nhiệm vụ thú vị"}</span>
+                    <span>{txt({ vi: "Hoàn thành nhiệm vụ thú vị", en: "Complete fun travel quests", zh: "完成趣味旅游任务", ko: "재미있는 여행 미션 완료", ja: "楽しいクエストをクリア" })}</span>
                   </span>
                   <span className="travel-challenge-feat-pill">
                     <span className="travel-challenge-feat-icon">🪙</span>
-                    <span>{isEn ? "Earn points for gifts" : "Tích điểm đổi quà hấp dẫn"}</span>
+                    <span>{txt({ vi: "Tích điểm đổi quà hấp dẫn", en: "Earn points for gifts", zh: "积分兑换精美礼品", ko: "포인트로 풍성한 선물 교환", ja: "ポイントで豪華賞品と交換" })}</span>
                   </span>
                   <span className="travel-challenge-feat-pill">
                     <span className="travel-challenge-feat-icon">🧭</span>
-                    <span>{isEn ? "Explore unique destinations" : "Khám phá nhiều địa điểm độc đáo"}</span>
+                    <span>{txt({ vi: "Khám phá nhiều địa điểm độc đáo", en: "Explore unique destinations", zh: "发现众多独特景点", ko: "다양하고 독특한 명소 탐험", ja: "ユニークな名所を発見" })}</span>
                   </span>
                 </div>
                 <div className="travel-challenge-btn-row">
@@ -6448,7 +6554,7 @@ export default function Home() {
                     className="travel-challenge-cta-btn"
                     onClick={() => setChallengeModalOpen(true)}
                   >
-                    <span>{isEn ? "Join Now" : "Tham gia ngay"}</span>
+                    <span>{txt({ vi: "Tham gia ngay", en: "Join Now", zh: "立即参与", ko: "지금 참여하기", ja: "今すぐ参加" })}</span>
                     <span className="travel-challenge-arrow">➔</span>
                   </button>
                 </div>
@@ -6619,7 +6725,7 @@ export default function Home() {
             <div className="food-teaser-card">
               <div className="food-teaser-head">
                 <div className="food-teaser-badge">
-                  <span>🍲</span> {isEn ? "GASTRONOMY & OCOP SPECIALTIES" : "BẢN ĐỒ VỊ GIÁC ĐẤT TỔ & OCOP"}
+                  <span>🍲</span> {txt({ vi: "BẢN ĐỒ VỊ GIÁC ĐẤT TỔ & OCOP", en: "GASTRONOMY & OCOP SPECIALTIES", zh: "祖地风味地图与OCOP特产", ko: "조상의 땅 미식 지도 & OCOP 특산품", ja: "祖先の地の味覚マップ＆特産品" })}
                 </div>
                 <button
                   type="button"
@@ -6629,16 +6735,20 @@ export default function Home() {
                     window.scrollTo({ top: 0, behavior: "smooth" });
                   }}
                 >
-                  {isEn ? "Open Dedicated Food Page →" : "Khám phá Trang Ẩm Thực Riêng →"}
+                  {txt({ vi: "Khám phá Trang Ẩm Thực Riêng →", en: "Open Dedicated Food Page →", zh: "前往特色美食专页 →", ko: "전용 미식 페이지 보기 →", ja: "専用グルメページを開く →" })}
                 </button>
               </div>
               <div className="food-teaser-body">
                 <div className="food-teaser-info">
-                  <h3>{isEn ? "Authentic Local Delicacies of 3 Heritage Regions" : "Thưởng Thức Trọn Vẹn Tinh Hoa Ẩm Thực Đất Tổ & 3 Vùng Di Sản"}</h3>
+                  <h3>{txt({ vi: "Thưởng Thức Trọn Vẹn Tinh Hoa Ẩm Thực Đất Tổ & 3 Vùng Di Sản", en: "Authentic Local Delicacies of 3 Heritage Regions", zh: "品味祖地与三大历史名区地道风味", ko: "웅왕 조상의 땅 & 3대 유산 지역의 정통 미식 향연", ja: "祖先の地と3大遺産地域の本格的な味覚を堪能" })}</h3>
                   <p>
-                    {isEn
-                      ? "From Thanh Son fermented pork and Phu Tho ear cakes to Tam Dao chayote greens and Hoa Binh bamboo-tube sticky rice. Certified OCOP delicacies ready to order."
-                      : "Trọn bộ đặc sản trứ danh: Thịt chua Thanh Sơn, Bánh tai Phú Thọ, Chè búp tím Long Cốc, Xáo chuối Lâm Thao, Rau su su Tam Đảo, Cơm lam Mường Động. Đặt mua OCOP chính gốc giao tận nơi."}
+                    {txt({
+                      vi: "Trọn bộ đặc sản trứ danh: Thịt chua Thanh Sơn, Bánh tai Phú Thọ, Chè búp tím Long Cốc, Xáo chuối Lâm Thao, Rau su su Tam Đảo, Cơm lam Mường Động. Đặt mua OCOP chính gốc giao tận nơi.",
+                      en: "From Thanh Son fermented pork and Phu Tho ear cakes to Tam Dao chayote greens and Hoa Binh bamboo-tube sticky rice. Certified OCOP delicacies ready to order.",
+                      zh: "汇聚清山酸肉、富寿耳糕、龙谷紫芽茶、三岛佛手瓜菜、芒洞竹筒饭等知名特产。官方认证OCOP商品随时直达送达。",
+                      ko: "타인선 신고기, 푸토 귀떡, 롱꼭 자색 찻잎, 땀다오 수수채소, 므엉동 대나무통밥까지 명품 특산물 총집합. 인증된 정통 OCOP 상품 주문 가능.",
+                      ja: "タインソン酸肉、フート名物バインタイ、ロンコック紫茶、タムダオのハヤトウリ若芽、ムオンドン竹筒ご飯など極上名物を網羅。公認OCOP特産品をお届け。",
+                    })}
                   </p>
                 </div>
                 <div className="food-teaser-preview-grid">
@@ -6723,13 +6833,13 @@ export default function Home() {
               }}
             >
               <span>←</span>
-              <span>{isEn ? "Back to Explore" : "Quay lại Trang Khám Phá"}</span>
+              <span>{txt({ vi: "Quay lại Trang Khám Phá", en: "Back to Explore", zh: "返回探索页", ko: "탐색 페이지로 돌아가기", ja: "探索ページに戻る" })}</span>
             </button>
 
             {/* HERO BANNER */}
             <div className="food-hero-card">
               <div className="food-hero-card__badge">
-                <span>🍲 {isEn ? "HERITAGE GASTRONOMY & CERTIFIED OCOP" : "TINH HOA ẨM THỰC ĐẤT TỔ & OCOP 3 VÙNG"}</span>
+                <span>🍲 {txt({ vi: "TINH HOA ẨM THỰC ĐẤT TỔ & OCOP 3 VÙNG", en: "HERITAGE GASTRONOMY & CERTIFIED OCOP", zh: "祖地风味精粹与三大名区认证特产", ko: "조상의 땅 미식 정수 & 3대 지역 공인 OCOP", ja: "祖先の地の食文化遺産＆公認特産品" })}</span>
               </div>
               <h1 className="food-hero-card__title">
                 {t.foodTitle1} <em>{t.foodTitle2}</em>
@@ -6751,7 +6861,13 @@ export default function Home() {
                   type="text"
                   value={foodSearchQuery}
                   onChange={(e) => setFoodSearchQuery(e.target.value)}
-                  placeholder={isEn ? "Search dishes, ingredients or regions (e.g., thit chua, banh tai, com lam...)..." : "Tìm kiếm món ngon, đặc sản OCOP (thịt chua, bánh tai, su su, cơm lam, cá thính...)..."}
+                  placeholder={txt({
+                    vi: "Tìm kiếm món ngon, đặc sản OCOP (thịt chua, bánh tai, su su, cơm lam, cá thính...)...",
+                    en: "Search dishes, ingredients or regions (e.g., thit chua, banh tai, com lam...)...",
+                    zh: "搜索特色美食或特产（酸肉、耳糕、佛手瓜、竹筒饭等）...",
+                    ko: "특산 요리 및 식재료 검색 (신고기, 귀떡, 수수채소, 대나무밥...)...",
+                    ja: "名物料理や特産品を検索（酸肉、バインタイ、竹筒ご飯など）...",
+                  })}
                 />
                 {foodSearchQuery && (
                   <button
@@ -6821,8 +6937,8 @@ export default function Home() {
               {filteredDishes.length === 0 ? (
                 <div className="food-empty-search">
                   <span>🍲</span>
-                  <h4>{isEn ? "No matching culinary dishes found" : "Không tìm thấy món ăn nào phù hợp"}</h4>
-                  <p>{isEn ? "Try changing your keyword or season filter." : "Thử đổi từ khóa tìm kiếm hoặc chọn lại bộ lọc mùa."}</p>
+                  <h4>{txt({ vi: "Không tìm thấy món ăn nào phù hợp", en: "No matching culinary dishes found", zh: "未找到匹配的美食", ko: "일치하는 요리가 없습니다", ja: "一致する料理が見つかりません" })}</h4>
+                  <p>{txt({ vi: "Thử đổi từ khóa tìm kiếm hoặc chọn lại bộ lọc mùa.", en: "Try changing your keyword or season filter.", zh: "请尝试更换关键词或季节筛选条件。", ko: "검색어를 변경하거나 계절 필터를 다시 선택해 보세요.", ja: "キーワードを変更するか季節フィルターを再選択してください。" })}</p>
                   <button
                     type="button"
                     onClick={() => {
@@ -6830,7 +6946,7 @@ export default function Home() {
                       setFoodSeasonFilter("Tất cả");
                     }}
                   >
-                    {isEn ? "Reset Filters" : "Xem tất cả đặc sản"}
+                    {txt({ vi: "Xem tất cả đặc sản", en: "Reset Filters", zh: "查看全部特产", ko: "모든 특산품 보기", ja: "すべての特産品を見る" })}
                   </button>
                 </div>
               ) : (
@@ -6854,16 +6970,16 @@ export default function Home() {
                         <div className="food-row__main">
                           <div className="food-row__header">
                             <div style={{ display: "flex", alignItems: "center", gap: "8px", flexWrap: "wrap" }}>
-                              <b className="food-row__title">{isEn && food.nameEn ? food.nameEn : food.name}</b>
+                              <b className="food-row__title">{currentLang !== "vi" && food.nameEn ? food.nameEn : food.name}</b>
                               <span style={{ fontSize: "11px", fontWeight: 700, color: "#1b4332", background: "rgba(27, 67, 50, 0.08)", padding: "2px 8px", borderRadius: "6px" }}>
                                 {food.region}
                               </span>
                             </div>
                             <span className="food-row__price">{food.price}</span>
                           </div>
-                          <p className="food-row__desc">{isEn && food.descriptionEn ? food.descriptionEn : food.description}</p>
+                          <p className="food-row__desc">{currentLang !== "vi" && food.descriptionEn ? food.descriptionEn : food.description}</p>
                           <div className="food-row__footer">
-                            <span className="food-row__season">🗓️ {isEn && food.seasonEn ? food.seasonEn : food.season}</span>
+                            <span className="food-row__season">🗓️ {currentLang !== "vi" && food.seasonEn ? food.seasonEn : food.season}</span>
                             <span className="food-row__toggle">
                               {activeFoodId === food.id ? t.foodToggleHide : `${t.foodToggleView} (${food.sellers.length} điểm bán)`}
                             </span>
@@ -6887,17 +7003,17 @@ export default function Home() {
             <div className="trip-hero-left">
               <div className="trip-hero-badge">
                 <span className="trip-hero-badge__dot" />
-                <span>{isEn ? "✨ SMART ITINERARY PLANNER" : "✨ TRỢ LÝ THIẾT KẾ LỊCH TRÌNH THÔNG MINH"}</span>
+                <span>{txt({ vi: "✨ TRỢ LÝ THIẾT KẾ LỊCH TRÌNH THÔNG MINH", en: "✨ SMART ITINERARY PLANNER", zh: "✨ 智能行程规划助手", ko: "✨ 스마트 일정 설계 어시스턴트", ja: "✨ スマート旅程プランナー" })}</span>
               </div>
               <h1 className="trip-hero-title">
                 <span className="trip-hero-title__primary">{t.tripPageTitle1}</span>
                 <span className="trip-hero-title__accent">{t.tripPageTitle2}</span>
               </h1>
               <div className="trip-hero-pillars">
-                <span className="trip-pillar-chip"><i className="trip-pillar-chip__icon">🏛️</i> {isEn ? "Sightseeing Route" : "Lộ trình tham quan"}</span>
-                <span className="trip-pillar-chip"><i className="trip-pillar-chip__icon">🍲</i> {isEn ? "Local Specialties" : "Món ngon đặc sản"}</span>
-                <span className="trip-pillar-chip"><i className="trip-pillar-chip__icon">🛏️</i> {isEn ? "Accommodations" : "Điểm nghỉ dưỡng"}</span>
-                <span className="trip-pillar-chip"><i className="trip-pillar-chip__icon">🚗</i> {isEn ? "Transport & Timing" : "Phương tiện & thời gian"}</span>
+                <span className="trip-pillar-chip"><i className="trip-pillar-chip__icon">🏛️</i> {txt({ vi: "Lộ trình tham quan", en: "Sightseeing Route", zh: "观光路线", ko: "관광 코스", ja: "観光ルート" })}</span>
+                <span className="trip-pillar-chip"><i className="trip-pillar-chip__icon">🍲</i> {txt({ vi: "Món ngon đặc sản", en: "Local Specialties", zh: "特色美食", ko: "특산 요리", ja: "名物グルメ" })}</span>
+                <span className="trip-pillar-chip"><i className="trip-pillar-chip__icon">🛏️</i> {txt({ vi: "Điểm nghỉ dưỡng", en: "Accommodations", zh: "住宿休闲", ko: "숙박 및 휴양", ja: "宿泊・リゾート" })}</span>
+                <span className="trip-pillar-chip"><i className="trip-pillar-chip__icon">🚗</i> {txt({ vi: "Phương tiện & thời gian", en: "Transport & Timing", zh: "交通与时间", ko: "교통 및 소요시간", ja: "交通手段・所要時間" })}</span>
               </div>
 
               <div className="trip-hero-actions" style={{ display: "flex", gap: "12px", marginTop: "18px", flexWrap: "wrap" }}>
@@ -7591,7 +7707,7 @@ export default function Home() {
           <div className="near-header">
             <div>
               <span className="kicker">{t.nearKicker}</span>
-              <h1>{t.nearTitle1}<br /><em className="near-title-highlight">{serviceProvinceFilter === "Tất cả" ? (isEn ? "across all 3 provinces." : "tại Đất Tổ & các tỉnh liên kết.") : (isEn ? `in ${serviceProvinceFilter}.` : `tại ${serviceProvinceFilter}.`)}</em></h1>
+              <h1>{t.nearTitle1}<br /><em className="near-title-highlight">{serviceProvinceFilter === "Tất cả" ? txt({ vi: "tại Đất Tổ & các tỉnh liên kết.", en: "across all 3 provinces.", zh: "贯通三大名区。", ko: "3개 성 전체 지역에서.", ja: "連携3省全域にて。" }) : txt({ vi: `tại ${serviceProvinceFilter}.`, en: `in ${serviceProvinceFilter}.`, zh: `位于 ${serviceProvinceFilter}。`, ko: `${serviceProvinceFilter} 지역에서.`, ja: `${serviceProvinceFilter}にて。` })}</em></h1>
             </div>
             <div className="near-location-card">
               <div className="near-location-card__row">
@@ -7612,7 +7728,7 @@ export default function Home() {
               </div>
 
               <div className="near-quick-locations">
-                <span className="near-quick-label">{isEn ? "Quick set:" : "Chọn nhanh vị trí:"}</span>
+                <span className="near-quick-label">{txt({ vi: "Chọn nhanh vị trí:", en: "Quick set:", zh: "快速选择位置：", ko: "빠른 위치 선택:", ja: "位置のクイック選択：" })}</span>
                 <div className="near-quick-buttons">
                   <button
                     type="button"
@@ -7621,7 +7737,7 @@ export default function Home() {
                       setPosition({ lat: 21.3215, lng: 105.3926 });
                       setServiceProvinceFilter("Phú Thọ");
                       setLocationStatus("success");
-                      showToast(isEn ? "Set location: Viet Tri (Phu Tho)" : "Đã chọn vị trí: TP. Việt Trì (PT cũ)");
+                      showToast(txt({ vi: "Đã chọn vị trí: TP. Việt Trì (PT cũ)", en: "Set location: Viet Tri (Phu Tho)", zh: "已设定位：越池市（富寿）", ko: "위치 설정됨: 비엣찌시 (푸토)", ja: "位置設定：ベッチ市（フート）" }));
                     }}
                   >
                     📍 Việt Trì (PT cũ)
@@ -7633,7 +7749,7 @@ export default function Home() {
                       setPosition({ lat: 21.3150, lng: 105.5890 });
                       setServiceProvinceFilter("Vĩnh Phúc");
                       setLocationStatus("success");
-                      showToast(isEn ? "Set location: Vinh Yen (Vinh Phuc)" : "Đã chọn vị trí: TP. Vĩnh Yên (VP cũ)");
+                      showToast(txt({ vi: "Đã chọn vị trí: TP. Vĩnh Yên (VP cũ)", en: "Set location: Vinh Yen (Vinh Phuc)", zh: "已设定位：永安市（永福）", ko: "위치 설정됨: 빈옌시 (빈푹)", ja: "位置設定：ビンエン市（ビンフック）" }));
                     }}
                   >
                     📍 Vĩnh Yên (VP cũ)
@@ -7645,7 +7761,7 @@ export default function Home() {
                       setPosition({ lat: 20.8140, lng: 105.3380 });
                       setServiceProvinceFilter("Hòa Bình");
                       setLocationStatus("success");
-                      showToast(isEn ? "Set location: Hoa Binh City" : "Đã chọn vị trí: TP. Hòa Bình (HB cũ)");
+                      showToast(txt({ vi: "Đã chọn vị trí: TP. Hòa Bình (HB cũ)", en: "Set location: Hoa Binh City", zh: "已设定位：和平市", ko: "위치 설정됨: 호아빈시", ja: "位置設定：ホアビン市" }));
                     }}
                   >
                     📍 TP. Hòa Bình (HB cũ)
@@ -7675,7 +7791,7 @@ export default function Home() {
                   }}
                 >
                   {prov === "Tất cả"
-                    ? (isEn ? "All 3 Provinces" : "Tất cả 3 tỉnh")
+                    ? txt({ vi: "Tất cả 3 tỉnh", en: "All 3 Provinces", zh: "全部3省", ko: "전체 3개 성", ja: "全3省" })
                     : prov === "Phú Thọ"
                     ? t.provPhuTho
                     : prov === "Vĩnh Phúc"
@@ -8099,8 +8215,8 @@ export default function Home() {
               <img src={selected.image} alt={selected.name} onError={handleImageError} />
               <span className="modal-hero__shade" />
               <div>
-                <span>{getCategoryLabel(selected.category, t)} · {getRegionLabel(selected.region, t)} · {isEn && selected.locationEn ? selected.locationEn : selected.location}</span>
-                <h2 id="place-modal-title">{isEn && selected.nameEn ? selected.nameEn : selected.name}</h2>
+                <span>{getCategoryLabel(selected.category, t)} · {getRegionLabel(selected.region, t)} · {currentLang !== "vi" && selected.locationEn ? selected.locationEn : selected.location}</span>
+                <h2 id="place-modal-title">{currentLang !== "vi" && selected.nameEn ? selected.nameEn : selected.name}</h2>
                 <p><b>★ {selected.rating}</b> ({selected.reviews.toLocaleString(currentLang === "vi" ? "vi-VN" : "en-US")} {t.modalReviews}) · {t.modalPhoto} {selected.imageCredit}</p>
               </div>
               <button className={`heart-button modal-heart ${favorites.includes(selected.id) ? "is-saved" : ""}`} onClick={() => toggleFavorite(selected.id)}>
@@ -8157,21 +8273,20 @@ export default function Home() {
                     )}
 
                     {/* Language Switcher in Modal */}
-                    <div className="audio-lang-switcher" role="group" aria-label={t.audioVoiceLabel}>
-                      <button
-                        type="button"
-                        className={`audio-lang-btn ${currentLang === "vi" ? "is-active" : ""}`}
-                        onClick={() => changeLanguage("vi")}
-                      >
-                        🇻🇳 Việt
-                      </button>
-                      <button
-                        type="button"
-                        className={`audio-lang-btn ${currentLang === "en" ? "is-active" : ""}`}
-                        onClick={() => changeLanguage("en")}
-                      >
-                        🇬🇧 Eng
-                      </button>
+                    <div className="audio-lang-switcher" role="group" aria-label={t.audioVoiceLabel} style={{ display: "flex", flexWrap: "wrap", gap: "4px" }}>
+                      {(Object.keys(LANGUAGES) as LanguageCode[]).map((code) => {
+                        const langItem = LANGUAGES[code];
+                        return (
+                          <button
+                            key={code}
+                            type="button"
+                            className={`audio-lang-btn ${currentLang === code ? "is-active" : ""}`}
+                            onClick={() => changeLanguage(code)}
+                          >
+                            {langItem.flag} {langItem.label.split(" ")[0]}
+                          </button>
+                        );
+                      })}
                     </div>
                   </div>
 
@@ -8370,7 +8485,7 @@ export default function Home() {
                     style={{ flex: 1, padding: "7px 12px", fontSize: "12px", borderRadius: "999px" }}
                     onClick={() => setModalSidebarTab("photo")}
                   >
-                    🖼️ {isEn ? "Photos" : "Hình ảnh địa danh"}
+                    🖼️ {txt({ vi: "Hình ảnh địa danh", en: "Photos", zh: "景点相册", ko: "명소 사진", ja: "名所ギャラリー" })}
                   </button>
                   <button
                     type="button"
@@ -8378,7 +8493,7 @@ export default function Home() {
                     style={{ flex: 1, padding: "7px 12px", fontSize: "12px", borderRadius: "999px" }}
                     onClick={() => setModalSidebarTab("map")}
                   >
-                    🗺️ {isEn ? "Map View" : "Bản đồ vệ tinh"}
+                    🗺️ {txt({ vi: "Bản đồ vệ tinh", en: "Map View", zh: "卫星地图", ko: "위성 지도", ja: "衛星マップ" })}
                   </button>
                 </div>
 
@@ -8396,8 +8511,8 @@ export default function Home() {
                         <span style={{ fontSize: "11px", fontWeight: 700, background: "rgba(0,0,0,0.6)", padding: "3px 8px", borderRadius: "4px" }}>
                           📸 {selected.imageCredit || "Ảnh danh lam thắng cảnh Đất Tổ"}
                         </span>
-                        <h4 style={{ margin: "6px 0 2px", fontSize: "16px", fontWeight: 800 }}>{isEn && selected.nameEn ? selected.nameEn : selected.name}</h4>
-                        <p style={{ margin: 0, fontSize: "12px", opacity: 0.9 }}>{isEn && selected.locationEn ? selected.locationEn : selected.location}</p>
+                        <h4 style={{ margin: "6px 0 2px", fontSize: "16px", fontWeight: 800 }}>{currentLang !== "vi" && selected.nameEn ? selected.nameEn : selected.name}</h4>
+                        <p style={{ margin: 0, fontSize: "12px", opacity: 0.9 }}>{currentLang !== "vi" && selected.locationEn ? selected.locationEn : selected.location}</p>
                       </div>
                     </div>
                   ) : (
@@ -8414,7 +8529,7 @@ export default function Home() {
                   <div style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "8px" }}>
                     <span style={{ fontSize: "20px", color: "var(--red)" }}>📍</span>
                     <div>
-                      <b style={{ display: "block", fontSize: "13.5px", color: "var(--ink)" }}>{isEn && selected.locationEn ? selected.locationEn : selected.location}</b>
+                      <b style={{ display: "block", fontSize: "13.5px", color: "var(--ink)" }}>{currentLang !== "vi" && selected.locationEn ? selected.locationEn : selected.location}</b>
                       <small style={{ fontSize: "11px", color: "var(--muted)" }}>
                         {position ? `${formatDistance(haversine(position.lat, position.lng, selected.lat, selected.lng))} · ${estimateTravel(haversine(position.lat, position.lng, selected.lat, selected.lng))} ${t.fromYou}` : `${selected.distanceFromVietTri} km · ${selected.travelFromVietTri} ${t.fromVietTri}`}
                       </small>
@@ -8427,7 +8542,7 @@ export default function Home() {
                     rel="noreferrer"
                     href={`https://www.google.com/maps/dir/?api=1&destination=${selected.lat},${selected.lng}`}
                   >
-                    🚀 {isEn ? "Open Google Maps Directions" : "Mở Google Maps chỉ đường trực tiếp"}
+                    🚀 {txt({ vi: "Mở Google Maps chỉ đường trực tiếp", en: "Open Google Maps Directions", zh: "打开谷歌地图导航", ko: "구글 지도 길찾기 열기", ja: "Googleマップナビを開く" })}
                   </a>
                 </div>
               </aside>

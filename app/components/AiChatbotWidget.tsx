@@ -65,7 +65,13 @@ export default function AiChatbotWidget({
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const prevAuthUserIdRef = useRef<string | null>(null);
 
-  const isEn = currentLang === "en";
+  const txt = (dict: { vi: string; en: string; zh?: string; ko?: string; ja?: string }): string => {
+    if (currentLang === "en") return dict.en;
+    if (currentLang === "zh") return dict.zh || dict.en;
+    if (currentLang === "ko") return dict.ko || dict.en;
+    if (currentLang === "ja") return dict.ja || dict.en;
+    return dict.vi;
+  };
 
   // Auto-scroll chat to bottom
   const scrollToBottom = () => {
@@ -114,38 +120,145 @@ export default function AiChatbotWidget({
       return {
         id: "msg-welcome",
         sender: "ai",
-        text: isEn
-          ? `Hello **${userName}**! 👋 I am **Dat To AI Assistant**.\n\nI can intelligently understand your travel needs and generate an optimized itinerary for **Phu Tho, Tam Dao, Mai Chau**!\n\nYou can chat naturally, for example:\n- *"Plan a 3 days 2 nights trip to Tam Dao for 2 people"*\n- *"1-day Hung Temple tour by motorbike"*\n- *"What are the best local specialties?"*`
-          : `Xin chào **${userName}**! 👋 Em là **Trợ lý du lịch Đất Tổ**.\n\nRất vui được đồng hành cùng bạn! Em có thể tự động hiểu yêu cầu và thiết kế lịch trình du lịch tối ưu cho **Phú Thọ và các tuyến liên kết (Tam Đảo, Tây Thiên, Mai Châu)**.\n\nBạn có thể nhắn tự nhiên cho em bất kỳ câu nào, ví dụ:\n- *"Lên lịch trình Tam Đảo 3 ngày 2 đêm cho 2 người"*\n- *"Đi Đền Hùng 1 ngày bằng xe máy"*\n- *"Đặc sản Phú Thọ có những món gì ngon?"*`,
+        text: txt({
+          vi: `Xin chào **${userName}**! 👋 Em là **Trợ lý du lịch Đất Tổ**.\n\nRất vui được đồng hành cùng bạn! Em có thể tự động hiểu yêu cầu và thiết kế lịch trình du lịch tối ưu cho **Phú Thọ và các tuyến liên kết (Tam Đảo, Tây Thiên, Mai Châu)**.\n\nBạn có thể nhắn tự nhiên cho em bất kỳ câu nào, ví dụ:\n- *"Lên lịch trình Tam Đảo 3 ngày 2 đêm cho 2 người"*\n- *"Đi Đền Hùng 1 ngày bằng xe máy"*\n- *"Đặc sản Phú Thọ có những món gì ngon?"*`,
+          en: `Hello **${userName}**! 👋 I am **Dat To AI Assistant**.\n\nI can intelligently understand your travel needs and generate an optimized itinerary for **Phu Tho, Tam Dao, Mai Chau**!\n\nYou can chat naturally, for example:\n- *"Plan a 3 days 2 nights trip to Tam Dao for 2 people"*\n- *"1-day Hung Temple tour by motorbike"*\n- *"What are the best local specialties?"*`,
+          zh: `您好 **${userName}**！👋 我是 **富寿文旅AI助手**。\n\n很高兴为您服务！我可以智能理解您的旅游需求，为您定制 **富寿、三岛、梅州** 的专属游览路线！\n\n您可以随时告诉我，例如：\n- *“规划三岛2天1晚2人游”*\n- *“雄王庙1日游”*\n- *“富寿有哪些特色美食？”*`,
+          ko: `안녕하세요 **${userName}**님! 👋 저는 **푸토 스마트 AI 여행 비서**입니다.\n\n여행 일정 요청을 자연어로 이해하여 **푸토, 땀다오, 마이쩌우** 최적의 맞춤 일정을 즉시 생성해 드립니다!\n\n편하게 메시지를 입력해보세요, 예:\n- *“2인 땀다오 2박 3일 일정 짜줘”*\n- *“흥왕 신전 1일 투어”*\n- *“푸토의 유명한 특산물은 뭐야?”*`,
+          ja: `こんにちは **${userName}**様！👋 私は**フート省AI観光アシスタント**です。\n\n旅行のご希望をインテリジェントに解析し、**フート、タムダオ、マイチャウ**の最適な旅程を自動生成します！\n\nお気軽に話しかけてください。例：\n- *“2名でタムダオ2泊3日の旅程を立てて”*\n- *“フン王廟の1日観光ツアー”*\n- *“フート省のおすすめグルメは？”*`,
+        }),
         timestamp: time,
         options: [
-          { label: isEn ? "🌫️ Plan Tam Dao Trip (2D1N / 3D2N)" : "🌫️ Lên lịch trình Tam Đảo (2N1Đ / 3N2Đ)", value: "plan_tam_dao", icon: "🏔️" },
-          { label: isEn ? "🏛️ Hung Temple Origin Tour" : "🏛️ Tour cội nguồn Đền Hùng", value: "plan_den_hung", icon: "🏛️" },
-          { label: isEn ? "🍃 Long Coc Tea Hill" : "🍃 Săn mây Đồi chè Long Cốc", value: "plan_long_coc", icon: "📸" },
-          { label: isEn ? "♨️ Thanh Thuy Hot Spring" : "♨️ Nghỉ dưỡng khoáng nóng Thanh Thủy", value: "plan_thanh_thuy", icon: "💆" },
-          { label: isEn ? "🍲 Recommend OCOP Foods" : "🍲 Gợi ý đặc sản OCOP", value: "ask_foods", icon: "🥢" },
+          {
+            label: txt({
+              vi: "🌫️ Lên lịch trình Tam Đảo (2N1Đ / 3N2Đ)",
+              en: "🌫️ Plan Tam Dao Trip (2D1N / 3D2N)",
+              zh: "🌫️ 规划三岛行程 (2天1晚 / 3天2晚)",
+              ko: "🌫️ 땀다오 일정 계획 (1박2일 / 2박3일)",
+              ja: "🌫️ タムダオ旅程作成 (1泊2日 / 2泊3日)",
+            }),
+            value: "plan_tam_dao",
+            icon: "🏔️",
+          },
+          {
+            label: txt({
+              vi: "🏛️ Tour cội nguồn Đền Hùng",
+              en: "🏛️ Hung Temple Origin Tour",
+              zh: "🏛️ 雄王祖庙溯源之旅",
+              ko: "🏛️ 흥왕 신전 투어",
+              ja: "🏛️ フン王廟ルーツツアー",
+            }),
+            value: "plan_den_hung",
+            icon: "🏛️",
+          },
+          {
+            label: txt({
+              vi: "🍃 Săn mây Đồi chè Long Cốc",
+              en: "🍃 Long Coc Tea Hill Cloud Hunting",
+              zh: "🍃 龙谷茶丘云海仙境",
+              ko: "🍃 롱꼭 차밭 구름 여행",
+              ja: "🍃 ロンコック茶畑 雲海ツアー",
+            }),
+            value: "plan_long_coc",
+            icon: "📸",
+          },
+          {
+            label: txt({
+              vi: "♨️ Nghỉ dưỡng khoáng nóng Thanh Thủy",
+              en: "♨️ Thanh Thuy Hot Spring Resort",
+              zh: "♨️ 清水温泉度假体验",
+              ko: "♨️ 타잉투이 온천 힐링",
+              ja: "♨️ タイントゥイ温泉リゾート",
+            }),
+            value: "plan_thanh_thuy",
+            icon: "💆",
+          },
+          {
+            label: txt({
+              vi: "🍲 Gợi ý đặc sản OCOP",
+              en: "🍲 Recommend OCOP Specialties",
+              zh: "🍲 推荐OCOP特色美馔",
+              ko: "🍲 OCOP 특산 음식 추천",
+              ja: "🍲 OCOP特産グルメおすすめ",
+            }),
+            value: "ask_foods",
+            icon: "🥢",
+          },
         ],
       };
     } else {
       return {
         id: "msg-welcome",
         sender: "ai",
-        text: isEn
-          ? `Hello! 👋 I am **Dat To AI Assistant** — your smart travel companion in Phu Tho & connected destinations.\n\nTell me where you want to go, how many days, and how many people. I will build an accurate itinerary instantly!`
-          : `Xin chào bạn! 👋 Em là **Trợ lý du lịch Đất Tổ** — bạn đồng hành du lịch thông minh tại Phú Thọ & các tuyến liên kết.\n\nBạn chỉ cần cho em biết bạn muốn đi đâu, mấy ngày, mấy người (Ví dụ: *"Lên lịch trình Tam Đảo 3 ngày 2 đêm cho 2 người"*). Em sẽ tự động phân tích và tạo lịch trình trực quan ngay cho bạn!`,
+        text: txt({
+          vi: `Xin chào bạn! 👋 Em là **Trợ lý du lịch Đất Tổ** — bạn đồng hành du lịch thông minh tại Phú Thọ & các tuyến liên kết.\n\nBạn chỉ cần cho em biết bạn muốn đi đâu, mấy ngày, mấy người (Ví dụ: *"Lên lịch trình Tam Đảo 3 ngày 2 đêm cho 2 người"*). Em sẽ tự động phân tích và tạo lịch trình trực quan ngay cho bạn!`,
+          en: `Hello! 👋 I am **Dat To AI Assistant** — your smart travel companion in Phu Tho & connected destinations.\n\nTell me where you want to go, how many days, and how many people. I will build an accurate itinerary instantly!`,
+          zh: `您好！👋 我是 **富寿文旅AI助手** — 您的富寿及周边专属智能旅游顾问。\n\n请告诉我您的目的地、游玩天数与人数（例如：“规划三岛2天1晚2人游”），我将立即为您智能生成可视化行程！`,
+          ko: `안녕하세요! 👋 저는 **푸토 스마트 AI 여행 비서** — 푸토 및 인근 지역 전용 여행 동반자입니다.\n\n목적지, 여행 일수, 인원수를 알려주시면 (예: “2인 땀다오 2박 3일 일정 짜줘”) 최적의 일정을 즉시 생성해 드립니다!`,
+          ja: `こんにちは！👋 私は**フート省AI観光アシスタント** — フート省および周辺ルートのスマート観光パートナーです。\n\n目的地、旅行日数、人数をお知らせいただければ（例：「2名でタムダオ2泊3日の旅程を立てて」）、すぐにビジュアル旅程を作成します！`,
+        }),
         timestamp: time,
         options: [
-          { label: isEn ? "🌫️ Plan Tam Dao Trip" : "🌫️ Lên lịch trình Tam Đảo", value: "plan_tam_dao", icon: "🏔️" },
-          { label: isEn ? "🏛️ Explore Hung Temple" : "🏛️ Khám phá Đền Hùng & Việt Trì", value: "plan_den_hung", icon: "🏛️" },
-          { label: isEn ? "🍃 Long Coc Tea Hill" : "🍃 Đồi chè Long Cốc & Xuân Sơn", value: "plan_long_coc", icon: "📸" },
-          { label: isEn ? "♨️ Thanh Thuy Hot Spring" : "♨️ Khoáng nóng Thanh Thủy", value: "plan_thanh_thuy", icon: "💆" },
-          { label: isEn ? "👤 Login to save trips" : "👤 Đăng nhập tài khoản để lưu lịch trình", value: "open_login", icon: "🔑" },
+          {
+            label: txt({
+              vi: "🌫️ Lên lịch trình Tam Đảo",
+              en: "🌫️ Plan Tam Dao Trip",
+              zh: "🌫️ 规划三岛行程",
+              ko: "🌫️ 땀다오 일정 계획",
+              ja: "🌫️ タムダオ旅程作成",
+            }),
+            value: "plan_tam_dao",
+            icon: "🏔️",
+          },
+          {
+            label: txt({
+              vi: "🏛️ Khám phá Đền Hùng & Việt Trì",
+              en: "🏛️ Explore Hung Temple & Viet Tri",
+              zh: "🏛️ 探索雄王庙与越池",
+              ko: "🏛️ 흥왕 신전 & 비엣찌 탐방",
+              ja: "🏛️ フン王廟＆ヴィエットチー探訪",
+            }),
+            value: "plan_den_hung",
+            icon: "🏛️",
+          },
+          {
+            label: txt({
+              vi: "🍃 Đồi chè Long Cốc & Xuân Sơn",
+              en: "🍃 Long Coc Tea Hill & Xuan Son",
+              zh: "🍃 龙谷茶丘与春山国家公园",
+              ko: "🍃 롱꼭 차밭 & 쑤언선",
+              ja: "🍃 ロンコック茶畑＆スアンソン",
+            }),
+            value: "plan_long_coc",
+            icon: "📸",
+          },
+          {
+            label: txt({
+              vi: "♨️ Khoáng nóng Thanh Thủy",
+              en: "♨️ Thanh Thuy Hot Spring",
+              zh: "♨️ 清水矿泉水疗",
+              ko: "♨️ 타잉투이 온천",
+              ja: "♨️ タイントゥイ温泉",
+            }),
+            value: "plan_thanh_thuy",
+            icon: "💆",
+          },
+          {
+            label: txt({
+              vi: "👤 Đăng nhập tài khoản để lưu lịch trình",
+              en: "👤 Login to save trips",
+              zh: "👤 登录账号保存行程",
+              ko: "👤 일정 저장을 위한 로그인",
+              ja: "👤 旅程保存用ログイン",
+            }),
+            value: "open_login",
+            icon: "🔑",
+          },
         ],
       };
     }
   };
 
-  // Re-greet if authUser changes
   // Re-greet if authUser changes or language changes
   useEffect(() => {
     const currentUserId = authUser?.id || null;
@@ -167,7 +280,7 @@ export default function AiChatbotWidget({
     if (shouldResetSurvey) {
       setSurvey(initialSurveyState);
     }
-  }, [authUser?.id, authUser?.name, isEn]);
+  }, [authUser?.id, authUser?.name, currentLang]);
 
   const surveyRef = useRef(survey);
   surveyRef.current = survey;
@@ -414,19 +527,27 @@ export default function AiChatbotWidget({
               ×
             </button>
             <div className="ai-launcher-tooltip__content" onClick={() => setIsOpen(true)}>
-              <div className="ai-launcher-tooltip__tag">{isEn ? "✦ Dat To AI Assistant" : "✦ Trợ lý du lịch Đất Tổ"}</div>
+              <div className="ai-launcher-tooltip__tag">{txt({ vi: "✦ Trợ lý du lịch Đất Tổ", en: "✦ Dat To AI Assistant", zh: "✦ 富寿AI文旅助手", ko: "✦ 푸토 AI 여행 비서", ja: "✦ フートAI観光アシスタント" })}</div>
               <div className="ai-launcher-tooltip__msg">
                 {authUser ? (
                   <span>
-                    {isEn ? (
-                      <>Hello <strong>{authUser.name}</strong>! Need an automated itinerary? Click here! 💬</>
-                    ) : (
-                      <>Xin chào <strong>{authUser.name}</strong>! Cần em tự động lên lịch trình du lịch bấm đây nhé! 💬</>
-                    )}
+                    {txt({
+                      vi: `Xin chào ${authUser.name}! Cần em tự động lên lịch trình du lịch bấm đây nhé! 💬`,
+                      en: `Hello ${authUser.name}! Need an automated itinerary? Click here! 💬`,
+                      zh: `您好 ${authUser.name}！需要智能规划行程请点击这里！💬`,
+                      ko: `안녕하세요 ${authUser.name}님! 여행 일정이 필요하시면 클릭하세요! 💬`,
+                      ja: `こんにちは ${authUser.name}様！AIによる自動旅程作成はこちらをクリック！💬`,
+                    })}
                   </span>
                 ) : (
                   <span>
-                    {isEn ? "Hello! Need an AI assistant to plan your trip? Click here! 💬" : "Chào bạn! Cần trợ lý AI tự động lên lịch trình du lịch bấm đây nhé! 💬"}
+                    {txt({
+                      vi: "Chào bạn! Cần trợ lý AI tự động lên lịch trình du lịch bấm đây nhé! 💬",
+                      en: "Hello! Need an AI assistant to plan your trip? Click here! 💬",
+                      zh: "您好！需要智能AI助手为您规划行程请点击这里！💬",
+                      ko: "안녕하세요! AI 비서에게 일정을 맡겨보세요! 클릭! 💬",
+                      ja: "こんにちは！AIアシスタントに旅程を作成してもらうにはこちらをクリック！💬",
+                    })}
                   </span>
                 )}
               </div>
@@ -442,8 +563,8 @@ export default function AiChatbotWidget({
             setIsOpen(!isOpen);
             setShowTooltip(false);
           }}
-          aria-label={isOpen ? "Thu nhỏ Trợ lý AI" : "Mở Trợ lý du lịch Đất Tổ"}
-          title="Trợ lý du lịch Đất Tổ — Lên lịch trình thông minh"
+          aria-label={isOpen ? txt({ vi: "Thu nhỏ Trợ lý AI", en: "Minimize AI Assistant", zh: "收起AI助手", ko: "AI 비서 최소화", ja: "AIアシスタントを縮小" }) : txt({ vi: "Mở Trợ lý du lịch Đất Tổ", en: "Open Dat To Travel Assistant", zh: "打开富寿AI助手", ko: "푸토 AI 비서 열기", ja: "フートAIアシスタントを開く" })}
+          title={txt({ vi: "Trợ lý du lịch Đất Tổ — Lên lịch trình thông minh", en: "Dat To Travel Assistant — Smart Itinerary Planner", zh: "富寿文旅AI助手 — 智能行程规划", ko: "푸토 AI 여행 비서 — 스마트 일정 생성", ja: "フートAI観光アシスタント — スマート旅程作成" })}
         >
           {/* MASCOT ROBOT AVATAR */}
           <div className="ai-mascot-avatar-wrapper">
@@ -463,8 +584,8 @@ export default function AiChatbotWidget({
 
           {/* Mini label on desktop */}
           <div className="ai-mascot-launcher-btn__text">
-            <span className="ai-launcher-title">{isEn ? "I am Dat To Travel Assistant" : "Tôi là trợ lý du lịch Đất Tổ"}</span>
-            <span className="ai-launcher-sub">{isEn ? "Plan your trip" : "Lên lịch trình"}</span>
+            <span className="ai-launcher-title">{txt({ vi: "Tôi là trợ lý du lịch Đất Tổ", en: "Dat To AI Assistant", zh: "富寿AI旅游助手", ko: "푸토 AI 여행 비서", ja: "フートAI観光アシスタント" })}</span>
+            <span className="ai-launcher-sub">{txt({ vi: "Lên lịch trình", en: "Plan your trip", zh: "智能规划行程", ko: "일정 계획하기", ja: "旅程を作成する" })}</span>
           </div>
         </button>
       </div>
@@ -489,10 +610,12 @@ export default function AiChatbotWidget({
               </div>
               <div className="ai-header-titles">
                 <div className="ai-header-name">
-                  {isEn ? "Dat To Travel Assistant" : "Trợ lý du lịch Đất Tổ"} <span className="ai-header-badge">AI 2.0</span>
+                  {txt({ vi: "Trợ lý du lịch Đất Tổ", en: "Dat To Travel Assistant", zh: "富寿AI旅游助手", ko: "푸토 AI 여행 비서", ja: "フートAI観光アシスタント" })} <span className="ai-header-badge">AI 2.0</span>
                 </div>
                 <div className="ai-header-role">
-                  {authUser ? (isEn ? `Assisting: ${authUser.name}` : `Đang hỗ trợ: ${authUser.name}`) : (isEn ? "Trip Planner & Advisor" : "Tư vấn & Lên lịch trình Đất Tổ")}
+                  {authUser
+                    ? txt({ vi: `Đang hỗ trợ: ${authUser.name}`, en: `Assisting: ${authUser.name}`, zh: `正在为 ${authUser.name} 服务`, ko: `지원 중: ${authUser.name}`, ja: `ご案内中: ${authUser.name}` })
+                    : txt({ vi: "Tư vấn & Lên lịch trình Đất Tổ", en: "Trip Planner & Advisor", zh: "富寿行程规划顾问", ko: "푸토 여행 일정 기획 및 안내", ja: "フート旅程プランナー＆アドバイザー" })}
                 </div>
               </div>
             </div>
@@ -505,9 +628,9 @@ export default function AiChatbotWidget({
                   setSurvey(initialSurveyState);
                   const welcome = buildWelcomeMessage(authUser?.name);
                   setMessages([welcome]);
-                  showToast?.("Đã làm mới cuộc hội thoại");
+                  showToast?.(txt({ vi: "Đã làm mới cuộc hội thoại", en: "Conversation refreshed", zh: "已重置对话", ko: "대화가 새로고침되었습니다", ja: "会話をリセットしました" }));
                 }}
-                title="Bắt đầu lại cuộc hội thoại"
+                title={txt({ vi: "Bắt đầu lại cuộc hội thoại", en: "Restart conversation", zh: "重新开始对话", ko: "대화 다시 시작", ja: "会話をやり直す" })}
                 aria-label="Làm mới cuộc trò chuyện"
               >
                 🔄
@@ -516,7 +639,7 @@ export default function AiChatbotWidget({
                 type="button"
                 className="ai-header-btn"
                 onClick={() => setIsOpen(false)}
-                title="Thu nhỏ cửa sổ chat"
+                title={txt({ vi: "Thu nhỏ", en: "Minimize", zh: "最小化", ko: "최소화", ja: "最小化" })}
                 aria-label="Thu nhỏ"
               >
                 —
@@ -525,7 +648,7 @@ export default function AiChatbotWidget({
                 type="button"
                 className="ai-header-btn ai-header-btn--close"
                 onClick={() => setIsOpen(false)}
-                title="Đóng chat"
+                title={txt({ vi: "Đóng chat", en: "Close chat", zh: "关闭对话", ko: "채팅 닫기", ja: "チャットを閉じる" })}
                 aria-label="Đóng chat"
               >
                 ✕
@@ -539,8 +662,14 @@ export default function AiChatbotWidget({
             <div className="ai-intro-card">
               <div className="ai-intro-card__icon">✦</div>
               <div className="ai-intro-card__content">
-                <strong>{isEn ? "Dat To Smart AI Assistant" : "Đất Tổ Smart AI Assistant"}</strong>
-                <p>{isEn ? "Understands natural language, automatically plans optimal trips based on destinations (Phu Tho, Tam Dao, Mai Chau), travelers, duration, and transport." : "Hiểu ngôn ngữ tự nhiên, tự động lên lịch trình tối ưu theo điểm đến (Phú Thọ, Tam Đảo, Mai Châu), số người, số ngày và phương tiện."}</p>
+                <strong>{txt({ vi: "Đất Tổ Smart AI Assistant", en: "Dat To Smart AI Assistant", zh: "富寿智能AI旅游助手", ko: "푸토 스마트 AI 여행 비서", ja: "フートスマートAI観光アシスタント" })}</strong>
+                <p>{txt({
+                  vi: "Hiểu ngôn ngữ tự nhiên, tự động lên lịch trình tối ưu theo điểm đến (Phú Thọ, Tam Đảo, Mai Châu), số người, số ngày và phương tiện.",
+                  en: "Understands natural language, automatically plans optimal trips based on destinations (Phu Tho, Tam Dao, Mai Chau), travelers, duration, and transport.",
+                  zh: "智能理解自然语言，根据目的地（富寿、三岛、梅州）、游玩人数、天数及交通方式自动优化专属行程。",
+                  ko: "자연어를 이해하여 목적지(푸토, 땀다오, 마이쩌우), 인원, 일정, 교통편에 맞춘 최적의 여행 일정을 자동으로 계획합니다.",
+                  ja: "自然言語を理解し、目的地（フート、タムダオ、マイチャウ）、人数、日数、移動手段に応じた最適な旅程を自動作成します。"
+                })}</p>
               </div>
             </div>
 
@@ -582,7 +711,13 @@ export default function AiChatbotWidget({
                       <div className="ai-itinerary-preview-card">
                         <div className="ai-itinerary-card__header">
                           <span className="ai-itinerary-card__badge">
-                            ✦ Lịch trình AI đề xuất · {msg.itinerary.durationDays} Ngày {msg.itinerary.durationDays > 1 ? `${msg.itinerary.durationDays - 1} Đêm` : ""}
+                            {txt({
+                              vi: `✦ Lịch trình AI đề xuất · ${msg.itinerary.durationDays} Ngày ${msg.itinerary.durationDays > 1 ? `${msg.itinerary.durationDays - 1} Đêm` : ""}`,
+                              en: `✦ AI Recommended · ${msg.itinerary.durationDays}D ${msg.itinerary.durationDays > 1 ? `${msg.itinerary.durationDays - 1}N` : ""}`,
+                              zh: `✦ AI推荐行程 · ${msg.itinerary.durationDays}天${msg.itinerary.durationDays > 1 ? `${msg.itinerary.durationDays - 1}晚` : ""}`,
+                              ko: `✦ AI 추천 일정 · ${msg.itinerary.durationDays}일 ${msg.itinerary.durationDays > 1 ? `${msg.itinerary.durationDays - 1}박` : ""}`,
+                              ja: `✦ AIおすすめ旅程 · ${msg.itinerary.durationDays}日間 ${msg.itinerary.durationDays > 1 ? `${msg.itinerary.durationDays - 1}泊` : ""}`,
+                            })}
                           </span>
                           <span className="ai-itinerary-card__transport">
                             {msg.itinerary.transport}
@@ -594,15 +729,15 @@ export default function AiChatbotWidget({
 
                         <div className="ai-itinerary-card__meta-grid">
                           <div className="ai-meta-item">
-                            <span className="ai-meta-item__label">Quãng đường</span>
+                            <span className="ai-meta-item__label">{txt({ vi: "Quãng đường", en: "Distance", zh: "总行程", ko: "이동 거리", ja: "移動距離" })}</span>
                             <span className="ai-meta-item__val">~{msg.itinerary.totalDistanceKm} km</span>
                           </div>
                           <div className="ai-meta-item">
-                            <span className="ai-meta-item__label">Thời gian di chuyển</span>
+                            <span className="ai-meta-item__label">{txt({ vi: "Thời gian di chuyển", en: "Drive Time", zh: "车程时间", ko: "이동 시간", ja: "所要時間" })}</span>
                             <span className="ai-meta-item__val">{msg.itinerary.totalDriveTime}</span>
                           </div>
                           <div className="ai-meta-item">
-                            <span className="ai-meta-item__label">Dự toán / người</span>
+                            <span className="ai-meta-item__label">{txt({ vi: "Dự toán / người", en: "Est. Cost / Person", zh: "预计人均费用", ko: "1인 예상 비용", ja: "概算費用 / 人" })}</span>
                             <span className="ai-meta-item__val text-emerald">
                               {msg.itinerary.estimatedCostPerPerson.toLocaleString("vi-VN")}đ
                             </span>
@@ -613,8 +748,8 @@ export default function AiChatbotWidget({
                         <div className="ai-itinerary-card__days">
                           {msg.itinerary.days.map((d) => (
                             <div key={d.dayNumber} className="ai-day-pill">
-                              <span className="ai-day-pill__badge">Ngày {d.dayNumber}</span>
-                              <span className="ai-day-pill__summary">{d.dayTitle} ({d.slots.length} điểm dừng)</span>
+                              <span className="ai-day-pill__badge">{txt({ vi: `Ngày ${d.dayNumber}`, en: `Day ${d.dayNumber}`, zh: `第${d.dayNumber}天`, ko: `${d.dayNumber}일차`, ja: `${d.dayNumber}日目` })}</span>
+                              <span className="ai-day-pill__summary">{d.dayTitle} ({d.slots.length} {txt({ vi: "điểm dừng", en: "stops", zh: "个停靠点", ko: "곳 방문", ja: "スポット" })})</span>
                             </div>
                           ))}
                         </div>
@@ -626,7 +761,7 @@ export default function AiChatbotWidget({
                             className="ai-itinerary-btn ai-itinerary-btn--primary"
                             onClick={() => handleViewVisualItinerary(msg.itinerary!)}
                           >
-                            <span>👉 Xem trên Trang Lịch Trình trực quan ➔</span>
+                            <span>{txt({ vi: "👉 Xem trên Trang Lịch Trình trực quan ➔", en: "👉 View in Visual Itinerary Planner ➔", zh: "👉 在可视化行程页面查看 ➔", ko: "👉 시각적 일정 페이지에서 보기 ➔", ja: "👉 ビジュアル旅程ページで確認 ➔" })}</span>
                           </button>
 
                           <button
@@ -634,10 +769,10 @@ export default function AiChatbotWidget({
                             className="ai-itinerary-btn ai-itinerary-btn--secondary"
                             onClick={() => {
                               onSaveItinerary?.(msg.itinerary!);
-                              showToast?.("✦ Đã lưu lịch trình thành công vào Sổ tay du lịch!");
+                              showToast?.(txt({ vi: "✦ Đã lưu lịch trình thành công vào Sổ tay du lịch!", en: "✦ Saved itinerary to notebook successfully!", zh: "✦ 已成功保存行程至我的旅行手册！", ko: "✦ 여행 수첩에 일정을 성공적으로 저장했습니다!", ja: "✦ 旅程をマイノートに正常に保存しました！" }));
                             }}
                           >
-                            <span>💾 Lưu vào Lịch trình của tôi</span>
+                            <span>{txt({ vi: "💾 Lưu vào Lịch trình của tôi", en: "💾 Save to My Itineraries", zh: "💾 保存至我的行程", ko: "💾 내 여행 일정에 저장", ja: "💾 マイ旅程に保存" })}</span>
                           </button>
                         </div>
                       </div>
@@ -682,7 +817,7 @@ export default function AiChatbotWidget({
                 </div>
                 <div className="ai-bubble-container">
                   <div className="ai-bubble-content ai-thinking-bubble">
-                    <span className="ai-thinking-text">Trợ lý AI đang xử lý & tối ưu lịch trình</span>
+                    <span className="ai-thinking-text">{txt({ vi: "Trợ lý AI đang xử lý & tối ưu lịch trình", en: "AI Assistant is optimizing your itinerary", zh: "AI正在处理并优化行程", ko: "AI 비서가 일정을 최적화하고 있습니다", ja: "AIアシスタントが旅程を最適化中" })}</span>
                     <div className="ai-typing-dots">
                       <span />
                       <span />
@@ -701,7 +836,13 @@ export default function AiChatbotWidget({
             <input
               type="text"
               className="ai-chat-input"
-              placeholder="Nhắn tự nhiên (vd: Lên lịch trình Tam Đảo 3 ngày 2 đêm 2 người...)"
+              placeholder={txt({
+                vi: "Nhắn tự nhiên (vd: Lên lịch trình Tam Đảo 3 ngày 2 đêm 2 người...)",
+                en: "Type naturally (e.g. Plan Tam Dao 3D2N for 2 people...)",
+                zh: "自由输入（如：帮我安排三岛3天2晚2人游...）",
+                ko: "자유롭게 입력하세요 (예: 2인 땀다오 2박 3일 일정 짜줘...)",
+                ja: "自然な言葉で入力（例：2名でタムダオ2泊3日の旅程を立てて...）",
+              })}
               value={inputVal}
               onChange={(e) => setInputVal(e.target.value)}
               disabled={isThinking}

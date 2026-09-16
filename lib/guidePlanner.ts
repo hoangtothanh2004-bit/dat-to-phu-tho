@@ -641,7 +641,7 @@ export function buildItinerary(options: PlannerOptions): GeneratedItinerary {
  * Lịch trình du lịch chuẩn 2N1Đ: Việt Trì – Đền Hùng – Thanh Thủy – Tam Đảo
  * Biên soạn và chuẩn hóa chính xác theo hồ sơ "lịch trình du lịch.docx"
  */
-export function getOfficialDocxItinerary(): GeneratedItinerary {
+export function getOfficialDocxItinerary(lang: string = "vi"): GeneratedItinerary {
   const denHungPlace = places.find((p) => p.id === "den-hung") || places[0];
   const thanhThuyPlace = places.find((p) => p.id === "thanh-thuy") || places[3] || places[0];
   const tamDaoPlace = places.find((p) => p.id === "tam-dao") || places[0];
@@ -1102,21 +1102,66 @@ export function getOfficialDocxItinerary(): GeneratedItinerary {
     },
   ];
 
+  const isEnLang = lang === "en";
+  const isZhLang = lang === "zh";
+  const isKoLang = lang === "ko";
+  const isJaLang = lang === "ja";
+
+  const day1DateLabel = isEnLang ? "Day 1" : isZhLang ? "第1天" : isKoLang ? "1일차" : isJaLang ? "1日目" : "Ngày 1";
+  const day1Title = isEnLang
+    ? "Day 1: Sacred Roots Pilgrimage to Hung Temple & Thanh Thuy Hot Springs"
+    : isZhLang
+    ? "第1天：雄王古庙朝圣之旅 & 清水天然温泉度假"
+    : isKoLang
+    ? "1일차: 훙왕 신전 근원 순례 & 탄투이 천연 온천 힐링"
+    : isJaLang
+    ? "1日目：フン王廟への巡礼＆タントゥイ天然ラドン温泉リゾート"
+    : "Hành hương Cội Nguồn Đền Hùng & Nghỉ dưỡng Khoáng nóng Thanh Thủy";
+  const day1Summary = isEnLang
+    ? "Depart Viet Tri, visit Hung Kings Temple UNESCO heritage site, savor local fish specialties, check into 5-star Shoptel at Lynn Times Thanh Thuy, indulge in Japanese radon Onsen and Da River fish dinner."
+    : isZhLang
+    ? "从越池出发，瞻仰联合国教科文组织非遗雄王庙，品尝江兰餐厅特色河鲜，入住清水林奈温泉度假区五星级套房，体验稀有氡温泉与特色河鱼宴。"
+    : isKoLang
+    ? "비엣찌 출발, 유네스코 인류유산 훙왕 사원 참배, 강란 향토 생선 요리 오찬, 린타임스 탄투이 5성급 숍텔 체크인, 천연 라돈 온천욕 및 전통 만찬."
+    : isJaLang
+    ? "ヴィエッチー出発、ユネスコ無形文化遺産フン王廟巡礼、川魚料理の昼食、リンタイムズ・タントゥイ5つ星リゾート宿泊、天然ラドン温泉と名物ディナー。"
+    : "Khởi hành từ trung tâm Việt Trì, ăn sáng Mai Anh, dâng hương tri ân công đức các Vua Hùng qua 4 đền linh thiêng và Bảo tàng Hùng Vương. Thưởng thức bữa trưa cá sông tại nhà hàng Giang Lan. Buổi chiều di chuyển về Lynn Times Thanh Thủy nhận phòng Shoptel 5 sao, ngâm khoáng Radon quý hiếm tại Ohayo Onsen, dạo phố đi bộ sinh thái và thưởng thức bữa tối Chả cá sông Đà & Tinh hoa Bắc Bộ.";
+
+  const day2DateLabel = isEnLang ? "Day 2" : isZhLang ? "第2天" : isKoLang ? "2일차" : isJaLang ? "2日目" : "Ngày 2";
+  const day2Title = isEnLang
+    ? "Day 2: Highland Cloud Paradise Tam Dao & Return to Viet Tri"
+    : isZhLang
+    ? "第2天：云雾之城三岛漫游 & 启程返回越池"
+    : isKoLang
+    ? "2일차: 땀다오 운해의 낙원 탐방 & 비엣찌 귀환"
+    : isJaLang
+    ? "2日目：霧の高原タムダオ散策＆ヴィエッチー帰還"
+    : "Thiên đường mây Tam Đảo & Trở về TP. Việt Trì";
+  const day2Summary = isEnLang
+    ? "Morning pass drive to misty Tam Dao, Central Square, French stone church, chayote lunch, mountain cafe above the clouds, local market shopping and scenic drive back to Viet Tri."
+    : isZhLang
+    ? "穿越13公里蜿蜒山路前往避暑胜地三岛，游览中央广场与百年哥特式石教堂，品尝山珍佛手瓜，在云海咖啡馆俯瞰全景，逛特产集市后返回越池。"
+    : isKoLang
+    ? "구름 속 고원 마을 땀다오로 이동, 중앙 광장과 프랑스식 고딕 석조 성당 탐방, 차요테 순과 토종닭 오찬, 운해 전망 카페, 특산품 쇼핑 후 비엣찌 귀환."
+    : isJaLang
+    ? "霧深き避暑地タムダオへ。中央広場、1906年建造の石造り教会、名物ハヤトウリ料理、雲海を望む絶景カフェ、特産品市場を巡りヴィエッチーへ帰還。"
+    : "Thưởng thức buffet sáng tại resort, vượt cung đèo mây lên xã Tam Đảo trong sương. Check-in Quảng trường trung tâm, chiêm ngưỡng Nhà thờ đá Gothic cổ kính, thưởng thức bữa trưa đặc sản rau su su và gà đồi tại nhà hàng Tam Đảo Núi. Thưởng thức cà phê ngắm biển mây tại Cổng Trời, dạo chợ mua quà đặc sản và trở về Việt Trì lúc chiều muộn.";
+
   const days: ItineraryDay[] = [
     {
       dayNumber: 1,
-      dateLabel: "Ngày 1",
-      dayTitle: "Hành hương Cội Nguồn Đền Hùng & Nghỉ dưỡng Khoáng nóng Thanh Thủy",
-      daySummary: "Khởi hành từ trung tâm Việt Trì, ăn sáng Mai Anh, dâng hương tri ân công đức các Vua Hùng qua 4 đền linh thiêng và Bảo tàng Hùng Vương. Thưởng thức bữa trưa cá sông tại nhà hàng Giang Lan. Buổi chiều di chuyển về Lynn Times Thanh Thủy nhận phòng Shoptel 5 sao, ngâm khoáng Radon quý hiếm tại Ohayo Onsen, dạo phố đi bộ sinh thái và thưởng thức bữa tối Chả cá sông Đà & Tinh hoa Bắc Bộ.",
+      dateLabel: day1DateLabel,
+      dayTitle: day1Title,
+      daySummary: day1Summary,
       slots: day1Slots,
       dayDistanceKm: 55,
       stayForNight: lynnTimesStay,
     },
     {
       dayNumber: 2,
-      dateLabel: "Ngày 2",
-      dayTitle: "Thiên đường mây Tam Đảo & Trở về TP. Việt Trì",
-      daySummary: "Thưởng thức buffet sáng tại resort, vượt cung đèo mây lên xã Tam Đảo trong sương. Check-in Quảng trường trung tâm, chiêm ngưỡng Nhà thờ đá Gothic cổ kính, thưởng thức bữa trưa đặc sản rau su su và gà đồi tại nhà hàng Tam Đảo Núi. Thưởng thức cà phê ngắm biển mây tại Cổng Trời, dạo chợ mua quà đặc sản và trở về Việt Trì lúc chiều muộn.",
+      dateLabel: day2DateLabel,
+      dayTitle: day2Title,
+      daySummary: day2Summary,
       slots: day2Slots,
       dayDistanceKm: 140,
     },
@@ -1125,14 +1170,36 @@ export function getOfficialDocxItinerary(): GeneratedItinerary {
   const totalCostPerPerson = 1630000;
   const travelers = 2;
 
+  const itineraryTitle = isEnLang
+    ? "Viet Tri – Hung King Temple – Thanh Thuy – Tam Dao (2D1N)"
+    : isZhLang
+    ? "越池 – 雄王庙 – 清水 – 三岛（2天1晚）"
+    : isKoLang
+    ? "비엣찌 – 훙왕 신전 – 탄투이 – 땀다오 (1박2일)"
+    : isJaLang
+    ? "ヴィエッチー – フン王廟 – タントゥイ – タムダオ（1泊2日）"
+    : "Việt Trì – Đền Hùng – Thanh Thủy – Tam Đảo (2N1Đ)";
+
+  const itinerarySubtitle = isEnLang
+    ? "Standard Heritage Route: Ancestral Roots, Mineral Onsen & Misty Mountain Peaks"
+    : isZhLang
+    ? "标准经典行程：民族源头文化遗产、天然氡温泉与高山云海摄影"
+    : isKoLang
+    ? "공식 표준 일정: 민족의 시원 문화유산, 라돈 온천 휴양 & 땀다오 운해"
+    : isJaLang
+    ? "公式標準ツアー：祖先の地・世界遺産、天然ラドン温泉＆霧のタムダオ絶景"
+    : "Lịch trình chuẩn theo tài liệu hồ sơ: Di sản Cội Nguồn, Khoáng nóng Onsen & Săn mây núi ngàn";
+
+  const itineraryDurationLabel = isEnLang ? "2 days 1 night" : isZhLang ? "2天1晚" : isKoLang ? "1박 2일" : isJaLang ? "1泊2日" : "2 ngày 1 đêm";
+
   return {
     id: "plan-viet-tri-den-hung-thanh-thuy-tam-dao-2n1d",
-    title: "Việt Trì – Đền Hùng – Thanh Thủy – Tam Đảo (2N1Đ)",
-    subtitle: "Lịch trình chuẩn theo tài liệu hồ sơ: Di sản Cội Nguồn, Khoáng nóng Onsen & Săn mây núi ngàn",
+    title: itineraryTitle,
+    subtitle: itinerarySubtitle,
     targetDestination: "Việt Trì – Đền Hùng – Thanh Thủy – Tam Đảo",
     region: "Phú Thọ",
     durationDays: 2,
-    durationLabel: "2 ngày 1 đêm",
+    durationLabel: itineraryDurationLabel,
     transport: "Ô tô riêng",
     style: "Di sản & Nghỉ dưỡng",
     travelers,
