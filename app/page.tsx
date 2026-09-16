@@ -265,9 +265,9 @@ export const UI_TEXT = {
     viewAllBtn: "Xem tất cả →",
     selectProvinceLabel: "CHỌN KHU VỰC:",
     provAll: "Tất cả khu vực",
-    provPhuTho: "Khu vực Phú Thọ cũ",
-    provVinhPhuc: "Khu vực Vĩnh Phúc cũ",
-    provHoaBinh: "Khu vực Hòa Bình cũ",
+    provPhuTho: "Khu vực Phú Thọ",
+    provVinhPhuc: "Khu vực Vĩnh Phúc",
+    provHoaBinh: "Khu vực Hòa Bình",
     seasonLabel: "ĐI THEO MÙA",
     seasonAll: "Tất cả",
     seasonInSeason: "Đang hợp mùa",
@@ -737,9 +737,9 @@ export const UI_TEXT = {
     viewAllBtn: "View all →",
     selectProvinceLabel: "SELECT AREA:",
     provAll: "All Areas",
-    provPhuTho: "Khu vực Phú Thọ cũ (Phu Tho Area)",
-    provVinhPhuc: "Khu vực Vĩnh Phúc cũ (Vinh Phuc Area)",
-    provHoaBinh: "Khu vực Hòa Bình cũ (Hoa Binh Area)",
+    provPhuTho: "Khu vực Phú Thọ (Phu Tho Area)",
+    provVinhPhuc: "Khu vực Vĩnh Phúc (Vinh Phuc Area)",
+    provHoaBinh: "Khu vực Hòa Bình (Hoa Binh Area)",
     seasonLabel: "SEASONAL TRAVEL",
     seasonAll: "All",
     seasonInSeason: "Best this season",
@@ -1198,9 +1198,9 @@ export const UI_TEXT = {
     viewAllBtn: "查看全部 →",
     selectProvinceLabel: "选择区域:",
     provAll: "所有区域",
-    provPhuTho: "原富寿地区",
-    provVinhPhuc: "原永福地区",
-    provHoaBinh: "原和平地区",
+    provPhuTho: "富寿地区",
+    provVinhPhuc: "永福地区",
+    provHoaBinh: "和平地区",
     seasonLabel: "按季节旅行",
     seasonAll: "全部",
     seasonInSeason: "当季最佳",
@@ -1573,9 +1573,9 @@ export const UI_TEXT = {
     viewAllBtn: "전체 보기 →",
     selectProvinceLabel: "지역 선택:",
     provAll: "전체 지역",
-    provPhuTho: "구 푸토 지역",
-    provVinhPhuc: "구 빈푹 지역",
-    provHoaBinh: "구 호아빈 지역",
+    provPhuTho: "푸토 지역",
+    provVinhPhuc: "빈푹 지역",
+    provHoaBinh: "호아빈 지역",
     seasonLabel: "계절별 추천",
     seasonAll: "전체",
     seasonInSeason: "지금 가기 좋은 곳",
@@ -1948,9 +1948,9 @@ export const UI_TEXT = {
     viewAllBtn: "すべて見る →",
     selectProvinceLabel: "エリア選択:",
     provAll: "すべての地域",
-    provPhuTho: "旧フート地域",
-    provVinhPhuc: "旧ヴィンフック地域",
-    provHoaBinh: "旧ホアビン地域",
+    provPhuTho: "フート地域",
+    provVinhPhuc: "ビンフック地域",
+    provHoaBinh: "ホアビン地域",
     seasonLabel: "季節ごとの旅",
     seasonAll: "すべて",
     seasonInSeason: "今が旬",
@@ -3066,7 +3066,7 @@ export default function Home() {
   // Audio guide controls & voice customization (AI TTS + Browser Speech)
   const [audioLang, setAudioLang] = useState<"vi" | "en">("vi");
   const [availableVoices, setAvailableVoices] = useState<SpeechSynthesisVoice[]>([]);
-  const [selectedVoiceURI, setSelectedVoiceURI] = useState<string>("ai-female-north");
+  const [selectedVoiceURI, setSelectedVoiceURI] = useState<string>("ai-male-north");
   const [audioGuidePlaying, setAudioGuidePlaying] = useState(false);
   const [audioState, setAudioState] = useState<AudioState>("idle");
   const [speechPlaceId, setSpeechPlaceId] = useState<string | null>(null);
