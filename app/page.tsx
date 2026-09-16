@@ -3203,6 +3203,8 @@ export default function Home() {
   const [reviewComment, setReviewComment] = useState("");
   const [reviewPhotos, setReviewPhotos] = useState<string[]>([]);
   const [activeFoodId, setActiveFoodId] = useState<string | null>(null);
+  const [foodSearchQuery, setFoodSearchQuery] = useState("");
+  const [foodSeasonFilter, setFoodSeasonFilter] = useState<SeasonFilter>("Tất cả");
   
   // User Authentication & Role-Based Access Control
   const [authUser, setAuthUser] = useState<{
@@ -6436,7 +6438,7 @@ export default function Home() {
                 <div className="food-teaser-preview-grid">
                   <div className="food-teaser-item" onClick={() => { setActiveTab("food"); setFoodRegionId("phu-tho-dac-san"); window.scrollTo({ top: 0, behavior: "smooth" }); }}>
                     <div className="food-teaser-img-wrap">
-                      <img src="/images/food/thit-chua.png" alt="Thịt chua Thanh Sơn" onError={handleImageError} />
+                      <img src="/images/food/thit-chua.jpg" alt="Thịt chua Thanh Sơn" onError={handleImageError} />
                       <span className="food-teaser-tag">Phú Thọ</span>
                     </div>
                     <strong>Thịt chua Thanh Sơn</strong>
@@ -6444,7 +6446,7 @@ export default function Home() {
                   </div>
                   <div className="food-teaser-item" onClick={() => { setActiveTab("food"); setFoodRegionId("phu-tho-dac-san"); window.scrollTo({ top: 0, behavior: "smooth" }); }}>
                     <div className="food-teaser-img-wrap">
-                      <img src="/images/food/banh-tai.png" alt="Bánh tai Phú Thọ" onError={handleImageError} />
+                      <img src="/images/food/banh-tai.jpg" alt="Bánh tai Phú Thọ" onError={handleImageError} />
                       <span className="food-teaser-tag">Phú Thọ</span>
                     </div>
                     <strong>Bánh tai Đất Tổ</strong>
@@ -6474,25 +6476,113 @@ export default function Home() {
       )}
 
       {/* TAB: ẨM THỰC (DEDICATED FOOD & OCOP PAGE) */}
-      {activeTab === "food" && (
-        <section className="inner-page food-page" id="food-browser-section">
-          <div className="inner-page__intro inner-page__intro--compact food-hero-intro">
-            <div className="trip-hero-left">
-              <div className="trip-hero-badge">
-                <span className="trip-hero-badge__dot" />
-                <span>{isEn ? "🍲 TRADITIONAL CUISINE & OCOP" : "🍲 TINH HOA ẨM THỰC ĐẤT TỔ & OCOP"}</span>
-              </div>
-              <h1 className="trip-hero-title">
-                <span className="trip-hero-title__primary">{t.foodTitle1}</span>
-                <span className="trip-hero-title__accent" style={{ display: "block", color: "var(--red)" }}>{t.foodTitle2}</span>
-              </h1>
-              <p className="trip-hero-desc">{t.foodDesc}</p>
-            </div>
-          </div>
+      {activeTab === "food" && (() => {
+        const currentRegion = foodRegions.find((r) => r.id === foodRegionId) || foodRegions[0];
+        const allDishes = foodRegions.flatMap((r) => r.dishes);
+        const queryClean = foodSearchQuery.trim().toLowerCase();
 
-          <div className="content-section local-guide" style={{ padding: "0 0 60px", maxWidth: "1280px", margin: "0 auto" }}>
-            <div className="food-browser">
-              <div className="food-region-tabs" role="tablist" aria-label="Chọn tỉnh ẩm thực">
+        const filteredDishes = (queryClean ? allDishes : currentRegion.dishes).filter((food) => {
+          // Season filter
+          if (foodSeasonFilter === "Đang hợp mùa") {
+            const s = food.season.toLowerCase();
+            const matchesCurrentSeason = s.includes("quanh năm") || s.includes("mùa xuân") || s.includes("đặc biệt") || s.includes("mùa thu");
+            if (!matchesCurrentSeason) return false;
+          } else if (foodSeasonFilter !== "Tất cả") {
+            const seasonKeyword = foodSeasonFilter.replace("Mùa ", "").toLowerCase();
+            if (!food.season.toLowerCase().includes(seasonKeyword) && !food.season.toLowerCase().includes("quanh năm")) {
+              return false;
+            }
+          }
+
+          // Search query filter
+          if (queryClean) {
+            const matchName = food.name.toLowerCase().includes(queryClean) || (food.nameEn && food.nameEn.toLowerCase().includes(queryClean));
+            const matchDesc = food.description.toLowerCase().includes(queryClean) || (food.descriptionEn && food.descriptionEn.toLowerCase().includes(queryClean));
+            const matchRegion = food.region.toLowerCase().includes(queryClean);
+            const matchSeller = food.sellers.some((s) => s.name.toLowerCase().includes(queryClean) || s.address.toLowerCase().includes(queryClean));
+            return matchName || matchDesc || matchRegion || matchSeller;
+          }
+
+          return true;
+        });
+
+        return (
+          <section className="inner-page food-page" id="food-browser-section">
+            <button
+              type="button"
+              className="food-page-nav-back"
+              onClick={() => {
+                setActiveTab("explore");
+                window.scrollTo({ top: 0, behavior: "smooth" });
+              }}
+            >
+              <span>←</span>
+              <span>{isEn ? "Back to Explore" : "Quay lại Trang Khám Phá"}</span>
+            </button>
+
+            {/* HERO BANNER */}
+            <div className="food-hero-card">
+              <div className="food-hero-card__badge">
+                <span>🍲 {isEn ? "HERITAGE GASTRONOMY & CERTIFIED OCOP" : "TINH HOA ẨM THỰC ĐẤT TỔ & OCOP 3 VÙNG"}</span>
+              </div>
+              <h1 className="food-hero-card__title">
+                {t.foodTitle1} <em>{t.foodTitle2}</em>
+              </h1>
+              <p className="food-hero-card__desc">{t.foodDesc}</p>
+              <div className="food-hero-card__stats">
+                <span className="food-stat-chip">🏛️ Phú Thọ (8 đặc sản)</span>
+                <span className="food-stat-chip">🌲 Vĩnh Phúc (7 đặc sản)</span>
+                <span className="food-stat-chip">🏔️ Hòa Bình (8 đặc sản)</span>
+                <span className="food-stat-chip">🛒 Đặt mua OCOP chính gốc giao tận nơi</span>
+              </div>
+            </div>
+
+            {/* TOOLBAR: SEARCH & SEASON FILTER */}
+            <div className="food-toolbar">
+              <div className="food-search-box">
+                <span className="food-search-box__icon">🔍</span>
+                <input
+                  type="text"
+                  value={foodSearchQuery}
+                  onChange={(e) => setFoodSearchQuery(e.target.value)}
+                  placeholder={isEn ? "Search dishes, ingredients or regions (e.g., thit chua, banh tai, com lam...)..." : "Tìm kiếm món ngon, đặc sản OCOP (thịt chua, bánh tai, su su, cơm lam, cá thính...)..."}
+                />
+                {foodSearchQuery && (
+                  <button
+                    type="button"
+                    className="food-search-box__clear"
+                    onClick={() => setFoodSearchQuery("")}
+                    title="Xóa tìm kiếm"
+                  >
+                    ×
+                  </button>
+                )}
+              </div>
+
+              <div className="food-filter-row">
+                <div className="food-season-chips" role="group" aria-label="Lọc theo mùa">
+                  {(["Tất cả", "Đang hợp mùa", "Mùa xuân", "Mùa hè", "Mùa thu", "Mùa đông"] as SeasonFilter[]).map((s) => (
+                    <button
+                      key={s}
+                      type="button"
+                      className={`food-season-chip ${foodSeasonFilter === s ? "is-active" : ""}`}
+                      onClick={() => setFoodSeasonFilter(s)}
+                    >
+                      {s === "Tất cả" ? "🍽️ Tất cả" : s === "Đang hợp mùa" ? "✨ Đang hợp mùa" : s}
+                    </button>
+                  ))}
+                </div>
+                {queryClean && (
+                  <span style={{ fontSize: "12.5px", fontWeight: 700, color: "#1b4332" }}>
+                    Tìm thấy {filteredDishes.length} đặc sản
+                  </span>
+                )}
+              </div>
+            </div>
+
+            {/* REGION SELECTION TABS */}
+            {!queryClean && (
+              <div className="food-page-tabs" role="tablist" aria-label="Chọn tỉnh ẩm thực">
                 {foodRegions.map((region) => {
                   const label =
                     region.id === "phu-tho-dac-san"
@@ -6502,23 +6592,51 @@ export default function Home() {
                       : region.id === "hoa-binh-dac-san"
                       ? t.provHoaBinh
                       : region.label;
+                  const icon = region.id === "phu-tho-dac-san" ? "🏛️" : region.id === "vinh-phuc-dac-san" ? "🌲" : "🏔️";
+                  const isAct = foodRegionId === region.id;
                   return (
                     <button
                       key={region.id}
                       role="tab"
-                      aria-selected={foodRegionId === region.id}
-                      className={foodRegionId === region.id ? "is-active" : ""}
+                      aria-selected={isAct}
+                      className={`food-page-tab-btn ${isAct ? "is-active" : ""}`}
                       onClick={() => setFoodRegionId(region.id)}
                     >
-                      {label}
+                      <span>{icon}</span>
+                      <span>{label}</span>
+                      <span className="food-page-tab-count">{region.dishes.length}</span>
                     </button>
                   );
                 })}
               </div>
-              {foodRegions.filter((region) => region.id === foodRegionId).map((region) => (
-                <div key={region.id} className="food-list">
-                  <p className="food-region-note">{region.subtitle}</p>
-                  {region.dishes.map((food, index) => (
+            )}
+
+            {/* DEDICATED FULL-WIDTH BROWSER */}
+            <div className="food-page-browser">
+              {!queryClean && (
+                <div className="food-region-note">
+                  <strong>✦ {currentRegion.label}:</strong> {currentRegion.subtitle}
+                </div>
+              )}
+
+              {filteredDishes.length === 0 ? (
+                <div className="food-empty-search">
+                  <span>🍲</span>
+                  <h4>{isEn ? "No matching culinary dishes found" : "Không tìm thấy món ăn nào phù hợp"}</h4>
+                  <p>{isEn ? "Try changing your keyword or season filter." : "Thử đổi từ khóa tìm kiếm hoặc chọn lại bộ lọc mùa."}</p>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setFoodSearchQuery("");
+                      setFoodSeasonFilter("Tất cả");
+                    }}
+                  >
+                    {isEn ? "Reset Filters" : "Xem tất cả đặc sản"}
+                  </button>
+                </div>
+              ) : (
+                <div className="food-list">
+                  {filteredDishes.map((food, index) => (
                     <div className={`food-entry ${activeFoodId === food.id ? "is-active" : ""}`} key={food.id}>
                       <button
                         type="button"
@@ -6527,16 +6645,29 @@ export default function Home() {
                         onClick={() => setActiveFoodId((current) => current === food.id ? null : food.id)}
                       >
                         <span className="food-row__num">{String(index + 1).padStart(2, "0")}</span>
-                        <img className="food-row__thumb" src={food.image} alt={food.name} loading="lazy" onError={handleImageError} />
+                        <img
+                          className="food-row__thumb"
+                          src={food.image}
+                          alt={food.name}
+                          loading="lazy"
+                          onError={handleImageError}
+                        />
                         <div className="food-row__main">
                           <div className="food-row__header">
-                            <b className="food-row__title">{isEn && food.nameEn ? food.nameEn : food.name}</b>
+                            <div style={{ display: "flex", alignItems: "center", gap: "8px", flexWrap: "wrap" }}>
+                              <b className="food-row__title">{isEn && food.nameEn ? food.nameEn : food.name}</b>
+                              <span style={{ fontSize: "11px", fontWeight: 700, color: "#1b4332", background: "rgba(27, 67, 50, 0.08)", padding: "2px 8px", borderRadius: "6px" }}>
+                                {food.region}
+                              </span>
+                            </div>
                             <span className="food-row__price">{food.price}</span>
                           </div>
                           <p className="food-row__desc">{isEn && food.descriptionEn ? food.descriptionEn : food.description}</p>
                           <div className="food-row__footer">
                             <span className="food-row__season">🗓️ {isEn && food.seasonEn ? food.seasonEn : food.season}</span>
-                            <span className="food-row__toggle">{activeFoodId === food.id ? t.foodToggleHide : t.foodToggleView}</span>
+                            <span className="food-row__toggle">
+                              {activeFoodId === food.id ? t.foodToggleHide : `${t.foodToggleView} (${food.sellers.length} điểm bán)`}
+                            </span>
                           </div>
                         </div>
                       </button>
@@ -6544,11 +6675,11 @@ export default function Home() {
                     </div>
                   ))}
                 </div>
-              ))}
+              )}
             </div>
-          </div>
-        </section>
-      )}
+          </section>
+        );
+      })()}
 
       {/* TAB 2: LỊCH TRÌNH (TRIP - TOUR GUIDE) */}
       {activeTab === "trip" && (

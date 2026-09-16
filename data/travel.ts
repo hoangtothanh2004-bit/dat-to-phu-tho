@@ -3127,7 +3127,7 @@ export const foodRegions: FoodRegion[] = [
         id: 'ca-nuong-song-da',
         name: 'Cá nướng sông Đà',
         nameEn: 'Da River Grilled Fish',
-        image: '/images/food/ca-song-lo.jpg',
+        image: '/images/food/ca-nuong-song-da.jpg',
         description: 'Cá lăng, cá trắm đen đánh bắt từ lòng hồ sông Đà, kẹp vào thanh tre tươi ướp muối ớt, mắc khén rồi nướng chậm trên than củi bên bờ hồ. Thịt cá dai ngọt thơm nức mũi.',
         descriptionEn: 'Fresh river fish caught from Da River reservoir, seasoned with mountain mac khen spices and grilled on fresh bamboo skewers.',
         price: 'Từ 150.000đ/con',
