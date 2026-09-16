@@ -1327,7 +1327,7 @@ export const places: Place[] = [
     ],
     transportTips: {
       recommendedVehicle: "Ô tô tới bến cảng Thung Nai rồi đi tàu thủy",
-      routeAdvice: "Từ TP. Hòa Bình cũ theo đường Tây Tiến lên cảng Thung Nai khoảng 15 km, bãi đỗ xe ô tô tại bến cảng.",
+      routeAdvice: "Từ TP. Hòa Bình theo đường Tây Tiến lên cảng Thung Nai khoảng 15 km, bãi đỗ xe ô tô tại bến cảng.",
       caution: "Nên thỏa thuận giá tàu và giờ đón trả rõ ràng với chủ thuyền trước khi xuất bến."
     }
   },
@@ -1406,7 +1406,7 @@ export const places: Place[] = [
     shortName: "Bảo tàng Mường",
     category: "Văn hóa & làng nghề",
     region: "Hòa Bình",
-    district: "TP. Hòa Bình cũ",
+    district: "TP. Hòa Bình",
     location: "Số 202 đường Tây Tiến, phường Thái Bình, tỉnh Phú Thọ",
     locationEn: "Số 202 đường Tây Tiến, Thái Bình, Phu Tho",
     image: "/images/places/bao-tang-muong.jpg",
@@ -1464,7 +1464,7 @@ export const places: Place[] = [
     ],
     transportTips: {
       recommendedVehicle: "Ô tô hoặc xe máy",
-      routeAdvice: "Từ trung tâm TP. Hòa Bình cũ đi theo đường Tây Tiến hướng lên dốc Cun chỉ 4 km là tới cổng bảo tàng.",
+      routeAdvice: "Từ trung tâm TP. Hòa Bình đi theo đường Tây Tiến hướng lên dốc Cun chỉ 4 km là tới cổng bảo tàng.",
       caution: "Bảo tàng nằm trên sườn đồi thoai thoải có bậc đá, đi giày thể thao để tham quan thuận tiện."
     }
   }
@@ -1474,7 +1474,7 @@ export const places: Place[] = [
 export const phuTho100Directory: DirectoryPlace[] = [
   {
     "stt": "1",
-    "district": "Việt Trì cũ",
+    "district": "Việt Trì",
     "name": "Khu di tích lịch sử quốc gia đặc biệt Đền Hùng",
     "category": "Tâm linh - lịch sử",
     "location": "Hy Cương",
@@ -1485,7 +1485,7 @@ export const phuTho100Directory: DirectoryPlace[] = [
   },
   {
     "stt": "2",
-    "district": "Việt Trì cũ",
+    "district": "Việt Trì",
     "name": "Cổng Đền Hùng",
     "category": "Kiến trúc - check-in",
     "location": "Hy Cương",
@@ -1496,7 +1496,7 @@ export const phuTho100Directory: DirectoryPlace[] = [
   },
   {
     "stt": "3",
-    "district": "Việt Trì cũ",
+    "district": "Việt Trì",
     "name": "Đền Hạ",
     "category": "Tâm linh - lịch sử",
     "location": "Núi Nghĩa Lĩnh, Hy Cương",
@@ -1507,7 +1507,7 @@ export const phuTho100Directory: DirectoryPlace[] = [
   },
   {
     "stt": "4",
-    "district": "Việt Trì cũ",
+    "district": "Việt Trì",
     "name": "Chùa Thiên Quang",
     "category": "Tâm linh",
     "location": "Núi Nghĩa Lĩnh, Hy Cương",
@@ -1518,7 +1518,7 @@ export const phuTho100Directory: DirectoryPlace[] = [
   },
   {
     "stt": "5",
-    "district": "Việt Trì cũ",
+    "district": "Việt Trì",
     "name": "Đền Trung",
     "category": "Tâm linh - lịch sử",
     "location": "Núi Nghĩa Lĩnh, Hy Cương",
@@ -1529,7 +1529,7 @@ export const phuTho100Directory: DirectoryPlace[] = [
   },
   {
     "stt": "6",
-    "district": "Việt Trì cũ",
+    "district": "Việt Trì",
     "name": "Đền Thượng",
     "category": "Tâm linh - lịch sử",
     "location": "Đỉnh Nghĩa Lĩnh, Hy Cương",
@@ -1540,7 +1540,7 @@ export const phuTho100Directory: DirectoryPlace[] = [
   },
   {
     "stt": "7",
-    "district": "Việt Trì cũ",
+    "district": "Việt Trì",
     "name": "Lăng Hùng Vương",
     "category": "Lịch sử - tâm linh",
     "location": "Núi Nghĩa Lĩnh, Hy Cương",
@@ -1551,7 +1551,7 @@ export const phuTho100Directory: DirectoryPlace[] = [
   },
   {
     "stt": "8",
-    "district": "Việt Trì cũ",
+    "district": "Việt Trì",
     "name": "Đền Giếng",
     "category": "Tâm linh",
     "location": "Hy Cương",
@@ -1562,7 +1562,7 @@ export const phuTho100Directory: DirectoryPlace[] = [
   },
   {
     "stt": "9",
-    "district": "Việt Trì cũ",
+    "district": "Việt Trì",
     "name": "Đền Tổ Mẫu Âu Cơ (khu Đền Hùng)",
     "category": "Tâm linh",
     "location": "Núi Vặn, Hy Cương",
@@ -1573,7 +1573,7 @@ export const phuTho100Directory: DirectoryPlace[] = [
   },
   {
     "stt": "10",
-    "district": "Việt Trì cũ",
+    "district": "Việt Trì",
     "name": "Đền Quốc Tổ Lạc Long Quân",
     "category": "Tâm linh",
     "location": "Khu Đền Hùng, Hy Cương",
@@ -1584,7 +1584,7 @@ export const phuTho100Directory: DirectoryPlace[] = [
   },
   {
     "stt": "11",
-    "district": "Việt Trì cũ",
+    "district": "Việt Trì",
     "name": "Bảo tàng Hùng Vương tại Khu di tích Đền Hùng",
     "category": "Bảo tàng - lịch sử",
     "location": "Hy Cương",
@@ -1595,7 +1595,7 @@ export const phuTho100Directory: DirectoryPlace[] = [
   },
   {
     "stt": "12",
-    "district": "Việt Trì cũ",
+    "district": "Việt Trì",
     "name": "Đồi Phân Bùng / khu cảnh quan Đền Hùng",
     "category": "Cảnh quan - dã ngoại",
     "location": "Khu Đền Hùng",
@@ -1606,7 +1606,7 @@ export const phuTho100Directory: DirectoryPlace[] = [
   },
   {
     "stt": "13",
-    "district": "Việt Trì cũ",
+    "district": "Việt Trì",
     "name": "Điểm du lịch văn hóa cộng đồng Hùng Lô",
     "category": "Văn hóa - di sản",
     "location": "phường Vân Phú, tỉnh Phú Thọ",
@@ -1617,7 +1617,7 @@ export const phuTho100Directory: DirectoryPlace[] = [
   },
   {
     "stt": "14",
-    "district": "Việt Trì cũ",
+    "district": "Việt Trì",
     "name": "Đình cổ Hùng Lô",
     "category": "Tâm linh - kiến trúc",
     "location": "phường Vân Phú, tỉnh Phú Thọ",
@@ -1628,7 +1628,7 @@ export const phuTho100Directory: DirectoryPlace[] = [
   },
   {
     "stt": "15",
-    "district": "Việt Trì cũ",
+    "district": "Việt Trì",
     "name": "Làng cổ Hùng Lô",
     "category": "Di sản - trải nghiệm",
     "location": "phường Vân Phú, tỉnh Phú Thọ",
@@ -1639,7 +1639,7 @@ export const phuTho100Directory: DirectoryPlace[] = [
   },
   {
     "stt": "16",
-    "district": "Việt Trì cũ",
+    "district": "Việt Trì",
     "name": "Không gian Hát Xoan Hùng Lô",
     "category": "Di sản phi vật thể",
     "location": "phường Vân Phú, tỉnh Phú Thọ",
@@ -1650,10 +1650,10 @@ export const phuTho100Directory: DirectoryPlace[] = [
   },
   {
     "stt": "17",
-    "district": "Việt Trì cũ",
+    "district": "Việt Trì",
     "name": "Miếu Lãi Lèn",
     "category": "Tín ngưỡng - Hát Xoan",
-    "location": "Kim Đức cũ, Việt Trì",
+    "location": "Kim Đức, Việt Trì",
     "restaurants": "Nhà hàng trung tâm Việt Trì",
     "stays": "Khách sạn Việt Trì",
     "distance": "5-10 km",
@@ -1661,10 +1661,10 @@ export const phuTho100Directory: DirectoryPlace[] = [
   },
   {
     "stt": "18",
-    "district": "Việt Trì cũ",
+    "district": "Việt Trì",
     "name": "Đình Thét",
     "category": "Di tích - Hát Xoan",
-    "location": "Khu vực Kim Đức cũ",
+    "location": "Khu vực Kim Đức",
     "restaurants": "Nhà hàng Việt Trì",
     "stays": "Khách sạn Việt Trì",
     "distance": "5-10 km",
@@ -1672,10 +1672,10 @@ export const phuTho100Directory: DirectoryPlace[] = [
   },
   {
     "stt": "19",
-    "district": "Việt Trì cũ",
+    "district": "Việt Trì",
     "name": "Đình Kim Đái",
     "category": "Di tích - Hát Xoan",
-    "location": "Khu vực Kim Đức cũ",
+    "location": "Khu vực Kim Đức",
     "restaurants": "Nhà hàng Việt Trì",
     "stays": "Khách sạn Việt Trì",
     "distance": "5-10 km",
@@ -1683,10 +1683,10 @@ export const phuTho100Directory: DirectoryPlace[] = [
   },
   {
     "stt": "20",
-    "district": "Việt Trì cũ",
+    "district": "Việt Trì",
     "name": "Đình An Thái",
     "category": "Di tích - Hát Xoan",
-    "location": "Khu vực Phượng Lâu cũ",
+    "location": "Khu vực Phượng Lâu",
     "restaurants": "Nhà hàng Việt Trì",
     "stays": "Khách sạn Việt Trì",
     "distance": "5-10 km",
@@ -1694,7 +1694,7 @@ export const phuTho100Directory: DirectoryPlace[] = [
   },
   {
     "stt": "21",
-    "district": "Việt Trì cũ",
+    "district": "Việt Trì",
     "name": "Công viên Văn Lang",
     "category": "Công viên - check-in",
     "location": "Trung tâm Việt Trì",
@@ -1705,7 +1705,7 @@ export const phuTho100Directory: DirectoryPlace[] = [
   },
   {
     "stt": "22",
-    "district": "Việt Trì cũ",
+    "district": "Việt Trì",
     "name": "Hồ Công viên Văn Lang - cầu đi bộ",
     "category": "Cảnh quan đô thị",
     "location": "Trung tâm Việt Trì",
@@ -1716,7 +1716,7 @@ export const phuTho100Directory: DirectoryPlace[] = [
   },
   {
     "stt": "23",
-    "district": "Việt Trì cũ",
+    "district": "Việt Trì",
     "name": "Bảo tàng Hùng Vương (thành phố Việt Trì)",
     "category": "Bảo tàng - văn hóa",
     "location": "Trung tâm Việt Trì",
@@ -1727,7 +1727,7 @@ export const phuTho100Directory: DirectoryPlace[] = [
   },
   {
     "stt": "24",
-    "district": "Việt Trì cũ",
+    "district": "Việt Trì",
     "name": "Đền Tam Giang",
     "category": "Tâm linh - lịch sử",
     "location": "Bạch Hạc",
@@ -1738,7 +1738,7 @@ export const phuTho100Directory: DirectoryPlace[] = [
   },
   {
     "stt": "25",
-    "district": "Việt Trì cũ",
+    "district": "Việt Trì",
     "name": "Chùa Đại Bi",
     "category": "Tâm linh",
     "location": "Bạch Hạc",
@@ -1749,7 +1749,7 @@ export const phuTho100Directory: DirectoryPlace[] = [
   },
   {
     "stt": "26",
-    "district": "Việt Trì cũ",
+    "district": "Việt Trì",
     "name": "Điểm du lịch văn hóa cộng đồng Bạch Hạc",
     "category": "Văn hóa - sông nước",
     "location": "Phường Thanh Miếu, tỉnh Phú Thọ",
@@ -1760,7 +1760,7 @@ export const phuTho100Directory: DirectoryPlace[] = [
   },
   {
     "stt": "27",
-    "district": "Việt Trì cũ",
+    "district": "Việt Trì",
     "name": "Ngã ba Hạc",
     "category": "Cảnh quan sông nước",
     "location": "Bạch Hạc",
@@ -1771,7 +1771,7 @@ export const phuTho100Directory: DirectoryPlace[] = [
   },
   {
     "stt": "28",
-    "district": "Lâm Thao cũ",
+    "district": "Lâm Thao",
     "name": "Di tích khảo cổ Sơn Vi",
     "category": "Khảo cổ",
     "location": "Sơn Vi",
@@ -1782,7 +1782,7 @@ export const phuTho100Directory: DirectoryPlace[] = [
   },
   {
     "stt": "29",
-    "district": "Lâm Thao cũ",
+    "district": "Lâm Thao",
     "name": "Đền thờ Nguyễn Mẫn Đốc",
     "category": "Lịch sử - danh nhân",
     "location": "Xuân Lũng",
@@ -1793,7 +1793,7 @@ export const phuTho100Directory: DirectoryPlace[] = [
   },
   {
     "stt": "30",
-    "district": "Lâm Thao cũ",
+    "district": "Lâm Thao",
     "name": "Đình Du Cung",
     "category": "Di tích lịch sử - văn hóa",
     "location": "Lâm Thao",
@@ -1804,7 +1804,7 @@ export const phuTho100Directory: DirectoryPlace[] = [
   },
   {
     "stt": "31",
-    "district": "Lâm Thao cũ",
+    "district": "Lâm Thao",
     "name": "Chùa Danh Sơn",
     "category": "Tâm linh",
     "location": "Lâm Thao",
@@ -1815,7 +1815,7 @@ export const phuTho100Directory: DirectoryPlace[] = [
   },
   {
     "stt": "32",
-    "district": "Lâm Thao cũ",
+    "district": "Lâm Thao",
     "name": "Đình Hy Sơn",
     "category": "Di tích thời Hùng Vương",
     "location": "Khu vực Lâm Thao",
@@ -1826,7 +1826,7 @@ export const phuTho100Directory: DirectoryPlace[] = [
   },
   {
     "stt": "33",
-    "district": "Lâm Thao cũ",
+    "district": "Lâm Thao",
     "name": "Đình Sơn Vi",
     "category": "Đình làng - văn hóa",
     "location": "Sơn Vi",
@@ -1837,7 +1837,7 @@ export const phuTho100Directory: DirectoryPlace[] = [
   },
   {
     "stt": "34",
-    "district": "Lâm Thao cũ",
+    "district": "Lâm Thao",
     "name": "Đình Xuân Lũng",
     "category": "Đình làng - văn hóa",
     "location": "Xuân Lũng",
@@ -1848,7 +1848,7 @@ export const phuTho100Directory: DirectoryPlace[] = [
   },
   {
     "stt": "35",
-    "district": "Lâm Thao cũ",
+    "district": "Lâm Thao",
     "name": "Làng nghề tương Dục Mỹ",
     "category": "Làng nghề - ẩm thực",
     "location": "Lâm Thao",
@@ -1859,7 +1859,7 @@ export const phuTho100Directory: DirectoryPlace[] = [
   },
   {
     "stt": "36",
-    "district": "Phù Ninh cũ",
+    "district": "Phù Ninh",
     "name": "Đền Nhà Bà",
     "category": "Tâm linh - thời Hùng Vương",
     "location": "Tiên Du",
@@ -1870,7 +1870,7 @@ export const phuTho100Directory: DirectoryPlace[] = [
   },
   {
     "stt": "37",
-    "district": "Phù Ninh cũ",
+    "district": "Phù Ninh",
     "name": "Đình Tối Linh",
     "category": "Di tích tín ngưỡng",
     "location": "Tiên Du",
@@ -1881,7 +1881,7 @@ export const phuTho100Directory: DirectoryPlace[] = [
   },
   {
     "stt": "38",
-    "district": "Phù Ninh cũ",
+    "district": "Phù Ninh",
     "name": "Chùa Thái Bình",
     "category": "Tâm linh",
     "location": "Tiên Du",
@@ -1892,7 +1892,7 @@ export const phuTho100Directory: DirectoryPlace[] = [
   },
   {
     "stt": "39",
-    "district": "Phù Ninh cũ",
+    "district": "Phù Ninh",
     "name": "Làng nón Gia Thanh",
     "category": "Làng nghề",
     "location": "Gia Thanh",
@@ -1903,18 +1903,18 @@ export const phuTho100Directory: DirectoryPlace[] = [
   },
   {
     "stt": "40",
-    "district": "Phù Ninh cũ",
+    "district": "Phù Ninh",
     "name": "Khu vực đồi chè Phù Ninh",
     "category": "Nông nghiệp - cảnh quan",
     "location": "Phù Ninh",
-    "restaurants": "Nhà hàng huyện cũ",
+    "restaurants": "Nhà hàng đặc sản",
     "stays": "Lưu trú Phù Ninh/Việt Trì",
     "distance": "5-20 km",
     "notes": "Thích hợp check-in, trải nghiệm chè nếu có đơn vị đón khách."
   },
   {
     "stt": "41",
-    "district": "Phù Ninh cũ",
+    "district": "Phù Ninh",
     "name": "Đền Hùng Vương vùng Phù Ninh (các điểm thờ vọng địa phương)",
     "category": "Tín ngưỡng dân gian",
     "location": "Phù Ninh",
@@ -1925,7 +1925,7 @@ export const phuTho100Directory: DirectoryPlace[] = [
   },
   {
     "stt": "42",
-    "district": "Hạ Hòa cũ",
+    "district": "Hạ Hòa",
     "name": "Đền Mẫu Âu Cơ",
     "category": "Tâm linh - quốc gia",
     "location": "Hiền Lương",
@@ -1936,7 +1936,7 @@ export const phuTho100Directory: DirectoryPlace[] = [
   },
   {
     "stt": "43",
-    "district": "Hạ Hòa cũ",
+    "district": "Hạ Hòa",
     "name": "Ao Giời - Suối Tiên",
     "category": "Sinh thái - thác suối",
     "location": "Hiền Lương",
@@ -1947,7 +1947,7 @@ export const phuTho100Directory: DirectoryPlace[] = [
   },
   {
     "stt": "44",
-    "district": "Hạ Hòa cũ",
+    "district": "Hạ Hòa",
     "name": "Đầm Ao Châu",
     "category": "Sinh thái hồ",
     "location": "Hạ Hòa",
@@ -1958,7 +1958,7 @@ export const phuTho100Directory: DirectoryPlace[] = [
   },
   {
     "stt": "45",
-    "district": "Hạ Hòa cũ",
+    "district": "Hạ Hòa",
     "name": "Đầm Vân Hội",
     "category": "Sinh thái hồ",
     "location": "Hạ Hòa",
@@ -1969,10 +1969,10 @@ export const phuTho100Directory: DirectoryPlace[] = [
   },
   {
     "stt": "46",
-    "district": "Hạ Hòa cũ",
+    "district": "Hạ Hòa",
     "name": "Đền Chu Hưng",
     "category": "Tâm linh - lịch sử",
-    "location": "Ấm Hạ cũ",
+    "location": "Ấm Hạ",
     "restaurants": "Nhà hàng địa phương",
     "stays": "Nhà nghỉ Hạ Hòa",
     "distance": "5-20 km",
@@ -1980,7 +1980,7 @@ export const phuTho100Directory: DirectoryPlace[] = [
   },
   {
     "stt": "47",
-    "district": "Hạ Hòa cũ",
+    "district": "Hạ Hòa",
     "name": "Núi Vả",
     "category": "Cảnh quan tự nhiên",
     "location": "Hạ Hòa",
@@ -1991,7 +1991,7 @@ export const phuTho100Directory: DirectoryPlace[] = [
   },
   {
     "stt": "48",
-    "district": "Hạ Hòa cũ",
+    "district": "Hạ Hòa",
     "name": "Vùng chè Hạ Hòa",
     "category": "Nông nghiệp - trải nghiệm",
     "location": "Hạ Hòa",
@@ -2002,7 +2002,7 @@ export const phuTho100Directory: DirectoryPlace[] = [
   },
   {
     "stt": "49",
-    "district": "Hạ Hòa cũ",
+    "district": "Hạ Hòa",
     "name": "Làng quê ven sông Hồng Hạ Hòa",
     "category": "Du lịch nông thôn",
     "location": "Hạ Hòa",
@@ -2013,7 +2013,7 @@ export const phuTho100Directory: DirectoryPlace[] = [
   },
   {
     "stt": "50",
-    "district": "Đoan Hùng cũ",
+    "district": "Đoan Hùng",
     "name": "Tượng đài Chiến thắng Sông Lô",
     "category": "Lịch sử - cảnh quan",
     "location": "Chí Đám",
@@ -2024,7 +2024,7 @@ export const phuTho100Directory: DirectoryPlace[] = [
   },
   {
     "stt": "51",
-    "district": "Đoan Hùng cũ",
+    "district": "Đoan Hùng",
     "name": "Ngã ba sông Lô - sông Chảy",
     "category": "Cảnh quan sông nước",
     "location": "Chí Đám",
@@ -2035,7 +2035,7 @@ export const phuTho100Directory: DirectoryPlace[] = [
   },
   {
     "stt": "52",
-    "district": "Đoan Hùng cũ",
+    "district": "Đoan Hùng",
     "name": "Vùng bưởi đặc sản Đoan Hùng",
     "category": "Nông nghiệp - đặc sản",
     "location": "Các xã vùng bưởi Đoan Hùng",
@@ -2046,7 +2046,7 @@ export const phuTho100Directory: DirectoryPlace[] = [
   },
   {
     "stt": "53",
-    "district": "Đoan Hùng cũ",
+    "district": "Đoan Hùng",
     "name": "Vườn bưởi Chí Đám",
     "category": "Nông nghiệp - trải nghiệm",
     "location": "Chí Đám",
@@ -2057,10 +2057,10 @@ export const phuTho100Directory: DirectoryPlace[] = [
   },
   {
     "stt": "54",
-    "district": "Đoan Hùng cũ",
+    "district": "Đoan Hùng",
     "name": "Vườn bưởi Bằng Luân",
     "category": "Nông nghiệp - trải nghiệm",
-    "location": "Bằng Luân cũ",
+    "location": "Bằng Luân",
     "restaurants": "Ẩm thực nhà vườn",
     "stays": "Nhà nghỉ Đoan Hùng",
     "distance": "5-20 km",
@@ -2068,7 +2068,7 @@ export const phuTho100Directory: DirectoryPlace[] = [
   },
   {
     "stt": "55",
-    "district": "Cẩm Khê cũ",
+    "district": "Cẩm Khê",
     "name": "Căn cứ Tiên Động",
     "category": "Lịch sử quốc gia",
     "location": "Tiên Lương",
@@ -2079,10 +2079,10 @@ export const phuTho100Directory: DirectoryPlace[] = [
   },
   {
     "stt": "56",
-    "district": "Cẩm Khê cũ",
+    "district": "Cẩm Khê",
     "name": "Đình Thổ Khối",
     "category": "Di tích quốc gia",
-    "location": "Minh Tân cũ",
+    "location": "Minh Tân",
     "restaurants": "Nhà hàng Cẩm Khê",
     "stays": "Nhà nghỉ Cẩm Khê",
     "distance": "5-20 km",
@@ -2090,10 +2090,10 @@ export const phuTho100Directory: DirectoryPlace[] = [
   },
   {
     "stt": "57",
-    "district": "Cẩm Khê cũ",
+    "district": "Cẩm Khê",
     "name": "Đình Hạ Khê",
     "category": "Di tích cấp tỉnh",
-    "location": "Minh Tân cũ",
+    "location": "Minh Tân",
     "restaurants": "Nhà hàng địa phương",
     "stays": "Nhà nghỉ Cẩm Khê",
     "distance": "5-20 km",
@@ -2101,10 +2101,10 @@ export const phuTho100Directory: DirectoryPlace[] = [
   },
   {
     "stt": "58",
-    "district": "Cẩm Khê cũ",
+    "district": "Cẩm Khê",
     "name": "Đình Cả Phùng Xá",
     "category": "Di tích cấp tỉnh",
-    "location": "Minh Tân cũ",
+    "location": "Minh Tân",
     "restaurants": "Nhà hàng địa phương",
     "stays": "Nhà nghỉ Cẩm Khê",
     "distance": "5-20 km",
@@ -2112,10 +2112,10 @@ export const phuTho100Directory: DirectoryPlace[] = [
   },
   {
     "stt": "59",
-    "district": "Cẩm Khê cũ",
+    "district": "Cẩm Khê",
     "name": "Đình Cả Văn Phú",
     "category": "Tín ngưỡng thời Hùng Vương",
-    "location": "Xã Cẩm Khê cũ",
+    "location": "Xã Cẩm Khê",
     "restaurants": "Nhà hàng xã Cẩm Khê",
     "stays": "Nhà nghỉ Cẩm Khê",
     "distance": "0-10 km",
@@ -2123,10 +2123,10 @@ export const phuTho100Directory: DirectoryPlace[] = [
   },
   {
     "stt": "60",
-    "district": "Cẩm Khê cũ",
+    "district": "Cẩm Khê",
     "name": "Đình Nga Hà",
     "category": "Tín ngưỡng thời Hùng Vương",
-    "location": "Xã Cẩm Khê cũ",
+    "location": "Xã Cẩm Khê",
     "restaurants": "Nhà hàng trung tâm xã",
     "stays": "Nhà nghỉ Cẩm Khê",
     "distance": "0-10 km",
@@ -2134,10 +2134,10 @@ export const phuTho100Directory: DirectoryPlace[] = [
   },
   {
     "stt": "61",
-    "district": "Cẩm Khê cũ",
+    "district": "Cẩm Khê",
     "name": "Đình Bình Phú",
     "category": "Di tích kiến trúc - tín ngưỡng",
-    "location": "Xã Cẩm Khê cũ",
+    "location": "Xã Cẩm Khê",
     "restaurants": "Nhà hàng trung tâm xã",
     "stays": "Nhà nghỉ Cẩm Khê",
     "distance": "0-10 km",
@@ -2145,10 +2145,10 @@ export const phuTho100Directory: DirectoryPlace[] = [
   },
   {
     "stt": "62",
-    "district": "Cẩm Khê cũ",
+    "district": "Cẩm Khê",
     "name": "Làng nón Sai Nga",
     "category": "Làng nghề",
-    "location": "Sai Nga cũ",
+    "location": "Sai Nga",
     "restaurants": "Ẩm thực địa phương",
     "stays": "Nhà nghỉ Cẩm Khê",
     "distance": "5-15 km",
@@ -2156,7 +2156,7 @@ export const phuTho100Directory: DirectoryPlace[] = [
   },
   {
     "stt": "63",
-    "district": "Thanh Ba cũ",
+    "district": "Thanh Ba",
     "name": "Đền Du Yến",
     "category": "Di tích quốc gia",
     "location": "Chí Tiên",
@@ -2167,7 +2167,7 @@ export const phuTho100Directory: DirectoryPlace[] = [
   },
   {
     "stt": "64",
-    "district": "Thanh Ba cũ",
+    "district": "Thanh Ba",
     "name": "Đình - đền Mạo Phổ",
     "category": "Di tích quốc gia",
     "location": "Lương Lỗ",
@@ -2178,7 +2178,7 @@ export const phuTho100Directory: DirectoryPlace[] = [
   },
   {
     "stt": "65",
-    "district": "Thanh Ba cũ",
+    "district": "Thanh Ba",
     "name": "Núi Thắm",
     "category": "Khảo cổ - cảnh quan",
     "location": "Thanh Ba",
@@ -2189,7 +2189,7 @@ export const phuTho100Directory: DirectoryPlace[] = [
   },
   {
     "stt": "66",
-    "district": "Thanh Ba cũ",
+    "district": "Thanh Ba",
     "name": "Vùng chè Thanh Ba",
     "category": "Nông nghiệp - cảnh quan",
     "location": "Thanh Ba",
@@ -2200,7 +2200,7 @@ export const phuTho100Directory: DirectoryPlace[] = [
   },
   {
     "stt": "67",
-    "district": "Thanh Ba cũ",
+    "district": "Thanh Ba",
     "name": "Làng quê trung du Thanh Ba",
     "category": "Du lịch nông thôn",
     "location": "Thanh Ba",
@@ -2211,10 +2211,10 @@ export const phuTho100Directory: DirectoryPlace[] = [
   },
   {
     "stt": "68",
-    "district": "Thị xã Phú Thọ cũ",
-    "name": "Khu trung tâm thị xã Phú Thọ cũ",
+    "district": "Thị xã Phú Thọ",
+    "name": "Khu trung tâm thị xã Phú Thọ",
     "category": "Đô thị - lịch sử địa phương",
-    "location": "Thị xã Phú Thọ cũ",
+    "location": "Thị xã Phú Thọ",
     "restaurants": "Nhà hàng trung tâm thị xã",
     "stays": "Khách sạn/nhà nghỉ thị xã Phú Thọ",
     "distance": "0-5 km",
@@ -2222,10 +2222,10 @@ export const phuTho100Directory: DirectoryPlace[] = [
   },
   {
     "stt": "69",
-    "district": "Thị xã Phú Thọ cũ",
-    "name": "Ga Phú Thọ và không gian đường sắt cũ",
+    "district": "Thị xã Phú Thọ",
+    "name": "Ga Phú Thọ và không gian đường sắt lịch sử",
     "category": "Kiến trúc - giao thông",
-    "location": "Thị xã Phú Thọ cũ",
+    "location": "Thị xã Phú Thọ",
     "restaurants": "Nhà hàng trung tâm",
     "stays": "Khách sạn/nhà nghỉ thị xã",
     "distance": "0-5 km",
@@ -2233,10 +2233,10 @@ export const phuTho100Directory: DirectoryPlace[] = [
   },
   {
     "stt": "70",
-    "district": "Thị xã Phú Thọ cũ",
+    "district": "Thị xã Phú Thọ",
     "name": "Không gian văn hóa - quảng trường trung tâm thị xã",
     "category": "Đô thị - cộng đồng",
-    "location": "Thị xã Phú Thọ cũ",
+    "location": "Thị xã Phú Thọ",
     "restaurants": "Nhà hàng trung tâm",
     "stays": "Khách sạn/nhà nghỉ thị xã",
     "distance": "0-5 km",
@@ -2244,10 +2244,10 @@ export const phuTho100Directory: DirectoryPlace[] = [
   },
   {
     "stt": "71",
-    "district": "Thị xã Phú Thọ cũ",
+    "district": "Thị xã Phú Thọ",
     "name": "Các làng ven sông Thao quanh thị xã",
     "category": "Nông thôn - cảnh quan",
-    "location": "Vùng ven thị xã Phú Thọ cũ",
+    "location": "Vùng ven thị xã Phú Thọ",
     "restaurants": "Ẩm thực địa phương",
     "stays": "Lưu trú thị xã",
     "distance": "5-15 km",
@@ -2255,7 +2255,7 @@ export const phuTho100Directory: DirectoryPlace[] = [
   },
   {
     "stt": "72",
-    "district": "Tam Nông cũ",
+    "district": "Tam Nông",
     "name": "Thành Hưng Hóa",
     "category": "Lịch sử - thành cổ",
     "location": "Hưng Hóa",
@@ -2266,7 +2266,7 @@ export const phuTho100Directory: DirectoryPlace[] = [
   },
   {
     "stt": "73",
-    "district": "Tam Nông cũ",
+    "district": "Tam Nông",
     "name": "Cột cờ thành Hưng Hóa",
     "category": "Lịch sử - kiến trúc",
     "location": "Hưng Hóa",
@@ -2277,7 +2277,7 @@ export const phuTho100Directory: DirectoryPlace[] = [
   },
   {
     "stt": "74",
-    "district": "Tam Nông cũ",
+    "district": "Tam Nông",
     "name": "Đền thờ Nguyễn Quang Bích",
     "category": "Lịch sử - danh nhân",
     "location": "Hưng Hóa",
@@ -2288,7 +2288,7 @@ export const phuTho100Directory: DirectoryPlace[] = [
   },
   {
     "stt": "75",
-    "district": "Tam Nông cũ",
+    "district": "Tam Nông",
     "name": "Văn miếu tỉnh Hưng Hóa",
     "category": "Lịch sử - giáo dục",
     "location": "Hưng Hóa",
@@ -2299,7 +2299,7 @@ export const phuTho100Directory: DirectoryPlace[] = [
   },
   {
     "stt": "76",
-    "district": "Tam Nông cũ",
+    "district": "Tam Nông",
     "name": "Cảnh quan ven sông Đà Tam Nông",
     "category": "Sinh thái - sông nước",
     "location": "Tam Nông",
@@ -2310,7 +2310,7 @@ export const phuTho100Directory: DirectoryPlace[] = [
   },
   {
     "stt": "77",
-    "district": "Tam Nông cũ",
+    "district": "Tam Nông",
     "name": "Làng quê ven sông Hồng - Tam Nông",
     "category": "Nông thôn - trải nghiệm",
     "location": "Tam Nông",
@@ -2321,7 +2321,7 @@ export const phuTho100Directory: DirectoryPlace[] = [
   },
   {
     "stt": "78",
-    "district": "Thanh Thủy cũ",
+    "district": "Thanh Thủy",
     "name": "Khu khoáng nóng Thanh Thủy",
     "category": "Nghỉ dưỡng - chăm sóc sức khỏe",
     "location": "Thanh Thủy",
@@ -2332,7 +2332,7 @@ export const phuTho100Directory: DirectoryPlace[] = [
   },
   {
     "stt": "79",
-    "district": "Thanh Thủy cũ",
+    "district": "Thanh Thủy",
     "name": "Wyndham Lynn Times Thanh Thủy",
     "category": "Nghỉ dưỡng - khoáng nóng",
     "location": "Thanh Thủy",
@@ -2343,7 +2343,7 @@ export const phuTho100Directory: DirectoryPlace[] = [
   },
   {
     "stt": "80",
-    "district": "Thanh Thủy cũ",
+    "district": "Thanh Thủy",
     "name": "Vườn Vua Resort & Villas",
     "category": "Nghỉ dưỡng - sinh thái",
     "location": "Thanh Thủy",
@@ -2354,7 +2354,7 @@ export const phuTho100Directory: DirectoryPlace[] = [
   },
   {
     "stt": "81",
-    "district": "Thanh Thủy cũ",
+    "district": "Thanh Thủy",
     "name": "Đảo Ngọc Xanh",
     "category": "Vui chơi - nghỉ dưỡng",
     "location": "Thanh Thủy",
@@ -2365,10 +2365,10 @@ export const phuTho100Directory: DirectoryPlace[] = [
   },
   {
     "stt": "82",
-    "district": "Thanh Thủy cũ",
+    "district": "Thanh Thủy",
     "name": "Đình Đào Xá",
     "category": "Di tích - lễ hội",
-    "location": "Đào Xá cũ",
+    "location": "Đào Xá",
     "restaurants": "Nhà hàng Thanh Thủy",
     "stays": "Lưu trú Thanh Thủy",
     "distance": "5-15 km",
@@ -2376,10 +2376,10 @@ export const phuTho100Directory: DirectoryPlace[] = [
   },
   {
     "stt": "83",
-    "district": "Thanh Thủy cũ",
+    "district": "Thanh Thủy",
     "name": "Đình La Phù",
     "category": "Di tích văn hóa",
-    "location": "La Phù cũ",
+    "location": "La Phù",
     "restaurants": "Nhà hàng Thanh Thủy",
     "stays": "Lưu trú Thanh Thủy",
     "distance": "5-15 km",
@@ -2387,7 +2387,7 @@ export const phuTho100Directory: DirectoryPlace[] = [
   },
   {
     "stt": "84",
-    "district": "Thanh Thủy cũ",
+    "district": "Thanh Thủy",
     "name": "Khu lưu niệm Chủ tịch Hồ Chí Minh tại đồi Bạch Thạch",
     "category": "Lịch sử",
     "location": "Thanh Thủy",
@@ -2398,7 +2398,7 @@ export const phuTho100Directory: DirectoryPlace[] = [
   },
   {
     "stt": "85",
-    "district": "Thanh Thủy cũ",
+    "district": "Thanh Thủy",
     "name": "Đền Ngọc Sơn",
     "category": "Tâm linh",
     "location": "Thanh Thủy",
@@ -2409,7 +2409,7 @@ export const phuTho100Directory: DirectoryPlace[] = [
   },
   {
     "stt": "86",
-    "district": "Thanh Thủy cũ",
+    "district": "Thanh Thủy",
     "name": "Đền Quốc Tế",
     "category": "Tâm linh",
     "location": "Thanh Thủy",
@@ -2420,10 +2420,10 @@ export const phuTho100Directory: DirectoryPlace[] = [
   },
   {
     "stt": "87",
-    "district": "Thanh Thủy cũ",
+    "district": "Thanh Thủy",
     "name": "Đình - đền Viễn Lãm",
     "category": "Di tích lịch sử - văn hóa",
-    "location": "Bảo Yên cũ",
+    "location": "Bảo Yên",
     "restaurants": "Nhà hàng Thanh Thủy",
     "stays": "Lưu trú Thanh Thủy",
     "distance": "5-15 km",
@@ -2431,7 +2431,7 @@ export const phuTho100Directory: DirectoryPlace[] = [
   },
   {
     "stt": "88",
-    "district": "Thanh Sơn cũ",
+    "district": "Thanh Sơn",
     "name": "Thác Mây",
     "category": "Sinh thái - thác nước",
     "location": "Hương Cần",
@@ -2442,7 +2442,7 @@ export const phuTho100Directory: DirectoryPlace[] = [
   },
   {
     "stt": "89",
-    "district": "Thanh Sơn cũ",
+    "district": "Thanh Sơn",
     "name": "Thác Mơ (Vạn Mơ)",
     "category": "Sinh thái - thác nước",
     "location": "Cự Thắng",
@@ -2453,7 +2453,7 @@ export const phuTho100Directory: DirectoryPlace[] = [
   },
   {
     "stt": "90",
-    "district": "Thanh Sơn cũ",
+    "district": "Thanh Sơn",
     "name": "Suối Hem - khu Thác Mây",
     "category": "Sinh thái",
     "location": "Hương Cần",
@@ -2464,7 +2464,7 @@ export const phuTho100Directory: DirectoryPlace[] = [
   },
   {
     "stt": "91",
-    "district": "Thanh Sơn cũ",
+    "district": "Thanh Sơn",
     "name": "Vùng đồi chè Thanh Sơn",
     "category": "Nông nghiệp - cảnh quan",
     "location": "Thanh Sơn",
@@ -2475,7 +2475,7 @@ export const phuTho100Directory: DirectoryPlace[] = [
   },
   {
     "stt": "92",
-    "district": "Thanh Sơn cũ",
+    "district": "Thanh Sơn",
     "name": "Không gian văn hóa Mường Thanh Sơn",
     "category": "Văn hóa cộng đồng",
     "location": "Thanh Sơn",
@@ -2486,7 +2486,7 @@ export const phuTho100Directory: DirectoryPlace[] = [
   },
   {
     "stt": "93",
-    "district": "Tân Sơn cũ",
+    "district": "Tân Sơn",
     "name": "Vườn quốc gia Xuân Sơn",
     "category": "Sinh thái - VQG",
     "location": "Xuân Sơn",
@@ -2497,7 +2497,7 @@ export const phuTho100Directory: DirectoryPlace[] = [
   },
   {
     "stt": "94",
-    "district": "Tân Sơn cũ",
+    "district": "Tân Sơn",
     "name": "Điểm du lịch cộng đồng Bản Dù",
     "category": "Du lịch cộng đồng",
     "location": "Xuân Sơn",
@@ -2508,7 +2508,7 @@ export const phuTho100Directory: DirectoryPlace[] = [
   },
   {
     "stt": "95",
-    "district": "Tân Sơn cũ",
+    "district": "Tân Sơn",
     "name": "Điểm du lịch sinh thái cộng đồng Bản Cỏi",
     "category": "Sinh thái - cộng đồng",
     "location": "Xuân Sơn",
@@ -2519,7 +2519,7 @@ export const phuTho100Directory: DirectoryPlace[] = [
   },
   {
     "stt": "96",
-    "district": "Tân Sơn cũ",
+    "district": "Tân Sơn",
     "name": "Điểm du lịch sinh thái Thác Ngọc",
     "category": "Sinh thái - thác",
     "location": "VQG Xuân Sơn",
@@ -2530,7 +2530,7 @@ export const phuTho100Directory: DirectoryPlace[] = [
   },
   {
     "stt": "97",
-    "district": "Tân Sơn cũ",
+    "district": "Tân Sơn",
     "name": "Đồi chè Long Cốc",
     "category": "Cảnh quan - nông nghiệp",
     "location": "Long Cốc",
@@ -2541,7 +2541,7 @@ export const phuTho100Directory: DirectoryPlace[] = [
   },
   {
     "stt": "98",
-    "district": "Tân Sơn cũ",
+    "district": "Tân Sơn",
     "name": "Trải nghiệm hái và chế biến chè Long Cốc",
     "category": "Nông nghiệp - trải nghiệm",
     "location": "Long Cốc",
@@ -2552,7 +2552,7 @@ export const phuTho100Directory: DirectoryPlace[] = [
   },
   {
     "stt": "99",
-    "district": "Yên Lập cũ",
+    "district": "Yên Lập",
     "name": "Hồ Ly",
     "category": "Sinh thái hồ",
     "location": "Thượng Long",
@@ -2563,7 +2563,7 @@ export const phuTho100Directory: DirectoryPlace[] = [
   },
   {
     "stt": "100",
-    "district": "Yên Lập cũ",
+    "district": "Yên Lập",
     "name": "Bản Dao - Mường ven Hồ Ly",
     "category": "Văn hóa cộng đồng",
     "location": "Thượng Long",
@@ -2612,7 +2612,7 @@ export type FoodRegion = {
 export const foodRegions: FoodRegion[] = [
   {
     id: "phu-tho-dac-san",
-    label: "Khu vực Phú Thọ cũ",
+    label: "Khu vực Phú Thọ",
     subtitle: "Hương vị cội nguồn: Bánh tai, thịt chua Thanh Sơn, xáo chuối Lâm Thao, cọ ỏm, bưởi Đoan Hùng, canh rau sắn",
     dishes: [
       {
@@ -2827,7 +2827,7 @@ export const foodRegions: FoodRegion[] = [
   },
   {
     id: "vinh-phuc-dac-san",
-    label: "Khu vực Vĩnh Phúc cũ",
+    label: "Khu vực Vĩnh Phúc",
     subtitle: "Mỹ vị đồng quê & non cao: Cá thính Lập Thạch, bò tái kiến đốt, chè kho Tứ Yên, dứa Tam Dương, tép Đầm Vạc, rau su su",
     dishes: [
       {
@@ -3016,7 +3016,7 @@ export const foodRegions: FoodRegion[] = [
   },
   {
     id: "hoa-binh-dac-san",
-    label: "Khu vực Hòa Bình cũ",
+    label: "Khu vực Hòa Bình",
     subtitle: "Mỹ vị đại ngàn Tây Bắc: Cơm lam nếp nương, thịt lợn muối chua, gà đồi nấu măng, chả cuốn lá bưởi, cá nướng sông Đà, thịt trâu lá lồm, rượu cần Mường",
     dishes: [
       {

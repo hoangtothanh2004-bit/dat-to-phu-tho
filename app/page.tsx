@@ -3346,14 +3346,16 @@ export default function Home() {
       note: "Giao trước 18h giúp mình nhé",
       paymentMethod: "Thanh toán khi nhận hàng (COD)",
       status: "Chờ xác nhận",
-      totalAmount: 50000,
+      totalAmount: 45000,
       items: [
         {
-          dishName: "Thịt chua Thanh Sơn",
+          dishName: "Thịt chua Trường Food",
+          dishId: "thit-chua-truong-food",
           quantity: 1,
-          sellerName: "Thịt chua Nghị Thịnh",
-          sellerPhone: "0987 654 321",
-          price: 50000,
+          sellerName: "Cửa hàng chính hãng Trường Food",
+          sellerId: "truong-food-chinh-hang",
+          sellerPhone: "02102225666",
+          price: 45000,
         },
       ],
     },
@@ -3366,14 +3368,16 @@ export default function Home() {
       note: "Đóng gói kỹ kèm lá ổi",
       paymentMethod: "Chuyển khoản QR ngân hàng",
       status: "Chờ lấy hàng",
-      totalAmount: 50000,
+      totalAmount: 45000,
       items: [
         {
-          dishName: "Thịt chua Thanh Sơn",
+          dishName: "Thịt chua Trường Food",
+          dishId: "thit-chua-truong-food",
           quantity: 1,
-          sellerName: "Thịt chua Nghị Thịnh",
-          sellerPhone: "0987 654 321",
-          price: 50000,
+          sellerName: "Cửa hàng chính hãng Trường Food",
+          sellerId: "truong-food-chinh-hang",
+          sellerPhone: "02102225666",
+          price: 45000,
         },
       ],
     },
@@ -3386,14 +3390,16 @@ export default function Home() {
       note: "Gọi trước khi giao 10 phút",
       paymentMethod: "Thanh toán khi nhận hàng (COD)",
       status: "Chờ giao hàng",
-      totalAmount: 50000,
+      totalAmount: 45000,
       items: [
         {
-          dishName: "Thịt chua Thanh Sơn",
+          dishName: "Thịt chua Trường Food",
+          dishId: "thit-chua-truong-food",
           quantity: 1,
-          sellerName: "Thịt chua Nghị Thịnh",
-          sellerPhone: "0987 654 321",
-          price: 50000,
+          sellerName: "Cửa hàng chính hãng Trường Food",
+          sellerId: "truong-food-chinh-hang",
+          sellerPhone: "02102225666",
+          price: 45000,
         },
       ],
     },
@@ -3406,14 +3412,16 @@ export default function Home() {
       note: "Đã nhận đủ và hài lòng",
       paymentMethod: "Chuyển khoản QR ngân hàng",
       status: "Hoàn thành",
-      totalAmount: 100000,
+      totalAmount: 90000,
       items: [
         {
-          dishName: "Thịt chua Thanh Sơn",
+          dishName: "Thịt chua Trường Food",
+          dishId: "thit-chua-truong-food",
           quantity: 2,
-          sellerName: "Thịt chua Nghị Thịnh",
-          sellerPhone: "0987 654 321",
-          price: 50000,
+          sellerName: "Cửa hàng chính hãng Trường Food",
+          sellerId: "truong-food-chinh-hang",
+          sellerPhone: "02102225666",
+          price: 45000,
         },
       ],
     },
@@ -4207,14 +4215,80 @@ export default function Home() {
     return [...placeSuggestions, ...dishSuggestions].slice(0, 6);
   }, [query]);
 
-  const cartDetails = useMemo(() => cart.flatMap((line) => {
-    const catalogItem = foodCatalog.find(({ dish }) => dish.id === line.dishId);
-    const seller = catalogItem?.dish.sellers.find((item) => item.id === line.sellerId);
-    return catalogItem && seller ? [{ ...line, dish: catalogItem.dish, seller }] : [];
-  }), [cart]);
-  
-  const cartQuantity = cart.reduce((total, line) => total + line.quantity, 0);
+  const cartDetails = useMemo(() => {
+    return cart.flatMap((line) => {
+      // Find catalog item by ID, or fallback to matching slug / dish name
+      let catalogItem = foodCatalog.find(({ dish }) => dish.id === line.dishId);
+      if (!catalogItem && line.dishId) {
+        const needle = line.dishId.toLowerCase().replace(/^dac-san-/, "");
+        catalogItem = foodCatalog.find(({ dish }) =>
+          dish.id.toLowerCase().includes(needle) ||
+          needle.includes(dish.id.toLowerCase()) ||
+          dish.name.toLowerCase().includes(needle)
+        );
+      }
+      if (!catalogItem && line.dishId) {
+        if (line.dishId.includes("thit-chua")) catalogItem = foodCatalog.find(({ dish }) => dish.id === "thit-chua-truong-food");
+        else if (line.dishId.includes("ca-thinh")) catalogItem = foodCatalog.find(({ dish }) => dish.id === "ca-thinh-lap-thach");
+        else if (line.dishId.includes("banh-tai")) catalogItem = foodCatalog.find(({ dish }) => dish.id === "banh-tai-phu-tho");
+        else if (line.dishId.includes("co-om")) catalogItem = foodCatalog.find(({ dish }) => dish.id === "co-om-phu-tho");
+        else if (line.dishId.includes("com-lam")) catalogItem = foodCatalog.find(({ dish }) => dish.id === "com-lam-muong");
+        else if (line.dishId.includes("su-su")) catalogItem = foodCatalog.find(({ dish }) => dish.id === "rau-su-su-tam-dao");
+      }
+      if (!catalogItem) return [];
+
+      // Find seller or fallback to first seller of the dish
+      const seller =
+        catalogItem.dish.sellers.find((item) => item.id === line.sellerId || item.name === line.sellerId) ||
+        catalogItem.dish.sellers[0];
+
+      if (!seller) return [];
+
+      return [{
+        ...line,
+        dishId: catalogItem.dish.id,
+        sellerId: seller.id,
+        dish: catalogItem.dish,
+        seller,
+      }];
+    });
+  }, [cart]);
+
+  const cartQuantity = cartDetails.reduce((total, line) => total + line.quantity, 0);
   const cartSubtotal = cartDetails.reduce((total, line) => total + line.seller.price * line.quantity, 0);
+
+  const clearCart = () => {
+    setCart([]);
+    try {
+      window.localStorage.removeItem("datto-cart");
+    } catch {}
+    showToast("Đã xóa sạch giỏ hàng");
+  };
+
+  // Auto-sync valid items back to cart & localStorage so invalid/ghost items never persist
+  useEffect(() => {
+    if (cart.length > 0) {
+      if (cartDetails.length === 0) {
+        setCart([]);
+        try {
+          window.localStorage.removeItem("datto-cart");
+        } catch {}
+      } else if (
+        cartDetails.length !== cart.length ||
+        cart.some((c, i) => c.dishId !== cartDetails[i]?.dishId || c.sellerId !== cartDetails[i]?.sellerId)
+      ) {
+        const cleanCart = cartDetails.map((cd) => ({
+          dishId: cd.dishId,
+          sellerId: cd.sellerId,
+          quantity: cd.quantity,
+        }));
+        setCart(cleanCart);
+        try {
+          window.localStorage.setItem("datto-cart", JSON.stringify(cleanCart));
+        } catch {}
+      }
+    }
+  }, [cart, cartDetails]);
 
   const appliedVoucher = useMemo(() => {
     if (!appliedVoucherCode) return null;
@@ -5259,8 +5333,13 @@ export default function Home() {
     if (!order.items || !order.items.length) return;
     let addedCount = 0;
     order.items.forEach((it: any) => {
-      const foundDish = foodCatalog.find((fc) => fc.dish.name === it.dishName)?.dish;
-      const foundSeller = foundDish?.sellers.find((s) => s.name === it.sellerName) || foundDish?.sellers[0];
+      const foundDish = foodCatalog.find((fc) =>
+        (it.dishId && fc.dish.id === it.dishId) ||
+        fc.dish.name.toLowerCase() === (it.dishName || "").toLowerCase() ||
+        (it.dishName && fc.dish.name.toLowerCase().includes(it.dishName.toLowerCase())) ||
+        (it.dishName && it.dishName.toLowerCase().includes(fc.dish.name.toLowerCase()))
+      )?.dish;
+      const foundSeller = foundDish?.sellers.find((s) => (it.sellerId && s.id === it.sellerId) || s.name === it.sellerName) || foundDish?.sellers[0];
       if (foundDish && foundSeller) {
         addToCart(foundDish, foundSeller);
         addedCount++;
@@ -6530,9 +6609,9 @@ export default function Home() {
               </h1>
               <p className="food-hero-card__desc">{t.foodDesc}</p>
               <div className="food-hero-card__stats">
-                <span className="food-stat-chip">🏛️ Phú Thọ (8 đặc sản)</span>
-                <span className="food-stat-chip">🌲 Vĩnh Phúc (7 đặc sản)</span>
-                <span className="food-stat-chip">🏔️ Hòa Bình (8 đặc sản)</span>
+                <span className="food-stat-chip">🏛️ Phú Thọ</span>
+                <span className="food-stat-chip">🌲 Vĩnh Phúc</span>
+                <span className="food-stat-chip">🏔️ Hòa Bình</span>
                 <span className="food-stat-chip">🛒 Đặt mua OCOP chính gốc giao tận nơi</span>
               </div>
             </div>
@@ -6584,14 +6663,7 @@ export default function Home() {
             {!queryClean && (
               <div className="food-page-tabs" role="tablist" aria-label="Chọn tỉnh ẩm thực">
                 {foodRegions.map((region) => {
-                  const label =
-                    region.id === "phu-tho-dac-san"
-                      ? t.provPhuTho
-                      : region.id === "vinh-phuc-dac-san"
-                      ? t.provVinhPhuc
-                      : region.id === "hoa-binh-dac-san"
-                      ? t.provHoaBinh
-                      : region.label;
+                  const label = (region.label || "").replace(/\s*cũ\b/gi, "").trim();
                   const icon = region.id === "phu-tho-dac-san" ? "🏛️" : region.id === "vinh-phuc-dac-san" ? "🌲" : "🏔️";
                   const isAct = foodRegionId === region.id;
                   return (
@@ -8172,7 +8244,30 @@ export default function Home() {
                 <span>{t.cart.toUpperCase()} & ĐƠN HÀNG OCOP</span>
                 <h2 id="commerce-drawer-title">Đặc Sản & Mua Sắm</h2>
               </div>
-              <button type="button" onClick={() => setCartOpen(false)} aria-label="Đóng giỏ hàng">×</button>
+              <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+                {cartDetails.length > 0 && cartDrawerTab === "cart" && (
+                  <button
+                    type="button"
+                    onClick={clearCart}
+                    style={{
+                      background: "transparent",
+                      border: "1px solid #dcdcdc",
+                      borderRadius: "6px",
+                      fontSize: "12px",
+                      color: "#666",
+                      padding: "4px 8px",
+                      cursor: "pointer",
+                      display: "inline-flex",
+                      alignItems: "center",
+                      gap: "4px",
+                    }}
+                    title="Xóa sạch giỏ hàng"
+                  >
+                    🗑️ Xóa giỏ
+                  </button>
+                )}
+                <button type="button" onClick={() => setCartOpen(false)} aria-label="Đóng giỏ hàng">×</button>
+              </div>
             </div>
 
             {/* Top 2 Tabs: Giỏ hàng vs Đơn mua */}
@@ -8201,9 +8296,16 @@ export default function Home() {
                     <span>🛒</span>
                     <h3>{t.cartEmptyTitle}</h3>
                     <p>{t.cartEmptyDesc}</p>
-                    <button type="button" className="button button--dark" onClick={() => { setCartOpen(false); goToFoodSection(); }}>
-                      {t.viewSpecialtiesBtn}
-                    </button>
+                    <div style={{ display: "flex", gap: "10px", justifyContent: "center", marginTop: "12px", flexWrap: "wrap" }}>
+                      <button type="button" className="button button--dark" onClick={() => { setCartOpen(false); goToFoodSection(); }}>
+                        {t.viewSpecialtiesBtn}
+                      </button>
+                      {cart.length > 0 && (
+                        <button type="button" className="button button--ghost" onClick={clearCart}>
+                          🔄 Làm mới giỏ hàng
+                        </button>
+                      )}
+                    </div>
                   </div>
                 ) : (
                   <>
