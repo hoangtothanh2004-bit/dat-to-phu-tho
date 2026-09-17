@@ -4410,22 +4410,171 @@ body {
 }
 
 @media (max-width: 768px) {
+  /* 16.3 Mobile: Cải tiến giao diện Trang Ẩm Thực trên điện thoại */
   .food-page {
-    padding-left: 10px !important;
-    padding-right: 10px !important;
+    padding-left: 12px !important;
+    padding-right: 12px !important;
+    padding-top: 14px !important;
+    padding-bottom: 120px !important;
   }
+
+  .food-page-nav-back {
+    font-size: 12px !important;
+    padding: 6px 14px !important;
+    margin-bottom: 12px !important;
+    border-radius: 999px !important;
+  }
+
+  /* Food Hero Card - Tối ưu hoá toàn diện cho điện thoại */
   .food-hero-card {
-    padding: 20px 16px !important;
-    border-radius: 18px !important;
+    flex-direction: column !important;
+    align-items: stretch !important;
+    justify-content: flex-start !important;
+    padding: 22px 16px 20px !important;
+    border-radius: 20px !important;
+    gap: 16px !important;
+    background-image: linear-gradient(180deg, rgba(14, 38, 28, 0.96) 0%, rgba(22, 54, 38, 0.92) 55%, rgba(27, 67, 50, 0.88) 100%), url('/images/food/food-hero-bg.png') !important;
+    background-size: cover !important;
+    background-position: center !important;
+    box-shadow: 0 12px 32px rgba(14, 38, 28, 0.3) !important;
+    border: 1px solid rgba(255, 255, 255, 0.18) !important;
+    overflow: hidden !important;
   }
+
+  .food-hero-card__content {
+    flex: none !important;
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  .food-hero-card__badge {
+    display: inline-flex !important;
+    align-items: center !important;
+    width: auto !important;
+    max-width: 100% !important;
+    padding: 5px 12px !important;
+    font-size: 11px !important;
+    letter-spacing: 0.04em !important;
+    line-height: 1.3 !important;
+    border-radius: 999px !important;
+    margin-bottom: 10px !important;
+    white-space: nowrap !important;
+    background: rgba(255, 255, 255, 0.16) !important;
+    backdrop-filter: blur(8px) !important;
+    border: 1px solid rgba(255, 255, 255, 0.25) !important;
+  }
+
+  .food-hero-card__title {
+    font-size: clamp(20px, 5.5vw, 24px) !important;
+    line-height: 1.35 !important;
+    margin: 0 0 10px 0 !important;
+    word-break: normal !important;
+    white-space: normal !important;
+    color: #ffffff !important;
+    font-weight: 900 !important;
+  }
+
+  .food-hero-card__title em {
+    font-style: normal !important;
+    color: #ffd166 !important;
+    display: inline !important;
+  }
+
+  .food-hero-card__desc {
+    font-size: 13.5px !important;
+    line-height: 1.6 !important;
+    max-width: 100% !important;
+    margin: 0 0 4px 0 !important;
+    color: rgba(255, 255, 255, 0.92) !important;
+    word-break: normal !important;
+    white-space: normal !important;
+  }
+
+  .food-hero-card__media {
+    flex: none !important;
+    width: 100% !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    gap: 8px !important;
+    margin-top: 4px !important;
+  }
+
+  .food-hero-card__thumb-frame {
+    width: 100% !important;
+    max-width: 100% !important;
+    height: 185px !important;
+    border-radius: 14px !important;
+    border: 1.5px solid rgba(255, 255, 255, 0.3) !important;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35) !important;
+    overflow: hidden !important;
+  }
+
+  .food-hero-card__thumb-frame img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+  }
+
+  .food-hero-card__caption {
+    font-size: 11.5px !important;
+    font-weight: 700 !important;
+    padding: 4px 14px !important;
+    border-radius: 999px !important;
+    background: rgba(0, 0, 0, 0.5) !important;
+    backdrop-filter: blur(6px) !important;
+    color: #ffd166 !important;
+    border: 1px solid rgba(255, 209, 102, 0.3) !important;
+    margin-top: -6px !important;
+    position: relative !important;
+    z-index: 3 !important;
+  }
+
+  /* Toolbar tìm kiếm & lọc trên điện thoại */
   .food-toolbar {
     padding: 14px 12px !important;
-    border-radius: 14px !important;
+    border-radius: 16px !important;
+    margin-bottom: 16px !important;
   }
+
+  .food-search-box {
+    margin-bottom: 10px !important;
+  }
+
+  .food-search-box input {
+    height: 42px !important;
+    font-size: 13.5px !important;
+    padding: 0 14px 0 40px !important;
+  }
+
+  .food-season-chips {
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+    gap: 6px !important;
+    padding-bottom: 4px !important;
+    width: 100% !important;
+    scrollbar-width: none !important;
+  }
+
+  .food-season-chips::-webkit-scrollbar {
+    display: none !important;
+  }
+
+  .food-season-chip {
+    white-space: nowrap !important;
+    flex-shrink: 0 !important;
+    padding: 6px 12px !important;
+    font-size: 12px !important;
+    border-radius: 999px !important;
+  }
+
   .food-page-browser {
-    padding: 14px 10px !important;
+    padding: 16px 10px !important;
     border-radius: 16px !important;
   }
+
   .food-page-tab-btn {
     padding: 8px 14px !important;
     font-size: 12.5px !important;

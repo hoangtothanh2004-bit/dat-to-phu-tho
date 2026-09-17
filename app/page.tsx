@@ -7957,7 +7957,7 @@ export default function Home() {
           <div className="near-header">
             <div>
               <span className="kicker">{t.nearKicker}</span>
-              <h1>{t.nearTitle1}<br /><em className="near-title-highlight">{serviceProvinceFilter === "Tất cả" ? txt({ vi: "tại Đất Tổ & các tỉnh liên kết.", en: "across all 3 provinces.", zh: "贯通三大名区。", ko: "3개 성 전체 지역에서.", ja: "連携3省全域にて。" }) : txt({ vi: `tại ${serviceProvinceFilter}.`, en: `in ${serviceProvinceFilter}.`, zh: `位于 ${serviceProvinceFilter}。`, ko: `${serviceProvinceFilter} 지역에서.`, ja: `${serviceProvinceFilter}にて。` })}</em></h1>
+              <h1>{t.nearTitle1}<br /><em className="near-title-highlight">{txt({ vi: "tại Đất Tổ & khu vực lân cận.", en: "in the Ancestral Land & surrounding areas.", zh: "位于祖地及周边区域。", ko: "조상의 땅 및 주변 지역에서.", ja: "祖先の地および周辺地域にて。" })}</em></h1>
             </div>
             <div className="near-location-card">
               <div className="near-location-card__row">
@@ -7982,75 +7982,47 @@ export default function Home() {
                 <div className="near-quick-buttons">
                   <button
                     type="button"
-                    className={`near-quick-btn ${serviceProvinceFilter === "Phú Thọ" ? "is-active" : ""}`}
+                    className="near-quick-btn"
                     onClick={() => {
                       setPosition({ lat: 21.3215, lng: 105.3926 });
-                      setServiceProvinceFilter("Phú Thọ");
+                      setServiceProvinceFilter("Tất cả");
                       setLocationStatus("success");
-                      showToast(txt({ vi: "Đã chọn vị trí: TP. Việt Trì (PT cũ)", en: "Set location: Viet Tri (Phu Tho)", zh: "已设定位：越池市（富寿）", ko: "위치 설정됨: 비엣찌시 (푸토)", ja: "位置設定：ベッチ市（フート）" }));
+                      showToast(txt({ vi: "Đã chọn vị trí: TP. Việt Trì", en: "Set location: Viet Tri City", zh: "已设定位：越池市", ko: "위치 설정됨: 비엣찌시", ja: "位置設定：ベッチ市" }));
                     }}
                   >
-                    📍 Việt Trì (PT cũ)
+                    📍 TP. Việt Trì
                   </button>
                   <button
                     type="button"
-                    className={`near-quick-btn ${serviceProvinceFilter === "Vĩnh Phúc" ? "is-active" : ""}`}
+                    className="near-quick-btn"
                     onClick={() => {
                       setPosition({ lat: 21.3150, lng: 105.5890 });
-                      setServiceProvinceFilter("Vĩnh Phúc");
+                      setServiceProvinceFilter("Tất cả");
                       setLocationStatus("success");
-                      showToast(txt({ vi: "Đã chọn vị trí: TP. Vĩnh Yên (VP cũ)", en: "Set location: Vinh Yen (Vinh Phuc)", zh: "已设定位：永安市（永福）", ko: "위치 설정됨: 빈옌시 (빈푹)", ja: "位置設定：ビンエン市（ビンフック）" }));
+                      showToast(txt({ vi: "Đã chọn vị trí: TP. Vĩnh Yên", en: "Set location: Vinh Yen City", zh: "已设定位：永安市", ko: "위치 설정됨: 빈옌시", ja: "位置設定：ビンエン市" }));
                     }}
                   >
-                    📍 Vĩnh Yên (VP cũ)
+                    📍 TP. Vĩnh Yên
                   </button>
                   <button
                     type="button"
-                    className={`near-quick-btn ${serviceProvinceFilter === "Hòa Bình" ? "is-active" : ""}`}
+                    className="near-quick-btn"
                     onClick={() => {
                       setPosition({ lat: 20.8140, lng: 105.3380 });
-                      setServiceProvinceFilter("Hòa Bình");
+                      setServiceProvinceFilter("Tất cả");
                       setLocationStatus("success");
-                      showToast(txt({ vi: "Đã chọn vị trí: TP. Hòa Bình (HB cũ)", en: "Set location: Hoa Binh City", zh: "已设定位：和平市", ko: "위치 설정됨: 호아빈시", ja: "位置設定：ホアビン市" }));
+                      showToast(txt({ vi: "Đã chọn vị trí: TP. Hòa Bình", en: "Set location: Hoa Binh City", zh: "已设定位：和平市", ko: "위치 설정됨: 호아빈시", ja: "位置設定：ホアビン市" }));
                     }}
                   >
-                    📍 TP. Hòa Bình (HB cũ)
+                    📍 TP. Hòa Bình
                   </button>
                 </div>
               </div>
             </div>
           </div>
 
-          {/* SERVICE CATEGORY TABS & PROVINCE FILTER */}
+          {/* SERVICE CATEGORY TABS */}
           <div className="service-filters-wrapper">
-            <div className="service-province-tabs">
-              <span>{t.nearAreaLabel}</span>
-              {["Tất cả", "Phú Thọ", "Vĩnh Phúc", "Hòa Bình"].map((prov) => (
-                <button
-                  key={prov}
-                  className={`province-tab ${serviceProvinceFilter === prov ? "is-active" : ""}`}
-                  onClick={() => {
-                    setServiceProvinceFilter(prov);
-                    if (prov === "Vĩnh Phúc" && !position) {
-                      setPosition({ lat: 21.3150, lng: 105.5890 });
-                    } else if (prov === "Hòa Bình" && !position) {
-                      setPosition({ lat: 20.8140, lng: 105.3380 });
-                    } else if (prov === "Phú Thọ" && !position) {
-                      setPosition({ lat: 21.3215, lng: 105.3926 });
-                    }
-                  }}
-                >
-                  {prov === "Tất cả"
-                    ? txt({ vi: "Tất cả 3 tỉnh", en: "All 3 Provinces", zh: "全部3省", ko: "전체 3개 성", ja: "全3省" })
-                    : prov === "Phú Thọ"
-                    ? t.provPhuTho
-                    : prov === "Vĩnh Phúc"
-                    ? t.provVinhPhuc
-                    : t.provHoaBinh}
-                </button>
-              ))}
-            </div>
-
             <div className="service-tabs">
               {[
                 { id: "Tất cả", label: t.provAll, icon: "🧭" },
