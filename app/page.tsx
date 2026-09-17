@@ -90,7 +90,7 @@ const navigation: { id: Tab; label: string; icon: string }[] = [
   { id: "food", label: "Ẩm thực", icon: "🍲" },
   { id: "trip", label: "Lịch trình", icon: "▤" },
   { id: "vouchers", label: "Ưu đãi", icon: "🎟️" },
-  { id: "near", label: "Gần tôi", icon: "⌖" },
+  { id: "near", label: "Gần tôi", icon: "📍" },
   { id: "saved", label: "Đã lưu", icon: "♡" },
   { id: "profile", label: "Cá nhân", icon: "♙" },
 ];
@@ -6279,8 +6279,8 @@ export default function Home() {
           <button className={activeTab === "vouchers" ? "is-active" : ""} onClick={() => setActiveTab("vouchers")}>
             {t.vouchers || "Ưu đãi"}
           </button>
-          <button className={activeTab === "near" ? "is-active" : ""} onClick={() => setActiveTab("near")}>
-            {t.near}
+          <button className={`nav-near-btn ${activeTab === "near" ? "is-active" : ""}`} onClick={() => setActiveTab("near")}>
+            <span className="nav-near-dot">📍</span> {t.near}
           </button>
         </nav>
         <div className="topbar__actions">
@@ -8175,6 +8175,22 @@ export default function Home() {
               <span className="kicker">{t.festivalKicker}</span>
               <h2>{t.festivalTitle1}<br /><em>{t.festivalTitle2}</em></h2>
               <p>{t.festivalDesc}</p>
+              
+              {/* Ảnh đại diện Lễ hội văn hóa Đất Tổ */}
+              <div className="event-calendar__hero-card">
+                <img
+                  src="/images/places/den-hung.jpg"
+                  alt="Lễ hội truyền thống Đất Tổ"
+                  className="event-calendar__hero-img"
+                  loading="lazy"
+                  onError={handleImageError}
+                />
+                <div className="event-calendar__hero-overlay">
+                  <span className="event-calendar__hero-badge">✦ Di sản văn hóa phi vật thể UNESCO</span>
+                  <b>Đại lễ Giỗ Tổ Hùng Vương & Hát Xoan Phú Thọ</b>
+                  <small>Lễ hội cội nguồn lớn nhất dân tộc diễn ra vào dịp mùng 10 tháng 3 âm lịch hàng năm tại Đền Hùng</small>
+                </div>
+              </div>
             </div>
             <div className="event-list">
               {culturalEvents.map((event) => {
@@ -8185,15 +8201,19 @@ export default function Home() {
                 const eventSchedule = eventI18n?.schedule || event.schedule;
                 const eventDesc = eventI18n?.description || event.description;
                 const eventSeason = getSeasonLabel(event.season, t);
+                const eventImg = event.image || eventPlace?.image || "/images/places/den-hung.jpg";
                 return (
-                  <article key={event.id}>
-                    <span>{eventSeason}</span>
-                    <div>
+                  <article key={event.id} className="event-item-card">
+                    <div className="event-item__thumb-box">
+                      <img src={eventImg} alt={eventName} loading="lazy" onError={handleImageError} />
+                      <span className="event-item__season-badge">{eventSeason}</span>
+                    </div>
+                    <div className="event-item__info">
                       <h3>{eventName}</h3>
                       <p>{eventDesc}</p>
                       <small>⌖ {eventLocation}</small>
                     </div>
-                    <aside>
+                    <aside className="event-item__aside">
                       <b>{eventSchedule}</b>
                       {event.bookingRequired && <em>{t.bookingRequired}</em>}
                       {eventPlace && <button onClick={() => openPlace(eventPlace)}>{t.openPlaceBtn}</button>}

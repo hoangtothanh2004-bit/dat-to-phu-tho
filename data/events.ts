@@ -7,6 +7,7 @@ export type CulturalEvent = {
   description: string;
   placeId?: string;
   bookingRequired?: boolean;
+  image: string;
 };
 
 export const culturalEvents: CulturalEvent[] = [
@@ -18,6 +19,7 @@ export const culturalEvents: CulturalEvent[] = [
     season: "Mùa xuân",
     description: "Lễ dâng hương, hoạt động văn hóa dân gian và hành trình về cội nguồn.",
     placeId: "den-hung",
+    image: "/images/places/den-hung.jpg",
   },
   {
     id: "den-mau-au-co",
@@ -27,6 +29,7 @@ export const culturalEvents: CulturalEvent[] = [
     season: "Mùa xuân",
     description: "Tưởng nhớ Quốc Mẫu Âu Cơ với nghi lễ truyền thống và sinh hoạt cộng đồng.",
     placeId: "mau-au-co",
+    image: "/images/places/den-mau-au-co.jpg",
   },
   {
     id: "tro-tram",
@@ -35,6 +38,7 @@ export const culturalEvents: CulturalEvent[] = [
     schedule: "Đêm 11, rạng sáng 12 tháng Giêng âm lịch",
     season: "Mùa xuân",
     description: "Lễ hội dân gian đặc sắc gắn với tín ngưỡng phồn thực của cư dân vùng trung du.",
+    image: "/images/places/viet-tri.jpg",
   },
   {
     id: "hat-xoan-hung-lo",
@@ -45,5 +49,6 @@ export const culturalEvents: CulturalEvent[] = [
     description: "Trải nghiệm di sản Hát Xoan trong không gian đình cổ; không nên đến tự phát mà chưa xác nhận lịch.",
     placeId: "hung-lo",
     bookingRequired: true,
+    image: "/images/places/hung-lo.jpg",
   },
 ];

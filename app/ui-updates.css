@@ -4760,6 +4760,335 @@ html, body {
   }
 }
 
+/* ==========================================================================
+   18. LỊCH LỄ HỘI VĂN HÓA - HÌNH ẢNH SỐNG ĐỘNG & GIAO DIỆN HIỆN ĐẠI
+   ========================================================================== */
+.event-calendar {
+  display: grid !important;
+  grid-template-columns: minmax(0, 0.9fr) minmax(480px, 1.25fr) !important;
+  gap: clamp(32px, 4vw, 56px) !important;
+  margin-top: 60px !important;
+  padding-top: 48px !important;
+  border-top: 1.5px solid #e2e8f0 !important;
+}
+
+.event-calendar__intro {
+  display: flex !important;
+  flex-direction: column !important;
+}
+
+.event-calendar__intro h2 {
+  font-size: clamp(24px, 2.8vw, 36px) !important;
+  line-height: 1.25 !important;
+  margin: 14px 0 12px !important;
+}
+
+.event-calendar__intro h2 em {
+  color: #c2410c !important;
+  font-style: normal !important;
+  font-weight: 700 !important;
+}
+
+.event-calendar__intro p {
+  color: #475569 !important;
+  font-size: 14px !important;
+  line-height: 1.6 !important;
+  margin-bottom: 24px !important;
+}
+
+/* Banner ảnh lễ hội nổi bật cột bên trái */
+.event-calendar__hero-card {
+  position: relative !important;
+  border-radius: 18px !important;
+  overflow: hidden !important;
+  box-shadow: 0 16px 36px rgba(15, 23, 42, 0.12) !important;
+  border: 1px solid rgba(226, 232, 240, 0.8) !important;
+  margin-top: auto !important;
+  aspect-ratio: 16 / 10 !important;
+  background: #0f231c !important;
+}
+
+.event-calendar__hero-img {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  display: block !important;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+.event-calendar__hero-card:hover .event-calendar__hero-img {
+  transform: scale(1.04) !important;
+}
+
+.event-calendar__hero-overlay {
+  position: absolute !important;
+  inset: 0 !important;
+  background: linear-gradient(180deg, rgba(15, 23, 42, 0.1) 0%, rgba(10, 26, 20, 0.92) 100%) !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: flex-end !important;
+  padding: 18px 20px !important;
+  color: #fff !important;
+}
+
+.event-calendar__hero-badge {
+  font-size: 11px !important;
+  font-weight: 800 !important;
+  color: #fef08a !important;
+  background: rgba(254, 240, 138, 0.2) !important;
+  border: 1px solid rgba(254, 240, 138, 0.4) !important;
+  padding: 3px 10px !important;
+  border-radius: 999px !important;
+  width: fit-content !important;
+  margin-bottom: 8px !important;
+  backdrop-filter: blur(8px) !important;
+}
+
+.event-calendar__hero-overlay b {
+  font-size: 16px !important;
+  font-weight: 800 !important;
+  line-height: 1.35 !important;
+  color: #ffffff !important;
+  margin-bottom: 4px !important;
+}
+
+.event-calendar__hero-overlay small {
+  font-size: 12px !important;
+  color: #e2e8f0 !important;
+  line-height: 1.4 !important;
+  opacity: 0.9 !important;
+}
+
+/* Thẻ sự kiện danh sách bên phải có kèm ảnh đại diện */
+.event-list {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 16px !important;
+  border-top: none !important;
+}
+
+.event-item-card {
+  display: grid !important;
+  grid-template-columns: 120px minmax(0, 1fr) 190px !important;
+  gap: 18px !important;
+  align-items: center !important;
+  padding: 14px 16px !important;
+  background: #ffffff !important;
+  border: 1.5px solid #e2e8f0 !important;
+  border-radius: 16px !important;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04) !important;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  min-height: auto !important;
+}
+
+.event-item-card:hover {
+  transform: translateY(-2px) !important;
+  border-color: #cbd5e1 !important;
+  box-shadow: 0 10px 28px rgba(15, 23, 42, 0.08) !important;
+}
+
+.event-item__thumb-box {
+  width: 120px !important;
+  height: 90px !important;
+  border-radius: 12px !important;
+  overflow: hidden !important;
+  position: relative !important;
+  flex-shrink: 0 !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1) !important;
+  background: #f1f5f9 !important;
+}
+
+.event-item__thumb-box img {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  display: block !important;
+  transition: transform 0.3s ease !important;
+}
+
+.event-item-card:hover .event-item__thumb-box img {
+  transform: scale(1.06) !important;
+}
+
+.event-item__season-badge {
+  position: absolute !important;
+  top: 6px !important;
+  left: 6px !important;
+  background: rgba(15, 23, 42, 0.75) !important;
+  backdrop-filter: blur(6px) !important;
+  color: #fff !important;
+  font-size: 10px !important;
+  font-weight: 800 !important;
+  padding: 2px 7px !important;
+  border-radius: 999px !important;
+  letter-spacing: 0.03em !important;
+}
+
+.event-item__info {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 4px !important;
+  min-width: 0 !important;
+}
+
+.event-item__info h3 {
+  font-size: 16px !important;
+  font-weight: 800 !important;
+  color: #0f172a !important;
+  margin: 0 !important;
+  line-height: 1.35 !important;
+}
+
+.event-item__info p {
+  font-size: 12.5px !important;
+  color: #475569 !important;
+  line-height: 1.45 !important;
+  margin: 0 !important;
+}
+
+.event-item__info small {
+  font-size: 11.5px !important;
+  color: #166534 !important;
+  font-weight: 700 !important;
+}
+
+.event-item__aside {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: flex-end !important;
+  gap: 6px !important;
+  text-align: right !important;
+}
+
+.event-item__aside b {
+  font-size: 12.5px !important;
+  color: #c2410c !important;
+  font-weight: 800 !important;
+  line-height: 1.35 !important;
+}
+
+.event-item__aside em {
+  font-size: 10.5px !important;
+  color: #991b1b !important;
+  background: #fef2f2 !important;
+  padding: 2px 8px !important;
+  border-radius: 999px !important;
+  font-style: normal !important;
+  font-weight: 800 !important;
+  border: 1px solid rgba(239, 68, 68, 0.2) !important;
+}
+
+.event-item__aside button {
+  background: #f1f5f9 !important;
+  color: #1e293b !important;
+  border: 1px solid #cbd5e1 !important;
+  border-radius: 999px !important;
+  padding: 6px 14px !important;
+  font-size: 12px !important;
+  font-weight: 700 !important;
+  cursor: pointer !important;
+  transition: all 0.2s ease !important;
+  margin-top: 4px !important;
+}
+
+.event-item__aside button:hover {
+  background: #18332c !important;
+  color: #ffe082 !important;
+  border-color: #18332c !important;
+}
+
+/* ==========================================================================
+   19. NÂNG CẤP ICON VÀ GIAO DIỆN MỤC "GẦN TÔI" (NEAR TAB)
+   ========================================================================== */
+/* Nút tab Gần tôi trên Desktop Nav */
+.nav-near-btn {
+  position: relative !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 5px !important;
+}
+
+.nav-near-dot {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  font-size: 15px !important;
+  filter: drop-shadow(0 2px 4px rgba(234, 88, 12, 0.4)) !important;
+  transition: transform 0.2s ease !important;
+}
+
+.nav-near-btn:hover .nav-near-dot,
+.nav-near-btn.is-active .nav-near-dot {
+  transform: scale(1.2) translateY(-1px) !important;
+}
+
+/* Icon trong danh sách dịch vụ gần tôi */
+.service-thumb-wrap--icon {
+  width: 44px !important;
+  height: 44px !important;
+  border-radius: 12px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  background: linear-gradient(135deg, #fef3c7 0%, #ffedd5 100%) !important;
+  border: 1px solid #fed7aa !important;
+  box-shadow: 0 2px 6px rgba(234, 88, 12, 0.12) !important;
+  flex-shrink: 0 !important;
+}
+
+.service-type-icon {
+  font-size: 20px !important;
+  line-height: 1 !important;
+}
+
+/* Responsive cho phần Lễ hội trên Tablet & Mobile */
+@media (max-width: 900px) {
+  .event-calendar {
+    grid-template-columns: 1fr !important;
+    gap: 28px !important;
+  }
+  .event-item-card {
+    grid-template-columns: 100px minmax(0, 1fr) !important;
+    gap: 14px !important;
+  }
+  .event-item__thumb-box {
+    width: 100px !important;
+    height: 80px !important;
+  }
+  .event-item__aside {
+    grid-column: 1 / -1 !important;
+    align-items: flex-start !important;
+    text-align: left !important;
+    flex-direction: row !important;
+    justify-content: space-between !important;
+    border-top: 1px dashed #e2e8f0 !important;
+    padding-top: 8px !important;
+    width: 100% !important;
+  }
+}
+
+@media (max-width: 600px) {
+  .event-item-card {
+    grid-template-columns: 80px minmax(0, 1fr) !important;
+    padding: 12px 10px !important;
+    gap: 10px !important;
+  }
+  .event-item__thumb-box {
+    width: 80px !important;
+    height: 68px !important;
+  }
+  .event-item__info h3 {
+    font-size: 14px !important;
+  }
+  .event-item__info p {
+    font-size: 11.5px !important;
+  }
+  .event-calendar__hero-card {
+    aspect-ratio: 16 / 9 !important;
+  }
+}
+
+
 
 
 
