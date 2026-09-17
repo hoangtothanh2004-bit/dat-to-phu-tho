@@ -360,10 +360,10 @@ export const UI_TEXT = {
     tripPageDesc: "Tự động thiết kế hành trình tối ưu theo 4 yếu tố cốt lõi: 🏛️ Lộ trình tham quan · 🍲 Món ngon đặc sản · 🛏️ Khách sạn nghỉ dưỡng · 🚗 Phương tiện & thời gian di chuyển trên toàn địa bàn Phú Thọ, Vĩnh Phúc, Hòa Bình.",
     tripControllerTitle: "BỘ ĐIỀU KHIỂN LỊCH TRÌNH",
     tripCustomize: "Tùy biến chuyến đi của bạn",
-    tripStep1: "1. Chọn Tỉnh / Vùng du lịch",
+    tripStep1: "1. Lựa chọn điểm đến",
     tripCombine3: "Tất cả khu vực",
-    tripStep2: "2. Chọn Huyện / Thị xã muốn tới",
-    tripAllDistricts: "Toàn bộ các huyện (Lập tuyến tự do)",
+    tripStep2: "2. Chọn Xã / Phường muốn tới",
+    tripAllDistricts: "Toàn bộ các xã / phường (Lập tuyến tự do)",
     tripDirectionGuide: "🧭 HƯỚNG DẪN ĐƯỜNG ĐI:",
     tripRecommendedRoute: "Tuyến đường khuyên dùng:",
     tripSignatureFoods: "Món ngon tiêu biểu:",
@@ -499,8 +499,8 @@ export const UI_TEXT = {
     directoryCollapse: "Thu gọn bảng danh bạ ▲",
     directoryExpand: "Mở toàn bộ danh bạ",
     directorySearchPlaceholder: "Tìm theo tên điểm, món ăn, khách sạn...",
-    directoryAllDistricts: "Tất cả huyện/thị",
-    directoryDistrictPrefix: "Huyện/Thị:",
+    directoryAllDistricts: "Tất cả xã/phường",
+    directoryDistrictPrefix: "Xã/Phường:",
     directoryColNo: "STT",
     directoryColName: "Tên điểm đến",
     directoryColType: "Loại hình",
@@ -830,10 +830,10 @@ export const UI_TEXT = {
     tripPageDesc: "Automatically optimizes 4 core factors: 🏛️ Sightseeing · 🍲 Local cuisine · 🛏️ Hotels & resorts · 🚗 Transport & travel time across Phu Tho, Vinh Phuc, and Hoa Binh.",
     tripControllerTitle: "TRIP CONTROLLER",
     tripCustomize: "Customize your journey",
-    tripStep1: "1. Select Province / Region",
+    tripStep1: "1. Choose Destination",
     tripCombine3: "All Areas",
-    tripStep2: "2. Select District / Town",
-    tripAllDistricts: "All districts (Free routing)",
+    tripStep2: "2. Select Commune / Ward",
+    tripAllDistricts: "All Communes / Wards (Free Route)",
     tripDirectionGuide: "🧭 TRAVEL DIRECTIONS:",
     tripRecommendedRoute: "Recommended route:",
     tripSignatureFoods: "Signature local dishes:",
@@ -1287,8 +1287,8 @@ export const UI_TEXT = {
     tripPageTitle1: "智能行程规划", tripPageTitle2: "当地专家全程指导。",
     tripPageDesc: "自动优化4大核心：🏛️观光·🍲美食·🛏️住宿·🚗交通，覆盖富寿、永福、和平三省。",
     tripControllerTitle: "行程控制面板", tripCustomize: "自定义您的旅程",
-    tripStep1: "1. 选择省份/区域", tripCombine3: "所有区域",
-    tripStep2: "2. 选择县/区", tripAllDistricts: "全部县区（自由规划）",
+    tripStep1: "1. 选择目的地", tripCombine3: "所有区域",
+    tripStep2: "2. 选择乡镇/坊", tripAllDistricts: "全部乡镇/坊（自由规划）",
     tripDirectionGuide: "🧭 出行指南：", tripRecommendedRoute: "推荐路线：",
     tripSignatureFoods: "特色美食：",
     tripStep3: "3. 选择景点加入行程", tripSelected: "已选", tripPoints: "处",
@@ -1662,8 +1662,8 @@ export const UI_TEXT = {
     tripPageTitle1: "스마트 일정 만들기", tripPageTitle2: "현지 가이드가 함께합니다.",
     tripPageDesc: "🏛️관광·🍲맛집·🛏️숙소·🚗교통 4대 요소를 자동 최적화, 푸토·빈푹·호아빈 3개 지역 전역.",
     tripControllerTitle: "일정 컨트롤러", tripCustomize: "나만의 여행 커스터마이즈",
-    tripStep1: "1. 지역/도 선택", tripCombine3: "전체 지역",
-    tripStep2: "2. 군/구 선택", tripAllDistricts: "전체 군구 (자유 루트)",
+    tripStep1: "1. 목적지 선택", tripCombine3: "전체 지역",
+    tripStep2: "2. 읍/면/동 선택", tripAllDistricts: "전체 읍/면/동 (자유 루트)",
     tripDirectionGuide: "🧭 이동 안내:", tripRecommendedRoute: "추천 경로:",
     tripSignatureFoods: "대표 맛집:",
     tripStep3: "3. 투어에 포함할 명소 선택", tripSelected: "선택됨", tripPoints: "곳",
@@ -2037,8 +2037,8 @@ export const UI_TEXT = {
     tripPageTitle1: "スマート旅程を作成", tripPageTitle2: "現地ガイドがサポート。",
     tripPageDesc: "🏛️観光·🍲グルメ·🛏️宿泊·🚗移動の4要素を自動最適化、フート・ビンフック・ホアビン3省全域。",
     tripControllerTitle: "旅程コントローラー", tripCustomize: "旅をカスタマイズ",
-    tripStep1: "1. 省/地域を選択", tripCombine3: "すべての地域",
-    tripStep2: "2. 郡/市を選択", tripAllDistricts: "全郡区（自由ルート）",
+    tripStep1: "1. 目的地を選択", tripCombine3: "すべての地域",
+    tripStep2: "2. 社/坊（町村）を選択", tripAllDistricts: "全社/坊（自由ルート）",
     tripDirectionGuide: "🧭 アクセス案内：", tripRecommendedRoute: "おすすめルート：",
     tripSignatureFoods: "名物料理：",
     tripStep3: "3. ツアーに含める観光地を選択", tripSelected: "選択済み", tripPoints: "箇所",
@@ -3066,7 +3066,7 @@ export default function Home() {
   // Audio guide controls & voice customization (AI TTS + Browser Speech)
   const [audioLang, setAudioLang] = useState<LanguageCode>("vi");
   const [availableVoices, setAvailableVoices] = useState<SpeechSynthesisVoice[]>([]);
-  const [selectedVoiceURI, setSelectedVoiceURI] = useState<string>("ai-male-north");
+  const [selectedVoiceURI, setSelectedVoiceURI] = useState<string>("ai-female-north");
   const [audioGuidePlaying, setAudioGuidePlaying] = useState(false);
   const [audioState, setAudioState] = useState<AudioState>("idle");
   const [speechPlaceId, setSpeechPlaceId] = useState<string | null>(null);
@@ -3207,8 +3207,8 @@ export default function Home() {
   const voiceOptions = useMemo(() => {
     if (audioLang === "vi") {
       const aiVoices = [
-        { id: "ai-female-north", label: "🌸 Giọng AI Nữ Hà Nội (Chuẩn Studio - Êm ái)" },
-        { id: "ai-male-north", label: "👔 Giọng AI Nam Hà Nội (Chuẩn Studio - Trầm ấm)" },
+        { id: "ai-female-north", label: "🌸 Giọng AI Nữ Hà Nội (Chuẩn miền Bắc - Êm ái)" },
+        { id: "ai-male-north", label: "👔 Giọng AI Nam Hà Nội (Chuẩn miền Bắc - Trầm ấm)" },
       ];
       const browserVoices = availableVoices
         .filter((v) => v.lang.toLowerCase().startsWith("vi"))
@@ -4090,84 +4090,110 @@ export default function Home() {
     if (tripRegion === "Phú Thọ") {
       return [
         "Tất cả",
-        "TP. Việt Trì",
-        "Thị xã Phú Thọ",
-        "Huyện Lâm Thao",
-        "Huyện Phù Ninh",
-        "Huyện Hạ Hòa",
-        "Huyện Đoan Hùng",
-        "Huyện Cẩm Khê",
-        "Huyện Thanh Ba",
-        "Huyện Tam Nông",
-        "Huyện Thanh Thủy",
-        "Huyện Thanh Sơn",
-        "Huyện Tân Sơn",
-        "Huyện Yên Lập",
+        "Xã Hy Cương",
+        "Phường Vân Phú",
+        "Phường Thanh Miếu",
+        "Xã Thanh Thủy",
+        "Xã Long Cốc",
+        "Xã Xuân Đài",
+        "Xã Hương Cần",
+        "Xã Cự Thắng",
+        "Xã Thu Cúc",
+        "Xã Hiền Lương",
+        "Xã Hạ Hòa",
+        "Xã Tiêu Sơn",
+        "Xã Phù Ninh",
+        "Xã Lâm Thao",
+        "Xã Tam Nông",
+        "Xã Cẩm Khê",
+        "Xã Thanh Ba",
+        "Xã Yên Lập",
+        "Xã Hà Thạch",
       ];
     }
     if (tripRegion === "Vĩnh Phúc") {
       return [
         "Tất cả",
-        "TP. Vĩnh Yên",
-        "TP. Phúc Yên",
-        "Huyện Tam Đảo",
-        "Huyện Bình Xuyên",
-        "Huyện Vĩnh Tường",
-        "Huyện Yên Lạc",
-        "Huyện Lập Thạch",
-        "Huyện Sông Lô",
-        "Huyện Tam Dương",
+        "Xã Tam Đảo",
+        "Xã Đại Đình",
+        "Xã Bình Nguyên",
+        "Phường Vĩnh Yên",
+        "Phường Xuân Hòa",
+        "Xã Yên Lạc",
+        "Xã Hải Lựu",
+        "Xã Tam Sơn",
+        "Xã Thổ Tang",
+        "Xã Lập Thạch",
+        "Xã Tam Dương",
       ];
     }
     if (tripRegion === "Hòa Bình") {
       return [
         "Tất cả",
-        "TP. Hòa Bình",
-        "Huyện Mai Châu",
-        "Huyện Kim Bôi",
-        "Huyện Cao Phong",
-        "Huyện Lương Sơn",
-        "Huyện Đà Bắc",
-        "Huyện Tân Lạc",
-        "Huyện Lạc Sơn",
-        "Huyện Lạc Thủy",
-        "Huyện Yên Thủy",
+        "Xã Mai Châu",
+        "Xã Pà Cò",
+        "Xã Vân Sơn",
+        "Xã Mường Bi",
+        "Xã Tiền Phong",
+        "Xã Thung Nai",
+        "Xã Bo",
+        "Xã Mường Thàng",
+        "Xã Lạc Thủy",
+        "Xã Lương Sơn",
+        "Xã Đà Bắc",
+        "Xã Tân Lạc",
+        "Xã Yên Thủy",
+        "Phường Thống Nhất",
+        "Phường Thái Bình",
       ];
     }
     return [
       "Tất cả",
-      "TP. Việt Trì",
-      "Thị xã Phú Thọ",
-      "Huyện Lâm Thao",
-      "Huyện Phù Ninh",
-      "Huyện Hạ Hòa",
-      "Huyện Đoan Hùng",
-      "Huyện Cẩm Khê",
-      "Huyện Thanh Ba",
-      "Huyện Tam Nông",
-      "Huyện Thanh Thủy",
-      "Huyện Thanh Sơn",
-      "Huyện Tân Sơn",
-      "Huyện Yên Lập",
-      "TP. Vĩnh Yên",
-      "TP. Phúc Yên",
-      "Huyện Tam Đảo",
-      "Huyện Bình Xuyên",
-      "Huyện Vĩnh Tường",
-      "Huyện Yên Lạc",
-      "Huyện Lập Thạch",
-      "Huyện Sông Lô",
-      "Huyện Tam Dương",
-      "TP. Hòa Bình",
-      "Huyện Mai Châu",
-      "Huyện Kim Bôi",
-      "Huyện Cao Phong",
-      "Huyện Lương Sơn",
-      "Huyện Đà Bắc",
-      "Huyện Tân Lạc",
-      "Huyện Lạc Sơn",
-      "Huyện Lạc Thủy",
-      "Huyện Yên Thủy",
+      "Xã Hy Cương",
+      "Phường Vân Phú",
+      "Phường Thanh Miếu",
+      "Xã Thanh Thủy",
+      "Xã Long Cốc",
+      "Xã Xuân Đài",
+      "Xã Hương Cần",
+      "Xã Cự Thắng",
+      "Xã Thu Cúc",
+      "Xã Hiền Lương",
+      "Xã Hạ Hòa",
+      "Xã Tiêu Sơn",
+      "Xã Phù Ninh",
+      "Xã Lâm Thao",
+      "Xã Tam Nông",
+      "Xã Cẩm Khê",
+      "Xã Thanh Ba",
+      "Xã Yên Lập",
+      "Xã Hà Thạch",
+      "Xã Tam Đảo",
+      "Xã Đại Đình",
+      "Xã Bình Nguyên",
+      "Phường Vĩnh Yên",
+      "Phường Xuân Hòa",
+      "Xã Yên Lạc",
+      "Xã Hải Lựu",
+      "Xã Tam Sơn",
+      "Xã Thổ Tang",
+      "Xã Lập Thạch",
+      "Xã Tam Dương",
+      "Xã Mai Châu",
+      "Xã Pà Cò",
+      "Xã Vân Sơn",
+      "Xã Mường Bi",
+      "Xã Tiền Phong",
+      "Xã Thung Nai",
+      "Xã Bo",
+      "Xã Mường Thàng",
+      "Xã Lạc Thủy",
+      "Xã Lương Sơn",
+      "Xã Đà Bắc",
+      "Xã Tân Lạc",
+      "Xã Yên Thủy",
+      "Phường Thống Nhất",
+      "Phường Thái Bình",
     ];
   }, [tripRegion]);
 
@@ -4179,7 +4205,18 @@ export default function Home() {
   const availablePlacesForSelection = useMemo(() => {
     return allTripPlaces.filter((p) => {
       if (tripRegion !== "Tất cả" && p.region !== tripRegion) return false;
-      if (tripDistrict !== "Tất cả" && p.district !== tripDistrict) return false;
+      if (tripDistrict !== "Tất cả") {
+        const norm = tripDistrict
+          .toLowerCase()
+          .replace(/^(xã|phường|thị xã|tp.|thành phố)s+/i, "")
+          .trim();
+        const inLoc = p.location && p.location.toLowerCase().includes(norm);
+        const inDist = p.district && (p.district.toLowerCase() === tripDistrict.toLowerCase() || p.district.toLowerCase().includes(norm));
+        const inName = p.name && p.name.toLowerCase().includes(norm);
+        const inTags = p.tags && p.tags.some((t) => t.toLowerCase().includes(norm));
+        const inDesc = (p.description || "").toLowerCase().includes(norm);
+        if (!inLoc && !inDist && !inName && !inTags && !inDesc) return false;
+      }
       return true;
     });
   }, [allTripPlaces, tripRegion, tripDistrict]);
@@ -4587,19 +4624,29 @@ export default function Home() {
       const sentences = rawSentences.length > 0 ? rawSentences : [textToSpeak];
 
       let matchedVoice: SpeechSynthesisVoice | undefined;
+      // Prioritize authentic Northern voices available on OS/Browser (Microsoft HoaiMy, Microsoft NamMinh, Microsoft An, etc.)
+      const northernVoices = targetVoices.filter((v) =>
+        /hoaimy|hoai my|namminh|nam minh|hanoi|ha noi|mien bac|bac|northern|an\b/i.test(v.name) ||
+        /hoaimy|namminh/i.test(v.voiceURI)
+      );
+
       if (isExplicitBrowserVoice) {
-        matchedVoice = targetVoices.find((v) => v.voiceURI === activeVoiceURI) || targetVoices[0];
+        matchedVoice = targetVoices.find((v) => v.voiceURI === activeVoiceURI) || northernVoices[0] || targetVoices[0];
       } else if (isMaleAi) {
         matchedVoice =
+          northernVoices.find((v) => /nam|minh|male|an\b/i.test(v.name)) ||
           targetVoices.find((v) => /nam|minh|male|an\b/i.test(v.name)) ||
+          northernVoices[0] ||
           targetVoices[0];
       } else if (activeVoiceURI === "ai-female-north" || (!isMaleAi && activeVoiceURI.startsWith("ai-"))) {
         matchedVoice =
+          northernVoices.find((v) => /hoaimy|hoai my|linh|mai|chi|female|nữ/i.test(v.name)) ||
+          northernVoices[0] ||
           targetVoices.find((v) => /hoaimy|linh|mai|chi|female|nữ|tiếng việt/i.test(v.name)) ||
           targetVoices.find((v) => !/nam|minh|male|an\b/i.test(v.name)) ||
           targetVoices[0];
       } else {
-        matchedVoice = targetVoices.find((v) => v.voiceURI === activeVoiceURI) || targetVoices[0];
+        matchedVoice = targetVoices.find((v) => v.voiceURI === activeVoiceURI) || northernVoices[0] || targetVoices[0];
       }
 
       let isCancelled = false;
@@ -4634,11 +4681,11 @@ export default function Home() {
 
         if (isMaleAi) {
           const isRealMale = matchedVoice && /nam|minh|male|an\b/i.test(matchedVoice.name);
-          utterance.pitch = isRealMale ? 0.95 : 0.70;
-          utterance.rate = audioRateRef.current * (isRealMale ? 1.0 : 0.95);
+          utterance.pitch = isRealMale ? 0.96 : 0.88;
+          utterance.rate = audioRateRef.current * (isRealMale ? 1.0 : 0.96);
         } else {
-          utterance.pitch = 1.08;
-          utterance.rate = audioRateRef.current;
+          utterance.pitch = 1.02;
+          utterance.rate = audioRateRef.current * 0.98;
         }
 
         utterance.onstart = () => {
@@ -7127,9 +7174,7 @@ export default function Home() {
                 <span className="trip-hero-visual__pill">🌟 DU LỊCH ĐẤT TỔ PHÚ THỌ</span>
                 <div className="trip-hero-visual__badge-card">
                   <div className="trip-hero-visual__details">
-                    <span><b>32</b> Huyện thị</span>
-                    <span>·</span>
-                    <span><b>100+</b> Điểm đến</span>
+                    <span><b>100+</b> Điểm đến di sản</span>
                     <span>·</span>
                     <span><b>AI</b> Tối ưu lộ trình</span>
                   </div>
@@ -7201,7 +7246,7 @@ export default function Home() {
                 </div>
               </div>
 
-              {/* 2. CHỌN HUYỆN & HƯỚNG DẪN ĐƯỜNG */}
+              {/* 2. CHỌN XÃ / PHƯỜNG & HƯỚNG DẪN ĐƯỜNG */}
               <div className="builder-group">
                 <label>{t.tripStep2}</label>
                 <select
@@ -7298,7 +7343,7 @@ export default function Home() {
                         <img src={p.image} alt={p.name} className="place-check-card__thumb" loading="lazy" onError={handleImageError} />
                         <div className="place-check-card__meta">
                           <b>{p.shortName}</b>
-                          <small>{p.district} · {getCategoryLabel(p.category, t)}</small>
+                          <small>{(p.district || "").replace(/^Huyện\s+/i, "Xã ")} · {getCategoryLabel(p.category, t)}</small>
                         </div>
                       </button>
                     );
@@ -7918,9 +7963,8 @@ export default function Home() {
                 const distance = formatDistance(haversine(activeRef.lat, activeRef.lng, item.lat, item.lng));
                 return (
                   <article key={item.id} className={selectedNearItem?.id === item.id ? "is-active" : ""}>
-                    <div className="service-thumb-wrap">
-                      <img className="service-thumb" src={item.image || "/images/services/gas-station.jpg"} alt={item.name} loading="lazy" onError={handleImageError} />
-                      <span className="service-type-badge">{item.icon}</span>
+                    <div className="service-thumb-wrap service-thumb-wrap--icon" title={item.type}>
+                      <span className="service-type-icon">{item.icon}</span>
                     </div>
                     <button className="service-main" onClick={() => setSelectedNearItemId(item.id)}>
                       <span className="service-main__meta">{item.type}{item.province ? ` · ${item.province}` : ""}</span>
@@ -10154,7 +10198,7 @@ function doPost(e) {
                 <div>
                   <span className="heritage-gold-tag">🍀 CHƯƠNG TRÌNH ĐẶC BIỆT 2026</span>
                   <h2 id="challenge-modal-title" className="challenge-modal-title">Thử Thách Du Lịch Đất Tổ</h2>
-                  <p className="challenge-modal-desc">Khám phá 32 huyện thị tỉnh Phú Thọ, tích lũy điểm thưởng đổi voucher OCOP giá trị!</p>
+                  <p className="challenge-modal-desc">Khám phá các điểm đến di sản tỉnh Phú Thọ, tích lũy điểm thưởng đổi voucher OCOP giá trị!</p>
                 </div>
                 <button
                   type="button"

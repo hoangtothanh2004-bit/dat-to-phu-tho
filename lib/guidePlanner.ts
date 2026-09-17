@@ -80,8 +80,8 @@ export const DISTRICT_TRAVEL_GUIDES: Record<string, DistrictGuide> = {
     highlights: ["Khu di tích lịch sử Đền Hùng", "Làng cổ & Đình cổ Hùng Lô (hát Xoan)", "Cầu đi bộ Công viên Văn Lang"],
     signatureFoods: ["Cá lăng sông Lô om chuối đậu", "Bánh tai Gia Cẩm", "Thịt chua Thanh Sơn"],
   },
-  "Huyện Thanh Sơn": {
-    district: "Huyện Thanh Sơn",
+  "Xã Thanh Sơn": {
+    district: "Xã Thanh Sơn",
     region: "Phú Thọ",
     distanceFromHanoi: "95 km (55 km từ Việt Trì)",
     travelTime: "1 giờ 45 phút",
@@ -90,8 +90,8 @@ export const DISTRICT_TRAVEL_GUIDES: Record<string, DistrictGuide> = {
     highlights: ["Thủ phủ Thịt chua truyền thống trứ danh (Nghị Thịnh / Điệp Đào)", "Khám phá văn hóa bản Mường & Thác Chòi", "Cửa ngõ kết nối Đồi chè Long Cốc và Vườn quốc gia Xuân Sơn"],
     signatureFoods: ["Thịt chua Thanh Sơn gói lá chuối kèm lá sung, ổi, đinh lăng", "Rêu đá xào tỏi Mường", "Cơm lam cá suối nướng than hoa"],
   },
-  "Huyện Tân Sơn": {
-    district: "Huyện Tân Sơn",
+  "Xã Long Cốc": {
+    district: "Xã Long Cốc",
     region: "Phú Thọ",
     distanceFromHanoi: "115 km (80 km từ Việt Trì)",
     travelTime: "2 giờ 15 phút",
@@ -100,8 +100,8 @@ export const DISTRICT_TRAVEL_GUIDES: Record<string, DistrictGuide> = {
     highlights: ["Đồi chè Long Cốc (ốc đảo chè đẹp nhất Việt Nam)", "Vườn quốc gia Xuân Sơn (rừng nguyên sinh, hang Lạng)"],
     signatureFoods: ["Gà nhiều cựa Xuân Sơn nướng than", "Lợn lửng xào lăn hạt dổi", "Rau sắng rừng & Xôi ngũ sắc"],
   },
-  "Huyện Thanh Thủy": {
-    district: "Huyện Thanh Thủy",
+  "Xã Thanh Thủy": {
+    district: "Xã Thanh Thủy",
     region: "Phú Thọ",
     distanceFromHanoi: "65 km (40 km từ Việt Trì)",
     travelTime: "1 giờ 15 phút",
@@ -110,8 +110,8 @@ export const DISTRICT_TRAVEL_GUIDES: Record<string, DistrictGuide> = {
     highlights: ["Quần thể nghỉ dưỡng suối khoáng nóng Radon", "Đền Lăng Sương", "Đảo Ngọc Xanh"],
     signatureFoods: ["Cá ngạnh sông Đà nướng riềng mẻ", "Gà đồi Thanh Thủy hấp lá chanh", "Tắm Onsen thư giãn"],
   },
-  "Huyện Hạ Hòa": {
-    district: "Huyện Hạ Hòa",
+  "Xã Hạ Hòa": {
+    district: "Xã Hạ Hòa",
     region: "Phú Thọ",
     distanceFromHanoi: "120 km (65 km từ Việt Trì)",
     travelTime: "1 giờ 20 phút",
@@ -120,8 +120,8 @@ export const DISTRICT_TRAVEL_GUIDES: Record<string, DistrictGuide> = {
     highlights: ["Đền Mẫu Âu Cơ (cội nguồn Mẹ Đất Việt)", "Khu du lịch sinh thái Đầm Ao Châu (99 ngách nước non)"],
     signatureFoods: ["Trám đen kho thịt", "Chuối phấn Hạ Hòa", "Cá đầm Ao Châu nướng giòn"],
   },
-  "Huyện Tam Đảo": {
-    district: "Huyện Tam Đảo",
+  "Xã Tam Đảo": {
+    district: "Xã Tam Đảo",
     region: "Vĩnh Phúc",
     distanceFromHanoi: "75 km",
     travelTime: "1 giờ 30 phút",
@@ -150,8 +150,8 @@ export const DISTRICT_TRAVEL_GUIDES: Record<string, DistrictGuide> = {
     highlights: ["Chùa Hà Tiên linh thiêng", "Đầm Vạc", "Quảng trường Hồ Chí Minh"],
     signatureFoods: ["Tép dầu Đầm Vạc chiên giòn", "Chè kho Tứ Yên", "Gỏi cá mè Vĩnh Yên"],
   },
-  "Huyện Bình Xuyên": {
-    district: "Huyện Bình Xuyên",
+  "Xã Bình Nguyên": {
+    district: "Xã Bình Nguyên",
     region: "Vĩnh Phúc",
     distanceFromHanoi: "50 km (kề cận Vĩnh Yên)",
     travelTime: "45 phút",
@@ -160,8 +160,8 @@ export const DISTRICT_TRAVEL_GUIDES: Record<string, DistrictGuide> = {
     highlights: ["Làng gốm sành cổ Hương Canh 300 năm di sản", "Tháp gốm Bình Sơn"],
     signatureFoods: ["Bánh hòn Hương Canh", "Cháo se Hương Canh"],
   },
-  "Huyện Mai Châu": {
-    district: "Huyện Mai Châu",
+  "Xã Mai Châu": {
+    district: "Xã Mai Châu",
     region: "Hòa Bình",
     distanceFromHanoi: "135 km",
     travelTime: "3 giờ 30 phút",
@@ -170,8 +170,8 @@ export const DISTRICT_TRAVEL_GUIDES: Record<string, DistrictGuide> = {
     highlights: ["Bản Lác & Thung lũng Mai Châu thơ mộng", "Điểm săn mây & Chợ phiên Pà Cò", "Đèo Đá Trắng Thung Khe"],
     signatureFoods: ["Cơm lam nếp nương nướng than", "Thịt lợn mán hạt dổi xứ Mường", "Cá suối chiên giòn & Rượu cần"],
   },
-  "Huyện Kim Bôi": {
-    district: "Huyện Kim Bôi",
+  "Xã Bo": {
+    district: "Xã Bo",
     region: "Hòa Bình",
     distanceFromHanoi: "75 km",
     travelTime: "1 giờ 45 phút",
@@ -180,8 +180,8 @@ export const DISTRICT_TRAVEL_GUIDES: Record<string, DistrictGuide> = {
     highlights: ["Suối khoáng nóng tự nhiên Kim Bôi (36°C giàu khoáng chất)", "Serena Resort Kim Bôi"],
     signatureFoods: ["Gà đồi nướng mọi", "Măng đắng xào thịt bò", "Rau rừng đồ chấm lòng cá"],
   },
-  "Huyện Cao Phong": {
-    district: "Huyện Cao Phong",
+  "Xã Thung Nai": {
+    district: "Xã Thung Nai",
     region: "Hòa Bình",
     distanceFromHanoi: "88 km",
     travelTime: "2 giờ",
@@ -969,7 +969,7 @@ export function getOfficialDocxItinerary(lang: string = "vi"): GeneratedItinerar
       travelMinutes: 5,
       highlightNote: "Biểu tượng trung tâm du lịch Tam Đảo mây mù bồng bềnh (0đ)",
       estimatedCostPerPerson: 0,
-      audioScript: "Quảng trường Tam Đảo nằm ngay trung tâm xã Tam Đảo, được ví như 'trái tim' của vùng đất nghỉ dưỡng trên mây. Đây là nơi du khách dễ dàng cảm nhận nhịp sống sôi động của Tam Đảo, vừa hiện đại vừa giữ được nét văn hóa vùng núi. Ban ngày, quảng trường rộng rãi, thoáng đãng, là điểm lý tưởng để dạo bộ, chụp ảnh với khung cảnh núi non hùng vĩ bao quanh. Đến Quảng trường Tam Đảo, du khách không chỉ có những bức hình đẹp, mà còn cảm nhận được tinh thần trẻ trung, năng động của thị trấn nghỉ dưỡng, đồng thời thấy rõ sự gắn kết giữa con người và thiên nhiên nơi đây.",
+      audioScript: "Quảng trường Tam Đảo nằm ngay trung tâm xã Tam Đảo, được ví như 'trái tim' của vùng đất nghỉ dưỡng trên mây. Đây là nơi du khách dễ dàng cảm nhận nhịp sống sôi động của Tam Đảo, vừa hiện đại vừa giữ được nét văn hóa vùng núi. Ban ngày, quảng trường rộng rãi, thoáng đãng, là điểm lý tưởng để dạo bộ, chụp ảnh với khung cảnh núi non hùng vĩ bao quanh. Đến Quảng trường Tam Đảo, du khách không chỉ có những bức hình đẹp, mà còn cảm nhận được tinh thần trẻ trung, năng động của khu nghỉ dưỡng, đồng thời thấy rõ sự gắn kết giữa con người và thiên nhiên nơi đây.",
       audioScriptEn: "Tam Dao Central Square is the beating heart of this misty mountain resort. Spacious and breezy during the day, framed by towering mountains and fairy-tale castle facades, it is the premier spot for strolling and capturing vibrant photos.",
     },
     {
@@ -1060,7 +1060,7 @@ export function getOfficialDocxItinerary(lang: string = "vi"): GeneratedItinerar
       travelMinutes: 5,
       highlightNote: "Khoảng thời gian tự do khám phá và chụp ảnh kỷ niệm (Tùy chi tiêu)",
       estimatedCostPerPerson: 50000,
-      audioScript: "Khoảng thời gian tự do khám phá, tản bộ qua những con dốc quanh co ngập tràn sắc hoa và sương mù, lưu lại những bức ảnh kỷ niệm cuối cùng tại thị trấn trong mây.",
+      audioScript: "Khoảng thời gian tự do khám phá, tản bộ qua những con dốc quanh co ngập tràn sắc hoa và sương mù, lưu lại những bức ảnh kỷ niệm cuối cùng tại xứ sở trong mây.",
       audioScriptEn: "Enjoy free time wandering through romantic flower slopes and stone steps, taking final memorable snapshots of misty Tam Dao.",
     },
     {

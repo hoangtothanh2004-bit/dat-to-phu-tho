@@ -659,20 +659,17 @@ export default function VisualItineraryV2(props: VisualItineraryV2Props) {
                       transition: "all 0.2s ease"
                     }}
                     onClick={() => {
-                      setSelectedVoiceURI("ai-male-north");
+                      setSelectedVoiceURI("ai-female-north");
                     }}
                   >
-                    <span>👔</span> Giọng Nam trầm ấm
+                    <span>🌸</span> Giọng Nữ Hà Nội (Miền Bắc)
                   </button>
                   <button
                     type="button"
                     className={`v2-rate-pill ${
-                      selectedVoiceURI === "ai-female-north" ||
-                      (!selectedVoiceURI.toLowerCase().includes("nam") &&
-                        !selectedVoiceURI.toLowerCase().includes("male") &&
-                        (selectedVoiceURI.toLowerCase().includes("nữ") ||
-                          selectedVoiceURI.toLowerCase().includes("female") ||
-                          selectedVoiceURI === "ai-female-north"))
+                      selectedVoiceURI === "ai-male-north" ||
+                      (selectedVoiceURI.toLowerCase().includes("nam") ||
+                        selectedVoiceURI.toLowerCase().includes("male"))
                         ? "is-active"
                         : ""
                     }`}
@@ -690,10 +687,10 @@ export default function VisualItineraryV2(props: VisualItineraryV2Props) {
                       transition: "all 0.2s ease"
                     }}
                     onClick={() => {
-                      setSelectedVoiceURI("ai-female-north");
+                      setSelectedVoiceURI("ai-male-north");
                     }}
                   >
-                    <span>🌸</span> Giọng Nữ êm dịu
+                    <span>👔</span> Giọng Nam Hà Nội (Miền Bắc)
                   </button>
                 </div>
               </div>

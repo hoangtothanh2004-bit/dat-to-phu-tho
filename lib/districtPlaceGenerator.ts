@@ -62,7 +62,7 @@ export const DISTRICT_COORDINATES: Record<
     distVietTri: 45,
     distHanoi: "95 km",
     timeHanoi: "1 giờ 30 phút",
-    bestRoute: "Cao tốc Nội Bài – Lào Cai (nút giao IC10 Sai Nga) rẽ thẳng vào huyện Cẩm Khê.",
+    bestRoute: "Cao tốc Nội Bài – Lào Cai (nút giao IC10 Sai Nga) rẽ thẳng vào xã Cẩm Khê.",
   },
   "thanh-ba": {
     lat: 21.45,
@@ -168,7 +168,7 @@ export const DISTRICT_COORDINATES: Record<
     distVietTri: 25,
     distHanoi: "75 km",
     timeHanoi: "1 giờ 15 phút",
-    bestRoute: "Cao tốc Nội Bài – Lào Cai (nút giao IC6 Văn Quán) rẽ thẳng vào huyện Lập Thạch.",
+    bestRoute: "Cao tốc Nội Bài – Lào Cai (nút giao IC6 Văn Quán) rẽ thẳng vào xã Lập Thạch.",
   },
   "song-lo": {
     lat: 21.48,

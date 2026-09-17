@@ -59,7 +59,7 @@ export const DISTRICT_DATABASE: Record<string, DistrictInfo> = {
 
   "thi-xa-phu-tho": {
     id: "thi-xa-phu-tho",
-    name: "Thị xã Phú Thọ",
+    name: "Xã Hà Thạch",
     oldName: "Thị xã Phú Thọ cũ",
     province: "Phú Thọ",
     title: "Thị xã Phú Thọ – Đô thị cổ trầm mặc & Nét đẹp trăm năm",
@@ -83,11 +83,11 @@ export const DISTRICT_DATABASE: Record<string, DistrictInfo> = {
 
   "lam-thao": {
     id: "lam-thao",
-    name: "Huyện Lâm Thao",
+    name: "Xã Lâm Thao",
     oldName: "Lâm Thao cũ",
     province: "Phú Thọ",
-    title: "Huyện Lâm Thao – Vùng đất học danh hương, làng cổ ven sông Thao",
-    intro: "Huyện Lâm Thao nằm bên tả ngạn sông Thao (sông Hồng), là cái nôi khảo cổ học Sơn Vi, vùng đất học khoa bảng với làng cổ Xuân Lũng, lễ hội Trò Trám và các làng nghề ẩm thực trứ danh.",
+    title: "Lâm Thao – Vùng đất học danh hương, làng cổ ven sông Thao",
+    intro: "Xã Lâm Thao nằm bên tả ngạn sông Thao (sông Hồng), là cái nôi khảo cổ học Sơn Vi, vùng đất học khoa bảng với làng cổ Xuân Lũng, lễ hội Trò Trám và các làng nghề ẩm thực trứ danh.",
     keywords: ["lâm thao", "lam thao", "huyện lâm thao", "lâm thao cũ", "sơn vi", "xuân lũng", "bánh dòng", "tứ xã", "trò trám", "dục mỹ"],
     attractions: [
       { name: "Di chỉ khảo cổ học Quốc gia Sơn Vi", category: "Lịch sử khảo cổ", desc: "Nơi phát hiện dấu tích người nguyên thủy thời đại đồ đá cũ cách đây hàng vạn năm, cái nôi đầu tiên của nền văn minh tiền sử Việt Nam.", icon: "🏺" },
@@ -107,10 +107,10 @@ export const DISTRICT_DATABASE: Record<string, DistrictInfo> = {
 
   "phu-ninh": {
     id: "phu-ninh",
-    name: "Huyện Phù Ninh",
+    name: "Xã Phù Ninh",
     oldName: "Phù Ninh cũ",
     province: "Phú Thọ",
-    title: "Huyện Phù Ninh – Xứ chè cọ ngút ngàn & Cội nguồn Hát Xoan An Thái",
+    title: "Phù Ninh – Xứ chè cọ ngút ngàn & Cội nguồn Hát Xoan An Thái",
     intro: "Phù Ninh tiếp giáp Việt Trì về phía Bắc, nổi tiếng với những đồi chè xanh mướt trải dài bên dòng sông Lô, các phường Xoan cổ linh thiêng và ẩm thực đồng quê phong phú.",
     keywords: ["phù ninh", "phu ninh", "huyện phù ninh", "phù ninh cũ", "an thái", "chùa lộc vân", "đền nhà bà", "rươi sông lô", "trạm thản"],
     attractions: [
@@ -131,10 +131,10 @@ export const DISTRICT_DATABASE: Record<string, DistrictInfo> = {
 
   "ha-hoa": {
     id: "ha-hoa",
-    name: "Huyện Hạ Hòa",
+    name: "Xã Hạ Hòa",
     oldName: "Hạ Hòa cũ",
     province: "Phú Thọ",
-    title: "Huyện Hạ Hòa – Cội nguồn Mẹ Âu Cơ & Vịnh nước ngọc Ao Châu",
+    title: "Hạ Hòa – Cội nguồn Mẹ Âu Cơ & Vịnh nước ngọc Ao Châu",
     intro: "Hạ Hòa nằm ở phía Tây Bắc tỉnh Phú Thọ bên sông Thao, nổi tiếng với Đền Mẫu Âu Cơ linh thiêng và Đầm Ao Châu được ví như 'Vịnh Hạ Long trên núi' với 99 ngách nước.",
     keywords: ["hạ hòa", "ha hoa", "huyện hạ hòa", "hạ hòa cũ", "âu cơ", "đền mẫu âu cơ", "đầm ao châu", "ao châu", "ao giời suối tiên", "hiền lương", "quân khê"],
     attractions: [
@@ -155,10 +155,10 @@ export const DISTRICT_DATABASE: Record<string, DistrictInfo> = {
 
   "doan-hung": {
     id: "doan-hung",
-    name: "Huyện Đoan Hùng",
+    name: "Xã Đoan Hùng",
     oldName: "Đoan Hùng cũ",
     province: "Phú Thọ",
-    title: "Huyện Đoan Hùng – Vương quốc bưởi tiến Vua & Hào khí sông Lô",
+    title: "Đoan Hùng – Vương quốc bưởi tiến Vua & Hào khí sông Lô",
     intro: "Đoan Hùng nằm ở ngã ba ranh giới giữa Phú Thọ, Tuyên Quang và Yên Bái, nơi hợp lưu của sông Chảy vào sông Lô, nổi tiếng với giống bưởi quý tiến Vua và chiến thắng sông Lô lịch sử.",
     keywords: ["đoan hùng", "doan hung", "huyện đoan hùng", "đoan hùng cũ", "bưởi đoan hùng", "bưởi sửu", "bằng luân", "chí đám", "chiến thắng sông lô", "sông lô đoan hùng", "tượng đài chiến thắng"],
     attractions: [
@@ -179,11 +179,11 @@ export const DISTRICT_DATABASE: Record<string, DistrictInfo> = {
 
   "cam-khe": {
     id: "cam-khe",
-    name: "Huyện Cẩm Khê",
+    name: "Xã Cẩm Khê",
     oldName: "Cẩm Khê cũ",
     province: "Phú Thọ",
-    title: "Huyện Cẩm Khê – Miền sinh thái đầm Rộc Trịnh & Đất cá thính trứ danh",
-    intro: "Huyện Cẩm Khê nằm ở trung tâm hữu ngạn sông Thao, nổi tiếng với di tích Căn cứ kháng chiến Tiên Động, Chùa Bồng Lai cổ kính, đầm nước sinh thái Rộc Trịnh và đặc sản cá thính nức tiếng gần xa.",
+    title: "Cẩm Khê – Miền sinh thái đầm Rộc Trịnh & Đất cá thính trứ danh",
+    intro: "Xã Cẩm Khê nằm ở trung tâm hữu ngạn sông Thao, nổi tiếng với di tích Căn cứ kháng chiến Tiên Động, Chùa Bồng Lai cổ kính, đầm nước sinh thái Rộc Trịnh và đặc sản cá thính nức tiếng gần xa.",
     keywords: ["cẩm khê", "cam khe", "huyện cẩm khê", "cẩm khê cũ", "cá thính", "tiên động", "chùa bồng lai", "rộc trịnh", "sông thao", "vạn thắng"],
     attractions: [
       { name: "Đầm sinh thái Rộc Trịnh", category: "Sinh thái hoang sơ", desc: "Khu đầm ngập nước tự nhiên rộng lớn hoang sơ với các loài chim nước, hoa súng bạt ngàn và cảnh hoàng hôn tĩnh lặng tuyệt đẹp.", icon: "🪷" },
@@ -203,11 +203,11 @@ export const DISTRICT_DATABASE: Record<string, DistrictInfo> = {
 
   "thanh-ba": {
     id: "thanh-ba",
-    name: "Huyện Thanh Ba",
+    name: "Xã Thanh Ba",
     oldName: "Thanh Ba cũ",
     province: "Phú Thọ",
-    title: "Huyện Thanh Ba – Xứ đồi chè búp tím & Đầm sen Vân Hội mênh mang",
-    intro: "Huyện Thanh Ba được thiên nhiên ưu đãi với vùng hồ đầm sinh thái rộng lớn, đặc biệt là đầm sen Vân Hội bát ngát và giống chè búp tím quý hiếm có hàm lượng dinh dưỡng cao.",
+    title: "Thanh Ba – Xứ đồi chè búp tím & Đầm sen Vân Hội mênh mang",
+    intro: "Xã Thanh Ba được thiên nhiên ưu đãi với vùng hồ đầm sinh thái rộng lớn, đặc biệt là đầm sen Vân Hội bát ngát và giống chè búp tím quý hiếm có hàm lượng dinh dưỡng cao.",
     keywords: ["thanh ba", "thanh ba cũ", "huyện thanh ba", "vân hội", "đầm vân hội", "chè búp tím", "chùa bút", "quảng nạp"],
     attractions: [
       { name: "Khu du lịch sinh thái Đầm Vân Hội", category: "Sinh thái hồ nước", desc: "Mặt hồ phẳng lặng rộng hàng trăm hecta được bao bọc bởi đồi cây xanh ngút ngàn, mùa hè hoa sen nở tỏa hương thơm ngát đón khách chèo thuyền ngắm cảnh.", icon: "🪷" },
@@ -227,10 +227,10 @@ export const DISTRICT_DATABASE: Record<string, DistrictInfo> = {
 
   "tam-nong": {
     id: "tam-nong",
-    name: "Huyện Tam Nông",
+    name: "Xã Tam Nông",
     oldName: "Tam Nông cũ",
     province: "Phú Thọ",
-    title: "Huyện Tam Nông – Khu nghỉ dưỡng Vườn Vua & Miền đầm Bạch Thủy",
+    title: "Tam Nông – Khu nghỉ dưỡng Vườn Vua & Miền đầm Bạch Thủy",
     intro: "Tam Nông nằm ở ngã ba ranh giới giữa sông Đà và sông Hồng, nổi tiếng với quần thể nghỉ dưỡng khoáng nóng Vườn Vua Resort ven đầm sen Bạch Thủy và các di tích lịch sử Hưng Hóa cổ kính.",
     keywords: ["tam nông", "tam nong", "huyện tam nông", "tam nông cũ", "vườn vua", "vuon vua", "vườn vua resort", "bạch thủy", "đầm sen bạch thủy", "phúc thánh", "bánh hòn"],
     attractions: [
@@ -251,10 +251,10 @@ export const DISTRICT_DATABASE: Record<string, DistrictInfo> = {
 
   "thanh-thuy": {
     id: "thanh-thuy",
-    name: "Huyện Thanh Thủy",
+    name: "Xã Thanh Thủy",
     oldName: "Thanh Thủy cũ",
     province: "Phú Thọ",
-    title: "Huyện Thanh Thủy – Thiên đường khoáng nóng Radon & Sinh thái Đảo Ngọc Xanh",
+    title: "Thanh Thủy – Thiên đường khoáng nóng Radon & Sinh thái Đảo Ngọc Xanh",
     intro: "Thanh Thủy là thủ phủ nghỉ dưỡng chăm sóc sức khỏe của miền Bắc với mỏ khoáng nóng Radon tự nhiên quý hiếm giàu khoáng chất phục hồi sức khỏe, khu vui chơi Đảo Ngọc Xanh và đền thờ Thánh Tản Viên.",
     keywords: ["thanh thủy", "thanh thuy", "huyện thanh thủy", "thanh thủy cũ", "suối khoáng nóng", "khoáng nóng thanh thủy", "đảo ngọc xanh", "đền lăng sương", "onsen", "wyndham", "tre nguồn", "bamboo"],
     attractions: [
@@ -275,16 +275,16 @@ export const DISTRICT_DATABASE: Record<string, DistrictInfo> = {
 
   "thanh-son": {
     id: "thanh-son",
-    name: "Huyện Thanh Sơn",
+    name: "Xã Thanh Sơn",
     oldName: "Thanh Sơn cũ",
     province: "Phú Thọ",
-    title: "Huyện Thanh Sơn – Cửa ngõ văn hóa Mường & Thủ phủ Thịt chua Đất Tổ",
+    title: "Thanh Sơn – Cửa ngõ văn hóa Mường & Thủ phủ Thịt chua Đất Tổ",
     intro: "Thanh Sơn là cửa ngõ Tây Nam Phú Thọ, nơi hội tụ nét đẹp văn hóa người Mường bản địa, các dòng suối thác nguyên sơ và món đặc sản Thịt chua nức tiếng khắp cả nước.",
     keywords: ["thanh sơn", "thanh son", "huyện thanh sơn", "thanh sơn cũ", "thịt chua thanh sơn", "nghị thịnh", "thác chòi", "cự thắng", "văn hóa mường"],
     attractions: [
       { name: "Làng nghề & Điểm trải nghiệm Thịt chua Thanh Sơn (Nghị Thịnh / Điệp Đào)", category: "Trải nghiệm làng nghề", desc: "Tham quan quy trình ủ men thính ngô truyền thống của người Mường, tự tay đóng ống giang lá chuối và thưởng thức thịt chua tươi ngon.", icon: "🥩" },
       { name: "Thác Mây (Hương Cần)", category: "Thiên nhiên thác nước", desc: "Dòng thác nguyên sơ hùng vĩ 13 tầng đổ trắng xóa giữa đại ngàn rừng xanh, điểm dã ngoại tắm mát lý tưởng.", location: "xã Hương Cần, tỉnh Phú Thọ", icon: "🌊" },
-      { name: "Thác Chòi (Cự Thắng)", category: "Thiên nhiên cắm trại", desc: "Dòng thác trong vắt đổ xuống qua các phiến đá phẳng giữa rừng đại ngàn, điểm lý tưởng cho dã ngoại picnic, cắm trại và tắm suối mát lạnh.", location: "xã Cự Thắng, huyện Thanh Sơn, tỉnh Phú Thọ", icon: "🏞️" },
+      { name: "Thác Chòi (Cự Thắng)", category: "Thiên nhiên cắm trại", desc: "Dòng thác trong vắt đổ xuống qua các phiến đá phẳng giữa rừng đại ngàn, điểm lý tưởng cho dã ngoại picnic, cắm trại và tắm suối mát lạnh.", location: "xã Cự Thắng, tỉnh Phú Thọ", icon: "🏞️" },
       { name: "Bản văn hóa Mường nguyên sơ Cự Đồng", category: "Du lịch cộng đồng", desc: "Những nếp nhà sàn gỗ mái lá đơn sơ, trải nghiệm giã gạo nhảy sạp, nghe hát Ví hát Rang và thưởng thức rượu hoẵng men lá.", icon: "🏡" },
       { name: "Cửa ngõ tiếp giáp Đồi chè Long Cốc", category: "Cung đường check-in", desc: "Tuyến đường uốn lượn qua các thung lũng lúa xanh mướt nối liền Thanh Sơn lên thiên đường săn mây Long Cốc.", location: "xã Long Cốc, tỉnh Phú Thọ", icon: "🍃" },
     ],
@@ -300,11 +300,11 @@ export const DISTRICT_DATABASE: Record<string, DistrictInfo> = {
 
   "tan-son": {
     id: "tan-son",
-    name: "Huyện Tân Sơn",
+    name: "Xã Long Cốc",
     oldName: "Tân Sơn cũ",
     province: "Phú Thọ",
-    title: "Huyện Tân Sơn – Ốc đảo chè Long Cốc & Vườn quốc gia Xuân Sơn đại ngàn",
-    intro: "Tân Sơn là huyện vùng cao hùng vĩ nhất Phú Thọ, sở hữu 'ốc đảo chè đẹp nhất Việt Nam' Long Cốc với hàng trăm quả đồi bát úp nhấp nhô và VQG Xuân Sơn hoang sơ kỳ vĩ.",
+    title: "Tân Sơn – Ốc đảo chè Long Cốc & Vườn quốc gia Xuân Sơn đại ngàn",
+    intro: "Tân Sơn là vùng cao hùng vĩ nhất Phú Thọ, sở hữu 'ốc đảo chè đẹp nhất Việt Nam' Long Cốc với hàng trăm quả đồi bát úp nhấp nhô và VQG Xuân Sơn hoang sơ kỳ vĩ.",
     keywords: ["tân sơn", "tan son", "huyện tân sơn", "tân sơn cũ", "long cốc", "long coc", "đồi chè long cốc", "xuân sơn", "xuan son", "vườn quốc gia xuân sơn", "hang lạng", "bản cỏi", "bản dù", "gà nhiều cựa"],
     attractions: [
       { name: "Đồi chè bát úp Long Cốc (Ốc đảo chè đẹp nhất Việt Nam)", category: "Kỳ quan thiên nhiên", desc: "Hàng trăm quả đồi chè hình bát úp tròn xoe nhấp nhô giữa thung lũng, buổi sớm mây mù bồng bềnh tựa chốn bồng lai tiên cảnh.", location: "xã Long Cốc, tỉnh Phú Thọ", icon: "🍃" },
@@ -325,11 +325,11 @@ export const DISTRICT_DATABASE: Record<string, DistrictInfo> = {
 
   "yen-lap": {
     id: "yen-lap",
-    name: "Huyện Yên Lập",
+    name: "Xã Yên Lập",
     oldName: "Yên Lập cũ",
     province: "Phú Thọ",
-    title: "Huyện Yên Lập – Miền xanh lòng hồ Ly thơ mộng & Núi rừng nguyên sơ",
-    intro: "Yên Lập là huyện miền núi phía Tây Phú Thọ, nổi tiếng với hồ Ly (hồ Thượng Long) làn nước xanh biếc như ngọc bích phẳng lặng giữa thung lũng và bản sắc văn hóa Mường, Dao đậm đà.",
+    title: "Yên Lập – Miền xanh lòng hồ Ly thơ mộng & Núi rừng nguyên sơ",
+    intro: "Yên Lập là vùng miền núi phía Tây Phú Thọ, nổi tiếng với hồ Ly (hồ Thượng Long) làn nước xanh biếc như ngọc bích phẳng lặng giữa thung lũng và bản sắc văn hóa Mường, Dao đậm đà.",
     keywords: ["yên lập", "yen lap", "huyện yên lập", "yên lập cũ", "hồ ly", "hồ thượng long", "ho ly", "thượng long", "núi rừng yên lập"],
     attractions: [
       { name: "Khu du lịch sinh thái Hồ Ly (Hồ Thượng Long)", category: "Sinh thái hồ nước", desc: "Hồ nước ngọt nhân tạo lớn nhất vùng với mặt nước trong xanh phẳng lặng như gương, cây cầu treo sắt bắc qua eo hồ tuyệt đẹp như tranh thủy mặc.", icon: "🌊" },
@@ -338,7 +338,7 @@ export const DISTRICT_DATABASE: Record<string, DistrictInfo> = {
     ],
     culinary: [
       { dish: "Cá hồ Ly nướng que than củi", desc: "Cá mè, cá trắm bắt tươi từ lòng hồ Ly thịt săn ngọt, nướng than củi mộc mạc chấm muối ớt cay xè.", places: "Các quán ăn ven bến đò Hồ Ly, xã Thượng Long" },
-      { dish: "Thịt lợn đen treo gác bếp chấm chẩm chéo", desc: "Thịt lợn bản ướp gia vị hong khói bếp củi thơm mùi gỗ rừng, thái lát mỏng nhắm cùng rượu ngô men lá.", places: "Chợ huyện Yên Lập, xã Thượng Long" },
+      { dish: "Thịt lợn đen treo gác bếp chấm chẩm chéo", desc: "Thịt lợn bản ướp gia vị hong khói bếp củi thơm mùi gỗ rừng, thái lát mỏng nhắm cùng rượu ngô men lá.", places: "Chợ trung tâm Yên Lập, xã Thượng Long" },
       { dish: "Xôi ngũ sắc & Măng nứa luộc chấm muối vừng", desc: "Nếp nương dẻo quánh đồ lá cẩm lá gấc rực rỡ sắc màu cùng đĩa măng nứa ngọt lịm vừa hái trên nương.", places: "Các hộ làm du lịch cộng đồng Yên Lập" },
     ],
     recommendedStay: "Nhà nghỉ sinh thái ven hồ Ly, Nhà nghỉ trung tâm TT. Yên Lập",
@@ -351,7 +351,7 @@ export const DISTRICT_DATABASE: Record<string, DistrictInfo> = {
   // =========================================================================
   "vinh-yen": {
     id: "vinh-yen",
-    name: "TP. Vĩnh Yên",
+    name: "Phường Vĩnh Yên",
     oldName: "Vĩnh Yên cũ",
     province: "Vĩnh Phúc",
     title: "TP. Vĩnh Yên – Trái tim đô thị Đầm Vạc & Cổ tự thanh tịnh",
@@ -375,7 +375,7 @@ export const DISTRICT_DATABASE: Record<string, DistrictInfo> = {
 
   "phuc-yen": {
     id: "phuc-yen",
-    name: "TP. Phúc Yên",
+    name: "Phường Xuân Hòa",
     oldName: "Phúc Yên cũ",
     province: "Vĩnh Phúc",
     title: "TP. Phúc Yên – Thiên đường nghỉ dưỡng Đại Lải & Rừng thông lãng mạn",
@@ -398,10 +398,10 @@ export const DISTRICT_DATABASE: Record<string, DistrictInfo> = {
 
   "tam-dao": {
     id: "tam-dao",
-    name: "Huyện Tam Đảo",
+    name: "Xã Tam Đảo",
     oldName: "Tam Đảo cũ",
     province: "Vĩnh Phúc",
-    title: "Huyện Tam Đảo – Xã du lịch trong sương & Danh thắng Tây Thiên huyền ảo",
+    title: "Tam Đảo – Xã du lịch trong sương & Danh thắng Tây Thiên huyền ảo",
     intro: "Tam Đảo tọa lạc ở độ cao hơn 900m trên dãy núi Tam Đảo với khí hậu 4 mùa trong một ngày, vùng sương mờ phong cách châu Âu và quần thể danh thắng tâm linh Tây Thiên.",
     keywords: ["tam đảo", "tam dao", "huyện tam đảo", "tam đảo cũ", "tây thiên", "tay thien", "nhà thờ đá tam đảo", "quán gió", "cầu mây", "thác bạc", "đại bảo tháp mandala"],
     attractions: [
@@ -422,10 +422,10 @@ export const DISTRICT_DATABASE: Record<string, DistrictInfo> = {
 
   "binh-xuyen": {
     id: "binh-xuyen",
-    name: "Huyện Bình Xuyên",
+    name: "Xã Bình Nguyên",
     oldName: "Bình Xuyên cũ",
     province: "Vĩnh Phúc",
-    title: "Huyện Bình Xuyên – Làng gốm cổ Hương Canh & Bánh hòn nức tiếng",
+    title: "Bình Xuyên – Làng gốm cổ Hương Canh & Bánh hòn nức tiếng",
     intro: "Bình Xuyên nằm ở phía Đông Nam Vĩnh Phúc, nổi danh với làng nghề gốm sành Hương Canh hơn 300 năm tuổi giữ trọn chất đất mộc mạc và món bánh hòn, bánh nẳng ngọt bùi.",
     keywords: ["bình xuyên", "binh xuyen", "huyện bình xuyên", "bình xuyên cũ", "hương canh", "gốm hương canh", "bánh hòn hương canh", "hồ gia khau"],
     attractions: [
@@ -445,10 +445,10 @@ export const DISTRICT_DATABASE: Record<string, DistrictInfo> = {
 
   "vinh-tuong": {
     id: "vinh-tuong",
-    name: "Huyện Vĩnh Tường",
+    name: "Xã Thổ Tang",
     oldName: "Vĩnh Tường cũ",
     province: "Vĩnh Phúc",
-    title: "Huyện Vĩnh Tường – Vùng đầm Rưng trù phú & Làng nghề xứ Đoài",
+    title: "Vĩnh Tường – Vùng đầm Rưng trù phú & Làng nghề xứ Đoài",
     intro: "Vĩnh Tường nằm ven bờ sông Hồng trù phú phù sa, nổi tiếng với đầm sinh thái Đầm Rưng, làng rèn Lý Nhân, di tích Đình Thổ Tang cổ kính và đặc sản bánh trùng mật mía.",
     keywords: ["vĩnh tường", "vinh tuong", "huyện vĩnh tường", "vĩnh tường cũ", "đầm rưng", "thổ tang", "đình thổ tang", "lý nhân", "bánh trùng mật mía", "vĩnh thịnh"],
     attractions: [
@@ -469,10 +469,10 @@ export const DISTRICT_DATABASE: Record<string, DistrictInfo> = {
 
   "yen-lac": {
     id: "yen-lac",
-    name: "Huyện Yên Lạc",
+    name: "Xã Yên Lạc",
     oldName: "Yên Lạc cũ",
     province: "Vĩnh Phúc",
-    title: "Huyện Yên Lạc – Di chỉ khảo cổ Đồng Đậu & Làng nghề mộc mỹ nghệ",
+    title: "Yên Lạc – Di chỉ khảo cổ Đồng Đậu & Làng nghề mộc mỹ nghệ",
     intro: "Yên Lạc là cái nôi khảo cổ học Đồng Đậu tiêu biểu cho 4 giai đoạn văn hóa tiền sử sông Hồng, vùng đồng bằng trù phú với các làng nghề mộc truyền thống lâu đời.",
     keywords: ["yên lạc", "yen lac", "huyện yên lạc", "yên lạc cũ", "đồng đậu", "di chỉ đồng đậu", "tề lỗ", "chùa biện sơn"],
     attractions: [
@@ -492,10 +492,10 @@ export const DISTRICT_DATABASE: Record<string, DistrictInfo> = {
 
   "lap-thach": {
     id: "lap-thach",
-    name: "Huyện Lập Thạch",
+    name: "Xã Lập Thạch",
     oldName: "Lập Thạch cũ",
     province: "Vĩnh Phúc",
-    title: "Huyện Lập Thạch – Đất Cá thính chua thơm lừng & Tháp gốm Chùa Trò",
+    title: "Lập Thạch – Đất Cá thính chua thơm lừng & Tháp gốm Chùa Trò",
     intro: "Lập Thạch nằm ở vùng bán sơn địa phía Tây Vĩnh Phúc, nổi danh với di sản ẩm thực Cá thính chua muối thính ngô nức tiếng và di tích Tháp gốm men Chùa Trò - Bảo vật Quốc gia.",
     keywords: ["lập thạch", "lap thach", "huyện lập thạch", "lập thạch cũ", "cá thính lập thạch", "tháp chùa trò", "trần nguyên hãn", "đền trần nguyên hãn"],
     attractions: [
@@ -515,11 +515,11 @@ export const DISTRICT_DATABASE: Record<string, DistrictInfo> = {
 
   "song-lo": {
     id: "song-lo",
-    name: "Huyện Sông Lô",
+    name: "Xã Hải Lựu",
     oldName: "Sông Lô cũ",
     province: "Vĩnh Phúc",
-    title: "Huyện Sông Lô – Danh thắng Núi Sáng Thác Bay & Thiền viện Tuệ Đức",
-    intro: "Sông Lô là huyện vùng núi phía Tây Bắc Vĩnh Phúc tựa lưng vào dãy núi Sáng hùng vĩ nhìn ra dòng sông Lô lịch sử, nổi bật với Thác Bay kỳ ảo và Thiền viện Trúc Lâm Tuệ Đức.",
+    title: "Sông Lô – Danh thắng Núi Sáng Thác Bay & Thiền viện Tuệ Đức",
+    intro: "Sông Lô là vùng núi phía Tây Bắc Vĩnh Phúc tựa lưng vào dãy núi Sáng hùng vĩ nhìn ra dòng sông Lô lịch sử, nổi bật với Thác Bay kỳ ảo và Thiền viện Trúc Lâm Tuệ Đức.",
     keywords: ["sông lô", "song lo", "huyện sông lô", "sông lô cũ", "núi sáng", "thác bay", "tuệ đức", "thiền viện tuệ đức", "hang đề thám"],
     attractions: [
       { name: "Quần thể Danh thắng Núi Sáng – Thác Bay", category: "Thiên nhiên hoang sơ", desc: "Đỉnh núi Sáng cao hơn 600m với Thác Bay nước đổ từ lưng trời tung bọt trắng xóa giữa rừng đại ngàn, điểm trekking tuyệt mỹ.", icon: "🌊" },
@@ -540,10 +540,10 @@ export const DISTRICT_DATABASE: Record<string, DistrictInfo> = {
 
   "tam-duong": {
     id: "tam-duong",
-    name: "Huyện Tam Dương",
+    name: "Xã Tam Dương",
     oldName: "Tam Dương cũ",
     province: "Vĩnh Phúc",
-    title: "Huyện Tam Dương – Vườn quả Hướng Đạo & Rừng cò thanh bình",
+    title: "Tam Dương – Vườn quả Hướng Đạo & Rừng cò thanh bình",
     intro: "Tam Dương là vùng bán sơn địa màu mỡ tiếp giáp Tam Đảo, nổi tiếng với giống gà đồi Tam Dương thả vườn chắc thịt, vùng dứa đồi Hướng Đạo ngọt mát và các di tích cổ.",
     keywords: ["tam dương", "tam duong", "huyện tam dương", "tam dương cũ", "hướng đạo", "dứa hướng đạo", "gà đồi tam dương"],
     attractions: [
@@ -566,7 +566,7 @@ export const DISTRICT_DATABASE: Record<string, DistrictInfo> = {
   // =========================================================================
   "tp-hoa-binh": {
     id: "tp-hoa-binh",
-    name: "TP. Hòa Bình",
+    name: "Phường Thống Nhất",
     oldName: "TP. Hòa Bình cũ",
     province: "Hòa Bình",
     title: "TP. Hòa Bình – Công trình Thủy điện thế kỷ & Bảo tàng Văn hóa Mường",
@@ -591,10 +591,10 @@ export const DISTRICT_DATABASE: Record<string, DistrictInfo> = {
 
   "mai-chau": {
     id: "mai-chau",
-    name: "Huyện Mai Châu",
+    name: "Xã Mai Châu",
     oldName: "Mai Châu cũ",
     province: "Hòa Bình",
-    title: "Huyện Mai Châu – Thung lũng Bản Lác thanh bình & Đèo Thung Khe mây phủ",
+    title: "Mai Châu – Thung lũng Bản Lác thanh bình & Đèo Thung Khe mây phủ",
     intro: "Mai Châu là thung lũng thơ mộng của đồng bào dân tộc Thái, nơi có những nếp nhà sàn thanh bình giữa đồng lúa bát ngát, đèo Đá Trắng mây phủ quanh năm và thiên đường săn mây Hang Kia - Pà Cò.",
     keywords: ["mai châu", "mai chau", "huyện mai châu", "mai châu cũ", "bản lác", "ban lac", "thung khe", "đèo đá trắng", "hang kia", "pà cò", "cơm lam mai châu"],
     attractions: [
@@ -616,10 +616,10 @@ export const DISTRICT_DATABASE: Record<string, DistrictInfo> = {
 
   "kim-boi": {
     id: "kim-boi",
-    name: "Huyện Kim Bôi",
+    name: "Xã Bo",
     oldName: "Kim Bôi cũ",
     province: "Hòa Bình",
-    title: "Huyện Kim Bôi – Dòng suối khoáng nóng tự nhiên & Nghỉ dưỡng Serena Resort",
+    title: "Kim Bôi – Dòng suối khoáng nóng tự nhiên & Nghỉ dưỡng Serena Resort",
     intro: "Kim Bôi là vùng thung lũng yên bình với nguồn suối khoáng nóng tự nhiên chảy ra từ lòng đất đá vôi hàng triệu năm, nổi tiếng với các khu nghỉ dưỡng sinh thái chữa lành như Serena Resort.",
     keywords: ["kim bôi", "kim boi", "huyện kim bôi", "kim bôi cũ", "khoáng nóng kim bôi", "suối khoáng kim bôi", "serena resort", "serena kim bôi", "thác bạc kim bôi"],
     attractions: [
@@ -639,10 +639,10 @@ export const DISTRICT_DATABASE: Record<string, DistrictInfo> = {
 
   "cao-phong": {
     id: "cao-phong",
-    name: "Huyện Cao Phong",
+    name: "Xã Thung Nai",
     oldName: "Cao Phong cũ",
     province: "Hòa Bình",
-    title: "Huyện Cao Phong – Vịnh Hạ Long trên núi Thung Nai & Vương quốc cam ngọt",
+    title: "Cao Phong – Vịnh Hạ Long trên núi Thung Nai & Vương quốc cam ngọt",
     intro: "Cao Phong nổi tiếng cả nước với thương hiệu cam đồi ngọt mọng và khu du lịch lòng hồ sông Đà Thung Nai - được ví như 'Vịnh Hạ Long trên núi' với hàng trăm đảo nổi xanh biếc.",
     keywords: ["cao phong", "cao phong cũ", "huyện cao phong", "thung nai", "thung nai sông đà", "đền thác bờ", "cam cao phong", "động thác bờ"],
     attractions: [
@@ -652,7 +652,7 @@ export const DISTRICT_DATABASE: Record<string, DistrictInfo> = {
       { name: "Quần thể Hang động Núi Đầu Rồng", category: "Danh thắng hang động", desc: "Quần thể hang động tự nhiên với động Hoa Sơn, động Thanh Thủy mang vẻ đẹp huyền bí kỳ vĩ.", icon: "🦇" },
     ],
     culinary: [
-      { dish: "Cam Cao Phong (Cam lòng vàng & Cam V2)", desc: "Trái cam đồi đất đỏ bazan mọng nước ngọt đậm, tép cam vàng óng tỏa hương thơm thanh mát nức tiếng gần xa.", places: "Dọc quốc lộ 6 đoạn qua huyện Cao Phong, các vườn cam xã Thu Phong" },
+      { dish: "Cam Cao Phong (Cam lòng vàng & Cam V2)", desc: "Trái cam đồi đất đỏ bazan mọng nước ngọt đậm, tép cam vàng óng tỏa hương thơm thanh mát nức tiếng gần xa.", places: "Dọc quốc lộ 6 đoạn qua xã Thung Nai, các vườn cam xã Thu Phong" },
       { dish: "Cá sông Đà nướng que tre tại Thung Nai", desc: "Cá mương, cá thiểu, cá lăng tươi rói kẹp thanh nứa nướng xèo xèo ngay trên mạn thuyền thưởng thức giữa lòng hồ biếc xanh.", places: "Bến cảng Thung Nai, Đảo Dừa Thung Nai" },
       { dish: "Gà đồi hấp lá chanh & Canh măng nõn", desc: "Thịt gà đồi thả nương chắc nịch luộc chấm muối tiêu chanh ớt ăn cùng bát canh măng đắng ngọt thanh tao.", places: "Các nhà bè sinh thái lòng hồ Thung Nai" },
     ],
@@ -663,10 +663,10 @@ export const DISTRICT_DATABASE: Record<string, DistrictInfo> = {
 
   "luong-son": {
     id: "luong-son",
-    name: "Huyện Lương Sơn",
+    name: "Xã Lương Sơn",
     oldName: "Lương Sơn cũ",
     province: "Hòa Bình",
-    title: "Huyện Lương Sơn – Cửa ngõ xứ Mường & Khu nghỉ dưỡng sinh thái xanh",
+    title: "Lương Sơn – Cửa ngõ xứ Mường & Khu nghỉ dưỡng sinh thái xanh",
     intro: "Lương Sơn là cửa ngõ phía Đông của tỉnh Hòa Bình tiếp giáp Hà Nội, nơi tập trung nhiều khu nghỉ dưỡng resort xanh mát, danh thắng Động Đá Bạc và ẩm thực thịt trâu lá lồm hấp dẫn.",
     keywords: ["lương sơn", "luong son", "huyện lương sơn", "lương sơn cũ", "động đá bạc", "ivory resort", "sân golf phượng hoàng", "thịt trâu lá lồm"],
     attractions: [
@@ -687,10 +687,10 @@ export const DISTRICT_DATABASE: Record<string, DistrictInfo> = {
 
   "da-bac": {
     id: "da-bac",
-    name: "Huyện Đà Bắc",
+    name: "Xã Tiền Phong",
     oldName: "Đà Bắc cũ",
     province: "Hòa Bình",
-    title: "Huyện Đà Bắc – Cung đường trekking lòng hồ sông Đà & Bản sắc Mường Dao",
+    title: "Đà Bắc – Cung đường trekking lòng hồ sông Đà & Bản sắc Mường Dao",
     intro: "Đà Bắc là vùng núi cao hoang sơ tuyệt mỹ ven hồ sông Đà, nổi tiếng với mô hình du lịch cộng đồng Đà Bắc CBT đạt giải thưởng ASEAN, vịnh Ngòi Hoa và trải nghiệm chèo kayak lòng hồ.",
     keywords: ["đà bắc", "da bac", "huyện đà bắc", "đà bắc cũ", "đá bia", "ké", "hiền lương", "tiền phong", "vịnh ngòi hoa", "cbt đà bắc"],
     attractions: [
@@ -711,10 +711,10 @@ export const DISTRICT_DATABASE: Record<string, DistrictInfo> = {
 
   "tan-lac": {
     id: "tan-lac",
-    name: "Huyện Tân Lạc",
+    name: "Xã Mường Bi",
     oldName: "Tân Lạc cũ",
     province: "Hòa Bình",
-    title: "Huyện Tân Lạc – Thủ phủ Mường Bi cổ xưa & Nóc nhà sương mù Lũng Vân",
+    title: "Tân Lạc – Thủ phủ Mường Bi cổ xưa & Nóc nhà sương mù Lũng Vân",
     intro: "Tân Lạc là trung tâm của xứ Mường Bi (vùng Mường lớn nhất trong tứ đại Mường xứ Hòa: Bi, Vang, Thàng, Động), nổi tiếng với đỉnh mây mù Lũng Vân và danh thắng Động Nam Sơn.",
     keywords: ["tân lạc", "tan lac", "huyện tân lạc", "tân lạc cũ", "mường bi", "lũng vân", "lung van", "động nam sơn", "nam sơn"],
     attractions: [
@@ -735,10 +735,10 @@ export const DISTRICT_DATABASE: Record<string, DistrictInfo> = {
 
   "lac-son": {
     id: "lac-son",
-    name: "Huyện Lạc Sơn",
+    name: "Xã Mường Thàng",
     oldName: "Lạc Sơn cũ",
     province: "Hòa Bình",
-    title: "Huyện Lạc Sơn – Tuyệt tác Thác Mu ba tầng & Đồi cỏ Miền Đồi bạt ngàn",
+    title: "Lạc Sơn – Tuyệt tác Thác Mu ba tầng & Đồi cỏ Miền Đồi bạt ngàn",
     intro: "Lạc Sơn nằm ở trung tâm vùng Mường Vang, sở hữu danh thắng Thác Mu ba tầng nước đổ bọt trắng xóa tuyệt đẹp giữa đại ngàn và đồi cỏ Miền Đồi thảo nguyên bao la.",
     keywords: ["lạc sơn", "lac son", "huyện lạc sơn", "lạc sơn cũ", "thác mu", "thac mu", "miền đồi", "mường vang", "hang mãn nguyện"],
     attractions: [
@@ -758,10 +758,10 @@ export const DISTRICT_DATABASE: Record<string, DistrictInfo> = {
 
   "lac-thuy": {
     id: "lac-thuy",
-    name: "Huyện Lạc Thủy",
+    name: "Xã Lạc Thủy",
     oldName: "Lạc Thủy cũ",
     province: "Hòa Bình",
-    title: "Huyện Lạc Thủy – Danh thắng Quần thể Chùa Tiên Đầm Đa & Dê núi trứ danh",
+    title: "Lạc Thủy – Danh thắng Quần thể Chùa Tiên Đầm Đa & Dê núi trứ danh",
     intro: "Lạc Thủy nằm ở phía Đông Nam tỉnh Hòa Bình tiếp giáp Hà Nam và Ninh Bình, nổi danh với Quần thể di tích danh thắng Chùa Tiên - Đầm Đa huyền ảo và di tích Nhà máy in tiền đầu tiên của Việt Nam.",
     keywords: ["lạc thủy", "lac thuy", "huyện lạc thủy", "lạc thủy cũ", "chùa tiên", "đầm đa", "chùa tiên đầm đa", "chi nê", "nhà máy in tiền chi nê", "dê núi lạc thủy"],
     attractions: [
@@ -781,10 +781,10 @@ export const DISTRICT_DATABASE: Record<string, DistrictInfo> = {
 
   "yen-thuy": {
     id: "yen-thuy",
-    name: "Huyện Yên Thủy",
+    name: "Xã Yên Thủy",
     oldName: "Yên Thủy cũ",
     province: "Hòa Bình",
-    title: "Huyện Yên Thủy – Độc đáo Chùa Hang trong lòng núi & Cây đa nghìn tuổi",
+    title: "Yên Thủy – Độc đáo Chùa Hang trong lòng núi & Cây đa nghìn tuổi",
     intro: "Yên Thủy nằm giáp ranh Vườn QG Cúc Phương, vùng đất thanh bình với ngôi chùa Hang kỳ bí tọa lạc trong lòng núi đá vôi mát lạnh và cây đa cổ thụ khổng lồ hơn 800 năm tuổi.",
     keywords: ["yên thủy", "yen thuy", "huyện yên thủy", "yên thủy cũ", "chùa hang yên thủy", "cây đa xóm rộc", "yên trị"],
     attractions: [

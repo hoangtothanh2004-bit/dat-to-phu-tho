@@ -592,7 +592,7 @@ export const places: Place[] = [
     bestStart: "08:00",
     lat: 21.5794,
     lng: 105.0212,
-    audioScript: "Đền Mẫu Âu Cơ nằm tại xã Hiền Lương, huyện Hạ Hòa là chốn linh thiêng phụng thờ Người Mẹ đầu tiên của trăm họ Việt. Truyền thuyết kể rằng sau khi chia 50 người con lên rừng và 50 người con xuống biển, Mẹ Âu Cơ đã dừng chân khai khẩn đất hoang tại vùng đất trù phú này trước khi bay về trời.",
+    audioScript: "Đền Mẫu Âu Cơ nằm tại xã Hiền Lương, tỉnh Phú Thọ là chốn linh thiêng phụng thờ Người Mẹ đầu tiên của trăm họ Việt. Truyền thuyết kể rằng sau khi chia 50 người con lên rừng và 50 người con xuống biển, Mẹ Âu Cơ đã dừng chân khai khẩn đất hoang tại vùng đất trù phú này trước khi bay về trời.",
     audioScriptEn: "Welcome to Mother Au Co Temple in Hien Luong, Ha Hoa. Nestled beneath sacred banyan trees beside the Red River, this temple is dedicated to the Great Mother Au Co, celebrating the primordial legend of the Dragon and Fairy heritage.",
     restaurants: [
       {
@@ -660,7 +660,7 @@ export const places: Place[] = [
     bestStart: "09:00",
     lat: 21.5833,
     lng: 104.9833,
-    audioScript: "Đầm Ao Châu là một kiệt tác tự nhiên nằm giữa vùng đồi bát úp của huyện Hạ Hòa. Mặt nước đầm quanh năm trong xanh phẳng lặng, soi bóng những vạt đồi trồng vải, mít và chè bạt ngàn. Ngồi trên mạn thuyền rẽ sóng qua từng ngách vịnh, du khách sẽ cảm nhận sự thanh bình thoát tục của đất trời trung du.",
+    audioScript: "Đầm Ao Châu là một kiệt tác tự nhiên nằm giữa vùng đồi bát úp tại xã Hạ Hòa, tỉnh Phú Thọ. Mặt nước đầm quanh năm trong xanh phẳng lặng, soi bóng những vạt đồi trồng vải, mít và chè bạt ngàn. Ngồi trên mạn thuyền rẽ sóng qua từng ngách vịnh, du khách sẽ cảm nhận sự thanh bình thoát tục của đất trời trung du.",
     audioScriptEn: "Welcome to Ao Chau Lagoon in Ha Hoa, known as the Halong Bay of Phu Tho with 99 scenic branches, crystal clear waters, surrounding lush fruit hills, and boat eco-tours.",
     restaurants: [
       {
@@ -2006,7 +2006,7 @@ export const phuTho100Directory: DirectoryPlace[] = [
     "name": "Làng quê ven sông Hồng Hạ Hòa",
     "category": "Du lịch nông thôn",
     "location": "Hạ Hòa",
-    "restaurants": "Ẩm thực hộ dân/nhà hàng huyện",
+    "restaurants": "Ẩm thực hộ dân/nhà hàng địa phương",
     "stays": "Nhà nghỉ Hạ Hòa",
     "distance": "5-20 km",
     "notes": "Phù hợp khảo sát xây tour cộng đồng."
@@ -2922,7 +2922,7 @@ export const foodRegions: FoodRegion[] = [
           {
             id: 'nha-vuon-dua-tam-duong',
             name: 'Trang trại Dứa Tam Dương',
-            address: 'xã Hướng Đạo, huyện Tam Dương, tỉnh Phú Thọ',
+            address: 'xã Hướng Đạo, tỉnh Phú Thọ',
             phone: '0971234999',
             hours: '06:00 – 18:00',
             rating: 4.7,
@@ -3264,32 +3264,32 @@ export const comprehensiveServices: ServiceItem[] = [
   { id: "srv-pt-4", icon: "⚡", name: "Trạm sạc VinFast Vincom Plaza Việt Trì", type: "Trạm sạc EV", province: "Phú Thọ", district: "TP. Việt Trì", lat: 21.3175, lng: 105.4012, note: "Sạc siêu nhanh 250kW & 60kW", address: "Đường Hùng Vương, P. Tiên Cát, TP. Việt Trì" },
   { id: "srv-pt-5", icon: "▣", name: "ATM Vietcombank Việt Trì 24/7", type: "ATM", province: "Phú Thọ", district: "TP. Việt Trì", lat: 21.3048, lng: 105.4028, note: "Rút tiền, chuyển khoản đa ngân hàng", address: "Số 668 Đại lộ Hùng Vương, TP. Việt Trì" },
   { id: "srv-pt-6", icon: "🛠️", name: "Cứu hộ giao thông Phú Thọ 116", type: "Cứu hộ", province: "Phú Thọ", district: "TP. Việt Trì", lat: 21.312, lng: 105.395, note: "Cứu hộ xe tai nạn, chết máy, vá lốp 24/7", address: "Toàn tỉnh Phú Thọ & Cao tốc Nội Bài - Lào Cai", phone: "0983116116" },
-  { id: "srv-pt-7", icon: "⛽", name: "Trạm xăng Petrolimex Thanh Thủy", type: "Trạm xăng", province: "Phú Thọ", district: "Huyện Thanh Thủy", lat: 21.178, lng: 105.289, note: "Mở cửa cả ngày · Bơm xe, nước làm mát", address: "Khu 3, xã La Phù, Huyện Thanh Thủy", phone: "02103878234" },
-  { id: "srv-pt-8", icon: "✚", name: "Trung tâm Y tế Huyện Thanh Thủy", type: "Y tế", province: "Phú Thọ", district: "Huyện Thanh Thủy", lat: 21.182, lng: 105.295, note: "Trực cấp cứu 24/7", address: "Khu 5, xã Thanh Thủy", phone: "02103877115" },
-  { id: "srv-pt-9", icon: "🅿️", name: "Bãi đỗ xe Khu du lịch Long Cốc", type: "Bãi đỗ xe", province: "Phú Thọ", district: "Huyện Tân Sơn", lat: 21.205, lng: 105.082, note: "Bãi xe chân đồi chè · Có dịch vụ xe ôm bản địa", address: "Xã Long Cốc, huyện Tân Sơn" },
-  { id: "srv-pt-10", icon: "⛽", name: "Trạm xăng ngã ba Tân Sơn - VQG Xuân Sơn", type: "Trạm xăng", province: "Phú Thọ", district: "Huyện Tân Sơn", lat: 21.124, lng: 104.985, note: "Trạm xăng cuối cùng trước khi vào rừng nguyên sinh", address: "Xã Xuân Đài, huyện Tân Sơn" },
+  { id: "srv-pt-7", icon: "⛽", name: "Trạm xăng Petrolimex Thanh Thủy", type: "Trạm xăng", province: "Phú Thọ", district: "Xã Thanh Thủy", lat: 21.178, lng: 105.289, note: "Mở cửa cả ngày · Bơm xe, nước làm mát", address: "Khu 3, xã La Phù, xã Thanh Thủy, tỉnh Phú Thọ", phone: "02103878234" },
+  { id: "srv-pt-8", icon: "✚", name: "Trung tâm Y tế Thanh Thủy", type: "Y tế", province: "Phú Thọ", district: "Xã Thanh Thủy", lat: 21.182, lng: 105.295, note: "Trực cấp cứu 24/7", address: "Khu 5, xã Thanh Thủy, tỉnh Phú Thọ", phone: "02103877115" },
+  { id: "srv-pt-9", icon: "🅿️", name: "Bãi đỗ xe Khu du lịch Long Cốc", type: "Bãi đỗ xe", province: "Phú Thọ", district: "Xã Long Cốc", lat: 21.205, lng: 105.082, note: "Bãi xe chân đồi chè · Có dịch vụ xe ôm bản địa", address: "Xã Long Cốc, tỉnh Phú Thọ" },
+  { id: "srv-pt-10", icon: "⛽", name: "Trạm xăng ngã ba Tân Sơn - VQG Xuân Sơn", type: "Trạm xăng", province: "Phú Thọ", district: "Xã Xuân Đài", lat: 21.124, lng: 104.985, note: "Trạm xăng cuối cùng trước khi vào rừng nguyên sinh", address: "Xã Xuân Đài, tỉnh Phú Thọ" },
 
   // --- VĨNH PHÚC ---
-  { id: "srv-vp-1", icon: "⛽", name: "Trạm xăng Petrolimex Chân Đèo Tam Đảo", type: "Trạm xăng", province: "Vĩnh Phúc", district: "Huyện Tam Đảo", lat: 21.412, lng: 105.618, note: "Cần đổ đầy bình trước khi lên dốc đèo 13km", address: "Ngã ba Hợp Châu, QL2B, Huyện Tam Đảo", phone: "02113853112" },
-  { id: "srv-vp-2", icon: "🅿️", name: "Bãi đỗ xe Trung tâm Xã Tam Đảo", type: "Bãi đỗ xe", province: "Vĩnh Phúc", district: "Huyện Tam Đảo", lat: 21.458, lng: 105.648, note: "Bãi xe Quảng trường & Khách sạn trung tâm", address: "Khu 1, xã Tam Đảo", phone: "02113824123" },
-  { id: "srv-vp-3", icon: "🛠️", name: "Đội cứu hộ đèo dốc Tam Đảo 24/7", type: "Cứu hộ", province: "Vĩnh Phúc", district: "Huyện Tam Đảo", lat: 21.442, lng: 105.635, note: "Hỗ trợ mất phanh, hỏng số đèo Tam Đảo & Tây Thiên", address: "Dọc tuyến đèo QL2B Tam Đảo", phone: "0915998116" },
-  { id: "srv-vp-4", icon: "🅿️", name: "Bãi đỗ xe Cáp treo Tây Thiên", type: "Bãi đỗ xe", province: "Vĩnh Phúc", district: "Huyện Tam Đảo", lat: 21.492, lng: 105.592, note: "Bãi xe rộng hàng nghìn m2 · Điểm xuất phát cáp treo", address: "Xã Đại Đình, huyện Tam Đảo" },
+  { id: "srv-vp-1", icon: "⛽", name: "Trạm xăng Petrolimex Chân Đèo Tam Đảo", type: "Trạm xăng", province: "Vĩnh Phúc", district: "Xã Tam Đảo", lat: 21.412, lng: 105.618, note: "Cần đổ đầy bình trước khi lên dốc đèo 13km", address: "Ngã ba Hợp Châu, QL2B, tỉnh Phú Thọ", phone: "02113853112" },
+  { id: "srv-vp-2", icon: "🅿️", name: "Bãi đỗ xe Trung tâm Xã Tam Đảo", type: "Bãi đỗ xe", province: "Vĩnh Phúc", district: "Xã Tam Đảo", lat: 21.458, lng: 105.648, note: "Bãi xe Quảng trường & Khách sạn trung tâm", address: "Khu 1, xã Tam Đảo, tỉnh Phú Thọ", phone: "02113824123" },
+  { id: "srv-vp-3", icon: "🛠️", name: "Đội cứu hộ đèo dốc Tam Đảo 24/7", type: "Cứu hộ", province: "Vĩnh Phúc", district: "Xã Tam Đảo", lat: 21.442, lng: 105.635, note: "Hỗ trợ mất phanh, hỏng số đèo Tam Đảo & Tây Thiên", address: "Dọc tuyến đèo QL2B Tam Đảo, tỉnh Phú Thọ", phone: "0915998116" },
+  { id: "srv-vp-4", icon: "🅿️", name: "Bãi đỗ xe Cáp treo Tây Thiên", type: "Bãi đỗ xe", province: "Vĩnh Phúc", district: "Xã Đại Đình", lat: 21.492, lng: 105.592, note: "Bãi xe rộng hàng nghìn m2 · Điểm xuất phát cáp treo", address: "Xã Đại Đình, tỉnh Phú Thọ" },
   { id: "srv-vp-5", icon: "✚", name: "Bệnh viện Đa khoa tỉnh Vĩnh Phúc", type: "Y tế", province: "Vĩnh Phúc", district: "TP. Vĩnh Yên", lat: 21.315, lng: 105.589, note: "Cấp cứu 24/7 · Trang thiết bị hiện đại", address: "Đường Lạc Long Quân, P. Định Trung, TP. Vĩnh Yên", phone: "02113861206" },
   { id: "srv-vp-6", icon: "⚡", name: "Trạm sạc VinFast Flamingo Đại Lải Resort", type: "Trạm sạc EV", province: "Vĩnh Phúc", district: "TP. Phúc Yên", lat: 21.332, lng: 105.715, note: "Sạc công cộng cho khách du lịch và cư dân", address: "Khu nghỉ dưỡng Flamingo Đại Lải, Phúc Yên" },
   { id: "srv-vp-7", icon: "▣", name: "ATM BIDV Phúc Yên - Đại Lải", type: "ATM", province: "Vĩnh Phúc", district: "TP. Phúc Yên", lat: 21.325, lng: 105.702, note: "Hoạt động liên tục 24/7", address: "Đường Nguyễn Tất Thành, TP. Phúc Yên" },
   { id: "srv-vp-8", icon: "⛽", name: "Trạm xăng Petrolimex Số 1 Vĩnh Yên", type: "Trạm xăng", province: "Vĩnh Phúc", district: "TP. Vĩnh Yên", lat: 21.312, lng: 105.595, note: "Mở cửa 24/24 · Đầy đủ xăng dầu chất lượng cao", address: "Đường Mê Linh, P. Khai Quang, TP. Vĩnh Yên", phone: "02113862234" },
   { id: "srv-vp-9", icon: "⚡", name: "Trạm sạc VinFast Vincom Plaza Vĩnh Yên", type: "Trạm sạc EV", province: "Vĩnh Phúc", district: "TP. Vĩnh Yên", lat: 21.318, lng: 105.602, note: "Trụ sạc nhanh ô tô điện 60kW – 250kW", address: "Đường Hai Bà Trưng, P. Tiền Châu, TP. Vĩnh Yên" },
   { id: "srv-vp-10", icon: "▣", name: "ATM Vietcombank Vĩnh Phúc 24/7", type: "ATM", province: "Vĩnh Phúc", district: "TP. Vĩnh Yên", lat: 21.316, lng: 105.592, note: "Rút tiền, chuyển khoản ngân hàng", address: "Đường Kim Ngọc, TP. Vĩnh Yên" },
-  { id: "srv-vp-11", icon: "✚", name: "Trung tâm Y tế Huyện Tam Đảo", type: "Y tế", province: "Vĩnh Phúc", district: "Huyện Tam Đảo", lat: 21.425, lng: 105.625, note: "Trực cấp cứu y tế 24/7 phục vụ khách du lịch", address: "Xã Hợp Châu, Huyện Tam Đảo", phone: "02113853115" },
+  { id: "srv-vp-11", icon: "✚", name: "Trung tâm Y tế Tam Đảo", type: "Y tế", province: "Vĩnh Phúc", district: "Xã Tam Đảo", lat: 21.425, lng: 105.625, note: "Trực cấp cứu y tế 24/7 phục vụ khách du lịch", address: "Xã Hợp Châu, xã Tam Đảo, tỉnh Phú Thọ", phone: "02113853115" },
   { id: "srv-vp-12", icon: "🛠️", name: "Cứu hộ giao thông Vĩnh Phúc 116", type: "Cứu hộ", province: "Vĩnh Phúc", district: "TP. Vĩnh Yên", lat: 21.310, lng: 105.580, note: "Cứu hộ xe hỏng, cẩu kéo 24/7 toàn tỉnh & Cao tốc Nội Bài - Lào Cai", address: "TP. Vĩnh Yên, Vĩnh Phúc", phone: "0912116116" },
 
   // --- HÒA BÌNH ---
-  { id: "srv-hb-1", icon: "⛽", name: "Trạm xăng Petrolimex Bản Lác Mai Châu", type: "Trạm xăng", province: "Hòa Bình", district: "Huyện Mai Châu", lat: 20.665, lng: 105.085, note: "Phục vụ khách du lịch thung lũng Mai Châu", address: "Ngã ba xã Mai Châu", phone: "02183867234" },
-  { id: "srv-hb-2", icon: "🅿️", name: "Bãi đỗ xe Du lịch Cộng đồng Bản Lác 1 & 2", type: "Bãi đỗ xe", province: "Hòa Bình", district: "Huyện Mai Châu", lat: 20.658, lng: 105.078, note: "Bãi xe ô tô du lịch · Cho thuê xe đạp/xe điện", address: "Bản Lác, xã Mai Châu" },
-  { id: "srv-hb-3", icon: "🛠️", name: "Cứu hộ giao thông Đèo Thung Khe (Đèo Đá Trắng)", type: "Cứu hộ", province: "Hòa Bình", district: "Huyện Mai Châu", lat: 20.695, lng: 105.155, note: "Cứu hộ sương mù, trơn trượt dốc đèo QL6", address: "Đỉnh đèo Thung Khe, Quốc lộ 6", phone: "0978116116" },
-  { id: "srv-hb-4", icon: "⛽", name: "Trạm xăng ngã ba Bo - Kim Bôi", type: "Trạm xăng", province: "Hòa Bình", district: "Huyện Kim Bôi", lat: 20.682, lng: 105.535, note: "Trung tâm xã Bo · Gần khu suối khoáng", address: "Khu Mớ Đá, xã Bo, Kim Bôi", phone: "02183871112" },
+  { id: "srv-hb-1", icon: "⛽", name: "Trạm xăng Petrolimex Bản Lác Mai Châu", type: "Trạm xăng", province: "Hòa Bình", district: "Xã Mai Châu", lat: 20.665, lng: 105.085, note: "Phục vụ khách du lịch thung lũng Mai Châu", address: "Ngã ba xã Mai Châu, tỉnh Phú Thọ", phone: "02183867234" },
+  { id: "srv-hb-2", icon: "🅿️", name: "Bãi đỗ xe Du lịch Cộng đồng Bản Lác 1 & 2", type: "Bãi đỗ xe", province: "Hòa Bình", district: "Xã Mai Châu", lat: 20.658, lng: 105.078, note: "Bãi xe ô tô du lịch · Cho thuê xe đạp/xe điện", address: "Bản Lác, xã Mai Châu, tỉnh Phú Thọ" },
+  { id: "srv-hb-3", icon: "🛠️", name: "Cứu hộ giao thông Đèo Thung Khe (Đèo Đá Trắng)", type: "Cứu hộ", province: "Hòa Bình", district: "Xã Mường Bi", lat: 20.695, lng: 105.155, note: "Cứu hộ sương mù, trơn trượt dốc đèo QL6", address: "Đỉnh đèo Thung Khe, Quốc lộ 6, xã Mường Bi, tỉnh Phú Thọ", phone: "0978116116" },
+  { id: "srv-hb-4", icon: "⛽", name: "Trạm xăng ngã ba Bo - Kim Bôi", type: "Trạm xăng", province: "Hòa Bình", district: "Xã Bo", lat: 20.682, lng: 105.535, note: "Trung tâm xã Bo · Gần khu suối khoáng", address: "Khu Mớ Đá, xã Bo, tỉnh Phú Thọ", phone: "02183871112" },
   { id: "srv-hb-5", icon: "✚", name: "Bệnh viện Đa khoa tỉnh Hòa Bình", type: "Y tế", province: "Hòa Bình", district: "TP. Hòa Bình", lat: 20.814, lng: 105.338, note: "Cấp cứu 24/7", address: "Đường Cù Chính Lan, P. Đồng Tiến, TP. Hòa Bình", phone: "02183852115" },
-  { id: "srv-hb-6", icon: "🅿️", name: "Bãi đỗ xe Cảng du lịch Thung Nai Sông Đà", type: "Bãi đỗ xe", province: "Hòa Bình", district: "Huyện Cao Phong", lat: 20.768, lng: 105.242, note: "Trông giữ xe qua đêm đi tàu lòng hồ Sông Đà", address: "Bến cảng Thung Nai, huyện Cao Phong" },
+  { id: "srv-hb-6", icon: "🅿️", name: "Bãi đỗ xe Cảng du lịch Thung Nai Sông Đà", type: "Bãi đỗ xe", province: "Hòa Bình", district: "Xã Thung Nai", lat: 20.768, lng: 105.242, note: "Trông giữ xe qua đêm đi tàu lòng hồ Sông Đà", address: "Bến cảng Thung Nai, xã Thung Nai, tỉnh Phú Thọ" },
   { id: "srv-hb-7", icon: "⚡", name: "Trạm sạc VinFast TP. Hòa Bình", type: "Trạm sạc EV", province: "Hòa Bình", district: "TP. Hòa Bình", lat: 20.825, lng: 105.342, note: "Trạm sạc nhanh Vincom Plaza Hòa Bình", address: "Đường Cù Chính Lan, TP. Hòa Bình" }
 ];
 

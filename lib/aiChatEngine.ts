@@ -77,73 +77,73 @@ const DESTINATION_MAPPINGS: Array<{
   {
     keywords: ["thanh sơn", "thanh son", "huyện thanh sơn", "huyen thanh son", "thịt chua thanh sơn", "thit chua thanh son", "thác chòi"],
     placeId: "long-coc",
-    name: "Huyện Thanh Sơn & Tân Sơn (Đặc sản Thịt chua & Đồi chè Long Cốc)",
+    name: "Xã Thanh Sơn & Tân Sơn (Đặc sản Thịt chua & Đồi chè Long Cốc)",
     region: "Phú Thọ",
-    district: "Huyện Thanh Sơn",
+    district: "Xã Thanh Sơn",
     desc: "Cái nôi văn hóa Mường Đất Tổ và thủ phủ đặc sản Thịt chua trứ danh (Nghị Thịnh / Điệp Đào), cửa ngõ khám phá đồi chè bát úp Long Cốc và rừng nguyên sinh Xuân Sơn.",
   },
   {
     keywords: ["tân sơn", "tan son", "huyện tân sơn", "huyen tan son"],
     placeId: "long-coc",
-    name: "Huyện Tân Sơn (Đồi chè Long Cốc & VQG Xuân Sơn)",
+    name: "Xã Tân Sơn (Đồi chè Long Cốc & VQG Xuân Sơn)",
     region: "Phú Thọ",
-    district: "Huyện Tân Sơn",
+    district: "Xã Tân Sơn",
     desc: "Thiên đường sinh thái với ốc đảo chè Long Cốc bồng bềnh mây sớm và Vườn quốc gia Xuân Sơn với hệ thống hang động kỳ vĩ.",
   },
   {
     keywords: ["đoan hùng", "doan hung", "huyện đoan hùng", "bưởi đoan hùng"],
     placeId: "district-doan-hung",
-    name: "Huyện Đoan Hùng (Vương quốc bưởi tiến Vua & Chiến thắng Sông Lô)",
+    name: "Xã Đoan Hùng (Vương quốc bưởi tiến Vua & Chiến thắng Sông Lô)",
     region: "Phú Thọ",
-    district: "Huyện Đoan Hùng",
+    district: "Xã Đoan Hùng",
     desc: "Vùng đất trù phú ngã ba sông Lô, nổi tiếng với di tích Chiến thắng Sông Lô và giống bưởi Sửu, bưởi Bằng Luân thơm ngọt tiến Vua.",
   },
   {
     keywords: ["lâm thao", "lam thao", "huyện lâm thao", "làng chu quyến"],
     placeId: "district-lam-thao",
-    name: "Huyện Lâm Thao (Đất học & Làng cổ)",
+    name: "Xã Lâm Thao (Đất học & Làng cổ)",
     region: "Phú Thọ",
-    district: "Huyện Lâm Thao",
+    district: "Xã Lâm Thao",
     desc: "Vùng đất phù sa cổ ven sông Hồng, gắn liền với di tích khảo cổ Sơn Vi và các làng nghề bánh làng Dòng truyền thống.",
   },
   {
     keywords: ["phù ninh", "phu ninh", "huyện phù ninh"],
     placeId: "district-phu-ninh",
-    name: "Huyện Phù Ninh",
+    name: "Xã Phù Ninh",
     region: "Phú Thọ",
-    district: "Huyện Phù Ninh",
+    district: "Xã Phù Ninh",
     desc: "Cửa ngõ Đất Tổ với đồi chè xanh mướt và hội chọi trâu Phù Ninh cổ xưa.",
   },
   {
     keywords: ["cẩm khê", "cam khe", "huyện cẩm khê"],
     placeId: "district-cam-khe",
-    name: "Huyện Cẩm Khê (Làng nón Sai Nga & Đầm Rộc Trịnh)",
+    name: "Xã Cẩm Khê (Làng nón Sai Nga & Đầm Rộc Trịnh)",
     region: "Phú Thọ",
-    district: "Huyện Cẩm Khê",
+    district: "Xã Cẩm Khê",
     desc: "Vùng đất đồng chiêm trù phú với nghề làm nón lá Sai Nga truyền thống, đầm sinh thái Rộc Trịnh và đặc sản cá thính trứ danh.",
   },
   {
     keywords: ["tam nông", "tam nong", "huyện tam nông"],
     placeId: "district-tam-nong",
-    name: "Huyện Tam Nông (Vườn Vua Resort & Đầm Sen Bạch Thủy)",
+    name: "Xã Tam Nông (Vườn Vua Resort & Đầm Sen Bạch Thủy)",
     region: "Phú Thọ",
-    district: "Huyện Tam Nông",
+    district: "Xã Tam Nông",
     desc: "Vùng đất ngã ba sông Đà và sông Hồng, nổi tiếng với Khu nghỉ dưỡng Vườn Vua Resort & Villas và đầm sen Bạch Thủy.",
   },
   {
     keywords: ["yên lập", "yen lap", "huyện yên lập"],
     placeId: "district-yen-lap",
-    name: "Huyện Yên Lập (Hồ Ly & Bản Mường)",
+    name: "Xã Yên Lập (Hồ Ly & Bản Mường)",
     region: "Phú Thọ",
-    district: "Huyện Yên Lập",
+    district: "Xã Yên Lập",
     desc: "Vùng cao nguyên sơ với hồ Ly thanh bình và nét văn hóa độc đáo của đồng bào Mường, Dao.",
   },
   {
     keywords: ["thanh ba", "thanh ba", "huyện thanh ba"],
     placeId: "district-thanh-ba",
-    name: "Huyện Thanh Ba (Đồi chè & Hồ Láng Cẩm)",
+    name: "Xã Thanh Ba (Đồi chè & Hồ Láng Cẩm)",
     region: "Phú Thọ",
-    district: "Huyện Thanh Ba",
+    district: "Xã Thanh Ba",
     desc: "Vùng đồi búp chè xanh ngát và hồ Láng Cẩm phẳng lặng giữa trung du.",
   },
   {
@@ -157,81 +157,81 @@ const DESTINATION_MAPPINGS: Array<{
   {
     keywords: ["thanh sơn", "thanh son", "huyện thanh sơn", "thịt chua thanh sơn"],
     placeId: "district-thanh-son",
-    name: "Huyện Thanh Sơn (Thủ phủ thịt chua & Thác Chòi)",
+    name: "Xã Thanh Sơn (Thủ phủ thịt chua & Thác Chòi)",
     region: "Phú Thọ",
-    district: "Huyện Thanh Sơn",
+    district: "Xã Thanh Sơn",
     desc: "Cửa ngõ Tây Nam Đất Tổ trứ danh với đặc sản Thịt chua, văn hóa Mường đặc sắc, Thác Chòi và đồi chè xanh mướt.",
   },
   {
     keywords: ["lập thạch", "lap thach", "huyện lập thạch"],
     placeId: "district-lap-thach",
-    name: "Huyện Lập Thạch",
+    name: "Xã Lập Thạch",
     region: "Vĩnh Phúc",
-    district: "Huyện Lập Thạch",
+    district: "Xã Lập Thạch",
     desc: "Vùng đất cổ ven sông Lô với đền thờ Tả Tướng quốc Trần Nguyên Hãn và tháp gốm Bình Sơn.",
   },
   {
     keywords: ["sông lô", "song lo", "huyện sông lô"],
     placeId: "district-song-lo",
-    name: "Huyện Sông Lô",
+    name: "Xã Sông Lô",
     region: "Vĩnh Phúc",
-    district: "Huyện Sông Lô",
+    district: "Xã Sông Lô",
     desc: "Vùng cảnh quan sinh thái với núi Sáng, thác Bay và dòng sông Lô lịch sử.",
   },
   {
     keywords: ["đà bắc", "da bac", "huyện đà bắc"],
     placeId: "district-da-bac",
-    name: "Huyện Đà Bắc (Bản du lịch cộng đồng Đà Bia & Lòng hồ Sông Đà)",
+    name: "Xã Đà Bắc (Bản du lịch cộng đồng Đà Bia & Lòng hồ Sông Đà)",
     region: "Hòa Bình",
-    district: "Huyện Đà Bắc",
+    district: "Xã Đà Bắc",
     desc: "Vùng hồ thủy điện thơ mộng với các bản du lịch cộng đồng homestay người Mường, Dao và chèo kayak trên vịnh hồ xanh ngọc.",
   },
   {
     keywords: ["lương sơn", "luong son", "huyện lương sơn"],
     placeId: "district-luong-son",
-    name: "Huyện Lương Sơn",
+    name: "Xã Lương Sơn",
     region: "Hòa Bình",
-    district: "Huyện Lương Sơn",
+    district: "Xã Lương Sơn",
     desc: "Cửa ngõ xứ Mường với các resort nghỉ dưỡng sinh thái gần Hà Nội và hang Trầm kỳ thú.",
   },
   {
     keywords: ["cao phong", "cao phong", "huyện cao phong", "cam cao phong"],
     placeId: "thung-nai-song-da",
-    name: "Huyện Cao Phong (Thung Nai Sông Đà & Vườn cam trĩu quả)",
+    name: "Xã Cao Phong (Thung Nai Sông Đà & Vườn cam trĩu quả)",
     region: "Hòa Bình",
-    district: "Huyện Cao Phong",
+    district: "Xã Cao Phong",
     desc: "Vương quốc cam ngọt nức tiếng và cảng Thung Nai xuất phát đi lòng hồ Sông Đà, đền Bờ linh thiêng.",
   },
   {
     keywords: ["tân lạc", "tan lac", "huyện tân lạc", "lũng vân"],
     placeId: "district-tan-lac",
-    name: "Huyện Tân Lạc (Thung lũng Mây Lũng Vân)",
+    name: "Xã Tân Lạc (Thung lũng Mây Lũng Vân)",
     region: "Hòa Bình",
-    district: "Huyện Tân Lạc",
+    district: "Xã Tân Lạc",
     desc: "Nóc nhà xứ Mường Bi quanh năm mây mù che phủ, động Nam Sơn kỳ ảo và khí hậu mát mẻ nguyên sơ.",
   },
   {
     keywords: ["lạc sơn", "lac son", "huyện lạc sơn", "thác mu"],
     placeId: "district-lac-son",
-    name: "Huyện Lạc Sơn (Thác Mu hùng vĩ)",
+    name: "Xã Lạc Sơn (Thác Mu hùng vĩ)",
     region: "Hòa Bình",
-    district: "Huyện Lạc Sơn",
+    district: "Xã Lạc Sơn",
     desc: "Vùng đất cội nguồn văn hóa Mường Vang với dòng thác Mu tung bọt trắng xóa giữa núi rừng đại ngàn.",
   },
   {
     keywords: ["lạc thủy", "lac thuy", "huyện lạc thủy", "chùa tiên"],
     placeId: "district-lac-thuy",
-    name: "Huyện Lạc Thủy (Quần thể Chùa Tiên & Đầm Đa)",
+    name: "Xã Lạc Thủy (Quần thể Chùa Tiên & Đầm Đa)",
     region: "Hòa Bình",
-    district: "Huyện Lạc Thủy",
+    district: "Xã Lạc Thủy",
     desc: "Quần thể tâm linh danh thắng Chùa Tiên - Đầm Đa với hệ thống hang động thạch nhũ lung linh.",
   },
   {
     keywords: ["yên thủy", "yen thuy", "huyện yên thủy"],
     placeId: "district-yen-thuy",
-    name: "Huyện Yên Thủy",
+    name: "Xã Yên Thủy",
     region: "Hòa Bình",
-    district: "Huyện Yên Thủy",
+    district: "Xã Yên Thủy",
     desc: "Cổ tự Chùa Hang linh thiêng trong lòng núi đá vôi và văn hóa Mường đặc sắc.",
   },
   {
@@ -295,7 +295,7 @@ const DESTINATION_MAPPINGS: Array<{
     placeId: "long-coc",
     name: "Đồi chè Long Cốc",
     region: "Phú Thọ",
-    district: "Huyện Tân Sơn",
+    district: "Xã Tân Sơn",
     desc: "Ốc đảo chè đẹp nhất Việt Nam với hàng trăm quả đồi bát úp nhấp nhô giữa làn sương sớm bồng bềnh.",
   },
   {
@@ -303,15 +303,15 @@ const DESTINATION_MAPPINGS: Array<{
     placeId: "xuan-son",
     name: "Vườn quốc gia Xuân Sơn",
     region: "Phú Thọ",
-    district: "Huyện Tân Sơn",
+    district: "Xã Tân Sơn",
     desc: "Lá phổi xanh ngút ngàn với hệ sinh thái rừng nhiệt đới trên núi đá vôi nguyên sinh, suối trong vắt và hang động kỳ vĩ.",
   },
   {
     keywords: ["huyện thanh thủy", "huyen thanh thuy", "du lịch thanh thủy", "du lich thanh thuy", "thanh thủy", "thanh thuy"],
     placeId: "thanh-thuy",
-    name: "Huyện Thanh Thủy (Khoáng nóng Onsen & Vui chơi sinh thái)",
+    name: "Xã Thanh Thủy (Khoáng nóng Onsen & Vui chơi sinh thái)",
     region: "Phú Thọ",
-    district: "Huyện Thanh Thủy",
+    district: "Xã Thanh Thủy",
     desc: "Thiên đường nghỉ dưỡng khoáng nóng Radon, tổ hợp vui chơi Đảo Ngọc Xanh, Đền Lăng Sương và thưởng thức ẩm thực cá sông Đà.",
   },
   {
@@ -319,7 +319,7 @@ const DESTINATION_MAPPINGS: Array<{
     placeId: "thanh-thuy",
     name: "Suối khoáng nóng Thanh Thủy",
     region: "Phú Thọ",
-    district: "Huyện Thanh Thủy",
+    district: "Xã Thanh Thủy",
     desc: "Nguồn nước khoáng Radon quý hiếm tự nhiên tốt cho sức khỏe, trung tâm nghỉ dưỡng Onsen chuẩn Nhật và trị liệu thư giãn.",
   },
   {
@@ -327,7 +327,7 @@ const DESTINATION_MAPPINGS: Array<{
     placeId: "thanh-thuy",
     name: "Khu du lịch sinh thái Đảo Ngọc Xanh",
     region: "Phú Thọ",
-    district: "Huyện Thanh Thủy",
+    district: "Xã Thanh Thủy",
     desc: "Tổ hợp vui chơi giải trí lớn nhất vùng với công viên nước, vòng quay mặt trời, các trò chơi cảm giác mạnh và công viên khủng long.",
   },
   {
@@ -335,7 +335,7 @@ const DESTINATION_MAPPINGS: Array<{
     placeId: "thanh-thuy",
     name: "Khu di tích lịch sử Đền Lăng Sương",
     region: "Phú Thọ",
-    district: "Huyện Thanh Thủy",
+    district: "Xã Thanh Thủy",
     desc: "Ngôi đền linh thiêng duy nhất thờ toàn gia Đức Thánh Tản Viên (Sơn Tinh) và thân mẫu Quốc Mẫu Đinh Thị Đen.",
   },
   {
@@ -343,7 +343,7 @@ const DESTINATION_MAPPINGS: Array<{
     placeId: "thanh-thuy",
     name: "Khu nghỉ dưỡng Vườn Vua Resort & Villas",
     region: "Phú Thọ",
-    district: "Huyện Tam Nông",
+    district: "Xã Tam Nông",
     desc: "Quần thể biệt thự nghỉ dưỡng bên đầm sen Bạch Thủy bát ngát, chèo thuyền kayak và tắm khoáng nóng ngoài trời.",
   },
   {
@@ -359,7 +359,7 @@ const DESTINATION_MAPPINGS: Array<{
     placeId: "den-mau-au-co",
     name: "Đền Mẫu Âu Cơ Hạ Hòa",
     region: "Phú Thọ",
-    district: "Huyện Hạ Hòa",
+    district: "Xã Hạ Hòa",
     desc: "Nơi phụng thờ Quốc Mẫu Âu Cơ sinh ra bọc trăm trứng, gắn liền với huyền tích cội nguồn giống nòi tiên rồng.",
   },
   {
@@ -367,7 +367,7 @@ const DESTINATION_MAPPINGS: Array<{
     placeId: "dam-ao-chau",
     name: "Khu du lịch sinh thái Đầm Ao Châu",
     region: "Phú Thọ",
-    district: "Huyện Hạ Hòa",
+    district: "Xã Hạ Hòa",
     desc: "Vịnh Hạ Long thu nhỏ giữa vùng trung du với 99 ngách nước len lỏi qua các đồi chè, đồi cọ trù phú.",
   },
   {
@@ -375,7 +375,7 @@ const DESTINATION_MAPPINGS: Array<{
     placeId: "ban-lac-mai-chau",
     name: "Bản Lác & Thung lũng Mai Châu",
     region: "Hòa Bình",
-    district: "Huyện Mai Châu",
+    district: "Xã Mai Châu",
     desc: "Thung lũng thơ mộng của đồng bào Thái, nhà sàn thanh bình giữa đồng lúa bát ngát và đèo Thung Khe mây phủ.",
   },
   {
@@ -383,7 +383,7 @@ const DESTINATION_MAPPINGS: Array<{
     placeId: "khoang-nong-kim-boi",
     name: "Suối khoáng nóng Kim Bôi",
     region: "Hòa Bình",
-    district: "Huyện Kim Bôi",
+    district: "Xã Kim Bôi",
     desc: "Dòng suối khoáng ấm tự nhiên chảy từ lòng đất mẹ, nổi tiếng thư giãn phục hồi sinh lực.",
   },
   {
@@ -391,7 +391,7 @@ const DESTINATION_MAPPINGS: Array<{
     placeId: "thung-nai-song-da",
     name: "Khu du lịch lòng hồ sông Đà Thung Nai",
     region: "Hòa Bình",
-    district: "Huyện Cao Phong",
+    district: "Xã Cao Phong",
     desc: "Vịnh Hạ Long trên núi với làn nước xanh ngọc bích, đảo nổi bồng bềnh và đền Chúa Thác Bờ linh thiêng.",
   },
   {
@@ -399,7 +399,7 @@ const DESTINATION_MAPPINGS: Array<{
     placeId: "pa-co-san-may",
     name: "Điểm săn mây & Chợ phiên Pà Cò",
     region: "Hòa Bình",
-    district: "Huyện Mai Châu",
+    district: "Xã Mai Châu",
     desc: "Biển mây trắng xóa bồng bềnh mỗi sớm mai và sắc màu váy hoa thổ cẩm người H'Mông rực rỡ.",
   },
 ];
@@ -474,8 +474,8 @@ export interface AreaRecommendation {
 
 export const AREA_RECOMMENDATIONS: Record<string, AreaRecommendation> = {
   "thanh-thuy": {
-    title: "Huyện Thanh Thủy – Thiên đường nghỉ dưỡng khoáng nóng & sinh thái ven sông Đà",
-    intro: "Dạ, **Huyện Thanh Thủy** là điểm đến nghỉ dưỡng khoáng nóng và du lịch sinh thái nổi tiếng nhất Phú Thọ ven dòng sông Đà thơ mộng.\n\nNếu bạn dự định đi chơi ở Thanh Thủy, dưới đây là **những địa điểm vui chơi & trải nghiệm hấp dẫn nhất** bạn có thể lựa chọn:",
+    title: "Xã Thanh Thủy – Thiên đường nghỉ dưỡng khoáng nóng & sinh thái ven sông Đà",
+    intro: "Dạ, **Xã Thanh Thủy** là điểm đến nghỉ dưỡng khoáng nóng và du lịch sinh thái nổi tiếng nhất Phú Thọ ven dòng sông Đà thơ mộng.\n\nNếu bạn dự định đi chơi ở Thanh Thủy, dưới đây là **những địa điểm vui chơi & trải nghiệm hấp dẫn nhất** bạn có thể lựa chọn:",
     spots: [
       {
         name: "Khu nghỉ dưỡng Suối khoáng nóng Radon (Wyndham Lynn Times / Bamboo / Tre Nguồn)",
@@ -516,11 +516,11 @@ export const AREA_RECOMMENDATIONS: Record<string, AreaRecommendation> = {
     comboValue: "plan_thanh_thuy_combo",
     comboLabel: "✨ Lên lịch trình kết hợp trọn gói Thanh Thủy",
     anchorPlaceId: "thanh-thuy",
-    district: "Huyện Thanh Thủy",
+    district: "Xã Thanh Thủy",
     region: "Phú Thọ",
   },
   "thanh-son": {
-    title: "Huyện Thanh Sơn – Cửa ngõ văn hóa Mường & Thủ phủ Thịt chua Đất Tổ",
+    title: "Xã Thanh Sơn – Cửa ngõ văn hóa Mường & Thủ phủ Thịt chua Đất Tổ",
     intro: "Dạ, **Thanh Sơn** nổi tiếng với nét đẹp văn hóa bản Mường nguyên sơ, ẩm thực trứ danh và là cửa ngõ tuyệt vời kết nối Đồi chè Long Cốc và Vườn QG Xuân Sơn.\n\nĐến Thanh Sơn, bạn nhất định nên tham quan và trải nghiệm các điểm đến sau:",
     spots: [
       {
@@ -555,7 +555,7 @@ export const AREA_RECOMMENDATIONS: Record<string, AreaRecommendation> = {
     comboValue: "plan_thanh_son_combo",
     comboLabel: "✨ Lên tour Thanh Sơn & Long Cốc kết hợp",
     anchorPlaceId: "long-coc",
-    district: "Huyện Thanh Sơn",
+    district: "Xã Thanh Sơn",
     region: "Phú Thọ",
   },
   "den-hung": {
@@ -633,7 +633,7 @@ export const AREA_RECOMMENDATIONS: Record<string, AreaRecommendation> = {
     comboValue: "plan_tam_dao_combo",
     comboLabel: "✨ Lên lịch trình khám phá Tam Đảo trọn gói",
     anchorPlaceId: "tam-dao",
-    district: "Huyện Tam Đảo",
+    district: "Xã Tam Đảo",
     region: "Vĩnh Phúc",
   },
   "phu-tho": {
@@ -1152,7 +1152,7 @@ function handleRouteJourneyInquiry(
   const itinerary = buildItinerary({
     anchorPlaceId: anchorId,
     selectedPlaceIds: selectedIds,
-    district: route.destinationDistrict?.name || survey.district || "Huyện Thanh Sơn",
+    district: route.destinationDistrict?.name || survey.district || "Xã Thanh Sơn",
     region: route.destinationDistrict?.province || survey.region || "Phú Thọ",
     durationDays: finalDays,
     durationNights: finalNights,
@@ -1484,7 +1484,7 @@ export function processAiMessage(
     if (matchedDistrict) {
       let foodText = `🥢 **Khám phá ẩm thực & Quán ăn đặc sản tại ${matchedDistrict.name} (${matchedDistrict.province}):**\n\n`;
       matchedDistrict.culinary.forEach((c, idx) => {
-        foodText += `${idx + 1}. **${c.dish}**:\n   - *Hương vị đặc sắc:* ${c.desc}\n   - 📍 *Địa chỉ / Quán gợi ý:* ${c.places || "Các nhà hàng đặc sản trung tâm huyện"}\n`;
+        foodText += `${idx + 1}. **${c.dish}**:\n   - *Hương vị đặc sắc:* ${c.desc}\n   - 📍 *Địa chỉ / Quán gợi ý:* ${c.places || "Các nhà hàng đặc sản trung tâm xã"}\n`;
       });
 
       foodText += `\n*(Bạn có thể kết hợp thưởng thức ẩm thực khi ghé thăm các điểm du lịch nổi tiếng tại ${matchedDistrict.name} như **${matchedDistrict.attractions.slice(0, 3).map((a) => a.name.split("(")[0].trim()).join(", ")}**.)*\n\n` +
@@ -1530,7 +1530,7 @@ export function processAiMessage(
         "   - *Cơm lam nếp nương Mai Châu & Xôi ngũ sắc:* Nướng ống nứa dẻo thơm chấm muối vừng.\n" +
         "   - *Cá suối nướng Pa pỉnh tộp & Cỗ lá lợn mán:* Chấm muối ớt hạt dổi mắc khén cay thơm ngào ngạt.\n" +
         "   - *Măng chua nấu gà đồi Kim Bôi, Cam Cao Phong & Dê núi Lạc Thủy.*\n\n" +
-        "*(Bạn muốn tìm hiểu chi tiết ẩm thực của **huyện nào** trong 3 tỉnh trên ạ? Hãy gõ tên huyện hoặc chọn bên dưới nhé!)*",
+        "*(Bạn muốn tìm hiểu chi tiết ẩm thực của **xã / điểm đến nào** trong 3 tỉnh trên ạ? Hãy gõ tên xã / điểm đến hoặc chọn bên dưới nhé!)*",
       options: [
         { label: "🥩 Đặc sản Phú Thọ (Thịt chua, Cá lăng, Bưởi)", value: "explore_food_phu_tho", icon: "🥩" },
         { label: "🌿 Đặc sản Vĩnh Phúc (Su su Tam Đảo, Trâu Đại Lải)", value: "explore_food_vinh_phuc", icon: "🍃" },
@@ -1721,7 +1721,7 @@ export function processAiMessage(
         `Dạ em đã ghi nhận bạn muốn đi **${days} ngày** cho **${trav} người**!\n\n` +
         `Bạn muốn đến địa điểm nào tại Phú Thọ & vùng liên kết để em tạo lịch trình ngay ạ?`,
       options: [
-        { label: "🍃 Huyện Thanh Sơn & Đồi chè Long Cốc", value: "plan_long_coc", icon: "📸" },
+        { label: "🍃 Xã Thanh Sơn & Đồi chè Long Cốc", value: "plan_long_coc", icon: "📸" },
         { label: "🏛️ Đền Hùng & TP Việt Trì", value: "plan_den_hung", icon: "🏛️" },
         { label: "🌫️ Khu du lịch Tam Đảo", value: "plan_tam_dao", icon: "🏔️" },
         { label: "♨️ Suối khoáng nóng Thanh Thủy", value: "plan_thanh_thuy", icon: "💆" },
