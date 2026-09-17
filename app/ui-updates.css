@@ -6,42 +6,396 @@
    - Suggested Tour Template Cards: Real Travel Destination Thumbnails
    ========================================================================== */
 
-/* 1. MỤC 03: TRỢ LÝ LỊCH TRÌNH THÔNG MINH - NỀN PHONG CẢNH SƠN THỦY */
+/* 1. MỤC 03: TRỢ LÝ LỊCH TRÌNH THÔNG MINH - NỀN PHONG CẢNH SƠN THỦY & THẺ LỊCH TRÌNH MẪU CHUẨN 2N1Đ */
 .itinerary-teaser {
   max-width: none !important;
-  background-image: linear-gradient(135deg, rgba(12, 32, 25, 0.84) 0%, rgba(18, 48, 38, 0.74) 50%, rgba(10, 26, 20, 0.86) 100%), url('/images/itinerary-teaser-bg.png') !important;
+  background-image: linear-gradient(135deg, rgba(8, 26, 20, 0.92) 0%, rgba(13, 38, 29, 0.84) 50%, rgba(6, 20, 15, 0.94) 100%), url('/images/itinerary-teaser-bg.png') !important;
   background-size: cover !important;
   background-position: center center !important;
   background-repeat: no-repeat !important;
   color: var(--cream) !important;
+  display: grid !important;
+  grid-template-columns: minmax(0, 0.88fr) minmax(460px, 1.25fr) !important;
+  gap: clamp(32px, 4.5vw, 64px) !important;
+  align-items: center !important;
   position: relative !important;
   overflow: hidden !important;
+  border-radius: 28px !important;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.35) !important;
+  margin: 40px 0 !important;
+  padding: 56px clamp(20px, 4vw, 56px) !important;
 }
+
 .itinerary-teaser::before {
   content: "03" !important;
   position: absolute !important;
   left: -12px !important;
   bottom: -62px !important;
   font: 700 260px/.8 Georgia, serif !important;
-  color: rgba(255, 255, 255, 0.05) !important;
+  color: rgba(255, 255, 255, 0.04) !important;
+  pointer-events: none !important;
 }
+
+.itinerary-teaser__copy {
+  position: relative !important;
+  z-index: 2 !important;
+}
+
+.itinerary-teaser__copy h2 {
+  font-size: clamp(24px, 2.8vw, 36px) !important;
+  line-height: 1.25 !important;
+  margin: 14px 0 !important;
+}
+
 .itinerary-teaser__copy h2 em {
   color: #ffe082 !important;
   font-weight: 700 !important;
+  font-style: normal !important;
   text-shadow: 0 2px 14px rgba(0, 0, 0, 0.35) !important;
 }
+
 .itinerary-teaser__copy p {
   color: #dce5e0 !important;
   text-shadow: 0 1px 4px rgba(0, 0, 0, 0.25) !important;
   font-size: 14.5px !important;
+  line-height: 1.65 !important;
+  margin-bottom: 20px !important;
 }
-.mini-itinerary {
-  background: rgba(255, 255, 255, 0.96) !important;
-  backdrop-filter: blur(16px) !important;
-  -webkit-backdrop-filter: blur(16px) !important;
-  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.32), 10px 10px 0 rgba(255, 255, 255, 0.12) !important;
-  border-radius: 14px !important;
-  border: 1px solid rgba(255, 255, 255, 0.9) !important;
+
+.itinerary-teaser__features {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 8px !important;
+  margin-bottom: 24px !important;
+}
+
+.itinerary-teaser__pill {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  font-size: 12.5px !important;
+  font-weight: 600 !important;
+  color: #f1f5f9 !important;
+  background: rgba(255, 255, 255, 0.08) !important;
+  backdrop-filter: blur(10px) !important;
+  -webkit-backdrop-filter: blur(10px) !important;
+  padding: 6px 14px !important;
+  border-radius: 999px !important;
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+  width: fit-content !important;
+}
+
+.itinerary-teaser__pill-icon {
+  color: #ffe082 !important;
+  font-size: 13px !important;
+}
+
+.itinerary-teaser__cta {
+  background: #ffe082 !important;
+  color: #0f231c !important;
+  font-weight: 800 !important;
+  font-size: 13px !important;
+  padding: 12px 24px !important;
+  border-radius: 999px !important;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25) !important;
+  transition: all 0.2s ease !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  border: none !important;
+  cursor: pointer !important;
+}
+
+.itinerary-teaser__cta:hover {
+  background: #fff !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.3) !important;
+}
+
+/* THẺ HIỂN THỊ LỊCH TRÌNH MẪU CHUẨN HIỆN ĐẠI */
+.mini-itinerary.modern-official-card {
+  background: rgba(255, 255, 255, 0.98) !important;
+  backdrop-filter: blur(20px) !important;
+  -webkit-backdrop-filter: blur(20px) !important;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.32), 0 0 0 1px rgba(255, 255, 255, 0.9) !important;
+  border-radius: 20px !important;
+  border: 1px solid rgba(255, 255, 255, 0.95) !important;
+  transform: none !important;
+  padding: clamp(18px, 2.5vw, 24px) !important;
+  position: relative !important;
+  z-index: 2 !important;
+}
+
+.mini-itinerary__top {
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: flex-start !important;
+  border-bottom: 1.5px solid #e2e8f0 !important;
+  padding-bottom: 12px !important;
+  margin-bottom: 12px !important;
+}
+
+.mini-itinerary__head-info {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 4px !important;
+}
+
+.mini-itinerary__badge-row {
+  display: flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+}
+
+.mini-itinerary__badge {
+  background: #ecfdf5 !important;
+  color: #047857 !important;
+  font-size: 11px !important;
+  font-weight: 800 !important;
+  letter-spacing: 0.05em !important;
+  padding: 3px 9px !important;
+  border-radius: 999px !important;
+  border: 1px solid rgba(16, 185, 129, 0.25) !important;
+}
+
+.mini-itinerary__subbadge {
+  background: #fef3c7 !important;
+  color: #b45309 !important;
+  font-size: 11px !important;
+  font-weight: 800 !important;
+  padding: 3px 8px !important;
+  border-radius: 999px !important;
+  border: 1px solid rgba(245, 158, 11, 0.25) !important;
+}
+
+.mini-itinerary__title {
+  font-size: 16px !important;
+  font-weight: 800 !important;
+  color: #0f172a !important;
+  margin: 2px 0 0 !important;
+  line-height: 1.35 !important;
+}
+
+.mini-itinerary__duration {
+  text-align: right !important;
+  flex-shrink: 0 !important;
+}
+
+.mini-itinerary__duration b {
+  font-size: 22px !important;
+  color: #c2410c !important;
+  font-weight: 900 !important;
+  display: block !important;
+  line-height: 1 !important;
+}
+
+.mini-itinerary__duration small {
+  font-size: 11px !important;
+  color: #64748b !important;
+  font-weight: 600 !important;
+}
+
+/* Day switch tabs */
+.mini-itinerary__day-tabs {
+  display: grid !important;
+  grid-template-columns: 1fr 1fr !important;
+  gap: 8px !important;
+  margin-bottom: 14px !important;
+}
+
+.mini-itinerary__day-tab {
+  border: 1.5px solid #e2e8f0 !important;
+  background: #f8fafc !important;
+  border-radius: 12px !important;
+  padding: 8px 10px !important;
+  cursor: pointer !important;
+  text-align: left !important;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 2px !important;
+}
+
+.mini-itinerary__day-tab:hover {
+  background: #f1f5f9 !important;
+  border-color: #cbd5e1 !important;
+}
+
+.mini-itinerary__day-tab--active {
+  background: #f0fdf4 !important;
+  border-color: #16a34a !important;
+  box-shadow: 0 4px 12px rgba(22, 163, 74, 0.12) !important;
+}
+
+.mini-day-badge {
+  font-size: 11px !important;
+  font-weight: 900 !important;
+  color: #16a34a !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.04em !important;
+}
+
+.mini-day-text {
+  font-size: 11.5px !important;
+  font-weight: 700 !important;
+  color: #1e293b !important;
+  line-height: 1.3 !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+}
+
+/* Stops list */
+.mini-itinerary__stops {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 4px !important;
+}
+
+.mini-stop--upgraded {
+  min-height: 52px !important;
+  display: grid !important;
+  grid-template-columns: 50px 12px 48px 1fr !important;
+  gap: 10px !important;
+  align-items: center !important;
+  position: relative !important;
+  padding: 4px 0 !important;
+}
+
+.mini-stop--upgraded:not(:last-of-type)::after {
+  content: "" !important;
+  position: absolute !important;
+  left: 55px !important;
+  top: 32px !important;
+  height: calc(100% - 6px) !important;
+  border-left: 2px dashed #cbd5e1 !important;
+}
+
+.mini-stop__time {
+  font-size: 10.5px !important;
+  font-weight: 800 !important;
+  color: #334155 !important;
+  line-height: 1.2 !important;
+  text-align: right !important;
+}
+
+.mini-stop__dot {
+  width: 8px !important;
+  height: 8px !important;
+  border-radius: 50% !important;
+  background: #ea580c !important;
+  box-shadow: 0 0 0 3px rgba(234, 88, 12, 0.2) !important;
+  position: relative !important;
+  z-index: 1 !important;
+  justify-self: center !important;
+}
+
+.mini-stop__img-box {
+  width: 48px !important;
+  height: 40px !important;
+  border-radius: 8px !important;
+  overflow: hidden !important;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1) !important;
+  flex-shrink: 0 !important;
+  background: #f1f5f9 !important;
+}
+
+.mini-stop__img-box img {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  display: block !important;
+}
+
+.mini-stop__details {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 2px !important;
+  min-width: 0 !important;
+}
+
+.mini-stop__title-row {
+  display: flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+  flex-wrap: wrap !important;
+}
+
+.mini-stop__title-row b {
+  font-size: 13px !important;
+  font-weight: 700 !important;
+  color: #0f172a !important;
+  line-height: 1.3 !important;
+}
+
+.mini-stop__tag {
+  font-size: 10px !important;
+  font-weight: 700 !important;
+  padding: 1px 7px !important;
+  border-radius: 999px !important;
+  background: #f1f5f9 !important;
+  color: #475569 !important;
+  white-space: nowrap !important;
+}
+
+.mini-stop__subtitle {
+  font-size: 11px !important;
+  color: #64748b !important;
+  line-height: 1.35 !important;
+  font-weight: 500 !important;
+  display: -webkit-box !important;
+  -webkit-line-clamp: 1 !important;
+  -webkit-box-orient: vertical !important;
+  overflow: hidden !important;
+}
+
+.mini-stop__cost {
+  font-size: 10.5px !important;
+  font-weight: 800 !important;
+  color: #b45309 !important;
+}
+
+/* Footer card */
+.mini-itinerary__footer {
+  border-top: 1.5px solid #e2e8f0 !important;
+  margin-top: 12px !important;
+  padding-top: 12px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 10px !important;
+}
+
+.mini-itinerary__footer-summary {
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  font-size: 11.5px !important;
+  font-weight: 700 !important;
+  color: #475569 !important;
+  flex-wrap: wrap !important;
+  gap: 4px !important;
+}
+
+.mini-itinerary__action-btn {
+  background: linear-gradient(135deg, #18332c 0%, #224d40 100%) !important;
+  color: #ffe082 !important;
+  font-size: 13px !important;
+  font-weight: 800 !important;
+  padding: 12px 18px !important;
+  border-radius: 12px !important;
+  border: 1px solid rgba(255, 224, 130, 0.3) !important;
+  cursor: pointer !important;
+  text-align: center !important;
+  box-shadow: 0 4px 14px rgba(24, 51, 44, 0.2) !important;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  width: 100% !important;
+}
+
+.mini-itinerary__action-btn:hover {
+  background: linear-gradient(135deg, #102620 0%, #1a3c32 100%) !important;
+  color: #fff !important;
+  transform: translateY(-1px) !important;
+  box-shadow: 0 6px 18px rgba(24, 51, 44, 0.3) !important;
 }
 
 /* 2. TAB LỊCH TRÌNH (TRIP) - THẺ SHOWCASE BÊN PHẢI KHUNG TIÊU ĐỀ */
@@ -4100,6 +4454,312 @@ body {
     font-size: 18px !important;
   }
 }
+
+/* ==========================================================================
+   17. ĐỒNG BỘ GIAO DIỆN TOÀN DIỆN TRÊN MỌI THIẾT BỊ (PC, LAPTOP, TABLET, MOBILE)
+   ========================================================================== */
+
+/* Ngăn ngừa lỗi tràn ngang trên toàn trang */
+html, body {
+  overflow-x: hidden !important;
+  max-width: 100vw !important;
+}
+
+/* 17.1 LAPTOP & MÀN HÌNH NHỎ (1024px - 1280px) */
+@media (max-width: 1280px) {
+  .itinerary-teaser {
+    grid-template-columns: minmax(0, 0.85fr) minmax(440px, 1.15fr) !important;
+    gap: 36px !important;
+    padding: 48px 32px !important;
+  }
+  .trip-hero-intro {
+    grid-template-columns: 1fr 1fr !important;
+    gap: 28px !important;
+  }
+}
+
+/* 17.2 MÁY TÍNH BẢNG / IPAD (768px - 1024px) */
+@media (max-width: 1024px) {
+  /* Khung Section 03 - Trợ lý lịch trình thông minh */
+  .itinerary-teaser {
+    grid-template-columns: 1fr !important;
+    gap: 32px !important;
+    padding: 42px 24px !important;
+    margin: 32px 0 !important;
+  }
+  .itinerary-teaser__copy {
+    max-width: 100% !important;
+  }
+  .itinerary-teaser__copy p {
+    max-width: 100% !important;
+  }
+  .mini-itinerary.modern-official-card {
+    width: 100% !important;
+    max-width: 100% !important;
+    transform: none !important;
+  }
+  
+  /* Khung Hero & Search */
+  .hero-panoramic {
+    padding: 38px 20px !important;
+  }
+  .hero-search-capsule {
+    width: 100% !important;
+    max-width: 580px !important;
+  }
+  .hero-category-cards {
+    grid-template-columns: repeat(4, 1fr) !important;
+    gap: 10px !important;
+  }
+  .hero-features-glass {
+    gap: 16px !important;
+    padding: 10px 16px !important;
+    flex-wrap: wrap !important;
+    justify-content: center !important;
+  }
+
+  /* Khung Thẻ Tour & Địa Điểm */
+  .trip-hero-intro {
+    grid-template-columns: 1fr !important;
+    gap: 24px !important;
+  }
+  .place-grid,
+  .commerce-search-results {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 18px !important;
+  }
+  .special-heritage-banner .special-heritage-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 16px !important;
+  }
+
+  /* Khung Thử Thách Du Lịch */
+  .travel-challenge-card {
+    grid-template-columns: 1fr !important;
+    gap: 24px !important;
+  }
+}
+
+/* 17.3 ĐIỆN THOẠI THÔNG MINH / MOBILE (<= 767px) */
+@media (max-width: 767px) {
+  /* Header Topbar trên Mobile */
+  .topbar--v2 {
+    height: 64px !important;
+    padding: 0 12px !important;
+  }
+  .brand__full-logo-img {
+    height: 44px !important;
+    max-height: 46px !important;
+  }
+
+  /* Khung Hero trên Mobile */
+  .hero-panoramic {
+    padding: 24px 12px 28px !important;
+    min-height: auto !important;
+  }
+  .hero-panoramic__title {
+    font-size: 20px !important;
+    line-height: 1.25 !important;
+  }
+  .hero-panoramic__subtitle {
+    font-size: 12.5px !important;
+  }
+  .hero-search-capsule {
+    width: 100% !important;
+    flex-direction: column !important;
+    padding: 8px 10px !important;
+    border-radius: 16px !important;
+    gap: 8px !important;
+  }
+  .hero-search-capsule input {
+    width: 100% !important;
+    height: 38px !important;
+    font-size: 13px !important;
+  }
+  .hero-search-capsule-actions {
+    width: 100% !important;
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    gap: 8px !important;
+  }
+  .hero-search-submit-btn {
+    flex: 1 !important;
+    padding: 8px 14px !important;
+    font-size: 12.5px !important;
+    justify-content: center !important;
+  }
+  .hero-category-cards {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 8px !important;
+  }
+  .hero-category-card {
+    padding: 8px 6px !important;
+  }
+  .hero-features-glass {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 8px !important;
+  }
+  .hero-feat-item {
+    justify-content: flex-start !important;
+  }
+
+  /* Section 03 - Trợ lý lịch trình thông minh trên Mobile */
+  .itinerary-teaser {
+    padding: 28px 14px !important;
+    border-radius: 18px !important;
+    margin: 24px 0 !important;
+    gap: 24px !important;
+  }
+  .itinerary-teaser::before {
+    font-size: 120px !important;
+    bottom: -30px !important;
+    left: -6px !important;
+  }
+  .itinerary-teaser__copy h2 {
+    font-size: 22px !important;
+  }
+  .itinerary-teaser__copy p {
+    font-size: 13px !important;
+    line-height: 1.55 !important;
+  }
+  .itinerary-teaser__features {
+    gap: 6px !important;
+  }
+  .itinerary-teaser__pill {
+    font-size: 11.5px !important;
+    padding: 5px 12px !important;
+  }
+  .itinerary-teaser__cta {
+    width: 100% !important;
+    justify-content: center !important;
+    padding: 11px 18px !important;
+    font-size: 12.5px !important;
+  }
+
+  /* Thẻ Lịch Trình Mẫu trên Mobile */
+  .mini-itinerary.modern-official-card {
+    padding: 14px 10px !important;
+    border-radius: 16px !important;
+  }
+  .mini-itinerary__top {
+    flex-direction: column !important;
+    gap: 8px !important;
+  }
+  .mini-itinerary__duration {
+    text-align: left !important;
+    display: flex !important;
+    align-items: baseline !important;
+    gap: 6px !important;
+  }
+  .mini-itinerary__duration b {
+    font-size: 18px !important;
+  }
+  .mini-itinerary__title {
+    font-size: 14.5px !important;
+  }
+  .mini-itinerary__day-tabs {
+    grid-template-columns: 1fr !important;
+    gap: 6px !important;
+  }
+  .mini-itinerary__day-tab {
+    padding: 7px 9px !important;
+  }
+  .mini-day-text {
+    font-size: 11px !important;
+    white-space: normal !important;
+  }
+  .mini-stop--upgraded {
+    grid-template-columns: 44px 10px 40px 1fr !important;
+    gap: 8px !important;
+    min-height: 48px !important;
+  }
+  .mini-stop--upgraded:not(:last-of-type)::after {
+    left: 49px !important;
+  }
+  .mini-stop__time {
+    font-size: 9.5px !important;
+  }
+  .mini-stop__img-box {
+    width: 40px !important;
+    height: 36px !important;
+    border-radius: 6px !important;
+  }
+  .mini-stop__title-row b {
+    font-size: 12px !important;
+  }
+  .mini-stop__tag {
+    font-size: 9px !important;
+    padding: 1px 5px !important;
+  }
+  .mini-stop__subtitle {
+    font-size: 10px !important;
+  }
+  .mini-stop__cost {
+    font-size: 10px !important;
+  }
+  .mini-itinerary__footer-summary {
+    font-size: 10.5px !important;
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 2px !important;
+  }
+  .mini-itinerary__action-btn {
+    font-size: 12px !important;
+    padding: 10px 14px !important;
+  }
+
+  /* Khung Lưới Địa Điểm & Món Ăn trên Mobile */
+  .place-grid,
+  .commerce-search-results {
+    grid-template-columns: 1fr !important;
+    gap: 14px !important;
+  }
+  .special-heritage-banner .special-heritage-grid {
+    grid-template-columns: 1fr !important;
+    gap: 12px !important;
+  }
+
+  /* Cửa Sổ Modal Chi Tiết trên Mobile */
+  .modal__dialog {
+    width: 95vw !important;
+    max-height: 86vh !important;
+    margin: 10px auto !important;
+    border-radius: 18px !important;
+  }
+  .detail-panel {
+    padding: 16px 12px !important;
+  }
+
+  /* Hộp Chat Hướng Dẫn Viên AI trên Mobile */
+  .ai-guide-chat-window {
+    width: calc(100vw - 20px) !important;
+    max-width: 100vw !important;
+    right: 10px !important;
+    bottom: 74px !important;
+    max-height: 75vh !important;
+  }
+}
+
+/* 17.4 THIẾT BỊ MÀN HÌNH NHỎ (<= 380px) */
+@media (max-width: 380px) {
+  .mini-stop--upgraded {
+    grid-template-columns: 38px 8px 36px 1fr !important;
+    gap: 6px !important;
+  }
+  .mini-stop__img-box {
+    width: 36px !important;
+    height: 32px !important;
+  }
+  .mini-stop__time {
+    font-size: 8.5px !important;
+  }
+  .mini-stop__title-row b {
+    font-size: 11.5px !important;
+  }
+}
+
 
 
 

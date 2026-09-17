@@ -3023,6 +3023,92 @@ export const TRAVEL_CHALLENGE_REWARDS: TravelReward[] = [
   },
 ];
 
+export const OFFICIAL_SAMPLE_TOUR_DAY1 = [
+  {
+    time: "07:30",
+    title: "Xuất phát từ trung tâm Việt Trì",
+    subtitle: "Khởi hành · Ăn sáng bún bò / phở nóng Nhà hàng Mai Anh (Hy Cương)",
+    tag: "Khởi hành",
+    cost: "40.000–60.000đ",
+    image: "/images/places/viet-tri.jpg",
+  },
+  {
+    time: "08:00 – 10:30",
+    title: "Quần thể Di tích Lịch sử Đền Hùng",
+    subtitle: "Hành hương Đền Hạ → Trung → Thượng → Giếng & Bảo tàng Hùng Vương",
+    tag: "Di sản Quốc gia",
+    cost: "Miễn phí",
+    image: "/images/places/den-hung.jpg",
+  },
+  {
+    time: "11:00 – 12:15",
+    title: "Ăn trưa ẩm thực cội nguồn Giang Lan",
+    subtitle: "Cá lăng om chuối đậu, gà đồi hấp lá chanh, thịt chua Thanh Sơn",
+    tag: "Đặc sản Đất Tổ",
+    cost: "120.000–180.000đ",
+    image: "/images/food/thit-chua.jpg",
+  },
+  {
+    time: "14:00 – 17:30",
+    title: "Lynn Times Thanh Thủy · Onsen khoáng nóng",
+    subtitle: "Nhận phòng Shoptel 5★, ngâm khoáng Radon Ohayo, phố Nhật & hồ cá Koi",
+    tag: "Khoáng nóng 5 sao",
+    cost: "Đã gồm trong combo",
+    image: "/images/places/thanh-thuy.jpg",
+  },
+  {
+    time: "18:30 – 21:15",
+    title: "Chả cá Sông Đà & Dạo phố đi bộ Sakura",
+    subtitle: "Thưởng thức Chả cá sông Đà xèo xèo, check-in phố đi bộ & nghỉ đêm",
+    tag: "Đặc sản & Nghỉ đêm",
+    cost: "150.000–250.000đ",
+    image: "/images/places/thanh-thuy.jpg",
+  },
+];
+
+export const OFFICIAL_SAMPLE_TOUR_DAY2 = [
+  {
+    time: "07:30 – 08:45",
+    title: "Ăn sáng resort & Dạo cảnh Thanh Thủy",
+    subtitle: "Buffet sáng tại resort, tản bộ ngắm cảnh vườn Nhật & check-out",
+    tag: "Nghỉ dưỡng",
+    cost: "Đã gồm trong combo",
+    image: "/images/places/thanh-thuy.jpg",
+  },
+  {
+    time: "10:30 – 11:30",
+    title: "Quảng trường & Nhà thờ đá Tam Đảo",
+    subtitle: "Chiêm ngưỡng kiến trúc đá Pháp cổ kính giữa biển sương mây 900m",
+    tag: "Săn mây mờ ảo",
+    cost: "Miễn phí",
+    image: "/images/places/tam-dao.jpg",
+  },
+  {
+    time: "11:30 – 12:45",
+    title: "Ăn trưa đặc sản Nhà hàng Tam Đảo Núi",
+    subtitle: "Ngọn rau su su giòn ngọt xào tỏi, gà đồi nướng than, cá suối chiên giòn",
+    tag: "Ẩm thực Tam Đảo",
+    cost: "150.000–250.000đ",
+    image: "/images/food/su-su-tam-dao.png",
+  },
+  {
+    time: "12:45 – 15:30",
+    title: "Café ngắm biển mây tại Cổng Trời Tam Đảo",
+    subtitle: "Thưởng thức đồ uống view toàn cảnh thung lũng & mua đặc sản su su",
+    tag: "View toàn cảnh",
+    cost: "60.000–100.000đ",
+    image: "/images/places/tam-dao.jpg",
+  },
+  {
+    time: "16:00 – 17:30",
+    title: "Di chuyển Tam Đảo → TP. Việt Trì",
+    subtitle: "Xuống đèo mây, trở về trung tâm TP. Việt Trì, hoàn tất hành trình 2N1Đ",
+    tag: "Kết thúc tour",
+    cost: "Hoàn tất 2N1Đ",
+    image: "/images/places/viet-tri.jpg",
+  },
+];
+
 export default function Home() {
   const [activeTab, setActiveTab] = useState<Tab>("explore");
   const [savedSubTab, setSavedSubTab] = useState<SavedSubTab>("places");
@@ -3038,6 +3124,7 @@ export default function Home() {
   const [heroBgImage, setHeroBgImage] = useState<string>("/images/hero/hero-river-valley.jpg");
   const [serverResultIds, setServerResultIds] = useState<string[] | null>(null);
   const [isServerSearching, setIsServerSearching] = useState(false);
+  const [teaserDay, setTeaserDay] = useState<1 | 2>(1);
   
   // Storage states
   const [favorites, setFavorites] = useState<string[]>([]);
@@ -6790,26 +6877,117 @@ export default function Home() {
             ) : null}
           </section>
 
-          {/* ITINERARY TEASER */}
-          <section className="content-section itinerary-teaser">
+          {/* ITINERARY TEASER: BẢN LỊCH TRÌNH MẪU CHUẨN TRÍCH TỪ TÀI LIỆU DOCX */}
+          <section className="content-section itinerary-teaser" id="smart-itinerary-teaser">
             <div className="itinerary-teaser__copy">
               <span className="section-number section-number--light">{t.section03Num}</span>
               <span className="kicker kicker--light">{t.section03Kicker}</span>
-              <h2>{t.section03Title1}<br /><em>{t.section03Title2}</em></h2>
+              <h2>
+                {t.section03Title1}
+                <br />
+                <em>{t.section03Title2}</em>
+              </h2>
               <p>{t.section03Desc}</p>
-              <button className="button button--cream" onClick={() => setActiveTab("trip")}>{t.planTripSmartBtn}</button>
+              <div className="itinerary-teaser__features">
+                <span className="itinerary-teaser__pill">
+                  <span className="itinerary-teaser__pill-icon">✦</span> Khớp 100% tài liệu lịch trình du lịch
+                </span>
+                <span className="itinerary-teaser__pill">
+                  <span className="itinerary-teaser__pill-icon">🚗</span> Tối ưu cung đường di chuyển ô tô / xe máy
+                </span>
+                <span className="itinerary-teaser__pill">
+                  <span className="itinerary-teaser__pill-icon">🎙</span> Tích hợp thuyết minh giọng đọc AI chi tiết
+                </span>
+              </div>
+              <button
+                type="button"
+                className="button button--cream itinerary-teaser__cta"
+                onClick={() => {
+                  handleApplyTourTemplate(tourTemplates[0]);
+                  setActiveTab("trip");
+                  setIsBuilderCollapsed(true);
+                  window.scrollTo({ top: 0, behavior: "smooth" });
+                }}
+              >
+                {t.planTripSmartBtn}
+              </button>
             </div>
-            <div className="mini-itinerary">
-              <div className="mini-itinerary__top"><span>{t.suggestedTourTitle}</span><b>{formatDaysNights(2, currentLang)}</b></div>
-              {[places[0], places[7] || places[1], places[2], places[12] || places[3]].map((place, index) => (
-                <div className="mini-stop" key={place.id}>
-                  <span className="mini-stop__time">{place.bestStart}</span>
-                  <span className="mini-stop__dot" />
-                  <img src={place.image} alt="" loading="lazy" onError={handleImageError} />
-                  <span><b>{place.shortName}</b><small>{getRegionLabel(place.region, t)} · {getCategoryLabel(place.category, t)}</small></span>
+
+            <div className="mini-itinerary modern-official-card">
+              <div className="mini-itinerary__top">
+                <div className="mini-itinerary__head-info">
+                  <div className="mini-itinerary__badge-row">
+                    <span className="mini-itinerary__badge">LỊCH TRÌNH MẪU CHUẨN</span>
+                    <span className="mini-itinerary__subbadge">Hồ sơ gốc</span>
+                  </div>
+                  <h3 className="mini-itinerary__title">Việt Trì – Đền Hùng – Thanh Thủy – Tam Đảo</h3>
                 </div>
-              ))}
-              <div className="route-summary"><span>{t.routeSummary1}</span><span>{t.routeSummary2}</span></div>
+                <div className="mini-itinerary__duration">
+                  <b>2N1Đ</b>
+                  <small>2 ngày 1 đêm</small>
+                </div>
+              </div>
+
+              {/* Bộ chuyển Ngày 1 / Ngày 2 */}
+              <div className="mini-itinerary__day-tabs">
+                <button
+                  type="button"
+                  className={`mini-itinerary__day-tab ${teaserDay === 1 ? "mini-itinerary__day-tab--active" : ""}`}
+                  onClick={() => setTeaserDay(1)}
+                >
+                  <span className="mini-day-badge">Ngày 1</span>
+                  <span className="mini-day-text">Việt Trì · Đền Hùng · Onsen Thanh Thủy</span>
+                </button>
+                <button
+                  type="button"
+                  className={`mini-itinerary__day-tab ${teaserDay === 2 ? "mini-itinerary__day-tab--active" : ""}`}
+                  onClick={() => setTeaserDay(2)}
+                >
+                  <span className="mini-day-badge">Ngày 2</span>
+                  <span className="mini-day-text">Thanh Thủy · Săn mây Tam Đảo · Việt Trì</span>
+                </button>
+              </div>
+
+              {/* Danh sách các chặng dừng trong ngày */}
+              <div className="mini-itinerary__stops">
+                {(teaserDay === 1 ? OFFICIAL_SAMPLE_TOUR_DAY1 : OFFICIAL_SAMPLE_TOUR_DAY2).map((stop, index) => (
+                  <div className="mini-stop mini-stop--upgraded" key={`${teaserDay}-${index}`}>
+                    <span className="mini-stop__time">{stop.time}</span>
+                    <span className="mini-stop__dot" />
+                    <div className="mini-stop__img-box">
+                      <img src={stop.image} alt={stop.title} loading="lazy" onError={handleImageError} />
+                    </div>
+                    <div className="mini-stop__details">
+                      <div className="mini-stop__title-row">
+                        <b>{stop.title}</b>
+                        <span className="mini-stop__tag">{stop.tag}</span>
+                      </div>
+                      <small className="mini-stop__subtitle">{stop.subtitle}</small>
+                      <span className="mini-stop__cost">{stop.cost}</span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              {/* Chân thẻ: Tóm tắt lộ trình & Nút mở chi tiết */}
+              <div className="mini-itinerary__footer">
+                <div className="mini-itinerary__footer-summary">
+                  <span>⌁ Tuyến liên kết thuận tiện đường sá (~140 km)</span>
+                  <span>Dự toán: ~1.400.000 – 1.850.000đ/người</span>
+                </div>
+                <button
+                  type="button"
+                  className="mini-itinerary__action-btn"
+                  onClick={() => {
+                    handleApplyTourTemplate(tourTemplates[0]);
+                    setActiveTab("trip");
+                    setIsBuilderCollapsed(true);
+                    window.scrollTo({ top: 0, behavior: "smooth" });
+                  }}
+                >
+                  Mở Toàn Bộ Lịch Trình Chi Tiết & Nghe Thuyết Minh →
+                </button>
+              </div>
             </div>
           </section>
 
